@@ -177,6 +177,11 @@
   .project-tags{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:16px;}
   .tag{background:var(--accent-soft); color:#5c4a04; font-size:0.75rem; font-weight:700; padding:4px 10px; border-radius:14px;}
   .project-link{font-weight:700; font-size:0.9rem;}
+  .project-links{display:flex; flex-wrap:wrap; align-items:center; gap:10px 18px;}
+  .project-link-live{background:var(--navy); color:#fff; padding:8px 14px; border-radius:6px; text-decoration:none !important;}
+  .project-link-live:hover{background:var(--navy-light);}
+  .project-title-link{color:inherit; text-decoration:none;}
+  .project-title-link:hover{text-decoration:underline;}
 
   /* SKILLS */
   .grid-2{display:grid; grid-template-columns:1fr 1fr; gap:28px;}
@@ -472,7 +477,7 @@
 
         <div class="project-card">
           <div class="project-icon">📊</div>
-          <h3>Fundraising Analytics Dashboard</h3>
+          <h3><a class="project-title-link" href="fundraising-dashboard/">Fundraising Analytics Dashboard</a></h3>
           <p>
             Interactive Power BI dashboard analyzing donor behavior, fundraising performance, gift
             types, and donor insights — with predictive modeling to help stakeholders make more
@@ -483,7 +488,10 @@
             <span class="tag">Data Modeling</span>
             <span class="tag">Predictive Analytics</span>
           </div>
-          <a class="project-link" href="https://github.com/Bsilva87921/Fundraising-Analytics-Dashboard" target="_blank" rel="noopener">View on GitHub →</a>
+          <div class="project-links">
+            <a class="project-link project-link-live" href="fundraising-dashboard/">Open live dashboard →</a>
+            <a class="project-link" href="https://github.com/Bsilva87921/Fundraising-Analytics-Dashboard" target="_blank" rel="noopener">View on GitHub →</a>
+          </div>
         </div>
 
         <div class="project-card">
