@@ -389,11 +389,17 @@ td.given { min-width: 220px; color: var(--ink-2); }
 
 .tip { position: fixed; z-index: 10; pointer-events: none; background: var(--ink); color: var(--bg); font-size: 12.5px; line-height: 1.4; padding: 7px 9px; border-radius: 6px; max-width: 260px; box-shadow: 0 4px 14px var(--shadow); }
 @media (prefers-reduced-motion: no-preference) { .out .meter i, .rbar, .drv .db i { transition: width .25s ease; } }
+
+.themebar { display: inline-flex; gap: 2px; border: 1px solid var(--rule); border-radius: 999px; padding: 2px; background: var(--surface); }
+.themebar button { border: none; background: none; color: var(--ink-2); font: inherit; font-size: 12.5px; font-weight: 600; padding: 4px 10px; border-radius: 999px; cursor: pointer; }
+.themebar button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+.themerow { display: flex; justify-content: flex-end; margin-bottom: 6px; }
 </style>
 </head>
 <body>
 <div class="wrap">
   <header class="top">
+    <div class="themerow"><div class="themebar" role="group" aria-label="Color theme"><button type="button" data-theme-set="auto" aria-pressed="true">Auto</button><button type="button" data-theme-set="light" aria-pressed="false">Light</button><button type="button" data-theme-set="dark" aria-pressed="false">Dark</button></div></div>
     <div class="eyebrow">Business analysis portfolio project</div>
     <h1>Loan Rules Lab</h1>
     <p class="lede">Set lending rules, test them against <b><span class="num" id="heroN">9,578</span> real LendingClub loans</b>, and get predictions, insights and recommendations, plus the business rules and test cases a project team needs.</p>
@@ -1589,6 +1595,19 @@ const MODEL = {"intercept":-1.7815073389345701,"num":[{"key":"fico","w":-0.00894
   $("gAuc").textContent = smAll.auc.toFixed(2); $("gAucF").textContent = smAll.aucFico.toFixed(2); $("gAvg").textContent = pct(smAll.predAvg);
   openGuideFromHash();
   setTimeout(renderFitFinding, 400);
+})();
+</script>
+<script>
+(function () {
+  var root = document.documentElement, KEY = "bs-theme";
+  function apply(t) {
+    if (t === "light" || t === "dark") root.setAttribute("data-theme", t); else root.removeAttribute("data-theme");
+    document.querySelectorAll("[data-theme-set]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-theme-set") === (t || "auto"))); });
+  }
+  var saved = null; try { saved = localStorage.getItem(KEY); } catch (e) {}
+  apply(saved || "auto");
+  document.querySelectorAll("[data-theme-set]").forEach(function (b) { b.addEventListener("click", function () {
+    var t = b.getAttribute("data-theme-set"); apply(t); try { localStorage.setItem(KEY, t); } catch (e) {} }); });
 })();
 </script>
 </body>
