@@ -270,6 +270,8 @@ FRED = {
     "FEDFUNDS": ("Fed funds rate", "%", "m"),
     "DFF": ("Fed funds rate (daily)", "%", "d"),
     "DGS3MO": ("3-month Treasury yield", "%", "d"),
+    "TB3MS": ("3-month Treasury bill (monthly)", "%", "m"),
+    "GS10": ("10-year Treasury yield (monthly)", "%", "m"),
     "DGS2": ("2-year Treasury yield", "%", "d"),
     "DGS10": ("10-year Treasury yield", "%", "d"),
     "T10Y3M": ("Yield curve: 10-year minus 3-month", "pp", "d"),
