@@ -134,9 +134,20 @@ def wb_countries():
         }
     return out
 
-def wb_indicator(code, source=None):
+def wgi_indicator(code):
+    # The World Bank renamed the governance series (GOV_WGI_*); try the new id first, then the old one.
+    err = None
+    for cid in (f"GOV_WGI_{code}", code):
+        for src in (3, None):
+            try:
+                return wb_indicator(cid, src, y0=1996)
+            except Exception as e:  # noqa
+                err = e
+    raise RuntimeError(str(err))
+
+def wb_indicator(code, source=None, y0=None):
     y1 = dt.date.today().year
-    url = f"https://api.worldbank.org/v2/country/all/indicator/{code}?format=json&per_page=20000&date={WB_Y0}:{y1}"
+    url = f"https://api.worldbank.org/v2/country/all/indicator/{code}?format=json&per_page=20000&date={y0 or WB_Y0}:{y1}"
     if source:
         url += f"&source={source}"
     rows, page = [], 1
@@ -182,9 +193,6 @@ IMF = {
     "LUR": "Unemployment rate (%)",
     "GGXWDG_NGDP": "Government gross debt (% GDP)",
     "GGXCNL_NGDP": "Government net lending/borrowing (% GDP)",
-    "GGXONLB_NGDP": "Government primary net lending/borrowing (% GDP)",
-    "GGR_NGDP": "Government revenue (% GDP)",
-    "GGX_NGDP": "Government expenditure (% GDP)",
     "BCA_NGDPD": "Current account balance (% GDP)",
     "LP": "Population (millions)",
 }
@@ -388,7 +396,7 @@ def main():
                 world["wb"][code] = prev_world["wb"][code]
     status["sources"]["World Bank WDI"] = f"{ok}/{len(WB)}"
     ok = 0
-    for code, (val, err) in run_many(lambda c: wb_indicator(c, 3), list(WGI)).items():
+    for code, (val, err) in run_many(wgi_indicator, list(WGI)).items():
         if val:
             world["wgi"][code] = val; ok += 1
         else:
