@@ -1930,8 +1930,28 @@ SNAPSHOT.stats = {"asOf":"2026-09-26","st":{"nfl":{"2026":"BUF|2|0|0|77|62||AFC|
     if (/^american league$/i.test(s)) return 'AL'; if (/^national league$/i.test(s)) return 'NL';
     return s.replace(/ Conference$/i, '');
   }
+  // ESPN now rejects date-range scoreboard requests (HTTP 400): fetch day by day and merge.
+  // Today is fetched every refresh; other days are cached for 10 minutes.
+  const DAYC = new Map(); let rangeOK = true;
+  async function scoreboardJSON(lg) {
+    if (!lg.range) return fetchJSON(sbURL(lg));
+    if (rangeOK) { try { return await fetchJSON(sbURL(lg)); } catch (e) { if (!/HTTP 4/.test(String(e && e.message))) throw e; rangeOK = false; } }
+    const n = Date.now(), today = ymd(new Date(n)), days = [];
+    for (let d = lg.range[0]; d <= lg.range[1]; d++) days.push(ymd(new Date(n + d * 864e5)));
+    const base = ESPN + lg.path + '/scoreboard?' + (lg.q ? lg.q + '&' : '') + 'dates=';
+    const res = await Promise.allSettled(days.map(async day => {
+      const k = lg.id + '|' + day, c = DAYC.get(k);
+      if (day !== today && c && n - c.t < 10 * 60e3) return c.js;
+      const js = await fetchJSON(base + day); DAYC.set(k, { t: n, js }); return js;
+    }));
+    const ok = res.filter(r => r.status === 'fulfilled').map(r => r.value);
+    if (!ok.length) throw res[0].reason;
+    const seen = new Map(); for (const js of ok) for (const ev of js.events || []) seen.set(String(ev.id), ev);
+    const first = ok.find(js => js.season || js.leagues) || ok[0];
+    return { events: [...seen.values()], season: first.season, leagues: first.leagues };
+  }
   async function loadLeagueLive(lg) {
-    const js = await fetchJSON(sbURL(lg));
+    const js = await scoreboardJSON(lg);
     const games = (js.events || []).map(ev => { try { return parseEvent(lg, ev); } catch (e) { return null; } }).filter(Boolean);
     S.data[lg.id].games = games; S.data[lg.id].fetchedAt = Date.now(); delete S.errors[lg.id];
     const se = js.season || (js.leagues && js.leagues[0] && js.leagues[0].season) || null;
