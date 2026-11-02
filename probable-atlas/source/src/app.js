@@ -1,12 +1,13 @@
 /* Probable Atlas · Economics: app shell (routing, scope, module nav, country drawer, events). */
 const TABS = [['live', 'Live now'], ['indicators', 'Indicators'], ['models', 'Models & forecasts'], ['whatif', 'What-if lab'], ['recs', 'Recommendations'], ['history', 'History'], ['how', 'How it works']];
-const MODULES = [['econ', 'Economics', true], ['fin', 'Finance & markets'], ['comm', 'Commodities & scarcity'], ['wx', 'Weather & climate'], ['ag', 'Agriculture & food'], ['hunger', 'Hunger'], ['wealth', 'Wealth & inequality'], ['tech', 'Tech & innovation'], ['conflict', 'Conflict & security'], ['pulse', 'World Pulse']];
+const FIN_URL = window.ATLAS_DATA ? 'https://bsilva87921.github.io/probable-atlas/finance/' : 'finance/';
+const MODULES = [['econ', 'Economics', true], ['fin', 'Finance & markets', false, FIN_URL], ['comm', 'Commodities & scarcity'], ['wx', 'Weather & climate'], ['ag', 'Agriculture & food'], ['hunger', 'Hunger'], ['wealth', 'Wealth & inequality'], ['tech', 'Tech & innovation'], ['conflict', 'Conflict & security'], ['pulse', 'World Pulse']];
 const STATE = K.store('atlas-econ-v1', { scope: 'WLD', tab: 'live', mapInd: 'g', indGrp: 'Growth & size', indFilter: 'top40', usSeries: 'UNRATE', usRange: '10', cSeries: 'imf:NGDP_RPCH', recModel: 'classic', wiIso: 'CHN' }, ['tab', 'scope', 'mapInd', 'indGrp', 'indFilter', 'usRange', 'recModel', 'usSeries', 'cSeries', 'wiIso']);
 
 const APP = (() => {
   const { $, $$, esc, ok, num, pct, sgn } = K;
   function header() {
-    $('#modnav').innerHTML = MODULES.map(([k, lab, on]) => `<button type="button" ${on ? 'aria-current="true"' : 'disabled title="Coming next in the Atlas build plan"'}>${esc(lab)}${on ? '' : ' <span class="soon">soon</span>'}</button>`).join('');
+    $('#modnav').innerHTML = MODULES.map(([k, lab, on, href]) => on ? `<button type="button" aria-current="true">${esc(lab)}</button>` : href ? `<a class="modlink" href="${esc(href)}"${window.ATLAS_DATA ? ' target="_blank" rel="noopener"' : ''}>${esc(lab)}</a>` : `<button type="button" disabled title="Coming next in the Atlas build plan">${esc(lab)} <span class="soon">soon</span></button>`).join('');
     // faint world map behind the masthead
     const g = $('#grat'); g.setAttribute('viewBox', `0 0 ${MAP.w} ${MAP.h}`);
     g.innerHTML = `<path d="${MAP.outline}" style="fill:none;stroke:#5FD3C8;stroke-width:1"/>` + Object.values(MAP.p).map(d => `<path d="${d}" style="fill:#5FD3C8;opacity:.35"/>`).join('');
@@ -38,6 +39,7 @@ const APP = (() => {
     C.mount(main); C.gc(); T.gc();
     if (!keepScroll) { const bar = $('.bar'); const top = bar.getBoundingClientRect().top + scrollY; if (scrollY > top) scrollTo({ top, behavior: 'instant' in document.documentElement.style ? 'instant' : 'auto' }); }
     STATE.save();
+    if (typeof CH !== 'undefined') CH.context(STATE);
   }
   /* ---------------- country profile drawer ---------------- */
   function openCountry(iso) {
@@ -72,6 +74,7 @@ const APP = (() => {
     document.addEventListener('click', ev => {
       const t = ev.target;
       if (VW.onClick(ev)) return;
+      const ask = t.closest('[data-ask]'); if (ask && typeof CH !== 'undefined') { ev.preventDefault(); K.drawer.close(); CH.open(ask.dataset.ask || ''); return; }
       const sc = t.closest('#scopeSeg [data-scope]'); if (sc) { go({ scope: sc.dataset.scope }); return; }
       const tb = t.closest('#tabs [data-tab]'); if (tb) { go({ tab: tb.dataset.tab }); tb.scrollIntoView({ block: 'nearest', inline: 'nearest' }); return; }
       const gt = t.closest('[data-goto]'); if (gt) { ev.preventDefault(); go({ tab: gt.dataset.goto, scope: gt.dataset.goto === 'models' && STATE.scope === 'WLD' ? 'USA' : STATE.scope }); return; }
@@ -90,6 +93,7 @@ const APP = (() => {
     });
     document.addEventListener('input', ev => { if (ev.target.matches('[data-wi]')) VW.onInput(ev.target); });
     document.addEventListener('keydown', ev => {
+      if (ev.key === 'Escape' && typeof CH !== 'undefined' && CH.isOpen()) { CH.close(); return; }
       if (ev.key === 'Escape' && K.drawer.isOpen) { K.drawer.close(); return; }
       if ((ev.key === 'Enter' || ev.key === ' ') && ev.target.matches('[data-country][tabindex],[data-series][tabindex],tr[data-country],tr[data-series]')) { ev.preventDefault(); ev.target.click(); }
       if (ev.key === 'Tab' && K.drawer.isOpen) { const f = $$('#drawer button, #drawer a, #drawer select, #drawer [tabindex]'); if (!f.length) return; const a = f[0], b = f[f.length - 1]; if (ev.shiftKey && document.activeElement === a) { ev.preventDefault(); b.focus(); } else if (!ev.shiftKey && document.activeElement === b) { ev.preventDefault(); a.focus(); } }
@@ -105,9 +109,11 @@ const APP = (() => {
     const up = h.toUpperCase(); if (up === 'WLD' || up === 'WORLD') STATE.scope = 'WLD'; else if (E.BYISO[up]) STATE.scope = up;
   }
   async function start() {
-    C.init(); T.init(); bind();
+    U.theme(); C.init(); T.init(); bind();
     try { await E.load(); } catch (e) { $('#main').innerHTML = `<div class="card empty">Could not load the data (${esc(e.message)}). Please refresh in a minute.</div>`; return; }
-    E.buildCatalog(); header(); hashRoute(); render(true);
+    E.buildCatalog(); header(); hashRoute();
+    if (typeof CH !== 'undefined') CH.init(ECHAT.adapter(), STATE);
+    render(true);
   }
   return { start, render, openCountry, go };
 })();

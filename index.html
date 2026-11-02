@@ -533,9 +533,40 @@
         </div>
 
         <div class="project-card project-featured">
+          <a class="project-shot" href="probable-atlas/finance/" aria-label="Open Probable Atlas: Finance & Markets"><img src="probable-atlas/finance/preview.jpg" alt="Probable Atlas Finance: S&amp;P 500, Nasdaq, Russell 2000, 10-year yield, VIX, dollar, gold, oil and bitcoin tiles with sparklines under the Finance masthead" width="1200" height="630" loading="lazy"></a>
+          <div class="project-body">
+            <span class="project-badge">New · Live markets + AI analyst</span>
+            <h3><a class="project-title-link" href="probable-atlas/finance/">Probable Atlas: Finance &amp; Markets</a></h3>
+            <p>
+              Module 2 of Probable Atlas. It tracks 61 funds, indexes, futures and crypto plus 34 Federal Reserve rate,
+              credit and FX series daily since 1990 (the S&amp;P 500 since 1928), refreshed during US trading hours by a
+              GitHub Actions pipeline. Seven models run in the browser and publish out-of-sample track records: GJR-GARCH
+              volatility and value-at-risk that passes Kupiec and Christoffersen backtests since 2000, a hidden Markov
+              regime model, a Shiller CAPE expected-return regression, correction-risk logistic models that report their
+              modest skill honestly, and a trend rule tested back to 1927. A portfolio lab builds an efficient frontier,
+              runs Monte Carlo retirement plans, replays ten historical sell-offs and conditional shock scenarios, and an
+              Ask Atlas chat answers questions from the same data and models, with Claude using them as tools.
+            </p>
+            <div class="project-tags">
+              <span class="tag">Quantitative Finance</span>
+              <span class="tag">Risk Modeling (GARCH, VaR)</span>
+              <span class="tag">Portfolio Optimization</span>
+              <span class="tag">Monte Carlo Simulation</span>
+              <span class="tag">AI Assistant (LLM Tool Use)</span>
+              <span class="tag">Data Pipeline (GitHub Actions)</span>
+            </div>
+            <div class="project-links">
+              <a class="project-link project-link-live" href="probable-atlas/finance/">Open live dashboard →</a>
+              <a class="project-link" href="probable-atlas/finance/#how">How it works →</a>
+              <a class="project-link" href="https://github.com/Bsilva87921/bsilva87921.github.io/tree/main/probable-atlas" target="_blank" rel="noopener">View source →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card project-featured">
           <a class="project-shot" href="probable-atlas/" aria-label="Open Probable Atlas: Economics"><img src="probable-atlas/preview.jpg" alt="Probable Atlas Economics: world growth, inflation and US recession-odds tiles above a world map of 2026 GDP growth and an alerts panel" width="1200" height="630" loading="lazy"></a>
           <div class="project-body">
-            <span class="project-badge">New · Live data</span>
+            <span class="project-badge">Live data + AI analyst</span>
             <h3><a class="project-title-link" href="probable-atlas/">Probable Atlas: Economics</a></h3>
             <p>
               Module 1 of Probable Atlas, a series of world-domain dashboards built on the Sports Lab engine. It covers
@@ -545,7 +576,8 @@
               GDP nowcast benchmarked against the Atlanta Fed's GDPNow, 1–12 month inflation forecasts, a Taylor rule,
               Monte Carlo growth and debt fans, and k-means economic archetypes. A what-if lab re-runs the models on
               your inputs, and a recommendation engine uses a panel regression of 328 country-decades to rank
-              improvements, each with its evidence, an impact range, trade-offs and a confidence level.
+              improvements, each with its evidence, an impact range, trade-offs and a confidence level. An Ask Atlas
+              chat answers questions about any economy, the forecasts and US what-if scenarios.
             </p>
             <div class="project-tags">
               <span class="tag">Econometrics</span>

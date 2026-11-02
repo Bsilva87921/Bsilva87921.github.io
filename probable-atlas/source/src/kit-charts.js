@@ -15,6 +15,12 @@ const C = (() => {
   function niceStep(span, n) { const raw = span / Math.max(n, 1), p = Math.pow(10, Math.floor(Math.log10(raw))), f = raw / p; return (f < 1.5 ? 1 : f < 3 ? 2 : f < 7 ? 5 : 10) * p; }
   function yTicks(lo, hi, n) { if (lo === hi) { lo -= 1; hi += 1; } const st = niceStep(hi - lo, n), a = Math.floor(lo / st) * st, b = Math.ceil(hi / st) * st, out = []; for (let v = a; v <= b + st / 2; v += st) out.push(+v.toFixed(10)); return { ticks: out, lo: a, hi: b }; }
   function xYearTicks(lo, hi, w) { const span = hi - lo, maxN = Math.max(2, Math.floor(w / 64)); const steps = [0.25, 0.5, 1, 2, 5, 10, 20, 25, 50]; let st = steps.find(s => span / s <= maxN) || 50; const out = []; for (let v = Math.ceil(lo / st) * st; v <= hi + 1e-9; v += st) out.push(+v.toFixed(4)); return { ticks: out, st }; }
+  function logTicks(lo, hi, maxN) { // lo/hi in log10 units; ticks at 1-2-5 steps
+    const out = []; for (let e = Math.floor(lo) - 1; e <= Math.ceil(hi) + 1; e++) for (const m of [1, 2, 5]) { const v = Math.log10(m) + e; if (v >= lo - 1e-9 && v <= hi + 1e-9) out.push(v); }
+    if (out.length > maxN) { const only = out.filter(v => Math.abs(v - Math.round(v)) < 1e-9); return only.length >= 2 ? only : out.filter((_, i) => i % 2 === 0); }
+    if (out.length < 3) { const t = yTicks(Math.pow(10, lo), Math.pow(10, hi), Math.max(3, maxN - 1)).ticks.filter(v => v > 0).map(v => Math.log10(v)).filter(v => v >= lo - 1e-9 && v <= hi + 1e-9); if (t.length >= 2) return t; }
+    return out;
+  }
   const yearLab = (x, st) => st >= 1 ? String(Math.round(x)) : (K.MON[Math.round((x % 1) * 12) % 12] + ' ' + String(Math.floor(x)).slice(2));
 
   function place(cid, type, opts) {
@@ -31,7 +37,8 @@ const C = (() => {
   function line(opts) { const cid = K.uid('c'); return (opts.legend !== false ? legendHTML(legendItems(opts)) : '') + place(cid, 'line', opts); }
   function legendItems(o) {
     const it = (o.series || []).filter(s => s.name && !s.noLegend).map((s, i) => ({ name: s.name, color: s.color || PAL[i] }));
-    for (const b of o.bands || []) if (b.name) it.push({ name: b.name, color: b.color || 'var(--s1)', kind: 'band' });
+    for (const b of o.bands || []) if (b.name && !b.noLegend) it.push({ name: b.name, color: b.color || 'var(--s1)', kind: 'band' });
+    for (const z of o.zoneLegend || []) it.push({ name: z.name, color: z.color, kind: 'sq' });
     if (o.shade && o.shade.length && o.shadeName) it.push({ name: o.shadeName, color: 'var(--rec)', kind: 'sq' });
     return it;
   }
@@ -39,21 +46,24 @@ const C = (() => {
     const H = o.h || 240, endW = o.endLabels ? Math.min(120, Math.max(70, W * 0.16)) : 0;
     const m = { l: o.ml || 44, r: 12 + endW, t: 12, b: 24 };
     const iw = Math.max(40, W - m.l - m.r), ih = H - m.t - m.b;
-    const ser = (o.series || []).map((s, i) => Object.assign({ color: PAL[i] }, s, { pts: (s.pts || []).filter(p => ok(p[0]) && ok(p[1])) }));
-    const bands = (o.bands || []).map(b => Object.assign({}, b));
+    const LG = !!o.logY, ty = v => LG ? Math.log10(v) : v;
+    const ser = (o.series || []).map((s, i) => Object.assign({ color: PAL[i] }, s, { pts: (s.pts || []).filter(p => ok(p[0]) && ok(p[1]) && (!LG || p[1] > 0)).map(p => LG ? [p[0], Math.log10(p[1])] : p) }));
+    const bands = (o.bands || []).map(b => LG ? Object.assign({}, b, { lo: b.lo.map(p => [p[0], Math.log10(Math.max(p[1], 1e-9))]), hi: b.hi.map(p => [p[0], Math.log10(Math.max(p[1], 1e-9))]) }) : Object.assign({}, b));
     let xs = [], ys = [];
     for (const s of ser) for (const p of s.pts) { xs.push(p[0]); ys.push(p[1]); }
     for (const b of bands) for (let i = 0; i < b.lo.length; i++) { xs.push(b.lo[i][0]); ys.push(b.lo[i][1], b.hi[i][1]); }
-    for (const hl of o.hlines || []) ys.push(hl.y);
+    for (const hl of o.hlines || []) ys.push(ty(hl.y));
     if (!xs.length) return `<div class="empty">No data for this view.</div>`;
     let x0 = o.x0 != null ? o.x0 : Math.min(...xs), x1 = o.x1 != null ? o.x1 : Math.max(...xs);
     if (x1 === x0) x1 = x0 + 1;
-    let ylo = o.y0 != null ? o.y0 : Math.min(...ys), yhi = o.y1 != null ? o.y1 : Math.max(...ys);
-    if (o.zero !== false && ylo > 0 && ylo < (yhi - ylo) * 0.35) ylo = 0;
-    const yt = yTicks(ylo, yhi, Math.max(3, Math.floor(ih / 42)));
-    const Y0 = o.y0 != null ? o.y0 : yt.lo, Y1 = o.y1 != null ? o.y1 : yt.hi;
+    let ylo = o.y0 != null ? ty(o.y0) : Math.min(...ys), yhi = o.y1 != null ? ty(o.y1) : Math.max(...ys);
+    if (!LG && o.zero !== false && ylo > 0 && ylo < (yhi - ylo) * 0.35) ylo = 0;
+    let yt;
+    if (LG) { const pad = (yhi - ylo) * 0.04 || 0.05; yt = { lo: ylo - pad, hi: yhi + pad }; yt.ticks = logTicks(yt.lo, yt.hi, Math.max(3, Math.floor(ih / 34))); }
+    else yt = yTicks(ylo, yhi, Math.max(3, Math.floor(ih / 42)));
+    const Y0 = o.y0 != null ? ty(o.y0) : yt.lo, Y1 = o.y1 != null ? ty(o.y1) : yt.hi;
     const sx = x => m.l + (x - x0) / (x1 - x0) * iw, sy = y => m.t + ih - (y - Y0) / (Y1 - Y0) * ih;
-    const yF = o.yFmt || (v => num(v, Math.abs(Y1 - Y0) < 5 ? 1 : 0));
+    const yF0 = o.yFmt || (v => num(v, Math.abs(Y1 - Y0) < 5 ? 1 : 0)), yF = LG ? (v => yF0(Math.pow(10, v))) : yF0;
     let g = '';
     for (const t of yt.ticks) if (t >= Y0 - 1e-9 && t <= Y1 + 1e-9) g += `<line class="gridl" x1="${m.l}" x2="${m.l + iw}" y1="${sy(t)}" y2="${sy(t)}"/><text x="${m.l - 6}" y="${sy(t) + 3.5}" text-anchor="end">${esc(yF(t))}</text>`;
     const xt = o.xTicks ? { ticks: o.xTicks, st: 1 } : xYearTicks(x0, x1, iw);
@@ -61,9 +71,10 @@ const C = (() => {
     for (const t of xt.ticks) if (t >= x0 - 1e-9 && t <= x1 + 1e-9) g += `<text x="${sx(t)}" y="${H - 6}" text-anchor="middle">${esc(xF(t))}</text>`;
     let sh = '';
     for (const [a, b] of o.shade || []) { const A = Math.max(a, x0), B = Math.min(b, x1); if (B > A) sh += `<rect class="rec" x="${sx(A)}" y="${m.t}" width="${Math.max(1, sx(B) - sx(A))}" height="${ih}"/>`; }
+    for (const z of o.zones || []) { const A = Math.max(z.a, x0), B = Math.min(z.b, x1); if (B > A) sh += `<rect x="${sx(A).toFixed(1)}" y="${m.t}" width="${Math.max(0.6, sx(B) - sx(A)).toFixed(1)}" height="${ih}" style="fill:${z.color};opacity:${z.op || 0.16}"/>`; }
     if (o.projFrom != null && o.projFrom < x1) sh += `<rect x="${sx(Math.max(o.projFrom, x0))}" y="${m.t}" width="${sx(x1) - sx(Math.max(o.projFrom, x0))}" height="${ih}" style="fill:var(--accent-wash)"/><text x="${sx(Math.max(o.projFrom, x0)) + 4}" y="${m.t + 11}" class="lbl" style="font-size:10.5px">${esc(o.projLabel || 'Projection')}</text>`;
-    if (Y0 < 0 && Y1 > 0) g += `<line class="zero" x1="${m.l}" x2="${m.l + iw}" y1="${sy(0)}" y2="${sy(0)}"/>`;
-    for (const hl of o.hlines || []) g += `<line x1="${m.l}" x2="${m.l + iw}" y1="${sy(hl.y)}" y2="${sy(hl.y)}" style="stroke:${hl.color || 'var(--ink-2)'};stroke-dasharray:4 4;stroke-width:1.2"/>${hl.label ? `<text x="${m.l + iw - 4}" y="${sy(hl.y) - 5}" text-anchor="end" class="lbl" style="font-size:10.5px">${esc(hl.label)}</text>` : ''}`;
+    if (!LG && Y0 < 0 && Y1 > 0) g += `<line class="zero" x1="${m.l}" x2="${m.l + iw}" y1="${sy(0)}" y2="${sy(0)}"/>`;
+    for (const hl of o.hlines || []) g += `<line x1="${m.l}" x2="${m.l + iw}" y1="${sy(ty(hl.y))}" y2="${sy(ty(hl.y))}" style="stroke:${hl.color || 'var(--ink-2)'};stroke-dasharray:4 4;stroke-width:1.2"/>${hl.label ? `<text x="${m.l + iw - 4}" y="${sy(ty(hl.y)) - 5}" text-anchor="end" class="lbl" style="font-size:10.5px">${esc(hl.label)}</text>` : ''}`;
     let bd = '';
     for (const b of bands) {
       const up = b.hi.map(p => `${sx(p[0]).toFixed(1)},${sy(p[1]).toFixed(1)}`), dn = b.lo.slice().reverse().map(p => `${sx(p[0]).toFixed(1)},${sy(p[1]).toFixed(1)}`);
@@ -87,7 +98,7 @@ const C = (() => {
       if (s.dots) for (const q of pts) ls += `<circle cx="${q[0].toFixed(1)}" cy="${q[1].toFixed(1)}" r="3.2" class="dotring" style="fill:${s.color}"/>`;
     }
     let mk = '';
-    for (const p of o.marks || []) { if (!ok(p.x) || !ok(p.y)) continue; mk += `<circle cx="${sx(p.x)}" cy="${sy(p.y)}" r="${p.r || 4.5}" class="dotring" style="fill:${p.color || 'var(--ink)'}"/>`; if (p.label) mk += `<text x="${sx(p.x) + (p.dx || 7)}" y="${sy(p.y) + (p.dy || -7)}" class="lbl" text-anchor="${p.anchor || 'start'}">${esc(p.label)}</text>`; }
+    for (const p of o.marks || []) { if (!ok(p.x) || !ok(p.y)) continue; const py = sy(ty(p.y)); mk += `<circle cx="${sx(p.x)}" cy="${py}" r="${p.r || 4.5}" class="dotring" style="fill:${p.color || 'var(--ink)'}"/>`; if (p.label) mk += `<text x="${sx(p.x) + (p.dx || 7)}" y="${py + (p.dy || -7)}" class="lbl" text-anchor="${p.anchor || 'start'}">${esc(p.label)}</text>`; }
     for (const v of o.vlines || []) { if (v.x < x0 || v.x > x1) continue; mk += `<line x1="${sx(v.x)}" x2="${sx(v.x)}" y1="${m.t}" y2="${m.t + ih}" style="stroke:var(--ink-2);stroke-dasharray:2 3"/>${v.label ? `<text x="${sx(v.x) + 4}" y="${m.t + 22}" class="lbl" style="font-size:10.5px">${esc(v.label)}</text>` : ''}`; }
     let el = '';
     if (o.endLabels) {
@@ -96,7 +107,8 @@ const C = (() => {
       for (let i = 1; i < labs.length; i++) if (labs[i].y - labs[i - 1].y < 13) labs[i].y = labs[i - 1].y + 13;
       for (const l of labs) el += `<text x="${m.l + iw + 6}" y="${l.y + 3.5}" class="lbl">${esc(l.s.name.length > 16 ? l.s.name.slice(0, 15) + '…' : l.s.name)}</text>`;
     }
-    const model = { m, iw, ih, x0, x1, Y0, Y1, ser, bands, tipX: o.tipX || (x => xF(x)), yF: o.tipFmt || yF };
+    const tF = o.tipFmt ? (LG ? (v => o.tipFmt(Math.pow(10, v))) : o.tipFmt) : yF;
+    const model = { m, iw, ih, x0, x1, Y0, Y1, ser, bands, tipX: o.tipX || (x => xF(x)), yF: tF, tipFn: o.tipFn };
     return { svg: `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">${sh}${g}${bd}${ls}${mk}${el}<line class="xh" x1="0" x2="0" y1="${m.t}" y2="${m.t + ih}" visibility="hidden"/><g class="hov"></g><rect class="hit" x="${m.l}" y="${m.t}" width="${iw}" height="${ih}"/></svg>`, model };
   }
   function nearest(pts, x) { let lo = 0, hi = pts.length - 1; if (hi < 0) return null; while (hi - lo > 1) { const mid = (lo + hi) >> 1; if (pts[mid][0] < x) lo = mid; else hi = mid; } return Math.abs(pts[lo][0] - x) <= Math.abs(pts[hi][0] - x) ? pts[lo] : pts[hi]; }
@@ -107,6 +119,7 @@ const C = (() => {
     const sx = v => mdl.m.l + (v - mdl.x0) / (mdl.x1 - mdl.x0) * mdl.iw, sy = v => mdl.m.t + mdl.ih - (v - mdl.Y0) / (mdl.Y1 - mdl.Y0) * mdl.ih;
     let best = null;
     for (const s of mdl.ser) { const p = nearest(s.pts, x); if (p && (!best || Math.abs(p[0] - x) < Math.abs(best[0] - x))) best = p; }
+    if (!best && mdl.bands.length) best = nearest(mdl.bands[0].lo, x);
     if (!best) return;
     const tx = best[0], tol = (mdl.x1 - mdl.x0) / 400 + 1e-9;
     const rows = []; let dots = '';
@@ -114,6 +127,7 @@ const C = (() => {
     for (const b of mdl.bands) { if (!b.name) continue; const lo = nearest(b.lo, tx), hi = nearest(b.hi, tx); if (lo && Math.abs(lo[0] - tx) <= tol) rows.push(K.tipRow(null, b.name, esc(mdl.yF(lo[1]) + ' to ' + mdl.yF(hi[1])))); }
     const xh = svg.querySelector('.xh'); xh.setAttribute('x1', sx(tx)); xh.setAttribute('x2', sx(tx)); xh.setAttribute('visibility', 'visible');
     svg.querySelector('.hov').innerHTML = dots;
+    if (mdl.tipFn) { const h = mdl.tipFn(tx); if (h) K.tip.show(h, ev); else K.tip.hide(); return; }
     K.tip.show(`<b>${esc(mdl.tipX(tx))}</b>${rows.join('')}`, ev);
   }
 
@@ -123,7 +137,7 @@ const C = (() => {
     const H = o.h || 220, m = { l: o.ml || 40, r: 10, t: 12, b: o.rotate ? 44 : 24 };
     const it = o.items.filter(d => ok(d.y)); if (!it.length) return `<div class="empty">No data.</div>`;
     const iw = W - m.l - m.r, ih = H - m.t - m.b;
-    let lo = Math.min(0, ...it.map(d => d.lo != null ? d.lo : d.y)), hi = Math.max(0, ...it.map(d => d.hi != null ? d.hi : d.y));
+    let lo = Math.min(0, ...it.map(d => Math.min(d.lo != null ? d.lo : d.y, ok(d.mark) ? d.mark : d.y))), hi = Math.max(0, ...it.map(d => d.hi != null ? d.hi : d.y));
     if (o.y0 != null) lo = o.y0; if (o.y1 != null) hi = o.y1;
     const yt = yTicks(lo, hi, Math.max(3, Math.floor(ih / 40))), Y0 = yt.lo, Y1 = yt.hi;
     const sy = y => m.t + ih - (y - Y0) / (Y1 - Y0) * ih, n = o.items.length, bw = iw / n, gap = Math.min(2, bw * 0.25);
@@ -135,16 +149,18 @@ const C = (() => {
     o.items.forEach((d, i) => {
       const x = m.l + i * bw + gap / 2, w = Math.max(1, bw - gap);
       if (ok(d.y)) {
-        const y = sy(Math.max(d.y, 0)), h = Math.abs(sy(d.y) - sy(0));
-        const rr = Math.min(3, w / 2);
+        const base = Y0 > 0 ? Y0 : Y1 < 0 ? Y1 : 0;
+        const y = sy(Math.max(d.y, base)), h = Math.abs(sy(d.y) - sy(base));
+        const rr = Math.min(3, w / 2, h);
         const col = d.color || o.color || 'var(--s1)';
-        const path = d.y >= 0
+        const path = d.y >= base
           ? `M${x} ${y + h}V${y + rr}Q${x} ${y} ${x + rr} ${y}H${x + w - rr}Q${x + w} ${y} ${x + w} ${y + rr}V${y + h}Z`
-          : `M${x} ${sy(0)}V${sy(d.y) - rr}Q${x} ${sy(d.y)} ${x + rr} ${sy(d.y)}H${x + w - rr}Q${x + w} ${sy(d.y)} ${x + w} ${sy(d.y) - rr}V${sy(0)}Z`;
+          : `M${x} ${sy(base)}V${sy(d.y) - rr}Q${x} ${sy(d.y)} ${x + rr} ${sy(d.y)}H${x + w - rr}Q${x + w} ${sy(d.y)} ${x + w} ${sy(d.y) - rr}V${sy(base)}Z`;
         b += `<path d="${path}" style="fill:${col};${d.proj ? 'opacity:.45' : ''}"/>`;
         if (d.proj) b += `<path d="${path}" style="fill:none;stroke:${col};stroke-width:1;stroke-dasharray:3 2"/>`;
         if (d.lo != null && d.hi != null) b += `<line x1="${x + w / 2}" x2="${x + w / 2}" y1="${sy(d.lo)}" y2="${sy(d.hi)}" style="stroke:var(--ink-2);stroke-width:1.2"/>`;
         if (o.valueLabels) b += `<text x="${x + w / 2}" y="${d.y >= 0 ? y - 4 : sy(d.y) + 12}" text-anchor="middle" class="lbl" style="font-size:10.5px">${esc(yF(d.y))}</text>`;
+        if (ok(d.mark)) b += `<circle cx="${x + w / 2}" cy="${sy(d.mark)}" r="${Math.max(1.8, Math.min(3.2, w / 2.4))}" style="fill:${o.markColor || 'var(--crit)'}"/>`;
       }
       if (i % every === 0 || i === n - 1 && o.lastLabel) {
         const lx = x + w / 2;
@@ -160,10 +176,11 @@ const C = (() => {
   /* ---------------- scatter ---------------- */
   function scatter(opts) { const cid = K.uid('c'); return (opts.legendItems ? legendHTML(opts.legendItems) : '') + place(cid, 'scatter', opts); }
   function drawScatter(o, W) {
-    const H = o.h || 300, m = { l: 48, r: 14, t: o.yLab ? 24 : 12, b: 38 };
-    const pts = o.pts.filter(p => ok(p.x) && ok(p.y)); if (!pts.length) return `<div class="empty">No data.</div>`;
+    const H = o.h || 300, m = { l: o.ml || 48, r: 14, t: o.yLab ? 24 : 12, b: 38 };
+    const pts = o.pts.filter(p => ok(p.x) && ok(p.y)); if (!pts.length && !(o.cloud || []).length) return `<div class="empty">No data.</div>`;
     const iw = W - m.l - m.r, ih = H - m.t - m.b, tx = o.logX ? v => Math.log10(v) : v => v;
-    const xs = pts.map(p => tx(p.x)), ys = pts.map(p => p.y);
+    const allP = pts.concat((o.cloud || []).filter(c => ok(c.x) && ok(c.y)), ...(o.paths || []).map(p => p.pts.filter(q => ok(q[0]) && ok(q[1])).map(q => ({ x: q[0], y: q[1] }))));
+    const xs = allP.map(p => tx(p.x)), ys = allP.map(p => p.y);
     const xt = yTicks(o.x0 != null ? tx(o.x0) : Math.min(...xs), o.x1 != null ? tx(o.x1) : Math.max(...xs), Math.max(3, Math.floor(iw / 80)));
     const yt = yTicks(o.y0 != null ? o.y0 : Math.min(...ys), o.y1 != null ? o.y1 : Math.max(...ys), Math.max(3, Math.floor(ih / 44)));
     const X0 = xt.lo, X1 = xt.hi, Y0 = yt.lo, Y1 = yt.hi;
@@ -176,6 +193,12 @@ const C = (() => {
     if (!o.logX && X0 < 0 && X1 > 0) g += `<line class="zero" x1="${sx(0)}" x2="${sx(0)}" y1="${m.t}" y2="${m.t + ih}"/>`;
     g += `<text x="${m.l + iw}" y="${H - 4}" text-anchor="end" class="ttl">${esc(o.xLab || '')}</text><text x="${m.l - 40}" y="${m.t - 10}" class="ttl">${esc(o.yLab || '')}</text>`;
     let fit = '';
+    let bg = '';
+    if (o.quads) { const qx = sx(o.quads.x), qy = sy(o.quads.y), L = o.quads.labels || []; const shade = o.quads.shade || []; const rects = [[m.l, m.t, qx - m.l, qy - m.t], [qx, m.t, m.l + iw - qx, qy - m.t], [m.l, qy, qx - m.l, m.t + ih - qy], [qx, qy, m.l + iw - qx, m.t + ih - qy]]; rects.forEach((r, k) => { if (shade[k]) bg += `<rect x="${r[0]}" y="${r[1]}" width="${Math.max(0, r[2])}" height="${Math.max(0, r[3])}" style="fill:${shade[k]};opacity:.07"/>`; }); bg += `<line class="zero" x1="${qx}" x2="${qx}" y1="${m.t}" y2="${m.t + ih}"/><line class="zero" x1="${m.l}" x2="${m.l + iw}" y1="${qy}" y2="${qy}"/>`; if (L[0]) bg += `<text x="${m.l + 6}" y="${m.t + 14}" class="ttl">${esc(L[0])}</text>`; if (L[1]) bg += `<text x="${m.l + iw - 6}" y="${m.t + 14}" class="ttl" text-anchor="end">${esc(L[1])}</text>`; if (L[2]) bg += `<text x="${m.l + 6}" y="${m.t + ih - 6}" class="ttl">${esc(L[2])}</text>`; if (L[3]) bg += `<text x="${m.l + iw - 6}" y="${m.t + ih - 6}" class="ttl" text-anchor="end">${esc(L[3])}</text>`; }
+    for (const c of o.cloud || []) if (ok(c.x) && ok(c.y)) bg += `<circle cx="${sx(c.x).toFixed(1)}" cy="${sy(c.y).toFixed(1)}" r="${c.r || 1.7}" style="fill:${c.color || 'var(--axis)'};opacity:${c.op || 0.55}"/>`;
+    for (const pth of o.paths || []) { const q = pth.pts.filter(p => ok(p[0]) && ok(p[1])); if (q.length < 2) continue; bg += `<path d="M${q.map(p => sx(p[0]).toFixed(1) + ' ' + sy(p[1]).toFixed(1)).join('L')}" style="fill:none;stroke:${pth.color || 'var(--ink-2)'};stroke-width:${pth.width || 1.5};${pth.dash ? 'stroke-dasharray:' + pth.dash + ';' : ''}stroke-linejoin:round;stroke-linecap:round;opacity:${pth.op || 1}"/>`; if (pth.dots) for (const p of q.slice(0, -1)) bg += `<circle cx="${sx(p[0]).toFixed(1)}" cy="${sy(p[1]).toFixed(1)}" r="2" style="fill:${pth.color};opacity:${pth.op || 0.8}"/>`; }
+    for (const hl of o.hlines || []) bg += `<line x1="${m.l}" x2="${m.l + iw}" y1="${sy(hl.y)}" y2="${sy(hl.y)}" style="stroke:${hl.color || 'var(--ink-2)'};stroke-dasharray:4 4"/>${hl.label ? `<text x="${m.l + iw - 4}" y="${sy(hl.y) - 5}" text-anchor="end" class="lbl" style="font-size:10.5px">${esc(hl.label)}</text>` : ''}`;
+    for (const vl of o.vlines || []) bg += `<line x1="${sx(vl.x)}" x2="${sx(vl.x)}" y1="${m.t}" y2="${m.t + ih}" style="stroke:${vl.color || 'var(--ink-2)'};stroke-dasharray:4 4"/>${vl.label ? `<text x="${sx(vl.x) + 4}" y="${m.t + 12}" class="lbl" style="font-size:10.5px">${esc(vl.label)}</text>` : ''}`;
     if (o.fit) { const a = X0, b = X1, f = v => o.fit.b0 + o.fit.b1 * v; const xa = o.logX ? Math.pow(10, a) : a, xb = o.logX ? Math.pow(10, b) : b; fit = `<line x1="${sx(xa)}" x2="${sx(xb)}" y1="${sy(K.clamp(f(a), Y0, Y1))}" y2="${sy(K.clamp(f(b), Y0, Y1))}" style="stroke:var(--ink-2);stroke-width:1.5;stroke-dasharray:6 4"/>`; }
     let d = '', lab = '';
     const sorted = pts.slice().sort((a, b) => (b.r || 4) - (a.r || 4));
@@ -187,7 +210,7 @@ const C = (() => {
       placed.push({ x, y, w }); lab += `<text x="${x}" y="${y}" class="lbl">${esc(p.lab)}</text>`;
     }
     const model = { pts: pts.map(p => Object.assign({ px: sx(p.x), py: sy(p.y) }, p)), tip: o.tip, xF, yF, xLab: o.xLab, yLab: o.yLab };
-    return { svg: `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">${g}${fit}${d}${lab}<g class="hov"></g><rect class="hit" x="${m.l}" y="${m.t}" width="${iw}" height="${ih}"/></svg>`, model };
+    return { svg: `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">${g}${bg}${fit}${d}${lab}<g class="hov"></g><rect class="hit" x="${m.l}" y="${m.t}" width="${iw}" height="${ih}"/></svg>`, model };
   }
   function hoverScatter(el, mdl, ev, click) {
     const svg = el.querySelector('svg'), r = svg.getBoundingClientRect(), W = +svg.getAttribute('width');
@@ -230,6 +253,14 @@ const C = (() => {
     const col = p >= 0.5 ? 'var(--crit)' : p >= 0.3 ? 'var(--serious)' : p >= 0.15 ? 'var(--warn)' : 'var(--good)';
     return `<svg viewBox="0 0 150 94" aria-hidden="true">${arc(a0, 0.0001, 'var(--line)', 12)}${p > 0.005 ? arc(a0, a, col, 12) : ''}<text x="${cx}" y="${cy - 2}" text-anchor="middle" style="font:600 20px var(--f-mono);fill:var(--ink)">${Math.round(p * 100)}%</text><text x="${cx - R}" y="92" text-anchor="middle" style="font:10px var(--f-sans);fill:var(--muted)">0%</text><text x="${cx + R}" y="92" text-anchor="middle" style="font:10px var(--f-sans);fill:var(--muted)">100%</text></svg>`;
   }
+  function dial(v, segs, o = {}) { // v in [0,100]; segs: [{to, color, label}]
+    const R = 62, cx = 80, cy = 76, ang = t => Math.PI * (1 - K.clamp(t, 0, 100) / 100);
+    const pt = (t, r) => [cx + r * Math.cos(ang(t)), cy - r * Math.sin(ang(t))];
+    let from = 0, arcs = '';
+    for (const sg of segs) { const [x1, y1] = pt(from + 0.6, R), [x2, y2] = pt(sg.to - 0.6, R); arcs += `<path d="M${x1.toFixed(1)} ${y1.toFixed(1)}A${R} ${R} 0 0 1 ${x2.toFixed(1)} ${y2.toFixed(1)}" style="fill:none;stroke:${sg.color};stroke-width:13"/>`; from = sg.to; }
+    const [nx, ny] = pt(v, R - 18);
+    return `<svg viewBox="0 0 160 96" aria-hidden="true">${arcs}<line x1="${cx}" y1="${cy}" x2="${nx.toFixed(1)}" y2="${ny.toFixed(1)}" style="stroke:var(--ink);stroke-width:3;stroke-linecap:round"/><circle cx="${cx}" cy="${cy}" r="5" style="fill:var(--ink)"/><text x="${cx}" y="${cy + 18}" text-anchor="middle" style="font:600 15px var(--f-mono);fill:var(--ink)">${o.txt != null ? esc(o.txt) : Math.round(v)}</text><text x="12" y="94" style="font:10px var(--f-sans);fill:var(--muted)">${esc(o.lo || '')}</text><text x="148" y="94" text-anchor="end" style="font:10px var(--f-sans);fill:var(--muted)">${esc(o.hi || '')}</text></svg>`;
+  }
   function hbars(items, o = {}) { // HTML bars, supports negatives
     const vals = items.map(d => d.v).filter(ok); if (!vals.length) return '<div class="empty">No data.</div>';
     const lo = Math.min(0, o.lo != null ? o.lo : Math.min(...vals)), hi = Math.max(0, o.hi != null ? o.hi : Math.max(...vals)), span = hi - lo || 1;
@@ -237,7 +268,7 @@ const C = (() => {
     return `<div class="hbars">${items.map(d => {
       if (!ok(d.v)) return `<div class="hbar"><span class="nm">${esc(d.name)}</span><span class="trk"></span><span class="v na">–</span></div>`;
       const l = d.v >= 0 ? z : (d.v - lo) / span * 100, w = Math.abs(d.v) / span * 100;
-      return `<div class="hbar${d.id ? ' click' : ''}"${d.id ? ` data-country="${esc(d.id)}" role="button" tabindex="0"` : ''} title="${esc(d.title || '')}"><span class="nm">${esc(d.name)}</span><span class="trk"><span class="z" style="left:${z}%"></span><b style="left:${l}%;width:${Math.max(w, 0.6)}%;background:${d.color || o.color || 'var(--s1)'}"></b></span><span class="v">${esc(f(d.v))}</span></div>`;
+      return `<div class="hbar${d.id || d.asset ? ' click' : ''}"${d.id ? ` data-country="${esc(d.id)}" role="button" tabindex="0"` : d.asset ? ` data-asset="${esc(d.asset)}" role="button" tabindex="0"` : ''}${d.tip ? ` data-tip="${esc(d.tip)}"` : ` title="${esc(d.title || '')}"`}><span class="nm">${esc(d.name)}</span><span class="trk"><span class="z" style="left:${z}%"></span><b style="left:${l}%;width:${Math.max(w, 0.6)}%;background:${d.color || o.color || 'var(--s1)'}"></b></span><span class="v">${esc(f(d.v))}</span></div>`;
     }).join('')}</div>`;
   }
   function rampHTML(kind, lo, hi, fmt, label) {
@@ -261,6 +292,8 @@ const C = (() => {
   }
   function gc() { for (const [cid] of REG) if (!document.querySelector(`.chart[data-cid="${cid}"]`)) REG.delete(cid); }
   function onMove(ev) {
+    const dt = ev.target.closest && ev.target.closest('[data-tip]');
+    if (dt) { K.tip.show(dt.getAttribute('data-tip'), ev); return; }
     const el = ev.target.closest && ev.target.closest('.chart[data-cid]');
     if (!el) return;
     const reg = REG.get(el.dataset.cid); if (!reg || !reg.model) return;
@@ -273,6 +306,8 @@ const C = (() => {
     }
   }
   function onLeave(ev) {
+    const dt = ev.target.closest && ev.target.closest('[data-tip]');
+    if (dt && !(ev.relatedTarget && dt.contains(ev.relatedTarget))) { K.tip.hide(); return; }
     const el = ev.target.closest && ev.target.closest('.chart[data-cid]'); if (!el) return;
     if (ev.relatedTarget && el.contains(ev.relatedTarget)) return;
     K.tip.hide();
@@ -285,6 +320,7 @@ const C = (() => {
     if (reg.type === 'map' && ev.target.dataset.iso && reg.model.vals[ev.target.dataset.iso] != null) document.dispatchEvent(new CustomEvent('atlas:country', { detail: ev.target.dataset.iso }));
     if (reg.type === 'scatter' && ev.target.classList.contains('hit')) hoverScatter(el, reg.model, ev, true);
     if (reg.type === 'line' || reg.type === 'bars') onMove(ev); // tap shows the tooltip on touch screens
+    if (reg.type === 'scatter' && ev.target.classList.contains('hit') && !reg.model.pts.some(p => p.id)) hoverScatter(el, reg.model, ev);
   }
   function init() {
     document.addEventListener('pointermove', onMove, { passive: true });
@@ -293,5 +329,5 @@ const C = (() => {
     addEventListener('resize', K.debounce(() => mount(), 150));
     addEventListener('scroll', () => K.tip.hide(), { passive: true });
   }
-  return { PAL, seq, div, line, bars, scatter, map, spark, gauge, hbars, rampHTML, mount, gc, init, REG };
+  return { PAL, seq, div, line, bars, scatter, map, spark, gauge, dial, hbars, rampHTML, mount, gc, init, REG, yTicks };
 })();

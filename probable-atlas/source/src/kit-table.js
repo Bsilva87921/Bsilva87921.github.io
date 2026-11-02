@@ -43,14 +43,14 @@ const T = (() => {
     if (o.view === 'chart') {
       const c = o.cols.find(x => x.k === o.chartCol) || o.cols[1];
       const lim = Math.min(rows.length, o.chartLimit || 30);
-      const items = rows.filter(r => ok(r[c.k])).slice(0, lim).map(r => ({ name: r._name || r[o.cols[0].k], v: r[c.k], id: r._country, color: c.color ? c.color(r) : (c.good ? (r[c.k] >= (c.mid != null ? c.mid : 0) ? 'var(--s1)' : 'var(--s2)') : 'var(--s1)') }));
+      const items = rows.filter(r => ok(r[c.k])).slice(0, lim).map(r => ({ name: r._name || r[o.cols[0].k], v: r[c.k], id: r._country, asset: r._asset, color: c.color ? c.color(r) : (c.good ? (r[c.k] >= (c.mid != null ? c.mid : 0) ? 'var(--s1)' : 'var(--s2)') : 'var(--s1)') }));
       return `<div class="card" style="box-shadow:none">${C.hbars(items, { fmt: c.fmt || (v => num(v, 1)) })}<div class="src">Top ${items.length} by the current sort (${esc(o.cols.find(x => x.k === o.sort.k).lab)}, ${o.sort.dir < 0 ? 'high to low' : 'low to high'}). Change the sort in Table view.</div></div>`;
     }
     const heat = o.view === 'heat';
     const shown = rows.slice(0, o.shown);
     const th = o.cols.map(c => `<th scope="col" ${o.sort.k === c.k ? `aria-sort="${o.sort.dir < 0 ? 'descending' : 'ascending'}"` : ''} title="${esc(c.title || c.lab)}"><button type="button" data-tsort="${c.k}">${esc(c.lab)}</button></th>`).join('');
     const tr = shown.map(r => {
-      const attr = r._country ? ` class="click" data-country="${esc(r._country)}" tabindex="0"` : r._series ? ` class="click" data-series="${esc(r._series)}" tabindex="0"` : '';
+      const attr = r._country ? ` class="click" data-country="${esc(r._country)}" tabindex="0"` : r._series ? ` class="click" data-series="${esc(r._series)}" tabindex="0"` : r._asset ? ` class="click" data-asset="${esc(r._asset)}" tabindex="0"` : '';
       return `<tr${attr}>${o.cols.map((c, i) => {
         const v = r[c.k];
         if (c.html) return `<td${i === 0 ? ' class="name"' : ''}>${c.html(r)}</td>`;

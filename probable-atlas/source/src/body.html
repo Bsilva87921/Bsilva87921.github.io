@@ -1,7 +1,7 @@
 <div class="strip">
   <div class="wrap">
     <span><a href="https://bsilva87921.github.io/">← Bruno Silva · Portfolio</a></span>
-    <span class="fresh" id="fresh"><span><span class="dot"></span>Loading data…</span></span>
+    <span class="r"><span class="fresh" id="fresh"><span><span class="dot"></span>Loading data…</span></span><button type="button" class="themebtn" id="themeBtn">☾ Dark mode</button></span>
   </div>
 </div>
 <header class="mast">
@@ -24,6 +24,7 @@
         <button type="button" data-scope="USA" aria-pressed="false">United States</button>
       </div>
       <label class="picker"><span class="sr">Choose a country</span><select id="countrySel" aria-label="Choose a country"><option value="">Any country…</option></select></label>
+      <button type="button" class="askbtn" data-ask="" aria-label="Ask Atlas a question"><span aria-hidden="true">✦</span> Ask Atlas</button>
     </div>
     <div class="tabs" role="tablist" id="tabs" aria-label="Sections"></div>
   </div>
@@ -36,3 +37,4 @@
 <div class="tip" id="tip" hidden></div>
 <div class="scrim" id="scrim" hidden></div>
 <aside class="drawer" id="drawer" hidden aria-modal="true" role="dialog" aria-labelledby="drTitle"></aside>
+<div id="chatRoot"></div>
