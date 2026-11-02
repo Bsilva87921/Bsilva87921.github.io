@@ -1,11 +1,12 @@
-# Probable Atlas: refresh the economics data (World Bank, IMF, FRED) and redeploy the site.
+# Probable Atlas: refresh the data (economics: World Bank, IMF, FRED; markets: Yahoo Finance, FRED, Shiller, French) and redeploy.
 # Data lives on the single-commit "atlas-data" branch (force-pushed each run) so main's history stays small.
 name: Probable Atlas data refresh
 
 on:
   schedule:
-    - cron: "23 11 * * 1-5"   # weekday mornings, after most US releases (8:30 ET)
-    - cron: "23 22 * * *"     # evenings, after markets close
+    - cron: "23 11 * * 1-5"          # weekday mornings, after most US releases (8:30 ET)
+    - cron: "23 22 * * *"            # evenings, after markets close
+    - cron: "47 14,16,18,20 * * 1-5" # during US trading hours: markets only
   workflow_dispatch:
   push:
     branches: ["main"]
@@ -27,6 +28,8 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    env:
+      INTRADAY: ${{ github.event.schedule == '47 14,16,18,20 * * 1-5' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -34,16 +37,27 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Install packages
+        run: pip install --quiet --upgrade yfinance xlrd || pip install --quiet xlrd || true
       - name: Load previous data (kept if a source fails)
         run: |
-          mkdir -p prev
+          mkdir -p prev out
           if git fetch --depth=1 origin atlas-data; then git archive FETCH_HEAD | tar -x -C prev; fi
           ls -la prev
-      - name: Fetch sources
+      - name: Fetch economics (World Bank, IMF, FRED)
+        if: env.INTRADAY != 'true'
         env:
           OUT_DIR: out
           PREV_DIR: prev
         run: python probable-atlas/pipeline/fetch_econ.py
+      - name: Keep economics data (intraday run)
+        if: env.INTRADAY == 'true'
+        run: cp prev/world.json prev/us.json prev/status.json out/ 2>/dev/null || true
+      - name: Fetch markets (Yahoo Finance, FRED, Shiller, French)
+        env:
+          OUT_DIR: out
+          PREV_DIR: prev
+        run: python probable-atlas/pipeline/fetch_markets.py || (echo "markets fetch failed; keeping previous files" && cp prev/markets*.json prev/mstatus.json out/ 2>/dev/null || true)
       - name: Save to atlas-data branch
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
