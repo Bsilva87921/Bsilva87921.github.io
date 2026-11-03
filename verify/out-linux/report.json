@@ -1,285 +1,31 @@
 {
   "os": "linux",
-  "at": "2026-11-03T04:59:28.354Z",
-  "pages": {
-    "sports": {
-      "title": "Probable Sports Lab — Bruno Silva",
-      "px3d": "WebGL2",
-      "canvases": 1,
-      "insights": true,
-      "insightItems": [
-        "Live | 3 games  in progress: NBA",
-        "Closest | Closest live game: Suns at Warriors, 3:35 - 3rd — Suns | 62%",
-        "Swing | Biggest swing: Clippers went from 41% before the game to | 95%",
-        "Upset watch | Upset watch: Suns was 35% before kickoff and is now favored at | 62%",
-        "Up next | Top matchup: Bayern at Atlético, Today 8:00 PM — Bayern | 41%",
-        "Favorite | Biggest favorite on the slate: Ohio (NCAAF) vs Akron | 80%",
-        "Upset | Biggest recent upset: Minnesota won 3–1 with a pregame chance of | 21%",
-        "Track record | Track record: replayed without hindsight, the lab's favorite won 58% of 3,240 games outside soccer this season — and its odds beat \"home edge only\" by 3% across 4,122 games | 58%"
-      ],
-      "askButton": "✦Ask AI",
-      "installButton": true,
-      "themeAttr": null,
-      "hOverflow": false,
-      "serviceWorker": "https://bsilva87921.github.io/live-sports-lab/",
-      "answer": {
-        "text": "BUILT-IN ANALYST\n\n3 games live, closest first:\n\nPhoenix Suns at Golden State Warriors (NBA, live · 3:35 - 3rd) — PHX 88, GS 84. — PHX 62% · GS 38% (pregame PHX 35%)\nToronto Raptors at LA Clippers (NBA, live · 50.8 - 3rd) — TOR 77, LAC 90. — TOR 5% · LAC 95% (pregame LAC 41%)\nMiami Heat at Los Angeles Lakers (NBA, live · End of 3rd) — MIA 93, LAL 111. — MIA 0% · LAL 100% (pregame LAL 69%)\nWhich live games are closest right now?\nWho will win MUN at ATM?\nWhat if ATM gets a red card?",
-        "error": false
-      },
-      "trackRecordShown": true,
-      "errors": [
-        "console: Failed to load resource: the server responded with a status of 400 ()",
-        "console: Failed to load resource: the server responded with a status of 400 ()",
-        "console: Failed to load resource: the server responded with a status of 400 ()",
-        "console: Failed to load resource: the server responded with a status of 400 ()",
-        "console: Failed to load resource: the server responded with a status of 400 ()",
-        "console: Failed to load resource: the server responded with a status of 400 ()",
-        "console: Failed to load resource: the server responded with a status of 400 ()",
-        "console: Failed to load resource: the server responded with a status of 400 ()",
-        "console: Failed to load resource: the server responded with a status of 400 ()",
-        "console: Failed to load resource: the server responded with a status of 400 ()",
-        "console: Failed to load resource: the server responded with a status of 400 ()"
-      ],
-      "httpFailures": [
-        "400 https://site.web.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard?dates=20261102-20261104&limit=300",
-        "400 https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261102-20261105&limit=300",
-        "400 https://site.web.api.espn.com/apis/site/v2/sports/hockey/nhl/scoreboard?dates=20261102-20261106&limit=300",
-        "400 https://site.web.api.espn.com/apis/site/v2/sports/soccer/esp.1/scoreboard?dates=20261030-20261113&limit=300",
-        "400 https://site.web.api.espn.com/apis/site/v2/sports/basketball/wnba/scoreboard?dates=20261101-20261106&limit=300",
-        "400 https://site.web.api.espn.com/apis/site/v2/sports/soccer/eng.1/scoreboard?dates=20261030-20261113&limit=300",
-        "400 https://site.web.api.espn.com/apis/site/v2/sports/soccer/ita.1/scoreboard?dates=20261030-20261113&limit=300",
-        "400 https://site.web.api.espn.com/apis/site/v2/sports/soccer/ger.1/scoreboard?dates=20261030-20261113&limit=300",
-        "400 https://site.web.api.espn.com/apis/site/v2/sports/soccer/fra.1/scoreboard?dates=20261030-20261113&limit=300",
-        "400 https://site.web.api.espn.com/apis/site/v2/sports/soccer/usa.1/scoreboard?dates=20261031-20261110&limit=300",
-        "400 https://site.web.api.espn.com/apis/site/v2/sports/soccer/uefa.champions/scoreboard?dates=20261030-20261117&limit=300"
-      ],
-      "dark": {
-        "title": "Probable Sports Lab — Bruno Silva",
-        "px3d": "WebGL2",
-        "canvases": 1,
-        "insights": true,
-        "insightItems": [
-          "Live | 3 games  in progress: NBA",
-          "Closest | Closest live game: Suns at Warriors, 3:35 - 3rd — Suns | 57%",
-          "Swing | Biggest swing: Clippers went from 41% before the game to | 94%",
-          "Upset watch | Upset watch: Suns was 35% before kickoff and is now favored at | 57%",
-          "Up next | Top matchup: Bayern at Atlético, Today 8:00 PM — Bayern | 41%",
-          "Favorite | Biggest favorite on the slate: Ohio (NCAAF) vs Akron | 80%",
-          "Upset | Biggest recent upset: Minnesota won 3–1 with a pregame chance of | 21%",
-          "Track record | Track record: replayed without hindsight, the lab's favorite won 58% of 3,240 games outside soccer this season — and its odds beat \"home edge only\" by 3% across 4,122 games | 58%"
-        ],
-        "askButton": "✦Ask AI",
-        "installButton": true,
-        "themeAttr": null,
-        "hOverflow": false,
-        "errors": [
-          "console: Failed to load resource: the server responded with a status of 400 ()",
-          "console: Failed to load resource: the server responded with a status of 400 ()",
-          "console: Failed to load resource: the server responded with a status of 400 ()",
-          "console: Failed to load resource: the server responded with a status of 400 ()",
-          "console: Failed to load resource: the server responded with a status of 400 ()",
-          "console: Failed to load resource: the server responded with a status of 400 ()"
-        ]
-      },
-      "mobile": {
-        "title": "Probable Sports Lab — Bruno Silva",
-        "px3d": "WebGL2",
-        "canvases": 1,
-        "insights": true,
-        "insightItems": [
-          "Live | 3 games  in progress: NBA",
-          "Closest | Closest live game: Suns at Warriors, 3:35 - 3rd — Suns | 52%",
-          "Swing | Biggest swing: Clippers went from 41% before the game to | 94%",
-          "Upset watch | Upset watch: Suns was 35% before kickoff and is now favored at | 52%",
-          "Up next | Top matchup: Bayern at Atlético, Today 8:00 PM — Bayern | 41%",
-          "Favorite | Biggest favorite on the slate: Ohio (NCAAF) vs Akron | 80%",
-          "Upset | Biggest recent upset: Minnesota won 3–1 with a pregame chance of | 21%",
-          "Track record | Track record: replayed without hindsight, the lab's favorite won 58% of 3,240 games outside soccer this season — and its odds beat \"home edge only\" by 3% across 4,122 games | 58%"
-        ],
-        "askButton": "✦Ask AI",
-        "installButton": true,
-        "themeAttr": null,
-        "hOverflow": false,
-        "errors": [
-          "console: Failed to load resource: the server responded with a status of 400 ()",
-          "console: Failed to load resource: the server responded with a status of 400 ()",
-          "console: Failed to load resource: the server responded with a status of 400 ()",
-          "console: Failed to load resource: the server responded with a status of 400 ()",
-          "console: Failed to load resource: the server responded with a status of 400 ()",
-          "console: Failed to load resource: the server responded with a status of 400 ()"
-        ],
-        "askLinkAnswered": true
-      }
-    },
-    "econ": {
-      "title": "Probable Atlas · Economics · World",
-      "px3d": "WebGL2",
-      "canvases": 1,
-      "insights": true,
-      "insightItems": [
-        "World | The IMF sees the world economy growing in 2026 (2025: 3.5%) — World Economic Outlook (October 2026) | 3.1%",
-        "US recession | Chance of a US recession within 12 months (yield-curve probit, out-of-sample AUC 0.78) | 13%",
-        "GDP nowcast | US GDP nowcast for Q4 2026, annualized (Atlanta Fed GDPNow 3.7%) | 2.6%",
-        "US inflation | US inflation is 3.7%; the model's 12-month forecast is | 2.9%",
-        "Fed policy | Fed funds 3.88% vs the Taylor rule's 5.6%: policy looks loose by | −1.7 pp",
-        "Contraction | Economies the IMF expects to shrink in 2026, out of 189 | 14",
-        "Fastest growing | Fastest-growing economy in 2026: Guyana | +22.3%",
-        "High inflation | Economies with double-digit inflation in 2026 | 23"
-      ],
-      "askButton": "✦Ask AI",
-      "installButton": true,
-      "themeAttr": null,
-      "hOverflow": false,
-      "serviceWorker": "https://bsilva87921.github.io/probable-atlas/",
-      "answer": {
-        "text": "BUILT-IN ANALYST\n\nWorld economy (IMF World Economic Outlook (October 2026)): growth 3.1% in 2026, 3.4% expected in 2027; inflation 4.7%. Fastest growing: Guyana 22.3%, South Sudan 10.5%, Ethiopia 9.2%.\n\nAlerts\n\nWorld growth 3.1% in 2026\n10 economies (5m+ people) are forecast to shrink in 2026\n9 economies have inflation of 20% or more\nOpen Live now →\nWill the US go into recession?\nWhich countries have the highest inflation?\nHow is China doing?",
-        "error": false
-      },
-      "errors": [],
-      "httpFailures": [],
-      "dark": {
-        "title": "Probable Atlas · Economics · World",
-        "px3d": "WebGL2",
-        "canvases": 1,
-        "insights": true,
-        "insightItems": [
-          "World | The IMF sees the world economy growing in 2026 (2025: 3.5%) — World Economic Outlook (October 2026) | 3.1%",
-          "US recession | Chance of a US recession within 12 months (yield-curve probit, out-of-sample AUC 0.78) | 13%",
-          "GDP nowcast | US GDP nowcast for Q4 2026, annualized (Atlanta Fed GDPNow 3.7%) | 2.6%",
-          "US inflation | US inflation is 3.7%; the model's 12-month forecast is | 2.9%",
-          "Fed policy | Fed funds 3.88% vs the Taylor rule's 5.6%: policy looks loose by | −1.7 pp",
-          "Contraction | Economies the IMF expects to shrink in 2026, out of 189 | 14",
-          "Fastest growing | Fastest-growing economy in 2026: Guyana | +22.3%",
-          "High inflation | Economies with double-digit inflation in 2026 | 23"
-        ],
-        "askButton": "✦Ask AI",
-        "installButton": true,
-        "themeAttr": null,
-        "hOverflow": false,
-        "errors": []
-      },
-      "mobile": {
-        "title": "Probable Atlas · Economics · World",
-        "px3d": "WebGL2",
-        "canvases": 1,
-        "insights": true,
-        "insightItems": [
-          "World | The IMF sees the world economy growing in 2026 (2025: 3.5%) — World Economic Outlook (October 2026) | 3.1%",
-          "US recession | Chance of a US recession within 12 months (yield-curve probit, out-of-sample AUC 0.78) | 13%",
-          "GDP nowcast | US GDP nowcast for Q4 2026, annualized (Atlanta Fed GDPNow 3.7%) | 2.6%",
-          "US inflation | US inflation is 3.7%; the model's 12-month forecast is | 2.9%",
-          "Fed policy | Fed funds 3.88% vs the Taylor rule's 5.6%: policy looks loose by | −1.7 pp",
-          "Contraction | Economies the IMF expects to shrink in 2026, out of 189 | 14",
-          "Fastest growing | Fastest-growing economy in 2026: Guyana | +22.3%",
-          "High inflation | Economies with double-digit inflation in 2026 | 23"
-        ],
-        "askButton": "✦Ask AI",
-        "installButton": true,
-        "themeAttr": null,
-        "hOverflow": false,
-        "errors": [],
-        "askLinkAnswered": true
-      }
-    },
-    "fin": {
-      "title": "Probable Atlas · Finance · Live now",
-      "px3d": "WebGL2",
-      "canvases": 1,
-      "insights": true,
-      "insightItems": [
-        "S&P 500 | S&P 500 at 7,541: −0.51% on Nov 2, 2026, +10.2% this year, 3.5% below its record | −0.51%",
-        "Regime | The regime model reads the market as calm, with probability | 96%",
-        "Correction risk | Chance of a 10% fall within six months, against a 21% base rate (modest skill) | 38%",
-        "Volatility | VIX 21.1; the GARCH model expects daily S&P 500 swings of about | ±1.1%",
-        "Yield curve | 10-year Treasury 4.94% vs 3-month 4.16%: the curve is upward sloping, spread | +0.78 pp",
-        "Risk appetite | Risk appetite gauge (six market readings): extreme fear | 17/100",
-        "Valuation | CAPE 40.7, 99th percentile since 1881; history implies a 10-year real return near | 0.4%/yr",
-        "Biggest mover | WTI oil moved the most of 58 markets on Nov 2, 2026 | −7.1%"
-      ],
-      "askButton": "✦Ask AI",
-      "installButton": true,
-      "themeAttr": null,
-      "hOverflow": false,
-      "serviceWorker": "https://bsilva87921.github.io/probable-atlas/",
-      "answer": {
-        "text": "BUILT-IN ANALYST\n\nModel odds, S&P 500:\n\n5% pullback within 3 months: 46% (base rate 31%; out of sample AUC 0.56, Brier skill +5%)\n10% correction within 6 months: 38% (base rate 21%; out of sample AUC 0.55, Brier skill +5%)\n20% bear market within 12 months: 28% (base rate 14%; out of sample AUC 0.53, Brier skill +5%)\n\nWhat drives the 6-month reading: valuations (CAPE) raise it, credit spreads lower it, implied volatility raise it.\n\nHow much to trust it: out of sample these models beat the base rate only modestly, so read them as a tilt, not a forecast. Declines are normal: the S&P 500 fell 10%+",
-        "error": false
-      },
-      "errors": [],
-      "httpFailures": [],
-      "dark": {
-        "title": "Probable Atlas · Finance · Live now",
-        "px3d": "WebGL2",
-        "canvases": 1,
-        "insights": true,
-        "insightItems": [
-          "S&P 500 | S&P 500 at 7,541: −0.51% on Nov 2, 2026, +10.2% this year, 3.5% below its record | −0.51%",
-          "Regime | The regime model reads the market as calm, with probability | 96%",
-          "Correction risk | Chance of a 10% fall within six months, against a 21% base rate (modest skill) | 38%",
-          "Volatility | VIX 21.1; the GARCH model expects daily S&P 500 swings of about | ±1.1%",
-          "Yield curve | 10-year Treasury 4.94% vs 3-month 4.16%: the curve is upward sloping, spread | +0.78 pp",
-          "Risk appetite | Risk appetite gauge (six market readings): extreme fear | 17/100",
-          "Valuation | CAPE 40.7, 99th percentile since 1881; history implies a 10-year real return near | 0.4%/yr",
-          "Biggest mover | WTI oil moved the most of 58 markets on Nov 2, 2026 | −7.1%"
-        ],
-        "askButton": "✦Ask AI",
-        "installButton": true,
-        "themeAttr": null,
-        "hOverflow": false,
-        "errors": []
-      },
-      "mobile": {
-        "title": "Probable Atlas · Finance · Live now",
-        "px3d": "WebGL2",
-        "canvases": 1,
-        "insights": true,
-        "insightItems": [
-          "S&P 500 | S&P 500 at 7,541: −0.51% on Nov 2, 2026, +10.2% this year, 3.5% below its record | −0.51%",
-          "Regime | The regime model reads the market as calm, with probability | 96%",
-          "Correction risk | Chance of a 10% fall within six months, against a 21% base rate (modest skill) | 38%",
-          "Volatility | VIX 21.1; the GARCH model expects daily S&P 500 swings of about | ±1.1%",
-          "Yield curve | 10-year Treasury 4.94% vs 3-month 4.16%: the curve is upward sloping, spread | +0.78 pp",
-          "Risk appetite | Risk appetite gauge (six market readings): extreme fear | 17/100",
-          "Valuation | CAPE 40.7, 99th percentile since 1881; history implies a 10-year real return near | 0.4%/yr",
-          "Biggest mover | WTI oil moved the most of 58 markets on Nov 2, 2026 | −7.1%"
-        ],
-        "askButton": "✦Ask AI",
-        "installButton": true,
-        "themeAttr": null,
-        "hOverflow": false,
-        "errors": [],
-        "askLinkAnswered": true
-      }
-    },
-    "home": {
-      "title": "Probable Atlas",
-      "px3d": "WebGL2",
-      "canvases": 1,
-      "insights": true,
-      "insightItems": [
-        "Econ · World | The IMF sees the world economy growing in 2026 (2025: 3.5%) — World Economic Outlook (October 2026) | 3.1%",
-        "Econ · US recession | Chance of a US recession within 12 months (yield-curve probit, out-of-sample AUC 0.78) | 13%",
-        "Econ · GDP nowcast | US GDP nowcast for Q4 2026, annualized (Atlanta Fed GDPNow 3.7%) | 2.6%",
-        "Econ · US inflation | US inflation is 3.7%; the model's 12-month forecast is | 2.9%",
-        "Econ · Fed policy | Fed funds 3.88% vs the Taylor rule's 5.6%: policy looks loose by | −1.7 pp",
-        "Markets · S&P 500 | S&P 500 at 7,541: −0.51% on Nov 2, 2026, +10.2% this year, 3.5% below its record | −0.51%",
-        "Markets · Regime | The regime model reads the market as calm, with probability | 96%",
-        "Markets · Correction risk | Chance of a 10% fall within six months, against a 21% base rate (modest skill) | 38%",
-        "Markets · Volatility | VIX 21.1; the GARCH model expects daily S&P 500 swings of about | ±1.1%",
-        "Markets · Yield curve | 10-year Treasury 4.94% vs 3-month 4.16%: the curve is upward sloping, spread | +0.78 pp"
-      ],
-      "askButton": null,
-      "installButton": true,
-      "themeAttr": null,
-      "hOverflow": false,
-      "errors": [],
-      "httpFailures": [],
-      "readings": 10
-    }
-  },
+  "at": "2026-11-03T15:22:27.344Z",
+  "pages": {},
   "browser": "Chromium headless 153.0.8010.12",
   "webgpu": {
     "api": true,
     "adapter": null
+  },
+  "finTerrain": {
+    "title": "Probable Atlas · Finance · Live now",
+    "px3d": "WebGL2",
+    "canvases": 1,
+    "insights": true,
+    "insightItems": [
+      "S&P 500 | S&P 500 at 7,541: −0.51% on Nov 2, 2026, +10.2% this year, 3.5% below its record | −0.51%",
+      "Regime | The regime model reads the market as calm, with probability | 96%",
+      "Correction risk | Chance of a 10% fall within six months, against a 21% base rate (modest skill) | 38%",
+      "Volatility | VIX 21.1; the GARCH model expects daily S&P 500 swings of about | ±1.1%",
+      "Yield curve | 10-year Treasury 4.94% vs 3-month 4.16%: the curve is upward sloping, spread | +0.78 pp",
+      "Risk appetite | Risk appetite gauge (six market readings): extreme fear | 17/100",
+      "Valuation | CAPE 40.7, 99th percentile since 1881; history implies a 10-year real return near | 0.4%/yr",
+      "Biggest mover | WTI oil moved the most of 58 markets on Nov 2, 2026 | −7.1%"
+    ],
+    "askButton": "✦Ask AI",
+    "installButton": true,
+    "themeAttr": null,
+    "hOverflow": false,
+    "errors": []
   }
 }
