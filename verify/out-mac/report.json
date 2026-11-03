@@ -1,6 +1,6 @@
 {
   "os": "mac",
-  "at": "2026-11-03T15:27:17.727Z",
+  "at": "2026-11-03T16:48:00.573Z",
   "pages": {
     "sports": {
       "title": "Probable Sports Lab — Bruno Silva",
@@ -8,7 +8,7 @@
       "canvases": 1,
       "insights": true,
       "insightItems": [
-        "Up next | Top matchup: Bayern at Atlético, Today 8:00 PM — Bayern | 41%",
+        "Up next | Top matchup: Bayern at Atlético, Today 8:00 PM — Bayern | 42%",
         "Favorite | Biggest favorite on the slate: Toledo (NCAAF) vs Sacramento St | 94%",
         "Model vs line | Biggest gap with the betting line: the model gives Pistons 59% against the line's | 52%",
         "Upset | Biggest recent upset: Minnesota won 3–1 with a pregame chance of | 21%",
@@ -20,7 +20,7 @@
       "hOverflow": false,
       "serviceWorker": "https://bsilva87921.github.io/live-sports-lab/",
       "answer": {
-        "text": "BUILT-IN ANALYST\n\nNo games are live right now. Next up: Galatasaray vs VfB Stuttgart (UCL, Today 5:45 PM).\n\nWin chances: VFB 30% · draw 23% · GAL 48%\nOpen the game center\nWho will win MUN at ATM?\nWhat if ATM gets a red card?\nAny upsets brewing?",
+        "text": "BUILT-IN ANALYST\n\nNo games are live right now. Next up: Galatasaray vs VfB Stuttgart (UCL, Today 5:45 PM).\n\nWin chances: VFB 32% · draw 23% · GAL 46%\nOpen the game center\nWho will win MUN at ATM?\nWhat if ATM gets a red card?\nAny upsets brewing?",
         "error": false
       },
       "trackRecordShown": true,
@@ -29,6 +29,49 @@
       ],
       "httpFailures": [
         "400 https://site.web.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard?dates=20261102-20261104&limit=300"
+      ],
+      "news": {
+        "items": 291,
+        "asOf": "2026-11-03T16:49:10.775Z",
+        "cards": 24,
+        "chips": [
+          "All 291",
+          "NFL 20",
+          "UCL 13",
+          "EPL 30",
+          "NCAAF 30",
+          "NBA 30",
+          "UFC 11",
+          "WNBA 20",
+          "MLB 23",
+          "NHL 29",
+          "Golf 13",
+          "LaLiga 17",
+          "Ligue 1 9",
+          "MLS 12"
+        ],
+        "imgs": 24,
+        "imgsLoaded": 21,
+        "first": [
+          "NFL Power Rankings: Stacking all 32 teams for Week 9, plus best in-season trades",
+          "2026 NFL awards tracker: Odds for MVP, Rookie of the Year and more",
+          "It's time for a Week 8 fantasy football recap",
+          "Rest-of-season rankings: Irving, Tuten and Hubbard achieve RB1 status"
+        ]
+      },
+      "search": [
+        "BOSBoston CelticsNBA · 5-2 · next: Thu, Nov 5 · 12:30 AMTeam",
+        "◷Boston Celtics at Houston RocketsNBA · Final · BOS 93–109 HOUGame",
+        "◷Milwaukee Bucks at Boston CelticsNBA · Thu, Nov 5 · 12:30 AMGame",
+        "✦Ask AI: “celtics”Answers from this page’s data and modelsAsk AI"
+      ],
+      "story": {
+        "slides": 6,
+        "kicker": "Up next · UCL",
+        "title": "Bayern at Atlético"
+      },
+      "extrasErrors": [
+        "console: Failed to load resource: the server responded with a status of 400 ()"
       ]
     },
     "econ": {
@@ -56,7 +99,41 @@
         "error": false
       },
       "errors": [],
-      "httpFailures": []
+      "httpFailures": [],
+      "news": {
+        "items": 272,
+        "asOf": "2026-11-03T16:46:46+00:00",
+        "cards": 24,
+        "chips": [
+          "All 272",
+          "Growth & GDP 60",
+          "Inflation 11",
+          "Jobs 17",
+          "Central banks 30",
+          "Trade 5",
+          "World 50",
+          "Markets 109",
+          "Official releases 22"
+        ],
+        "imgs": 14,
+        "imgsLoaded": 8,
+        "first": [
+          "Keeping mortgage interest relief approved",
+          "Binance co-CEO Richard Teng says hackers used fake job interviews, AI tool to steal $6.3 billion in crypto 108511116",
+          "Midterm elections could jolt stocks if Democrats sweep Congress",
+          "Sysco under pressure on Jetro acquisition costs, FY sales guidance"
+        ]
+      },
+      "search": [
+        "◍JapanEast Asia & Pacific · inflation 2.0%+0.7%Country",
+        "✦Ask AI: “japan”Answers from this page’s data and modelsAsk AI"
+      ],
+      "story": {
+        "slides": 8,
+        "kicker": "World economy · IMF outlook, Oct 2026",
+        "title": "The IMF sees the world economy growing 3.1% in 2026"
+      },
+      "extrasErrors": []
     },
     "fin": {
       "title": "Probable Atlas · Finance · Live now",
@@ -64,14 +141,14 @@
       "canvases": 1,
       "insights": true,
       "insightItems": [
-        "S&P 500 | S&P 500 at 7,541: −0.51% on Nov 2, 2026, +10.2% this year, 3.5% below its record | −0.51%",
+        "S&P 500 | S&P 500 at 7,572: +0.40% on Nov 3, 2026, +10.6% this year, 3.2% below its record | +0.40%",
         "Regime | The regime model reads the market as calm, with probability | 96%",
-        "Correction risk | Chance of a 10% fall within six months, against a 21% base rate (modest skill) | 38%",
-        "Volatility | VIX 21.1; the GARCH model expects daily S&P 500 swings of about | ±1.1%",
+        "Correction risk | Chance of a 10% fall within six months, against a 21% base rate (modest skill) | 37%",
+        "Volatility | VIX 20.6; the GARCH model expects daily S&P 500 swings of about | ±1.0%",
         "Yield curve | 10-year Treasury 4.94% vs 3-month 4.16%: the curve is upward sloping, spread | +0.78 pp",
-        "Risk appetite | Risk appetite gauge (six market readings): extreme fear | 17/100",
+        "Risk appetite | Risk appetite gauge (six market readings): extreme fear | 21/100",
         "Valuation | CAPE 40.7, 99th percentile since 1881; history implies a 10-year real return near | 0.4%/yr",
-        "Biggest mover | WTI oil moved the most of 58 markets on Nov 2, 2026 | −7.1%"
+        "Biggest mover | KOSPI moved the most of 58 markets on Nov 2, 2026 | +2.2%"
       ],
       "askButton": "✦Ask AI",
       "installButton": true,
@@ -79,11 +156,46 @@
       "hOverflow": false,
       "serviceWorker": "https://bsilva87921.github.io/probable-atlas/",
       "answer": {
-        "text": "BUILT-IN ANALYST\n\nModel odds, S&P 500:\n\n5% pullback within 3 months: 46% (base rate 31%; out of sample AUC 0.56, Brier skill +5%)\n10% correction within 6 months: 38% (base rate 21%; out of sample AUC 0.55, Brier skill +5%)\n20% bear market within 12 months: 28% (base rate 14%; out of sample AUC 0.53, Brier skill +5%)\n\nWhat drives the 6-month reading: valuations (CAPE) raise it, credit spreads lower it, implied volatility raise it.\n\nHow much to trust it: out of sample these models beat the base rate only modestly, so read them as a tilt, not a forecast. Declines are normal: the S&P 500 fell 10%+",
+        "text": "BUILT-IN ANALYST\n\nModel odds, S&P 500:\n\n5% pullback within 3 months: 45% (base rate 31%; out of sample AUC 0.56, Brier skill +5%)\n10% correction within 6 months: 37% (base rate 21%; out of sample AUC 0.55, Brier skill +5%)\n20% bear market within 12 months: 27% (base rate 14%; out of sample AUC 0.53, Brier skill +5%)\n\nWhat drives the 6-month reading: valuations (CAPE) raise it, credit spreads lower it, implied volatility raise it.\n\nHow much to trust it: out of sample these models beat the base rate only modestly, so read them as a tilt, not a forecast. Declines are normal: the S&P 500 fell 10%+",
         "error": false
       },
       "errors": [],
-      "httpFailures": []
+      "httpFailures": [],
+      "news": {
+        "items": 272,
+        "asOf": "2026-11-03T16:46:46+00:00",
+        "cards": 24,
+        "chips": [
+          "All 272",
+          "Markets 105",
+          "Fed & rates 40",
+          "Earnings 25",
+          "Commodities 20",
+          "Crypto 42",
+          "Currencies 12",
+          "Economy 75",
+          "Official releases 22"
+        ],
+        "imgs": 14,
+        "imgsLoaded": 8,
+        "first": [
+          "Keeping mortgage interest relief approved",
+          "Binance co-CEO Richard Teng says hackers used fake job interviews, AI tool to steal $6.3 billion in crypto 108511116",
+          "Midterm elections could jolt stocks if Democrats sweep Congress",
+          "Sysco under pressure on Jetro acquisition costs, FY sales guidance"
+        ]
+      },
+      "search": [
+        "◆Gold (GLD)Core asset classes · $360.11−0.43%Market",
+        "◆Gold (GC)Dollar & commodities · $3,940.3−0.74%Market",
+        "✦Ask AI: “gold”Answers from this page’s data and modelsAsk AI"
+      ],
+      "story": {
+        "slides": 8,
+        "kicker": "S&P 500 · Nov 3, 2026",
+        "title": "The S&P 500 rose 0.40% to 7,572"
+      },
+      "extrasErrors": []
     }
   },
   "browser": "Chrome headed 156.0.8078.48",
