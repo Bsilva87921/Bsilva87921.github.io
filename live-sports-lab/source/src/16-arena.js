@@ -32,12 +32,14 @@
   }
 
   const laneOf = g => APP.kindOf(g.lg);
+  // the snapshot copy is drawn around the moment it was captured, the live board around now
+  const nowRef = () => S.mode === 'snapshot' && S.capturedAt ? +new Date(S.capturedAt) : Date.now();
   function games() {
-    const now = Date.now(), w0 = now + WIN[0] * 3600e3, w1 = now + WIN[1] * 3600e3;
+    const now = nowRef(), w0 = now + WIN[0] * 3600e3, w1 = now + WIN[1] * 3600e3;
     return APP.allGames().filter(g => !g.void && g.start && +new Date(g.start) >= w0 - 3 * 3600e3 && +new Date(g.start) <= w1);
   }
   function data() {
-    const now = S.mode === 'snapshot' && S.capturedAt ? +new Date(S.capturedAt) : Date.now();
+    const now = nowRef();
     const gs = games(), used = new Set(gs.map(laneOf));
     const out = gs.map(g => {
       const P = APP.predict(g), live = g.state === 'in', R = live ? P.now : P.pre;

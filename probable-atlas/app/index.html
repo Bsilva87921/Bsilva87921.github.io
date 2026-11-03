@@ -74,7 +74,7 @@
 .px3d-overlay{position:absolute;inset:0;pointer-events:none;overflow:hidden}
 .px3d-label{position:absolute;left:0;top:0;white-space:nowrap;font:600 11px/1.2 var(--px3d-font,system-ui,sans-serif);letter-spacing:.06em;color:rgba(226,236,248,.86);transform:translate(-9999px,0);transition:opacity .25s;will-change:transform;text-shadow:0 1px 6px rgba(0,0,0,.6)}
 .px3d-lane{translate:-100% -50%;text-transform:uppercase;font-size:10.5px;color:rgba(190,210,235,.8)}
-.px3d-tick{translate:-50% 0;font-weight:500;font-size:10.5px;letter-spacing:.02em;color:rgba(170,192,220,.78)}
+.px3d-tick{translate:-50% 0;font-weight:500;font-size:10.5px;letter-spacing:.02em;color:rgba(170,192,220,.78);text-shadow:0 0 3px rgba(4,9,16,.95),0 0 7px rgba(4,9,16,.8)}   /* a dark halo keeps ticks legible over bright lines */
 .px3d-y{translate:-100% -50%}
 .px3d-y2{translate:4px -50%}
 .px3d-now{translate:-50% 2px;color:var(--px3d-accent,#FFB547);font-weight:800;letter-spacing:.14em;font-size:10.5px}
@@ -249,7 +249,7 @@ const INS = (() => {
    the page is interactive and only when the browser can draw it; if it can't, the page keeps its 2D design.
    A "still" toggle stops the motion and is remembered per visitor. */
 const PX3D = (() => {
-  const URL_ = window.PROBABLE_3D_URL || '/assets/probable-3d/probable-3d.js?v=1';
+  const URL_ = window.PROBABLE_3D_URL || '/assets/probable-3d/probable-3d.js?v=2';
   const KEY = 'px3d-still';
   const ls = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* blocked */ } } };
   const reduce = () => !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);

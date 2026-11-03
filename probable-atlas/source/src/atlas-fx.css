@@ -16,6 +16,7 @@
 .m3-cap b{font:600 13px/1.2 var(--f-sans)}
 .m3-cap span{font-size:11.5px;color:var(--band-muted);max-width:62ch}
 .mast.no3d .mast-3d{display:none}
+.mast.fin .mast-3d .px3d-still{top:10px;bottom:auto}   /* the terrain's front corner and Today sit bottom right */
 .mast.no3d .wrap{grid-template-columns:1fr;grid-template-areas:"brand" "mods"}
 .mast.has3d .grat{opacity:.12}
 @media (max-width:900px){

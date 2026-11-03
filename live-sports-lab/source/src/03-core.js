@@ -280,11 +280,18 @@
     return s.replace(/ Conference$/i, '');
   }
   // ESPN now rejects date-range scoreboard requests (HTTP 400): fetch day by day and merge.
-  // Today is fetched every refresh; other days are cached for 10 minutes.
-  const DAYC = new Map(); let rangeOK = true;
+  // Today is fetched every refresh; other days are cached for 10 minutes. One league probes the
+  // range request first (the rest wait for its answer), and a rejection is remembered for a week.
+  const DAYC = new Map(), RKEY = 'probable-espn-range';
+  let rangeState = (() => { try { const t = +localStorage.getItem(RKEY); return t && Date.now() - t < 7 * 864e5 ? 'no' : 'unknown'; } catch (e) { return 'unknown'; } })(), rangeProbe = null;
   async function scoreboardJSON(lg) {
     if (!lg.range) return fetchJSON(sbURL(lg));
-    if (rangeOK) { try { return await fetchJSON(sbURL(lg)); } catch (e) { if (!/HTTP 4/.test(String(e && e.message))) throw e; rangeOK = false; } }
+    if (rangeState === 'unknown' && rangeProbe) await rangeProbe.catch(() => { });
+    if (rangeState !== 'no') {
+      const p = fetchJSON(sbURL(lg)); if (rangeState === 'unknown' && !rangeProbe) rangeProbe = p;
+      try { const js = await p; rangeState = 'yes'; return js; }
+      catch (e) { if (!/HTTP 4/.test(String(e && e.message))) throw e; rangeState = 'no'; try { localStorage.setItem(RKEY, String(Date.now())); } catch (er) { /* storage unavailable */ } }
+    }
     const n = Date.now(), today = ymd(new Date(n)), days = [];
     for (let d = lg.range[0]; d <= lg.range[1]; d++) days.push(ymd(new Date(n + d * 864e5)));
     const base = ESPN + lg.path + '/scoreboard?' + (lg.q ? lg.q + '&' : '') + 'dates=';

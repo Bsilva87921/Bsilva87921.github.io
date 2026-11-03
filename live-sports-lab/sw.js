@@ -1,7 +1,7 @@
 /* Probable Sports Lab — service worker: the app shell is cached for instant, offline starts; pages and data are fetched
    fresh when online (network first, with a time limit) and the last good copy is served when offline. */
-const V = 'sports-v1', DATA = 'sports-data';
-const SHELL = ["/live-sports-lab/", "/live-sports-lab/manifest.webmanifest", "/live-sports-lab/icons/sports-192.png", "/live-sports-lab/icons/sports-512.png", "/assets/probable-3d/probable-3d.js?v=1", "/probable-atlas/ai-config.js"];
+const V = 'sports-v2', DATA = 'sports-data';
+const SHELL = ["/live-sports-lab/", "/live-sports-lab/manifest.webmanifest", "/live-sports-lab/icons/sports-192.png", "/live-sports-lab/icons/sports-512.png", "/assets/probable-3d/probable-3d.js?v=2", "/probable-atlas/ai-config.js"];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(V).then(c => Promise.all(SHELL.map(u => c.add(new Request(u, { cache: 'reload' })).catch(() => { })))).then(() => self.skipWaiting()));
 });

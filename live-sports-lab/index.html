@@ -802,7 +802,7 @@ table.tbl.sx{min-width:0}
 .px3d-overlay{position:absolute;inset:0;pointer-events:none;overflow:hidden}
 .px3d-label{position:absolute;left:0;top:0;white-space:nowrap;font:600 11px/1.2 var(--px3d-font,system-ui,sans-serif);letter-spacing:.06em;color:rgba(226,236,248,.86);transform:translate(-9999px,0);transition:opacity .25s;will-change:transform;text-shadow:0 1px 6px rgba(0,0,0,.6)}
 .px3d-lane{translate:-100% -50%;text-transform:uppercase;font-size:10.5px;color:rgba(190,210,235,.8)}
-.px3d-tick{translate:-50% 0;font-weight:500;font-size:10.5px;letter-spacing:.02em;color:rgba(170,192,220,.78)}
+.px3d-tick{translate:-50% 0;font-weight:500;font-size:10.5px;letter-spacing:.02em;color:rgba(170,192,220,.78);text-shadow:0 0 3px rgba(4,9,16,.95),0 0 7px rgba(4,9,16,.8)}   /* a dark halo keeps ticks legible over bright lines */
 .px3d-y{translate:-100% -50%}
 .px3d-y2{translate:4px -50%}
 .px3d-now{translate:-50% 2px;color:var(--px3d-accent,#FFB547);font-weight:800;letter-spacing:.14em;font-size:10.5px}
@@ -2141,11 +2141,18 @@ SNAPSHOT.stats = {"asOf":"2026-09-26","st":{"nfl":{"2026":"BUF|2|0|0|77|62||AFC|
     return s.replace(/ Conference$/i, '');
   }
   // ESPN now rejects date-range scoreboard requests (HTTP 400): fetch day by day and merge.
-  // Today is fetched every refresh; other days are cached for 10 minutes.
-  const DAYC = new Map(); let rangeOK = true;
+  // Today is fetched every refresh; other days are cached for 10 minutes. One league probes the
+  // range request first (the rest wait for its answer), and a rejection is remembered for a week.
+  const DAYC = new Map(), RKEY = 'probable-espn-range';
+  let rangeState = (() => { try { const t = +localStorage.getItem(RKEY); return t && Date.now() - t < 7 * 864e5 ? 'no' : 'unknown'; } catch (e) { return 'unknown'; } })(), rangeProbe = null;
   async function scoreboardJSON(lg) {
     if (!lg.range) return fetchJSON(sbURL(lg));
-    if (rangeOK) { try { return await fetchJSON(sbURL(lg)); } catch (e) { if (!/HTTP 4/.test(String(e && e.message))) throw e; rangeOK = false; } }
+    if (rangeState === 'unknown' && rangeProbe) await rangeProbe.catch(() => { });
+    if (rangeState !== 'no') {
+      const p = fetchJSON(sbURL(lg)); if (rangeState === 'unknown' && !rangeProbe) rangeProbe = p;
+      try { const js = await p; rangeState = 'yes'; return js; }
+      catch (e) { if (!/HTTP 4/.test(String(e && e.message))) throw e; rangeState = 'no'; try { localStorage.setItem(RKEY, String(Date.now())); } catch (er) { /* storage unavailable */ } }
+    }
     const n = Date.now(), today = ymd(new Date(n)), days = [];
     for (let d = lg.range[0]; d <= lg.range[1]; d++) days.push(ymd(new Date(n + d * 864e5)));
     const base = ESPN + lg.path + '/scoreboard?' + (lg.q ? lg.q + '&' : '') + 'dates=';
@@ -7359,7 +7366,7 @@ const INS = (() => {
    the page is interactive and only when the browser can draw it; if it can't, the page keeps its 2D design.
    A "still" toggle stops the motion and is remembered per visitor. */
 const PX3D = (() => {
-  const URL_ = window.PROBABLE_3D_URL || '/assets/probable-3d/probable-3d.js?v=1';
+  const URL_ = window.PROBABLE_3D_URL || '/assets/probable-3d/probable-3d.js?v=2';
   const KEY = 'px3d-still';
   const ls = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* blocked */ } } };
   const reduce = () => !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
@@ -7478,12 +7485,14 @@ window.CH = CH; window.INS = INS; window.PX3D = PX3D; window.PAPP = PAPP;
   }
 
   const laneOf = g => APP.kindOf(g.lg);
+  // the snapshot copy is drawn around the moment it was captured, the live board around now
+  const nowRef = () => S.mode === 'snapshot' && S.capturedAt ? +new Date(S.capturedAt) : Date.now();
   function games() {
-    const now = Date.now(), w0 = now + WIN[0] * 3600e3, w1 = now + WIN[1] * 3600e3;
+    const now = nowRef(), w0 = now + WIN[0] * 3600e3, w1 = now + WIN[1] * 3600e3;
     return APP.allGames().filter(g => !g.void && g.start && +new Date(g.start) >= w0 - 3 * 3600e3 && +new Date(g.start) <= w1);
   }
   function data() {
-    const now = S.mode === 'snapshot' && S.capturedAt ? +new Date(S.capturedAt) : Date.now();
+    const now = nowRef();
     const gs = games(), used = new Set(gs.map(laneOf));
     const out = gs.map(g => {
       const P = APP.predict(g), live = g.state === 'in', R = live ? P.now : P.pre;
