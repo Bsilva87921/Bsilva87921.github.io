@@ -8,6 +8,21 @@ const KXP = n => {
   try { if (C.registerPlugin && (!C.isPluginAvailable || C.isPluginAvailable(n))) return (C.Plugins = C.Plugins || {})[n] = C.registerPlugin(n); } catch (e) { /* not installed */ }
   return null;
 };
+// in the installed apps, links to other sites open in an in-app browser sheet (Safari View Controller on iPhone,
+// Chrome Custom Tabs on Android) instead of leaving the app; on the websites they open in a new tab as usual
+(function () {
+  const C = window.Capacitor; if (!C || !(C.isNativePlatform && C.isNativePlatform())) return;
+  const tint = () => { const m = document.querySelector('meta[name="theme-color"]'); return m && /^#[0-9a-f]{6}$/i.test(m.content) ? m.content : undefined; };
+  const inApp = url => { const B = KXP('Browser'); if (!B) return false; try { B.open({ url, presentationStyle: 'popover', toolbarColor: tint() }); return true; } catch (e) { return false; } };
+  const outside = href => { try { const u = new URL(href, location.href); return /^https?:$/.test(u.protocol) && u.origin !== location.origin ? u.href : null; } catch (e) { return null; } };
+  document.addEventListener('click', ev => {
+    if (ev.defaultPrevented) return;                     // the news reader and other handlers come first
+    const a = ev.target.closest && ev.target.closest('a[href]'); if (!a) return;
+    const url = outside(a.getAttribute('href')); if (url && inApp(url)) ev.preventDefault();
+  });
+  const wo = window.open;
+  window.open = function (u, ...rest) { const url = outside(u); if (url && inApp(url)) return null; return wo.call(window, u, ...rest); };
+})();
 const HAPTIC = (() => {
   const P = () => KXP('Haptics');
   const vib = ms => { try { if (navigator.vibrate) navigator.vibrate(ms); } catch (e) { /* ignore */ } };

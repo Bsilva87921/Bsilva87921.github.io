@@ -766,8 +766,49 @@ kbd{font:600 11px/1 var(--kx-mono,ui-monospace,monospace);padding:2px 5px;border
 @keyframes kxSpin{to{transform:rotate(1turn)}}
 .kx-confetti{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:100}
 body.kx-pip{margin:0;padding:10px;background:var(--bg,#0b1220);color:var(--ink,#eef3fb);font-family:var(--kx-font,system-ui,sans-serif)}
-@media (prefers-reduced-motion:reduce){.kx-toast,.kx-s-box,.kx-s-scrim,.kx-st-slide,.kx-st-val,.kx-share,.kx-help,.fav-btn.on,.kx-n-card,.kx-n-ph img{animation:none!important;transition:none!important}.kx-n-card:hover{transform:none}}
-@media print{.kx-toasts,.kx-search,.kx-story,.kx-share,.kx-help,.kx-ptr{display:none!important}}
+/* news: tools row, source picker, full-text tag, whole-card tap */
+.kx-n-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.kx-n-from select{height:38px;max-width:min(240px,70vw);border:1px solid var(--line-2,#ccc);border-radius:999px;padding:0 12px;background:var(--surface,#fff);color:var(--ink,#111);font:14px var(--kx-font,inherit);cursor:pointer}
+.kx-n-full{margin-left:2px;padding:2px 7px;border-radius:999px;background:var(--sunk,#eee);color:var(--ink-2,#333);font:600 10.5px/1.4 var(--kx-font,inherit)}
+.kx-n-card{cursor:pointer}
+/* the reader: a story opens over the page (a side panel on wide screens, a full sheet on phones) */
+.kx-reader{position:fixed;inset:0;z-index:90}
+.kx-r-scrim{position:absolute;inset:0;background:rgba(5,10,18,.52);animation:kxFade .18s}
+.kx-r-panel{position:absolute;top:0;right:0;bottom:0;width:min(680px,100%);overflow-y:auto;overscroll-behavior:contain;background:var(--surface,#fff);color:var(--ink,#111);box-shadow:-24px 0 60px rgba(0,0,0,.32);animation:kxReadIn .26s cubic-bezier(.2,.8,.2,1);padding-bottom:calc(28px + env(safe-area-inset-bottom,0px))}
+@keyframes kxReadIn{from{transform:translateX(40px);opacity:.35}}
+.kx-r-bar{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:10px;padding:calc(10px + env(safe-area-inset-top,0px)) 14px 10px;background:color-mix(in srgb,var(--surface,#fff) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line,#ddd)}
+.kx-r-src{display:flex;align-items:center;gap:9px;margin-right:auto;min-width:0}
+.kx-r-src b{display:block;font:700 14px/1.2 var(--kx-font,inherit);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kx-r-src small{display:block;color:var(--muted,#667);font-size:12px;white-space:nowrap}
+.kx-r-ini{flex:none;width:32px;height:32px;border-radius:9px;display:grid;place-items:center;background:var(--accent-wash,rgba(12,107,102,.1));color:var(--accent-ink,#0a5753);font:800 15px/1 var(--kx-display,inherit)}
+.kx-r-nav{display:flex;align-items:center;gap:6px}
+.kx-r-pos{font:600 12px/1 var(--kx-mono,ui-monospace,monospace);color:var(--muted,#667);min-width:52px;text-align:center;white-space:nowrap}
+.kx-r-src small .kx-r-when{white-space:nowrap}
+.kx-r-b{appearance:none;flex:none;width:36px;height:36px;border-radius:10px;border:1px solid var(--line,#ddd);background:transparent;color:var(--ink,#111);font-size:21px;line-height:1;cursor:pointer;display:grid;place-items:center}
+.kx-r-b:hover:not([disabled]){border-color:var(--accent,#0c6b66)}
+.kx-r-b[disabled]{opacity:.32;cursor:default}
+.kx-r-b:focus-visible{outline:2px solid var(--focus,var(--accent,#2a78d6));outline-offset:2px}
+.kx-r-in{padding:0 22px;max-width:640px;margin:0 auto}
+.kx-r-fig{position:relative;margin:0 -22px 4px;background:var(--sunk,#eee)}
+.kx-r-fig img{display:block;width:100%;height:auto;max-height:420px;object-fit:cover}
+.kx-r-fig figcaption{position:absolute;right:10px;bottom:9px;padding:2px 8px;border-radius:6px;background:rgba(0,0,0,.5);color:#fff;font-size:11px}
+.kx-r-tags{display:flex;gap:6px;flex-wrap:wrap;margin:16px 0 10px}
+.kx-r-pw{background:var(--sunk,#eee)!important;color:var(--ink-2,#333)!important}
+.kx-r-off{background:color-mix(in srgb,var(--kx-up,#0f9b6c) 16%,transparent)!important;color:var(--kx-up,#0f9b6c)!important}
+.kx-r-h{margin:0 0 12px;font:700 clamp(23px,3.6vw,31px)/1.16 var(--kx-display,inherit);text-wrap:balance}
+.kx-r-dek{margin:0 0 16px;font-size:17.5px;line-height:1.55;color:var(--ink-2,#333);max-width:62ch}
+.kx-r-body{max-width:65ch}
+.kx-r-body p{margin:0 0 14px;font-size:16.5px;line-height:1.68;color:var(--ink,#111)}
+.kx-r-cta{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 10px}
+.kx-r-cta .kx-btn.pri{min-height:42px;padding:0 18px;font-size:14.5px}
+.kx-r-note{margin:0 0 20px;color:var(--muted,#667);font-size:12.5px;line-height:1.5}
+.kx-r-more{border-top:1px solid var(--line,#ddd);padding-top:14px}
+.kx-r-more h3{margin:0 0 4px;font:700 15px/1.3 var(--kx-font,inherit)}
+@media (max-width:640px){.kx-r-panel{width:100%;box-shadow:none;animation-name:kxSheetUp}.kx-r-in{padding:0 16px}.kx-r-fig{margin:0 -16px 4px}.kx-r-pos{min-width:0;font-size:11px}.kx-r-src small .kx-r-at{display:none}.kx-r-bar{gap:6px;padding-inline:10px}.kx-r-nav{gap:4px}}
+@media (max-width:360px){.kx-r-pos{display:none}}
+@keyframes kxSheetUp{from{transform:translateY(48px);opacity:.35}}
+@media (prefers-reduced-motion:reduce){.kx-r-panel,.kx-r-scrim,.kx-toast,.kx-s-box,.kx-s-scrim,.kx-st-slide,.kx-st-val,.kx-share,.kx-help,.fav-btn.on,.kx-n-card,.kx-n-ph img{animation:none!important;transition:none!important}.kx-n-card:hover{transform:none}}
+@media print{.kx-reader,.kx-toasts,.kx-search,.kx-story,.kx-share,.kx-help,.kx-ptr{display:none!important}}
 /* the briefing ring inside the Insights bar */
 .ins .kx-st-ring{height:28px;margin-right:2px;color:var(--ins-ink,#eaf1f9);background:rgba(255,255,255,.07)}
 .ins .kx-st-ring:hover{background:rgba(255,255,255,.13)}
@@ -4313,6 +4354,21 @@ const KXP = n => {
   try { if (C.registerPlugin && (!C.isPluginAvailable || C.isPluginAvailable(n))) return (C.Plugins = C.Plugins || {})[n] = C.registerPlugin(n); } catch (e) { /* not installed */ }
   return null;
 };
+// in the installed apps, links to other sites open in an in-app browser sheet (Safari View Controller on iPhone,
+// Chrome Custom Tabs on Android) instead of leaving the app; on the websites they open in a new tab as usual
+(function () {
+  const C = window.Capacitor; if (!C || !(C.isNativePlatform && C.isNativePlatform())) return;
+  const tint = () => { const m = document.querySelector('meta[name="theme-color"]'); return m && /^#[0-9a-f]{6}$/i.test(m.content) ? m.content : undefined; };
+  const inApp = url => { const B = KXP('Browser'); if (!B) return false; try { B.open({ url, presentationStyle: 'popover', toolbarColor: tint() }); return true; } catch (e) { return false; } };
+  const outside = href => { try { const u = new URL(href, location.href); return /^https?:$/.test(u.protocol) && u.origin !== location.origin ? u.href : null; } catch (e) { return null; } };
+  document.addEventListener('click', ev => {
+    if (ev.defaultPrevented) return;                     // the news reader and other handlers come first
+    const a = ev.target.closest && ev.target.closest('a[href]'); if (!a) return;
+    const url = outside(a.getAttribute('href')); if (url && inApp(url)) ev.preventDefault();
+  });
+  const wo = window.open;
+  window.open = function (u, ...rest) { const url = outside(u); if (url && inApp(url)) return null; return wo.call(window, u, ...rest); };
+})();
 const HAPTIC = (() => {
   const P = () => KXP('Haptics');
   const vib = ms => { try { if (navigator.vibrate) navigator.vibrate(ms); } catch (e) { /* ignore */ } };
@@ -4791,14 +4847,18 @@ const STORY = (() => {
 window.STORY = STORY;
 
 /* Probable kit: the News section. Headlines come from the site's news file (refreshed by a scheduled job from
-   public feeds: league news from ESPN for sports; official releases and major outlets for economics and
+   public feeds: ESPN and other sports outlets for sports; official releases and major outlets for economics and
    markets) and, where a site offers it, a live refresh in the browser. Each story shows its source, time and
-   summary and links to the original; filters by topic, a search box, related headlines for any team, country
-   or market, and "What it means" hands the headline to Ask AI. */
+   summary; filters by topic and source, a search box, related headlines for any team, country or market, and
+   "What it means" hands the headline to Ask AI.
+   Tapping a story opens it in the reader on the page: the picture, the publisher's summary (official releases that
+   may be reproduced, in full), related stories and Ask AI. The full article is one tap away: inside the app in the
+   installed apps, on the publisher's site in a browser (publishers do not allow their pages inside other sites). */
 const NEWS = (() => {
-  let O = {}, items = [], asOf = null, sources = [], loaded = null, filt = 'all', query = '', shown = 24, liveAt = 0;
+  let O = {}, items = [], byId = new Map(), asOf = null, sources = [], loaded = null, filt = 'all', srcF = '', query = '', shown = 24, liveAt = 0;
   const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const norm = s => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+  const key = it => String(it.id || it.u);
   function ago(iso) {
     const t = +new Date(iso); if (!t) return '';
     const m = Math.round((Date.now() - t) / 60000);
@@ -4814,7 +4874,9 @@ const NEWS = (() => {
       const k = norm(it.t).replace(/[^a-z0-9]+/g, '').slice(0, 80);
       if (seen.has(it.u) || seen.has(k)) continue; seen.add(it.u); seen.add(k); out.push(it);
     }
-    return out.sort((a, b) => (+new Date(b.d) || 0) - (+new Date(a.d) || 0));
+    out.sort((a, b) => (+new Date(b.d) || 0) - (+new Date(a.d) || 0));
+    byId = new Map(out.map(it => [key(it), it]));
+    return out;
   }
   async function load() {
     if (loaded) return loaded;
@@ -4837,6 +4899,7 @@ const NEWS = (() => {
   const topics = () => O.topics ? O.topics() : [];
   function match(it) {
     if (filt !== 'all') { const T = topics().find(t => t.id === filt); if (T && !T.test(it)) return false; }
+    if (srcF && it.s !== srcF) return false;
     if (query) { const q = norm(query); if (!norm(it.t + ' ' + (it.x || '') + ' ' + (it.s || '')).includes(q)) return false; }
     return true;
   }
@@ -4845,12 +4908,13 @@ const NEWS = (() => {
     return it.img ? `<span class="${cls} kx-n-ph" data-ini="${ini}"><img src="${esc(it.img)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()"></span>` : `<span class="${cls} kx-n-ph" data-ini="${ini}" aria-hidden="true"></span>`;
   }
   function tags(it) { return (O.tagOf ? O.tagOf(it) : []).slice(0, 2).map(t => `<span class="kx-n-tag">${esc(t)}</span>`).join(''); }
+  const nid = it => `data-nid="${esc(key(it))}"`;
   function cardHTML(it, k, lead) {
     // stories without a picture get a compact text card with an accent edge instead of an empty frame
     return `<article class="kx-n-card${lead ? ' lead' : ''}${it.img ? '' : ' noimg'}" data-n="${k}">
-      ${it.img ? `<a class="kx-n-media" href="${esc(it.u)}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">${img(it, 'kx-n-img')}</a>` : ''}
-      <div class="kx-n-body"><div class="kx-n-meta"><span class="kx-n-src">${esc(it.s || host(it.u))}</span><span class="kx-n-dot" aria-hidden="true">·</span><time datetime="${esc(it.d || '')}">${esc(ago(it.d))}</time>${tags(it)}</div>
-      <h3 class="kx-n-h"><a href="${esc(it.u)}" target="_blank" rel="noopener">${esc(it.t)}</a></h3>
+      ${it.img ? `<a class="kx-n-media" href="${esc(it.u)}" ${nid(it)} target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">${img(it, 'kx-n-img')}</a>` : ''}
+      <div class="kx-n-body"><div class="kx-n-meta"><span class="kx-n-src">${esc(it.s || host(it.u))}</span><span class="kx-n-dot" aria-hidden="true">·</span><time datetime="${esc(it.d || '')}">${esc(ago(it.d))}</time>${tags(it)}${it.body ? '<span class="kx-n-full">Full text</span>' : ''}</div>
+      <h3 class="kx-n-h"><a href="${esc(it.u)}" ${nid(it)} target="_blank" rel="noopener">${esc(it.t)}</a></h3>
       ${it.x && norm(it.x) !== norm(it.t) ? `<p class="kx-n-x">${esc(it.x)}</p>` : ''}
       <div class="kx-n-acts">${O.ask ? `<button type="button" class="kx-n-btn" data-nask="${k}">✦ What it means</button>` : ''}<button type="button" class="kx-n-btn kx-ico" data-nshare="${k}" aria-label="Share this story">${window.SHARE ? SHARE.ICON : '↗'}</button></div></div>
     </article>`;
@@ -4862,22 +4926,29 @@ const NEWS = (() => {
     const T = topics(), counts = {}; T.forEach(t => { counts[t.id] = items.filter(t.test).length; });
     const chips = `<button type="button" class="kx-chip${filt === 'all' ? ' on' : ''}" data-nf="all">All <span>${items.length}</span></button>` + T.filter(t => counts[t.id] || t.always).map(t => `<button type="button" class="kx-chip${filt === t.id ? ' on' : ''}" data-nf="${esc(t.id)}">${esc(t.label)} <span>${counts[t.id] || 0}</span></button>`).join('');
     const src = sources.filter(s => s.ok !== false && s.n).map(s => s.name).filter((v, k, a) => a.indexOf(v) === k);
+    // a source picker once the stories come from three or more publishers
+    const pubs = {}; items.forEach(it => { if (it.s) pubs[it.s] = (pubs[it.s] || 0) + 1; });
+    const pubList = Object.entries(pubs).sort((a, b) => b[1] - a[1]);
+    const picker = pubList.length >= 3 ? `<label class="kx-n-from"><span class="kx-sr">Show stories from</span><select data-nsrc><option value="">All sources</option>${pubList.map(([n, c]) => `<option value="${esc(n)}"${n === srcF ? ' selected' : ''}>${esc(n)} (${c})</option>`).join('')}</select></label>` : '';
     const lead = view.findIndex(it => it.img);
     const order = lead > 0 ? [view[lead], ...view.slice(0, lead), ...view.slice(lead + 1)] : view;
     view = order;
     target.innerHTML = `<div class="kx-n-head"><div><h2 class="kx-n-title">${esc(O.title || 'News')}</h2><p class="kx-n-sub">${esc(O.lede || '')}${asOf ? ` Updated ${esc(ago(asOf))}.` : ''}</p></div>
-      <label class="kx-n-search"><span class="sr kx-sr">Search the news</span><input type="search" placeholder="Search headlines" value="${esc(query)}" data-nq></label></div>
+      <div class="kx-n-tools">${picker}<label class="kx-n-search"><span class="sr kx-sr">Search the news</span><input type="search" placeholder="Search headlines" value="${esc(query)}" data-nq></label></div></div>
       <div class="kx-chips" role="group" aria-label="Filter the news">${chips}</div>
-      ${view.length ? `<div class="kx-n-grid">${view.slice(0, shown).map((it, k) => cardHTML(it, k, k === 0 && !!it.img && !query && filt === 'all')).join('')}</div>${view.length > shown ? `<button type="button" class="kx-btn kx-n-more" data-nmore>Show more (${view.length - shown})</button>` : ''}` : `<p class="kx-n-empty">${items.length ? 'No headlines match. Try another filter or search.' : esc(O.empty || 'Headlines are on their way: the news job refreshes several times an hour.')}</p>`}
-      <p class="kx-n-src-note">${src.length ? `Headlines and summaries from ${esc(src.slice(0, 10).join(', '))}${src.length > 10 ? ' and more' : ''}. ` : ''}Each story links to its publisher.</p>`;
+      ${view.length ? `<div class="kx-n-grid" data-ngrid>${view.slice(0, shown).map((it, k) => cardHTML(it, k, k === 0 && !!it.img && !query && filt === 'all' && !srcF)).join('')}</div>${view.length > shown ? `<button type="button" class="kx-btn kx-n-more" data-nmore>Show more (${view.length - shown})</button>` : ''}` : `<p class="kx-n-empty">${items.length ? 'No headlines match. Try another filter, source or search.' : esc(O.empty || 'Headlines are on their way: the news job refreshes several times an hour.')}</p>`}
+      <p class="kx-n-src-note">${src.length ? `Headlines and summaries from ${esc(src.slice(0, 10).join(', '))}${src.length > 10 ? ' and more' : ''}. ` : ''}Tap a story to read it here; the full article is one tap away.</p>`;
   }
   function bind(el) {
     el.addEventListener('click', ev => {
       const f = ev.target.closest('[data-nf]'); if (f) { filt = f.dataset.nf; shown = 24; paint(); if (window.HAPTIC) HAPTIC.tick(); return; }
       if (ev.target.closest('[data-nmore]')) { shown += 24; paint(); return; }
       const a = ev.target.closest('[data-nask]'); if (a) { const it = view[+a.dataset.nask]; if (it && O.ask) O.ask(O.askText ? O.askText(it) : `What does this news mean: "${it.t}"?`, it); return; }
-      const s = ev.target.closest('[data-nshare]'); if (s) { const it = view[+s.dataset.nshare]; if (!it) return; if (window.SHARE) SHARE.link({ title: it.t, text: `${it.t} (${it.s})`, url: it.u }); }
+      const s = ev.target.closest('[data-nshare]'); if (s) { const it = view[+s.dataset.nshare]; if (!it) return; if (window.SHARE) SHARE.link({ title: it.t, text: `${it.t} (${it.s})`, url: it.u }); return; }
+      // anywhere else on a card opens it in the reader
+      const card = ev.target.closest('.kx-n-card'); if (card && !ev.target.closest('a,button')) open(view[+card.dataset.n], view);
     });
+    el.addEventListener('change', ev => { if (ev.target.matches('[data-nsrc]')) { srcF = ev.target.value; shown = 24; paint(); } });
     el.addEventListener('input', ev => { if (ev.target.matches('[data-nq]')) { query = ev.target.value; shown = 24; const pos = ev.target.selectionStart; paint(); const i2 = target.querySelector('[data-nq]'); if (i2) { i2.focus(); try { i2.setSelectionRange(pos, pos); } catch (e) { /* ignore */ } } } });
   }
   async function render(el) {
@@ -4891,10 +4962,122 @@ const NEWS = (() => {
     const L = items.filter(test || (() => true)).slice(0, n || 5);
     if (!L.length) return opts && opts.empty ? `<p class="kx-n-empty sm">${esc(opts.empty)}</p>` : '';
     const pics = L.some(it => it.img);   // thumbnails only when the list has pictures, so the rows stay aligned
-    return `<ul class="kx-n-list${pics ? '' : ' nopics'}">${L.map(it => `<li><a href="${esc(it.u)}" target="_blank" rel="noopener">${pics ? img(it, 'kx-n-thumb') : ''}<span><b>${esc(it.t)}</b><small>${esc(it.s || host(it.u))} · ${esc(ago(it.d))}</small></span></a></li>`).join('')}</ul>`;
+    return `<ul class="kx-n-list${pics ? '' : ' nopics'}" data-nlist>${L.map(it => `<li><a href="${esc(it.u)}" ${nid(it)} target="_blank" rel="noopener">${pics ? img(it, 'kx-n-thumb') : ''}<span><b>${esc(it.t)}</b><small>${esc(it.s || host(it.u))} · ${esc(ago(it.d))}</small></span></a></li>`).join('')}</ul>`;
   }
-  function init(o) { O = o || {}; return { load, render }; }
-  return { init, load, render, listHTML, ago, get items() { return items; }, get asOf() { return asOf; }, refresh: refreshLive, repaint: paint };
+
+  /* ---------- the reader ---------- */
+  let R = null, rList = [], rIdx = 0, rLast = null, rPushed = false;
+  const STOP = new Set('the and for with from after over into this that have will says said what when your more than their they about could would been were just also into amid ahead against first last week weeks year years make makes made gets take takes back down here there where which while being still how why who its it’s it\'s new news live report reports update updates'.split(' '));
+  const words = t => new Set(norm(t).replace(/[^a-z0-9 ]+/g, ' ').split(' ').filter(w => w.length > 3 && !STOP.has(w)));
+  function related(it, n) {
+    const W = words(it.t + ' ' + (it.x || '')), tm = new Set(it.tm || []), tp = new Set(it.tp || []);
+    return items.filter(x => x !== it && x.u !== it.u).map(x => {
+      let s = 0;
+      if (it.lg && x.lg === it.lg) s += 1.5;
+      for (const t of x.tm || []) if (tm.has(t)) s += 4;
+      for (const t of x.tp || []) if (tp.has(t)) s += 0.5;
+      for (const w of words(x.t)) if (W.has(w)) s += 2;
+      return { x, s };
+    }).filter(o => o.s >= 4).sort((a, b) => b.s - a.s || (+new Date(b.x.d) || 0) - (+new Date(a.x.d) || 0)).slice(0, n || 4).map(o => o.x);
+  }
+  const inApp = () => !!(window.KXP && window.KXP('Browser'));
+  function readerHTML(it) {
+    const pos = rList.length > 1 ? `${rIdx + 1} / ${rList.length}` : '';
+    const app = inApp(), name = esc(it.s || host(it.u));
+    const body = it.body && it.body.length ? it.body.map(p => `<p>${esc(p)}</p>`).join('') : '';
+    const dek = it.x && norm(it.x) !== norm(it.t) && !(body && norm(it.body[0]).startsWith(norm(it.x).slice(0, 60))) ? `<p class="kx-r-dek">${esc(it.x)}</p>` : '';
+    const note = body
+      ? `Official release${it.full ? ', in full' : ': the opening of the release'}. Source: ${esc(it.credit || it.s)}.`
+      : `This is the publisher's summary. ${app ? 'The full article opens right here in the app.' : 'The full article opens on the publisher’s site.'}${it.pw ? ` ${name} may ask you to subscribe.` : ''}`;
+    const more = related(it, 4);
+    return `<header class="kx-r-bar"><span class="kx-r-src"><span class="kx-r-ini" aria-hidden="true">${esc((it.s || '?').trim().charAt(0).toUpperCase())}</span><span><b>${name}</b><small><span class="kx-r-when">${esc(ago(it.d))}</span>${it.d ? `<span class="kx-r-at"> · ${esc(new Date(it.d).toLocaleString([], { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }))}</span>` : ''}</small></span></span>
+        <span class="kx-r-nav">${rList.length > 1 ? `<button type="button" class="kx-r-b" data-rprev aria-label="Previous story"${rIdx ? '' : ' disabled'}>‹</button><span class="kx-r-pos">${pos}</span><button type="button" class="kx-r-b" data-rnext aria-label="Next story"${rIdx < rList.length - 1 ? '' : ' disabled'}>›</button>` : ''}</span>
+        <button type="button" class="kx-r-b kx-r-x" data-rclose aria-label="Close the story">×</button></header>
+      <div class="kx-r-in">
+        ${it.img ? `<figure class="kx-r-fig"><img src="${esc(it.img)}" alt="" referrerpolicy="no-referrer" onerror="this.parentNode.remove()"><figcaption>Image: ${name}</figcaption></figure>` : ''}
+        <div class="kx-r-tags">${tags(it)}${it.pw ? '<span class="kx-n-tag kx-r-pw">Subscription</span>' : ''}${body ? '<span class="kx-n-tag kx-r-off">Full text</span>' : ''}</div>
+        <h2 class="kx-r-h" id="kxrH">${esc(it.t)}</h2>
+        ${dek}
+        ${body ? `<div class="kx-r-body">${body}</div>` : ''}
+        <div class="kx-r-cta"><a class="kx-btn pri" href="${esc(it.u)}" target="_blank" rel="noopener" data-rout>${body && it.full ? 'View the original' : app ? 'Read the full story' : `Read the full story on ${name}`} <span aria-hidden="true">${app ? '→' : '↗'}</span></a>${O.ask ? '<button type="button" class="kx-btn" data-rask>✦ What it means</button>' : ''}<button type="button" class="kx-btn kx-ico" data-rshare aria-label="Share this story">${window.SHARE ? SHARE.ICON : '↗'}</button></div>
+        <p class="kx-r-note">${note}</p>
+        ${more.length ? `<section class="kx-r-more"><h3>More on this</h3><ul class="kx-n-list${more.some(x => x.img) ? '' : ' nopics'}">${more.map(x => `<li><a href="${esc(x.u)}" data-rrel="${esc(key(x))}">${more.some(y => y.img) ? img(x, 'kx-n-thumb') : ''}<span><b>${esc(x.t)}</b><small>${esc(x.s || host(x.u))} · ${esc(ago(x.d))}</small></span></a></li>`).join('')}</ul></section>` : ''}
+      </div>`;
+  }
+  function paintReader() {
+    const it = rList[rIdx]; if (!R || !it) return;
+    const panel = R.querySelector('.kx-r-panel'); panel.innerHTML = readerHTML(it); panel.scrollTop = 0;
+    R.setAttribute('aria-label', it.t);
+    const c = R.querySelector('.kx-r-x'); if (c) c.focus({ preventScroll: true });
+  }
+  function build() {
+    R = document.createElement('div'); R.className = 'kx-reader'; R.hidden = true; R.setAttribute('role', 'dialog'); R.setAttribute('aria-modal', 'true');
+    R.innerHTML = '<div class="kx-r-scrim" data-rclose></div><article class="kx-r-panel" aria-labelledby="kxrH"></article>';
+    document.body.appendChild(R);
+    R.addEventListener('click', ev => {
+      const t = ev.target;
+      if (t.closest('[data-rclose]')) { close(); return; }
+      if (t.closest('[data-rprev]')) { step(-1); return; }
+      if (t.closest('[data-rnext]')) { step(1); return; }
+      const rel = t.closest('[data-rrel]'); if (rel && !ev.metaKey && !ev.ctrlKey && !ev.shiftKey) { ev.preventDefault(); const x = byId.get(rel.dataset.rrel); if (x) { rList = [x].concat(related(x, 8)); rIdx = 0; paintReader(); if (window.HAPTIC) HAPTIC.tick(); } return; }
+      const it = rList[rIdx];
+      if (t.closest('[data-rask]') && it && O.ask) { close(); setTimeout(() => O.ask(O.askText ? O.askText(it) : `What does this news mean: "${it.t}"?`, it), 80); return; }
+      if (t.closest('[data-rshare]') && it && window.SHARE) { SHARE.link({ title: it.t, text: `${it.t} (${it.s})`, url: it.u }); return; }
+    });
+    document.addEventListener('keydown', ev => {   // the whole page while a story is open, wherever focus is
+      if (!R || R.hidden) return;
+      if (ev.key === 'Escape') { ev.preventDefault(); close(); return; }
+      if ((ev.key === 'ArrowRight' || ev.key === 'ArrowLeft') && !/^(input|textarea|select)$/i.test(ev.target.tagName)) { ev.preventDefault(); step(ev.key === 'ArrowRight' ? 1 : -1); return; }
+      if (ev.key === 'Tab') {   // keep focus inside the story
+        const f = [...R.querySelectorAll('.kx-r-panel button:not([disabled]), .kx-r-panel a[href]')]; if (!f.length) return;
+        const a = f[0], b = f[f.length - 1];
+        if (ev.shiftKey && document.activeElement === a) { ev.preventDefault(); b.focus(); } else if (!ev.shiftKey && document.activeElement === b) { ev.preventDefault(); a.focus(); }
+      }
+    });
+    // swipe left or right on a phone for the next or previous story
+    let x0 = null, y0 = 0;
+    R.addEventListener('touchstart', ev => { const p = ev.touches[0]; x0 = p.clientX; y0 = p.clientY; }, { passive: true });
+    R.addEventListener('touchend', ev => { if (x0 == null) return; const p = ev.changedTouches[0], dx = p.clientX - x0, dy = p.clientY - y0; x0 = null; if (Math.abs(dx) > 70 && Math.abs(dy) < 45) step(dx < 0 ? 1 : -1); }, { passive: true });
+    addEventListener('popstate', () => { if (R && !R.hidden) { rPushed = false; close(true); } });
+  }
+  function step(d) { const k = rIdx + d; if (k < 0 || k >= rList.length) return; rIdx = k; paintReader(); if (window.HAPTIC) HAPTIC.tick(); }
+  function open(it, list) {
+    if (typeof it === 'string') it = byId.get(it) || items.find(x => x.u === it);
+    if (!it) return;
+    if (!R) build();
+    rList = (list && list.length ? list : [it].concat(related(it, 8))).filter(Boolean);
+    rIdx = Math.max(0, rList.indexOf(it)); if (rList[rIdx] !== it) { rList.unshift(it); rIdx = 0; }
+    if (R.hidden) {
+      rLast = document.activeElement; R.hidden = false; document.documentElement.classList.add('kx-lock', 'kx-reading');
+      // the phone's back button (and the browser's) closes the story instead of leaving the page
+      try { history.pushState(Object.assign({}, history.state, { kxReader: 1 }), ''); rPushed = true; } catch (e) { rPushed = false; }
+    }
+    paintReader(); if (window.HAPTIC) HAPTIC.tap();
+  }
+  function close(fromHistory) {
+    if (!R || R.hidden) return;
+    R.hidden = true; document.documentElement.classList.remove('kx-lock', 'kx-reading');
+    if (!fromHistory && rPushed) { rPushed = false; try { history.back(); } catch (e) { /* ignore */ } }
+    if (rLast && rLast.focus) try { rLast.focus({ preventScroll: true }); } catch (e) { /* ignore */ }
+  }
+  // any headline link the kit draws (cards, drawer lists, side panels) opens in the reader;
+  // a middle-click or Ctrl/⌘-click still opens the publisher in a new tab
+  let wired = false;
+  function wire() {
+    if (wired) return; wired = true;
+    document.addEventListener('click', ev => {
+      if (ev.defaultPrevented || ev.button !== 0 || ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.altKey) return;
+      const a = ev.target.closest && ev.target.closest('a[data-nid]'); if (!a) return;
+      const it = byId.get(a.dataset.nid); if (!it) return;
+      ev.preventDefault();
+      let list = null;
+      if (a.closest('[data-ngrid]')) list = view;
+      else { const ul = a.closest('[data-nlist]'); if (ul) list = [...ul.querySelectorAll('a[data-nid]')].map(x => byId.get(x.dataset.nid)).filter(Boolean); }
+      open(it, list);
+    }, true);
+  }
+  function init(o) { O = o || {}; wire(); return { load, render }; }
+  return { init, load, render, listHTML, ago, open, close, related, get items() { return items; }, get asOf() { return asOf; }, refresh: refreshLive, repaint: paint };
 })();
 
 window.NEWS = NEWS;
@@ -5203,7 +5386,7 @@ const FINX = (() => {
     const out = allIds().map(id => marketRow(id));
     for (const [k, l] of TABS) out.push({ id: 'tab:' + k, kind: 'Section', title: l, sub: 'Open the ' + l.toLowerCase() + ' tab', icon: '▤', go: () => APP.go({ tab: k }) });
     for (const [k, t] of CARDS) out.push({ id: 'card:' + t, kind: 'Chart', title: t, sub: 'In ' + tabLabel(k), icon: '▥', go: goCard(k, t) });
-    NEWS.items.slice(0, 40).forEach(it => out.push({ id: 'news:' + it.u, kind: 'News', title: it.t, sub: `${it.s} · ${NEWS.ago(it.d)}`, icon: '✉', go: () => window.open(it.u, '_blank', 'noopener') }));
+    NEWS.items.slice(0, 40).forEach(it => out.push({ id: 'news:' + it.u, kind: 'News', title: it.t, sub: `${it.s} · ${NEWS.ago(it.d)}`, icon: '✉', go: () => NEWS.open(it) }));
     out.push({ id: 'act:brief', kind: 'Action', title: "Open today's market briefing", sub: 'The day in markets in under a minute', kw: 'story stories', icon: '◉', go: () => STORY.open() });
     out.push({ id: 'act:alerts', kind: 'Action', title: ALERT.status() === 'on' ? 'Alerts are on' : 'Turn on alerts', sub: 'Big moves and 52-week highs or lows in the markets you follow', kw: 'notifications notify', icon: '🔔', go: () => ALERT.enable() });
     out.push({ id: 'act:theme', kind: 'Action', title: 'Switch light or dark theme', kw: 'dark mode light mode', icon: '◐', go: () => { const b = document.getElementById('themeBtn'); if (b) b.click(); } });
@@ -5229,7 +5412,7 @@ const FINX = (() => {
       out.push({ kicker: st.kicker || it.tag, title: st.title || it.text, value: st.value != null ? st.value : it.val, tone, sub: st.sub || '', chart: data ? { type: 'spark', data, color: tone === 'down' ? '#ff7b72' : tone === 'warn' ? '#F2B33D' : '#43d17a', label: F.short(st.spark) + ', last six months' } : null, cta: it.go ? { label: 'See it', go: it.go } : null, ask: it.ask, bg: BG[tone] });
     }
     const top = NEWS.items[0];
-    if (top) out.push({ kicker: 'In the news · ' + top.s, title: top.t, sub: NEWS.ago(top.d), cta: { label: 'Read the story', go: () => window.open(top.u, '_blank', 'noopener') }, ask: `What does this mean for markets: "${top.t}"?`, bg: ['#1b1036', '#0a1215'] });
+    if (top) out.push({ kicker: 'In the news · ' + top.s, title: top.t, sub: NEWS.ago(top.d), cta: { label: 'Read the story', go: () => NEWS.open(top) }, ask: `What does this mean for markets: "${top.t}"?`, bg: ['#1b1036', '#0a1215'] });
     return out.slice(0, 8);
   }
   function shareInsight(it) {

@@ -134,7 +134,7 @@ const EX = (() => {
     for (const ind of E.IND || []) out.push({ id: 'ind:' + ind.id, kind: 'Indicator', title: ind.lab, sub: `${ind.grp} · ${ind.src || ''} · every economy`, icon: '▥', go: () => APP.go({ tab: 'indicators', scope: 'WLD', indGrp: ind.grp }) });
     if (typeof VI !== 'undefined' && VI.SPEC) for (const sp of Object.values(VI.SPEC)) out.push({ id: 'us:' + sp.id, kind: 'US data', title: sp.lab, sub: `${sp.grp} · United States · FRED`, kw: sp.id, icon: '◷', go: () => APP.go({ scope: 'USA', tab: 'indicators', usSeries: sp.id }) });
     for (const [p, t] of CARDS) out.push({ id: 'card:' + t, kind: 'Chart', title: t, sub: `In ${tabLabel(p.tab)} · ${p.scope === 'USA' ? 'United States' : 'World'}`, icon: '▥', go: goCard(p, t) });
-    NEWS.items.slice(0, 40).forEach(it => out.push({ id: 'news:' + it.u, kind: 'News', title: it.t, sub: `${it.s} · ${NEWS.ago(it.d)}`, icon: '✉', go: () => window.open(it.u, '_blank', 'noopener') }));
+    NEWS.items.slice(0, 40).forEach(it => out.push({ id: 'news:' + it.u, kind: 'News', title: it.t, sub: `${it.s} · ${NEWS.ago(it.d)}`, icon: '✉', go: () => NEWS.open(it) }));
     out.push({ id: 'act:brief', kind: 'Action', title: "Open today's economy briefing", sub: 'The world economy in under a minute', kw: 'story stories', icon: '◉', go: () => STORY.open() });
     out.push({ id: 'act:alerts', kind: 'Action', title: ALERT.status() === 'on' ? 'Alerts are on' : 'Turn on alerts', sub: 'News and forecast changes for the countries you follow', kw: 'notifications notify', icon: '🔔', go: () => ALERT.enable() });
     out.push({ id: 'act:theme', kind: 'Action', title: 'Switch light or dark theme', kw: 'dark mode light mode', icon: '◐', go: () => { const b = document.getElementById('themeBtn'); if (b) b.click(); } });
@@ -160,7 +160,7 @@ const EX = (() => {
       out.push({ kicker: st.kicker || it.tag, title: st.title || it.text, value: st.value != null ? st.value : it.val, tone, sub: st.sub || '', chart: st.bars ? growthBars(st.bars) : null, cta: it.go ? { label: 'See it', go: it.go } : null, ask: it.ask, bg: BG[tone] });
     }
     const top = NEWS.items[0];
-    if (top) out.push({ kicker: 'In the news · ' + top.s, title: top.t, sub: NEWS.ago(top.d), cta: { label: 'Read the story', go: () => window.open(top.u, '_blank', 'noopener') }, ask: `What does this mean for the economy: "${top.t}"?`, bg: ['#1b1036', '#0a1215'] });
+    if (top) out.push({ kicker: 'In the news · ' + top.s, title: top.t, sub: NEWS.ago(top.d), cta: { label: 'Read the story', go: () => NEWS.open(top) }, ask: `What does this mean for the economy: "${top.t}"?`, bg: ['#1b1036', '#0a1215'] });
     return out.slice(0, 8);
   }
   function shareInsight(it) {
@@ -185,7 +185,7 @@ const EX = (() => {
       const fresh = NEWS.items.filter(it => Date.now() - +new Date(it.d) < 12 * 3600e3);
       for (const iso of L) {
         const it = fresh.find(x => about(x, iso)); if (!it) continue; n++;
-        if (n <= 2) ALERT.notify({ id: `econ-news:${it.id || it.u}`, title: `${E.name(iso)} in the news`, body: it.t, tone: 'info', go: () => window.open(it.u, '_blank', 'noopener') });
+        if (n <= 2) ALERT.notify({ id: `econ-news:${it.id || it.u}`, title: `${E.name(iso)} in the news`, body: it.t, tone: 'info', go: () => NEWS.open(it) });
       }
       BADGE.set(n);
     });

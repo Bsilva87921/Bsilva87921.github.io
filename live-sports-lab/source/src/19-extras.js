@@ -63,10 +63,11 @@
     }));
     return res.flatMap(r => r.status === 'fulfilled' ? r.value : []);
   }
-  const followedNames = () => FAV.list('team:').map(f => (f.label || '').toLowerCase()).filter(Boolean);
-  const aboutFollowed = it => { const ns = followedNames(); if (!ns.length) return false; const tx = ((it.tm || []).join(' ') + ' ' + it.t).toLowerCase(); return ns.some(n => tx.includes(n) || tx.includes(n.split(' ').pop())); };
+  // followed teams with their league, so "Kings" news about Sacramento never lands under the LA Kings
+  const followed = () => FAV.list('team:').map(f => ({ lg: f.key.split(':')[1], n: (f.label || '').toLowerCase() })).filter(f => f.n);
+  const aboutFollowed = it => { const F = followed(); if (!F.length) return false; const tx = ((it.tm || []).join(' ') + ' ' + it.t + ' ' + (it.x || '')).toLowerCase(); return F.some(f => (!it.lg || it.lg === f.lg) && (tx.includes(f.n) || (f.n.split(' ').pop().length > 3 && tx.includes(f.n.split(' ').pop())))); };
   NEWS.init({
-    url: [NEWS_URL], embed: 'SPORTS_NEWS', title: 'Sports news', lede: 'The latest from every league on the board, newest first.', live: liveNews,
+    url: [NEWS_URL], embed: 'SPORTS_NEWS', title: 'Sports news', lede: 'The latest from every league on the board, from ESPN and other major sports outlets, newest first.', live: liveNews,
     empty: SNAP() ? 'This saved copy has no news feed. The live site shows the latest headlines from every league.' : undefined,
     // one chip per league, in the board's order and with the board's names, whatever source a story came from
     topics: () => { const have = new Set(NEWS.items.map(i => i.lg)), order = APP.LEAGUES.map(l => l.id).concat(['tennis', 'golf', 'ufc']), T = []; if (FAV.count('team:')) T.push({ id: 'mine', label: '★ My teams', test: aboutFollowed, always: true }); return T.concat(order.filter(lg => have.has(lg)).map(lg => ({ id: lg, label: NAMES[lg] || lgName(lg), test: it => it.lg === lg }))); },
@@ -118,7 +119,7 @@
     }
     for (const l of APP.LEAGUES) out.push({ id: 'lg:' + l.id, kind: 'League', title: l.long || l.name, sub: 'Show only this league on the board', kw: l.short || '', icon: '◎', go: () => { S.league = l.id; APP.setTab('board'); } });
     for (const [id, title, icon] of TABS) out.push({ id: 'tab:' + id, kind: 'Section', title, sub: 'Open the ' + title.toLowerCase(), icon, go: () => APP.setTab(id) });
-    NEWS.items.slice(0, 60).forEach(it => out.push({ id: 'news:' + it.u, kind: 'News', title: it.t, sub: `${it.s} · ${it.lgName || ''} · ${NEWS.ago(it.d)}`, icon: '✉', kw: (it.tm || []).join(' '), go: () => window.open(it.u, '_blank', 'noopener') }));
+    NEWS.items.slice(0, 60).forEach(it => out.push({ id: 'news:' + it.u, kind: 'News', title: it.t, sub: `${it.s} · ${it.lgName || ''} · ${NEWS.ago(it.d)}`, icon: '✉', kw: (it.tm || []).join(' '), go: () => NEWS.open(it) }));
     out.push({ id: 'act:brief', kind: 'Action', title: "Open today's briefing", sub: 'Five stories in under a minute', icon: '◉', go: () => STORY.open() });
     out.push({ id: 'act:alerts', kind: 'Action', title: ALERT.status() === 'on' ? 'Alerts are on' : 'Turn on alerts for your teams', sub: 'Starts, nail-biters and finals', icon: '🔔', go: () => ALERT.enable() });
     out.push({ id: 'act:theme', kind: 'Action', title: 'Switch light or dark theme', icon: '◐', go: () => { const b = document.getElementById('btn-theme'); if (b) b.click(); } });
@@ -146,7 +147,7 @@
       out.push({ kicker: st.kicker || it.tag, title: st.title || it.text.replace(/\s+—\s+/g, ' · '), value: st.value != null ? st.value : (it.val || (g ? pc(lead(g).p) : '')), tone: it.tone === 'live' ? 'warn' : it.tone === 'down' ? 'down' : it.tone === 'up' ? 'up' : 'info', sub: st.sub || (g ? [score(g), status(g)].filter(Boolean).join(' · ') : ''), chart: g ? split(g) : null, cta: it.go ? { label: g ? 'Open the game' : 'See it', go: it.go } : null, ask: it.ask, bg: it.tone === 'live' ? ['#3a0f17', '#0b1220'] : it.tone === 'warn' ? ['#3a2a06', '#0b1220'] : ['#13223d', '#0a1120'] });
     }
     const top = NEWS.items[0];
-    if (top) out.push({ kicker: 'In the news · ' + (top.lgName || top.s), title: top.t, sub: `${top.s} · ${NEWS.ago(top.d)}`, cta: { label: 'Read the story', go: () => window.open(top.u, '_blank', 'noopener') }, ask: `What does this mean? "${top.t}"`, bg: ['#1b1036', '#0a1120'] });
+    if (top) out.push({ kicker: 'In the news · ' + (top.lgName || top.s), title: top.t, sub: `${top.s} · ${NEWS.ago(top.d)}`, cta: { label: 'Read the story', go: () => NEWS.open(top) }, ask: `What does this mean? "${top.t}"`, bg: ['#1b1036', '#0a1120'] });
     return out.slice(0, 8);
   }
 

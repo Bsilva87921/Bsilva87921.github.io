@@ -4,13 +4,18 @@
 Writes OUT_DIR/news-atlas.json and OUT_DIR/news-sports.json:
   {"asOf": ISO, "sources": [{"id", "name", "kind", "n", "ok"}], "items": [{"id", "t", "u", "s", "src", "d", "x", "img", "tp", ...}]}
 Each item is a headline, its link, the publisher, the time, the feed's own summary (trimmed) and an image when the
-feed offers one. Nothing else is copied from the article. A feed that fails keeps its stories from the previous run
-(PREV_DIR), so one outage never empties the page. Standard library only.
+feed offers one; nothing else is copied from news outlets' articles. Official releases that may be reproduced (the
+Federal Reserve Board and BEA, as US government works; the ECB, with the ECB cited as the source) also carry their
+text ("body"), so the pages can show them in full. Sports headlines come from ESPN and other outlets' public feeds
+(CBS Sports, BBC Sport, Sky Sports, The Guardian, MLB.com, The Athletic, MMA Fighting, MMA Junkie, the ATP Tour).
+A feed that fails keeps its stories from the previous run (PREV_DIR), so one outage never empties the page.
+Standard library only.
 """
 import hashlib, html, json, os, re, sys, time, urllib.request
 from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 import xml.etree.ElementTree as ET
+from html.parser import HTMLParser
 
 OUT = os.environ.get('OUT_DIR', 'out')
 PREV = os.environ.get('PREV_DIR', 'prev')
@@ -61,6 +66,7 @@ RULES = {
     'currency': r'\b(dollar|yen|euro|yuan|sterling|currenc(y|ies)|forex)\b',
 }
 RULES = {k: re.compile(v, re.I) for k, v in RULES.items()}
+PAYWALLED = {'ft-econ', 'ft-mkt'}   # the publisher may ask readers to subscribe
 
 # Sports Lab leagues: id, ESPN path, label (tennis, golf and MMA included)
 LEAGUES = [('nfl', 'football/nfl', 'NFL'), ('ncaaf', 'football/college-football', 'NCAAF'), ('mlb', 'baseball/mlb', 'MLB'), ('nba', 'basketball/nba', 'NBA'),
@@ -69,6 +75,151 @@ LEAGUES = [('nfl', 'football/nfl', 'NFL'), ('ncaaf', 'football/college-football'
            ('ucl', 'soccer/uefa.champions', 'Champions League'), ('tennis', 'tennis/atp', 'Tennis'), ('golf', 'golf/pga', 'Golf'), ('ufc', 'mma/ufc', 'UFC')]
 
 NO_HOTLINK = re.compile(r'investing\.com/', re.I)
+LABEL = {lg: label for lg, _, label in LEAGUES}
+
+# Other sports outlets: id, publisher, url (or addresses to try in order), league id or 'soccer' (sorted into the lab's
+# leagues by competition and club names), paywalled. Feeds that stop answering are simply skipped.
+SPORTS_FEEDS = [
+    ('cbs-nfl', 'CBS Sports', 'https://www.cbssports.com/rss/headlines/nfl/', 'nfl', False),
+    ('cbs-ncaaf', 'CBS Sports', 'https://www.cbssports.com/rss/headlines/college-football/', 'ncaaf', False),
+    ('cbs-mlb', 'CBS Sports', 'https://www.cbssports.com/rss/headlines/mlb/', 'mlb', False),
+    ('cbs-nba', 'CBS Sports', 'https://www.cbssports.com/rss/headlines/nba/', 'nba', False),
+    ('cbs-wnba', 'CBS Sports', 'https://www.cbssports.com/rss/headlines/wnba/', 'wnba', False),
+    ('cbs-nhl', 'CBS Sports', 'https://www.cbssports.com/rss/headlines/nhl/', 'nhl', False),
+    ('cbs-soccer', 'CBS Sports', 'https://www.cbssports.com/rss/headlines/soccer/', 'soccer', False),
+    ('cbs-golf', 'CBS Sports', 'https://www.cbssports.com/rss/headlines/golf/', 'golf', False),
+    ('cbs-mma', 'CBS Sports', 'https://www.cbssports.com/rss/headlines/mma/', 'ufc', False),
+    ('cbs-tennis', 'CBS Sports', 'https://www.cbssports.com/rss/headlines/tennis/', 'tennis', False),
+    ('bbc-epl', 'BBC Sport', 'https://feeds.bbci.co.uk/sport/football/premier-league/rss.xml', 'epl', False),
+    ('bbc-ucl', 'BBC Sport', 'https://feeds.bbci.co.uk/sport/football/champions-league/rss.xml', 'ucl', False),
+    ('bbc-euro', 'BBC Sport', 'https://feeds.bbci.co.uk/sport/football/european/rss.xml', 'soccer', False),
+    ('bbc-nfl', 'BBC Sport', 'https://feeds.bbci.co.uk/sport/american-football/rss.xml', 'nfl', False),
+    ('bbc-nba', 'BBC Sport', 'https://feeds.bbci.co.uk/sport/basketball/rss.xml', 'nba', False),
+    ('bbc-tennis', 'BBC Sport', 'https://feeds.bbci.co.uk/sport/tennis/rss.xml', 'tennis', False),
+    ('bbc-golf', 'BBC Sport', 'https://feeds.bbci.co.uk/sport/golf/rss.xml', 'golf', False),
+    ('bbc-mma', 'BBC Sport', 'https://feeds.bbci.co.uk/sport/mixed-martial-arts/rss.xml', 'ufc', False),
+    ('sky-epl', 'Sky Sports', 'https://www.skysports.com/rss/11661', 'epl', False),
+    ('sky-football', 'Sky Sports', 'https://www.skysports.com/rss/11095', 'soccer', False),
+    ('sky-nfl', 'Sky Sports', 'https://www.skysports.com/rss/12118', 'nfl', False),
+    ('sky-tennis', 'Sky Sports', 'https://www.skysports.com/rss/12110', 'tennis', False),
+    ('sky-golf', 'Sky Sports', 'https://www.skysports.com/rss/12176', 'golf', False),
+    ('gu-epl', 'The Guardian', 'https://www.theguardian.com/football/premierleague/rss', 'epl', False),
+    ('gu-ucl', 'The Guardian', 'https://www.theguardian.com/football/championsleague/rss', 'ucl', False),
+    ('gu-laliga', 'The Guardian', 'https://www.theguardian.com/football/laligafootball/rss', 'laliga', False),
+    ('gu-seriea', 'The Guardian', 'https://www.theguardian.com/football/serieafootball/rss', 'seriea', False),
+    ('gu-bund', 'The Guardian', 'https://www.theguardian.com/football/bundesligafootball/rss', 'bund', False),
+    ('gu-ligue1', 'The Guardian', 'https://www.theguardian.com/football/ligue1football/rss', 'ligue1', False),
+    ('gu-mls', 'The Guardian', 'https://www.theguardian.com/football/mls/rss', 'mls', False),
+    ('gu-nfl', 'The Guardian', 'https://www.theguardian.com/sport/nfl/rss', 'nfl', False),
+    ('gu-nba', 'The Guardian', 'https://www.theguardian.com/sport/nba/rss', 'nba', False),
+    ('gu-mlb', 'The Guardian', ['https://www.theguardian.com/sport/mlb/rss', 'https://www.theguardian.com/sport/baseball/rss'], 'mlb', False),
+    ('gu-tennis', 'The Guardian', 'https://www.theguardian.com/sport/tennis/rss', 'tennis', False),
+    ('gu-golf', 'The Guardian', 'https://www.theguardian.com/sport/golf/rss', 'golf', False),
+    ('mlb-com', 'MLB.com', 'https://www.mlb.com/feeds/news/rss.xml', 'mlb', False),
+    ('ath-nfl', 'The Athletic', 'https://www.nytimes.com/athletic/rss/nfl/', 'nfl', True),
+    ('ath-nba', 'The Athletic', 'https://www.nytimes.com/athletic/rss/nba/', 'nba', True),
+    ('ath-mlb', 'The Athletic', 'https://www.nytimes.com/athletic/rss/mlb/', 'mlb', True),
+    ('ath-nhl', 'The Athletic', 'https://www.nytimes.com/athletic/rss/nhl/', 'nhl', True),
+    ('ath-ncaaf', 'The Athletic', 'https://www.nytimes.com/athletic/rss/college-football/', 'ncaaf', True),
+    ('ath-epl', 'The Athletic', 'https://www.nytimes.com/athletic/rss/premier-league/', 'epl', True),
+    ('mmaf', 'MMA Fighting', ['https://www.mmafighting.com/rss/index.xml', 'https://www.mmafighting.com/rss/current'], 'ufc', False),
+    ('mmaj', 'MMA Junkie', 'https://mmajunkie.usatoday.com/feed', 'ufc', False),
+    ('atp', 'ATP Tour', 'https://www.atptour.com/en/media/rss-feed/xml-feed', 'tennis', False),
+]
+# soccer stories from general feeds: the competition named first wins, then the clubs (2025-26 top flights)
+SOCCER = [(lg, re.compile(rx, re.I)) for lg, rx in [
+    ('ucl', r'champions league|\bucl\b'),
+    ('epl', r'premier league|arsenal|aston villa|bournemouth|brentford|brighton|burnley|chelsea|crystal palace|everton|fulham|leeds|liverpool|manchester city|man city|manchester united|man utd|man united|newcastle|nottingham forest|sunderland|tottenham|spurs|west ham|wolves|wolverhampton'),
+    ('laliga', r'la ?liga|real madrid|barcelona|barça|barca\b|atl[eé]tico|sevilla|real sociedad|villarreal|real betis|athletic club|athletic bilbao|valencia|girona|celta|osasuna|mallorca|getafe|rayo vallecano|espanyol|alav[eé]s|elche|levante|real oviedo'),
+    ('seriea', r'serie a|juventus|inter milan|internazionale|ac milan|napoli|\broma\b|lazio|atalanta|fiorentina|bologna|torino|udinese|genoa|lecce|cagliari|parma|hellas verona|sassuolo|cremonese'),
+    ('bund', r'bundesliga|bayern|dortmund|leipzig|leverkusen|eintracht frankfurt|vfb stuttgart|wolfsburg|freiburg|mainz|gladbach|hoffenheim|werder bremen|union berlin|augsburg|heidenheim|st\.? pauli|hamburger sv|cologne|k[oö]ln'),
+    ('ligue1', r'ligue 1|paris saint-germain|\bpsg\b|marseille|\blyon\b|as monaco|\blille\b|stade rennais|\brennes\b|nantes|strasbourg|toulouse|auxerre|le havre|lorient|paris fc'),
+    ('mls', r'\bmls\b|inter miami|la galaxy|\blafc\b|sounders|atlanta united|red bulls|nycfc|columbus crew|fc cincinnati|orlando city|philadelphia union|toronto fc|whitecaps|portland timbers|austin fc|nashville sc|charlotte fc|st\.? louis city|real salt lake|minnesota united|sporting kansas city|houston dynamo|colorado rapids|earthquakes|chicago fire|d\.?c\.? united|new england revolution|cf montr[eé]al|san diego fc'),
+]]
+NBA_RE = re.compile(r'\bnba\b|hawks|celtics|brooklyn nets|hornets|chicago bulls|cavaliers|mavericks|nuggets|pistons|warriors|rockets|pacers|clippers|lakers|grizzlies|miami heat|bucks|timberwolves|pelicans|knicks|thunder|orlando magic|76ers|sixers|phoenix suns|trail blazers|sacramento kings|san antonio spurs|raptors|utah jazz|wizards|wembanyama|lebron', re.I)
+FANTASY = re.compile(r'\bfantasy\b', re.I)
+
+
+def soccer_league(text):
+    for lg, rx in SOCCER:
+        if rx.search(text):
+            return lg
+    return None
+
+
+class Paras(HTMLParser):
+    """Paragraph text grouped by the element that holds it: the group with the most text is the article."""
+    SKIP = {'script', 'style', 'nav', 'header', 'footer', 'aside', 'form', 'noscript', 'button', 'svg', 'select', 'figure', 'table'}
+    VOID = {'br', 'img', 'hr', 'meta', 'link', 'input', 'source', 'wbr', 'area', 'col', 'embed', 'param', 'track', 'base'}
+
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.st, self.n, self.skip, self.buf, self.par, self.out = [], 0, 0, None, 0, []
+
+    def _end_p(self):
+        if self.buf is not None:
+            txt = re.sub(r'\s+', ' ', ''.join(self.buf)).strip()
+            if txt:
+                self.out.append((self.par, txt))
+            self.buf = None
+
+    def handle_starttag(self, tag, attrs):
+        if tag in self.VOID:
+            if tag == 'br' and self.buf is not None:
+                self.buf.append(' ')
+            return
+        if tag in ('p', 'div', 'section', 'article', 'ul', 'ol', 'h1', 'h2', 'h3', 'h4'):
+            self._end_p()                      # a new block closes an open paragraph
+        self.n += 1
+        self.st.append((tag, self.n))
+        if tag in self.SKIP:
+            self.skip += 1
+        if tag == 'p' and not self.skip:
+            self.buf, self.par = [], (self.st[-2][1] if len(self.st) > 1 else 0)
+
+    def handle_endtag(self, tag):
+        for i in range(len(self.st) - 1, -1, -1):
+            if self.st[i][0] == tag:
+                for t, _ in self.st[i:]:
+                    if t in self.SKIP:
+                        self.skip -= 1
+                    if t == 'p':
+                        self._end_p()
+                del self.st[i:]
+                break
+
+    def handle_data(self, d):
+        if self.buf is not None and not self.skip:
+            self.buf.append(d)
+
+
+BOILER = re.compile(r'^(last update|for release|for immediate release|media (contact|inquiries)|back to top|share|print|related (links|information)|implementation note|subscribe|accessible version|return to text|footnotes?)\b', re.I)
+
+
+def article_text(raw, limit=4200):
+    """The longest run of paragraphs in a page, trimmed to about `limit` characters; returns (paragraphs, complete)."""
+    p = Paras()
+    try:
+        p.feed(raw.decode('utf-8', 'replace'))
+        p.close()
+    except Exception:
+        pass
+    groups = {}
+    for par, txt in p.out:
+        groups.setdefault(par, []).append(txt)
+    if not groups:
+        return [], False
+    best = max(groups.values(), key=lambda g: sum(len(x) for x in g))
+    out, n, complete = [], 0, True
+    for txt in best:
+        if len(txt) < 30 or BOILER.search(txt):
+            continue
+        if n + len(txt) > limit and out:
+            complete = False
+            break
+        out.append(txt)
+        n += len(txt)
+    return out, complete
 NS = {'media': 'http://search.yahoo.com/mrss/', 'content': 'http://purl.org/rss/1.0/modules/content/', 'atom': 'http://www.w3.org/2005/Atom', 'dc': 'http://purl.org/dc/elements/1.1/'}
 
 
@@ -215,8 +366,11 @@ def atlas():
                 x = clean(desc)
                 if x.lower().startswith(t.lower()[:40]):
                     x = clean(x[len(t):]) if len(x) > len(t) + 20 else ''
-                items.append({'id': iid(u, t), 't': clean(t, 200), 'u': u, 's': name, 'src': fid, 'k': kind,
-                              'd': (d or NOW).isoformat(timespec='seconds'), 'x': x, 'img': im, 'tp': topics_of(t + ' ' + x, base)})
+                it = {'id': iid(u, t), 't': clean(t, 200), 'u': u, 's': name, 'src': fid, 'k': kind,
+                      'd': (d or NOW).isoformat(timespec='seconds'), 'x': x, 'img': im, 'tp': topics_of(t + ' ' + x, base)}
+                if fid in PAYWALLED:
+                    it['pw'] = True
+                items.append(it)
                 n += 1
             sources.append({'id': fid, 'name': name, 'kind': kind, 'n': n, 'ok': True})
             print(f'  {fid:14s} {n:3d} items')
@@ -226,7 +380,37 @@ def atlas():
             sources.append({'id': fid, 'name': name, 'kind': kind, 'n': len(old), 'ok': False})
             print(f'  {fid:14s} failed ({type(e).__name__}: {str(e)[:80]}); kept {len(old)} previous')
         time.sleep(0.3)
-    return {'asOf': NOW.isoformat(timespec='seconds'), 'sources': sources, 'items': finish(items, 4, 260)}
+    out = finish(items, 4, 260)
+    full_text(out, prev)
+    return {'asOf': NOW.isoformat(timespec='seconds'), 'sources': sources, 'items': out}
+
+
+# official sources whose releases may be shown in full, with the credit the page shows
+REUSE = {'fed-press': 'Federal Reserve Board', 'fed-speech': 'Federal Reserve Board', 'bea': 'U.S. Bureau of Economic Analysis', 'ecb': 'European Central Bank'}
+
+
+def full_text(items, prev, budget=24):
+    """Adds the text of official releases (kept from the previous run when already read)."""
+    known = {it['id']: it for it in prev.get('items', []) if it.get('body')}
+    fetched = kept = 0
+    for it in items:
+        if it.get('src') not in REUSE:
+            continue
+        if it['id'] in known:
+            it['body'], it['full'] = known[it['id']]['body'], known[it['id']].get('full', False)
+            it['credit'] = REUSE[it['src']]; kept += 1
+            continue
+        if fetched >= budget:
+            continue
+        fetched += 1
+        try:
+            body, complete = article_text(get(it['u'], timeout=20))
+            if sum(len(x) for x in body) >= 200:
+                it['body'], it['full'], it['credit'] = body, complete, REUSE[it['src']]
+        except Exception as e:
+            print(f'  text {it["src"]:10s} failed ({type(e).__name__}: {str(e)[:60]})')
+        time.sleep(0.4)
+    print(f'  official text: {sum(1 for it in items if it.get("body"))} releases ({fetched} read now, {kept} kept)')
 
 
 def sports():
@@ -241,7 +425,7 @@ def sports():
                 u = (((a.get('links') or {}).get('web') or {}).get('href') or '').strip()
                 if not t or not u.startswith('http') or a.get('type') == 'Media' and not a.get('description'):
                     continue
-                if re.search(r'\bfantasy\b', t + ' ' + (a.get('description') or ''), re.I):
+                if FANTASY.search(t + ' ' + (a.get('description') or '')):
                     continue
                 ims = [i for i in (a.get('images') or []) if (i.get('url') or '').startswith('http')]
                 im = next((i['url'] for i in ims if (i.get('width') or 0) >= 400), ims[0]['url'] if ims else None)
@@ -259,7 +443,49 @@ def sports():
             sources.append({'id': 'espn-' + lg, 'name': 'ESPN', 'kind': 'outlet', 'n': len(old), 'ok': False})
             print(f'  espn {lg:7s} failed ({type(e).__name__}: {str(e)[:80]}); kept {len(old)} previous')
         time.sleep(0.25)
-    return {'asOf': NOW.isoformat(timespec='seconds'), 'sources': sources, 'items': finish(items, 3, 320)}
+    for fid, name, url, lg0, paywall in SPORTS_FEEDS:
+        try:
+            rows, err = None, None
+            for cand in ([url] if isinstance(url, str) else url):
+                try:
+                    rows = parse_feed(get(cand))
+                    if rows:
+                        break
+                except Exception as e:
+                    err = e
+            if not rows:
+                raise err or ValueError('empty feed')
+            n = 0
+            for t, u, desc, d, im in rows[:30]:
+                if not t or not u.startswith('http'):
+                    continue
+                t = re.sub(r'\s+\d{6,}$', '', t)
+                x = clean(desc)
+                if x.lower().startswith(t.lower()[:40]):
+                    x = clean(x[len(t):]) if len(x) > len(t) + 20 else ''
+                text = t + ' ' + x
+                if FANTASY.search(text):
+                    continue
+                lg = soccer_league(text) if lg0 == 'soccer' else lg0
+                if not lg or (fid == 'bbc-nba' and not NBA_RE.search(text)):
+                    continue
+                if im and NO_HOTLINK.search(im):
+                    im = None
+                it = {'id': iid(u, t), 't': clean(t, 200), 'u': u, 's': name, 'src': fid, 'k': 'outlet', 'd': (d or NOW).isoformat(timespec='seconds'),
+                      'x': x, 'img': im, 'lg': lg, 'lgName': LABEL.get(lg, lg), 'tm': [], 'pl': [], 'tp': [lg]}
+                if paywall:
+                    it['pw'] = True
+                items.append(it)
+                n += 1
+            sources.append({'id': fid, 'name': name, 'kind': 'outlet', 'n': n, 'ok': True})
+            print(f'  {fid:14s} {n:3d} items')
+        except Exception as e:
+            old = [it for it in prev.get('items', []) if it.get('src') == fid]
+            items.extend(old)
+            sources.append({'id': fid, 'name': name, 'kind': 'outlet', 'n': len(old), 'ok': False})
+            print(f'  {fid:14s} failed ({type(e).__name__}: {str(e)[:80]}); kept {len(old)} previous')
+        time.sleep(0.25)
+    return {'asOf': NOW.isoformat(timespec='seconds'), 'sources': sources, 'items': finish(items, 3, 420)}
 
 
 def main():

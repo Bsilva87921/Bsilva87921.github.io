@@ -128,7 +128,7 @@ const FINX = (() => {
     const out = allIds().map(id => marketRow(id));
     for (const [k, l] of TABS) out.push({ id: 'tab:' + k, kind: 'Section', title: l, sub: 'Open the ' + l.toLowerCase() + ' tab', icon: '▤', go: () => APP.go({ tab: k }) });
     for (const [k, t] of CARDS) out.push({ id: 'card:' + t, kind: 'Chart', title: t, sub: 'In ' + tabLabel(k), icon: '▥', go: goCard(k, t) });
-    NEWS.items.slice(0, 40).forEach(it => out.push({ id: 'news:' + it.u, kind: 'News', title: it.t, sub: `${it.s} · ${NEWS.ago(it.d)}`, icon: '✉', go: () => window.open(it.u, '_blank', 'noopener') }));
+    NEWS.items.slice(0, 40).forEach(it => out.push({ id: 'news:' + it.u, kind: 'News', title: it.t, sub: `${it.s} · ${NEWS.ago(it.d)}`, icon: '✉', go: () => NEWS.open(it) }));
     out.push({ id: 'act:brief', kind: 'Action', title: "Open today's market briefing", sub: 'The day in markets in under a minute', kw: 'story stories', icon: '◉', go: () => STORY.open() });
     out.push({ id: 'act:alerts', kind: 'Action', title: ALERT.status() === 'on' ? 'Alerts are on' : 'Turn on alerts', sub: 'Big moves and 52-week highs or lows in the markets you follow', kw: 'notifications notify', icon: '🔔', go: () => ALERT.enable() });
     out.push({ id: 'act:theme', kind: 'Action', title: 'Switch light or dark theme', kw: 'dark mode light mode', icon: '◐', go: () => { const b = document.getElementById('themeBtn'); if (b) b.click(); } });
@@ -154,7 +154,7 @@ const FINX = (() => {
       out.push({ kicker: st.kicker || it.tag, title: st.title || it.text, value: st.value != null ? st.value : it.val, tone, sub: st.sub || '', chart: data ? { type: 'spark', data, color: tone === 'down' ? '#ff7b72' : tone === 'warn' ? '#F2B33D' : '#43d17a', label: F.short(st.spark) + ', last six months' } : null, cta: it.go ? { label: 'See it', go: it.go } : null, ask: it.ask, bg: BG[tone] });
     }
     const top = NEWS.items[0];
-    if (top) out.push({ kicker: 'In the news · ' + top.s, title: top.t, sub: NEWS.ago(top.d), cta: { label: 'Read the story', go: () => window.open(top.u, '_blank', 'noopener') }, ask: `What does this mean for markets: "${top.t}"?`, bg: ['#1b1036', '#0a1215'] });
+    if (top) out.push({ kicker: 'In the news · ' + top.s, title: top.t, sub: NEWS.ago(top.d), cta: { label: 'Read the story', go: () => NEWS.open(top) }, ask: `What does this mean for markets: "${top.t}"?`, bg: ['#1b1036', '#0a1215'] });
     return out.slice(0, 8);
   }
   function shareInsight(it) {

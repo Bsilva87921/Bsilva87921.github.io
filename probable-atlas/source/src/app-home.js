@@ -71,7 +71,7 @@
       for (const m of MODS) if (m.on) { out.push({ id: 'mod:' + m.k, kind: 'Module', title: m.name, sub: m.blurb, icon: m.icon, go: () => { location.href = m.href; } }); for (const [l, h] of m.links) out.push({ id: 'lnk:' + h, kind: 'Section', title: `${m.name}: ${l}`, icon: '▤', go: () => { location.href = h; } }); }
       if (window.FAV) for (const f of FAV.list()) out.push({ id: 'fav:' + f.key, kind: 'Following', title: f.label, sub: f.key.startsWith('cty:') ? 'Country · Economics' : 'Market · Finance', icon: '★', boost: 10, go: () => { location.href = f.key.startsWith('cty:') ? '../#' + f.key.slice(4) : '../finance/?asset=' + encodeURIComponent(f.key.slice(4)); } });
       for (const it of items) out.push({ id: 'rd:' + it.mod + it.id, kind: 'Reading', title: it.text, sub: `${it.mod} · ${it.tag || ''}`, icon: '◉', badge: it.val || '', go: () => { location.href = it.href; } });
-      if (window.NEWS) NEWS.items.slice(0, 40).forEach(it => out.push({ id: 'news:' + it.u, kind: 'News', title: it.t, sub: `${it.s} · ${NEWS.ago(it.d)}`, icon: '✉', go: () => window.open(it.u, '_blank', 'noopener') }));
+      if (window.NEWS) NEWS.items.slice(0, 40).forEach(it => out.push({ id: 'news:' + it.u, kind: 'News', title: it.t, sub: `${it.s} · ${NEWS.ago(it.d)}`, icon: '✉', go: () => NEWS.open(it) }));
       out.push({ id: 'act:brief', kind: 'Action', title: "Open today's briefing", icon: '◉', go: () => STORY.open() });
       out.push({ id: 'act:theme', kind: 'Action', title: 'Switch light or dark theme', kw: 'dark mode light mode', icon: '◐', go: () => document.getElementById('themeBtn').click() });
       return out;
@@ -81,7 +81,7 @@
   function briefing(items) {
     if (!window.STORY) return;
     const TONE = t => t === 'up' ? 'up' : t === 'down' ? 'down' : t === 'warn' ? 'warn' : 'info';
-    const slides = () => items.slice(0, 7).map(it => { const st = it.story || {}; return { kicker: (it.mod === 'Economics' ? 'Economics · ' : 'Markets · ') + (st.kicker || it.tag || ''), title: st.title || it.text, value: st.value != null ? st.value : it.val, sub: st.sub || '', tone: TONE(it.tone), cta: { label: 'Open ' + it.mod, go: () => { location.href = it.href; } }, ask: it.ask }; }).concat(window.NEWS && NEWS.items[0] ? [{ kicker: 'In the news · ' + NEWS.items[0].s, title: NEWS.items[0].t, sub: NEWS.ago(NEWS.items[0].d), cta: { label: 'Read the story', go: () => window.open(NEWS.items[0].u, '_blank', 'noopener') } }] : []);
+    const slides = () => items.slice(0, 7).map(it => { const st = it.story || {}; return { kicker: (it.mod === 'Economics' ? 'Economics · ' : 'Markets · ') + (st.kicker || it.tag || ''), title: st.title || it.text, value: st.value != null ? st.value : it.val, sub: st.sub || '', tone: TONE(it.tone), cta: { label: 'Open ' + it.mod, go: () => { location.href = it.href; } }, ask: it.ask }; }).concat(window.NEWS && NEWS.items[0] ? [{ kicker: 'In the news · ' + NEWS.items[0].s, title: NEWS.items[0].t, sub: NEWS.ago(NEWS.items[0].d), cta: { label: 'Read the story', go: () => NEWS.open(NEWS.items[0]) } }] : []);
     STORY.mount({ key: 'atlas-home', title: "Today's Atlas briefing", mark: 'A', label: 'Today', slides, ask: q => { location.href = '../?ask=' + encodeURIComponent(q); }, host: document.querySelector('#insBar .ins-in'), prepend: true, bg: ['#102a33', '#0a1215'] });
   }
   function init() {
