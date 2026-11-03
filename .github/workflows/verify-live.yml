@@ -1,0 +1,35 @@
+# Temporary: checks the live Probable sites in real browsers (Linux Chromium and macOS Chrome) and keeps screenshots.
+name: Verify live sites (temporary)
+on:
+  push:
+    branches: ["verify-live"]
+permissions:
+  contents: read
+jobs:
+  check:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: ubuntu-latest, name: linux }
+          - { os: macos-latest, name: mac }
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install Playwright
+        run: |
+          npm init -y >/dev/null
+          npm install --no-audit --no-fund playwright@1.63.0
+          if [ "${{ matrix.name }}" = "linux" ]; then npx playwright install --with-deps chromium; fi
+      - name: Check the live sites
+        run: node verify/check.mjs ${{ matrix.name }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: verify-${{ matrix.name }}
+          path: verify/out-${{ matrix.name }}
+          retention-days: 3
