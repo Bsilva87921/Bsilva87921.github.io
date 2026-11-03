@@ -1,6 +1,6 @@
 {
   "os": "mac",
-  "at": "2026-11-03T04:59:15.214Z",
+  "at": "2026-11-03T15:27:17.727Z",
   "pages": {
     "sports": {
       "title": "Probable Sports Lab — Bruno Silva",
@@ -8,14 +8,11 @@
       "canvases": 1,
       "insights": true,
       "insightItems": [
-        "Live | 3 games  in progress: NBA",
-        "Closest | Closest live game: Suns at Warriors, 3:44 - 3rd — Suns | 62%",
-        "Swing | Biggest swing: Clippers went from 41% before the game to | 95%",
-        "Upset watch | Upset watch: Suns was 35% before kickoff and is now favored at | 62%",
         "Up next | Top matchup: Bayern at Atlético, Today 8:00 PM — Bayern | 41%",
-        "Favorite | Biggest favorite on the slate: Ohio (NCAAF) vs Akron | 80%",
+        "Favorite | Biggest favorite on the slate: Toledo (NCAAF) vs Sacramento St | 94%",
+        "Model vs line | Biggest gap with the betting line: the model gives Pistons 59% against the line's | 52%",
         "Upset | Biggest recent upset: Minnesota won 3–1 with a pregame chance of | 21%",
-        "Track record | Track record: replayed without hindsight, the lab's favorite won 58% of 3,240 games outside soccer this season — and its odds beat \"home edge only\" by 3% across 4,122 games | 58%"
+        "Track record | Track record: replayed without hindsight, the lab's favorite won 58% of 3,244 games outside soccer this season — and its odds beat \"home edge only\" by 3% across 4,126 games | 58%"
       ],
       "askButton": "✦Ask AI",
       "installButton": true,
@@ -23,35 +20,15 @@
       "hOverflow": false,
       "serviceWorker": "https://bsilva87921.github.io/live-sports-lab/",
       "answer": {
-        "text": "BUILT-IN ANALYST\n\n3 games live, closest first:\n\nPhoenix Suns at Golden State Warriors (NBA, live · 3:44 - 3rd) — PHX 88, GS 84. — PHX 62% · GS 38% (pregame PHX 35%)\nToronto Raptors at LA Clippers (NBA, live · 50.8 - 3rd) — TOR 77, LAC 90. — TOR 5% · LAC 95% (pregame LAC 41%)\nMiami Heat at Los Angeles Lakers (NBA, live · End of 3rd) — MIA 93, LAL 111. — MIA 0% · LAL 100% (pregame LAL 69%)\nWhich live games are closest right now?\nWho will win MUN at ATM?\nWhat if ATM gets a red card?",
+        "text": "BUILT-IN ANALYST\n\nNo games are live right now. Next up: Galatasaray vs VfB Stuttgart (UCL, Today 5:45 PM).\n\nWin chances: VFB 30% · draw 23% · GAL 48%\nOpen the game center\nWho will win MUN at ATM?\nWhat if ATM gets a red card?\nAny upsets brewing?",
         "error": false
       },
       "trackRecordShown": true,
       "errors": [
-        "console: Failed to load resource: the server responded with a status of 400 ()",
-        "console: Failed to load resource: the server responded with a status of 400 ()",
-        "console: Failed to load resource: the server responded with a status of 400 ()",
-        "console: Failed to load resource: the server responded with a status of 400 ()",
-        "console: Failed to load resource: the server responded with a status of 400 ()",
-        "console: Failed to load resource: the server responded with a status of 400 ()",
-        "console: Failed to load resource: the server responded with a status of 400 ()",
-        "console: Failed to load resource: the server responded with a status of 400 ()",
-        "console: Failed to load resource: the server responded with a status of 400 ()",
-        "console: Failed to load resource: the server responded with a status of 400 ()",
         "console: Failed to load resource: the server responded with a status of 400 ()"
       ],
       "httpFailures": [
-        "400 https://site.web.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard?dates=20261102-20261104&limit=300",
-        "400 https://site.web.api.espn.com/apis/site/v2/sports/soccer/esp.1/scoreboard?dates=20261030-20261113&limit=300",
-        "400 https://site.web.api.espn.com/apis/site/v2/sports/basketball/wnba/scoreboard?dates=20261101-20261106&limit=300",
-        "400 https://site.web.api.espn.com/apis/site/v2/sports/hockey/nhl/scoreboard?dates=20261102-20261106&limit=300",
-        "400 https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261102-20261105&limit=300",
-        "400 https://site.web.api.espn.com/apis/site/v2/sports/soccer/eng.1/scoreboard?dates=20261030-20261113&limit=300",
-        "400 https://site.web.api.espn.com/apis/site/v2/sports/soccer/ger.1/scoreboard?dates=20261030-20261113&limit=300",
-        "400 https://site.web.api.espn.com/apis/site/v2/sports/soccer/usa.1/scoreboard?dates=20261031-20261110&limit=300",
-        "400 https://site.web.api.espn.com/apis/site/v2/sports/soccer/uefa.champions/scoreboard?dates=20261030-20261117&limit=300",
-        "400 https://site.web.api.espn.com/apis/site/v2/sports/soccer/ita.1/scoreboard?dates=20261030-20261113&limit=300",
-        "400 https://site.web.api.espn.com/apis/site/v2/sports/soccer/fra.1/scoreboard?dates=20261030-20261113&limit=300"
+        "400 https://site.web.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard?dates=20261102-20261104&limit=300"
       ]
     },
     "econ": {
