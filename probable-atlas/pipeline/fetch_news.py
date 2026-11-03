@@ -17,13 +17,14 @@ PREV = os.environ.get('PREV_DIR', 'prev')
 UA = 'ProbableNews/1.0 (portfolio project; +https://bsilva87921.github.io/)'
 NOW = datetime.now(timezone.utc)
 
-# id, publisher, url, kind (official | outlet), topics the whole feed belongs to
+# id, publisher, url (or a list of addresses to try in order), kind (official | outlet), topics the whole feed belongs to.
+# Left out: BLS (refuses automated readers without a contact address), the IMF (rate-limits automated readers)
+# and Yahoo Finance (its feeds were retired).
 ATLAS_FEEDS = [
     ('fed-press', 'Federal Reserve', 'https://www.federalreserve.gov/feeds/press_all.xml', 'official', ['fed', 'policy']),
     ('fed-speech', 'Federal Reserve', 'https://www.federalreserve.gov/feeds/speeches.xml', 'official', ['fed', 'policy']),
     ('ecb', 'European Central Bank', 'https://www.ecb.europa.eu/rss/press.xml', 'official', ['global', 'policy']),
     ('bea', 'BEA', 'https://apps.bea.gov/rss/rss.xml', 'official', ['growth', 'data']),
-    ('imf', 'IMF', ['https://www.imf.org/en/News/RSS?Language=ENG', 'https://www.imf.org/en/news/rss', 'https://www.imf.org/en/Blogs/rss?language=eng'], 'official', ['global']),
     ('cnbc-econ', 'CNBC', 'https://www.cnbc.com/id/20910258/device/rss/rss.html', 'outlet', ['growth']),
     ('cnbc-top', 'CNBC', 'https://www.cnbc.com/id/100003114/device/rss/rss.html', 'outlet', []),
     ('cnbc-fin', 'CNBC', 'https://www.cnbc.com/id/10000664/device/rss/rss.html', 'outlet', ['markets']),
@@ -41,7 +42,6 @@ ATLAS_FEEDS = [
     ('ft-mkt', 'Financial Times', 'https://www.ft.com/markets?format=rss', 'outlet', ['markets']),
     ('bbc-biz', 'BBC', 'https://feeds.bbci.co.uk/news/business/rss.xml', 'outlet', []),
     ('guardian-econ', 'The Guardian', 'https://www.theguardian.com/business/economics/rss', 'outlet', ['growth']),
-    ('yahoo-fin', 'Yahoo Finance', ['https://finance.yahoo.com/rss/topstories', 'https://finance.yahoo.com/news/rss', 'https://finance.yahoo.com/news/rssindex'], 'outlet', ['markets']),
     ('sa-currents', 'Seeking Alpha', 'https://seekingalpha.com/market_currents.xml', 'outlet', ['markets', 'stocks']),
     ('coindesk', 'CoinDesk', 'https://www.coindesk.com/arc/outboundfeeds/rss/', 'outlet', ['crypto']),
 ]

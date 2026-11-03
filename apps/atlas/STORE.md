@@ -16,7 +16,7 @@ Probable Atlas explains how the world economy and financial markets are doing �
 • Finance & markets: 61 markets and 34 rates daily since 1990 and the S&P 500 since 1928. Volatility and value-at-risk, market regimes, correction risk, long-run expected returns, and a 3D market skyline of today's moves.
 • What-if labs: shock the economy or a portfolio and see the effect; a portfolio lab with an efficient frontier, Monte Carlo plans and historical stress tests.
 • Recommendations backed by evidence, each with its trade-offs.
-• News from the Federal Reserve, the ECB, BLS, BEA, the IMF and major outlets, filtered by topic.
+• News from the Federal Reserve, the ECB, BEA and major outlets, filtered by topic.
 • Follow markets and countries for alerts on big moves, 52-week highs or lows and new forecasts; a daily briefing in story form; search everything; share cards.
 • Ask AI: ask about the data, the forecasts or your own scenario.
 • Works offline with the last data on your device.

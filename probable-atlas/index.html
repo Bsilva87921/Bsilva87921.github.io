@@ -4452,7 +4452,7 @@ const EX = (() => {
   const myIsos = () => FAV.list('cty:').map(f => f.key.slice(4)).filter(iso => E.BYISO[iso]);
   NEWS.init({
     url: [NEWS_URL], embed: 'ATLAS_NEWS', title: 'Economy news',
-    lede: 'Growth, inflation, jobs, central banks and trade around the world, with official releases from the Fed, the ECB, BEA, BLS and the IMF, newest first.',
+    lede: 'Growth, inflation, jobs, central banks and trade around the world, with official releases from the Federal Reserve, the ECB and BEA, newest first.',
     empty: 'Headlines are on their way: the news job refreshes about every half hour.',
     topics: () => {
       const T = [], sc = STATE.scope;
