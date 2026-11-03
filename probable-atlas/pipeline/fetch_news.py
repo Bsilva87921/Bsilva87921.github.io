@@ -23,8 +23,7 @@ ATLAS_FEEDS = [
     ('fed-speech', 'Federal Reserve', 'https://www.federalreserve.gov/feeds/speeches.xml', 'official', ['fed', 'policy']),
     ('ecb', 'European Central Bank', 'https://www.ecb.europa.eu/rss/press.xml', 'official', ['global', 'policy']),
     ('bea', 'BEA', 'https://apps.bea.gov/rss/rss.xml', 'official', ['growth', 'data']),
-    ('bls', 'BLS', 'https://www.bls.gov/feed/news_release.rss', 'official', ['jobs', 'data']),
-    ('imf', 'IMF', 'https://www.imf.org/en/News/rss?language=eng', 'official', ['global']),
+    ('imf', 'IMF', ['https://www.imf.org/en/News/RSS?Language=ENG', 'https://www.imf.org/en/news/rss', 'https://www.imf.org/en/Blogs/rss?language=eng'], 'official', ['global']),
     ('cnbc-econ', 'CNBC', 'https://www.cnbc.com/id/20910258/device/rss/rss.html', 'outlet', ['growth']),
     ('cnbc-top', 'CNBC', 'https://www.cnbc.com/id/100003114/device/rss/rss.html', 'outlet', []),
     ('cnbc-fin', 'CNBC', 'https://www.cnbc.com/id/10000664/device/rss/rss.html', 'outlet', ['markets']),
@@ -42,7 +41,7 @@ ATLAS_FEEDS = [
     ('ft-mkt', 'Financial Times', 'https://www.ft.com/markets?format=rss', 'outlet', ['markets']),
     ('bbc-biz', 'BBC', 'https://feeds.bbci.co.uk/news/business/rss.xml', 'outlet', []),
     ('guardian-econ', 'The Guardian', 'https://www.theguardian.com/business/economics/rss', 'outlet', ['growth']),
-    ('yahoo-fin', 'Yahoo Finance', 'https://finance.yahoo.com/news/rssindex', 'outlet', ['markets']),
+    ('yahoo-fin', 'Yahoo Finance', ['https://finance.yahoo.com/rss/topstories', 'https://finance.yahoo.com/news/rss', 'https://finance.yahoo.com/news/rssindex'], 'outlet', ['markets']),
     ('sa-currents', 'Seeking Alpha', 'https://seekingalpha.com/market_currents.xml', 'outlet', ['markets', 'stocks']),
     ('coindesk', 'CoinDesk', 'https://www.coindesk.com/arc/outboundfeeds/rss/', 'outlet', ['crypto']),
 ]
@@ -105,12 +104,21 @@ def when(s):
     return None if d > NOW + timedelta(hours=2) else d
 
 
+def sharper(u):
+    # the BBC's image server serves any of its standard widths from the same path
+    return re.sub(r'(ichef\.bbci\.co\.uk/(?:ace|news)/(?:standard|ws)/)\d+/', r'\g<1>800/', u) if u else u
+
+
 def img_of(el, desc):
+    best, bw = None, -1
     for tag in ('media:content', 'media:thumbnail'):
         for m in el.findall(tag, NS):
             u, typ, w = m.get('url'), (m.get('type') or m.get('medium') or ''), m.get('width')
-            if u and u.startswith('http') and ('image' in typ or not typ or re.search(r'\.(jpe?g|png|webp)', u, re.I)) and not (w and w.isdigit() and int(w) < 120):
-                return u
+            wi = int(w) if w and w.isdigit() else 0
+            if u and u.startswith('http') and ('image' in typ or not typ or re.search(r'\.(jpe?g|png|webp)', u, re.I)) and not (w and wi < 120) and wi > bw:
+                best, bw = u, wi
+    if best:
+        return sharper(best)
     for m in el.findall('media:group/media:content', NS):
         if m.get('url', '').startswith('http'):
             return m.get('url')
@@ -166,17 +174,19 @@ def previous(name):
         return {'items': [], 'sources': []}
 
 
-def finish(items, keep_days, cap):
-    cut = NOW - timedelta(days=keep_days)
-    seen, out = set(), []
+def finish(items, keep_days, cap, official_days=21, official_cap=40):
+    cut, cut_off = (NOW - timedelta(days=keep_days)).isoformat(), (NOW - timedelta(days=official_days)).isoformat()
+    seen, out, off = set(), [], []
     for it in sorted(items, key=lambda x: x.get('d') or '', reverse=True):
         k = re.sub(r'[^a-z0-9]+', '', (it.get('t') or '').lower())[:80]
         if not it.get('t') or not it.get('u') or it['u'] in seen or k in seen:
             continue
-        if it.get('d') and it['d'] < cut.isoformat():
+        official = it.get('k') == 'official'
+        if it.get('d') and it['d'] < (cut_off if official else cut):
             continue
-        seen.add(it['u']); seen.add(k); out.append(it)
-    return out[:cap]
+        seen.add(it['u']); seen.add(k)
+        (off if official else out).append(it)
+    return sorted(out[:cap] + off[:official_cap], key=lambda x: x.get('d') or '', reverse=True)
 
 
 def atlas():
@@ -184,7 +194,16 @@ def atlas():
     items, sources = [], []
     for fid, name, url, kind, base in ATLAS_FEEDS:
         try:
-            rows = parse_feed(get(url))
+            rows, err = None, None
+            for cand in ([url] if isinstance(url, str) else url):
+                try:
+                    rows = parse_feed(get(cand))
+                    if rows:
+                        break
+                except Exception as e:
+                    err = e
+            if not rows:
+                raise err or ValueError('empty feed')
             n = 0
             for t, u, desc, d, im in rows[:40]:
                 if not t or not u.startswith('http'):
@@ -217,6 +236,8 @@ def sports():
                 t = (a.get('headline') or '').strip()
                 u = (((a.get('links') or {}).get('web') or {}).get('href') or '').strip()
                 if not t or not u.startswith('http') or a.get('type') == 'Media' and not a.get('description'):
+                    continue
+                if re.search(r'\bfantasy\b', t + ' ' + (a.get('description') or ''), re.I):
                     continue
                 ims = [i for i in (a.get('images') or []) if (i.get('url') or '').startswith('http')]
                 im = next((i['url'] for i in ims if (i.get('width') or 0) >= 400), ims[0]['url'] if ims else None)
