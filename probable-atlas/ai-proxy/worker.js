@@ -1,5 +1,5 @@
-// Probable Atlas · "Ask Atlas" proxy (Cloudflare Worker).
-// Lets visitors of the public site chat with Claude without their own API key. The Anthropic key stays here, server side.
+// Probable · "Ask AI" proxy (Cloudflare Worker), shared by Probable Atlas (Economics, Finance) and the Sports Lab.
+// Lets visitors of the public sites and the two apps chat with Claude without their own API key. The key stays here, server side.
 // Deploy steps are in README.md next to this file. Set ANTHROPIC_API_KEY as a secret; optionally MODEL and ALLOWED_ORIGINS.
 const DEFAULT_MODEL = 'claude-haiku-4-5-20251001';   // fast and inexpensive; set MODEL to e.g. claude-sonnet-5 for deeper answers
 const MAX_TOKENS = 1400;
@@ -7,7 +7,8 @@ const MAX_TOKENS = 1400;
 export default {
   async fetch(req, env) {
     const origin = req.headers.get('Origin') || '';
-    const allowed = (env.ALLOWED_ORIGINS || 'https://bsilva87921.github.io').split(',').map(s => s.trim());
+    // the website, plus the iOS (capacitor://localhost) and Android (https://localhost) apps
+    const allowed = (env.ALLOWED_ORIGINS || 'https://bsilva87921.github.io,capacitor://localhost,https://localhost').split(',').map(s => s.trim());
     const cors = { 'Access-Control-Allow-Origin': allowed.includes(origin) ? origin : allowed[0], 'Access-Control-Allow-Methods': 'POST, OPTIONS', 'Access-Control-Allow-Headers': 'content-type', 'Access-Control-Max-Age': '86400', 'Vary': 'Origin' };
     if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
     if (req.method !== 'POST' || !allowed.includes(origin)) return new Response('Forbidden', { status: 403, headers: cors });
