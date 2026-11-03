@@ -4,9 +4,13 @@ name: Probable Atlas data refresh
 
 on:
   schedule:
+    # GitHub runs schedules best-effort and drops some at busy times, so each slot has a backup
     - cron: "23 11 * * 1-5"          # weekday mornings, after most US releases (8:30 ET)
+    - cron: "53 12 * * 1-5"          # morning backup
     - cron: "23 22 * * *"            # evenings, after markets close
+    - cron: "51 23 * * *"            # evening backup
     - cron: "47 14,16,18,20 * * 1-5" # during US trading hours: markets only
+    - cron: "17 15,17,19 * * 1-5"    # more trading-hours runs: markets only
   workflow_dispatch:
   push:
     branches: ["main"]
@@ -29,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
-      INTRADAY: ${{ github.event.schedule == '47 14,16,18,20 * * 1-5' }}
+      INTRADAY: ${{ github.event.schedule == '47 14,16,18,20 * * 1-5' || github.event.schedule == '17 15,17,19 * * 1-5' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4

@@ -25,7 +25,7 @@ NHL, the Premier League, LaLiga, Serie A, Bundesliga, Ligue 1, MLS and the Champ
   [`apps/sports-lab`](../apps/sports-lab/).
 
 ## How the track record works
-`pipeline/track.mjs` runs every hour in GitHub Actions (`.github/workflows/sports-track.yml`) and loads the lab's own
+`pipeline/track.mjs` runs twice an hour in GitHub Actions (`.github/workflows/sports-track.yml`; GitHub drops some scheduled runs, so the slots overlap) and loads the lab's own
 model code (`source/src/01–03`) exactly as the browser runs it.
 1. **Season replay without look-ahead.** Every completed game of each league's current season (NFL, MLB, NBA, WNBA,
    NHL and the six soccer leagues) is predicted in start-time order using only games that were already over when it
@@ -33,8 +33,8 @@ model code (`source/src/01–03`) exactly as the browser runs it.
 2. **In-game checkpoints.** The same games are re-scored from their period scores (after the first quarter, at
    halftime and after the third; after the first and second periods; after three and six innings; at halftime and 75
    minutes in soccer, from goal times) and compared with simply backing the team that leads.
-3. **Prospective log.** Before each game the pipeline records the live board's pregame number and the betting line,
-   then grades both once the game is final.
+3. **Prospective log.** For every game starting within 18 hours, each run records the live board's pregame number and
+   the betting line; the last reading before the start is the one graded once the game is final.
 
 Scores are the Brier score, accuracy, calibration by probability bin, and skill against a "home edge only" baseline
 (and against the leader for checkpoints). The record is honest about where the edge is small: pregame skill is modest

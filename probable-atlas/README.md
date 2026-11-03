@@ -37,7 +37,7 @@ A series of world-domain analytics dashboards by Bruno Silva, built on the appro
 |---|---|
 | Economics pipeline (World Bank, IMF, FRED) | `pipeline/fetch_econ.py` |
 | Markets pipeline (Yahoo Finance via yfinance, FRED, Shiller, French) | `pipeline/fetch_markets.py`: delta-coded log prices on the NYSE calendar, previous good copy kept for any failed series |
-| Schedule | `.github/workflows/atlas-data.yml`: weekday mornings and evenings for everything, plus four runs during US trading hours for markets; output on the single-commit `atlas-data` branch, deployed to `probable-atlas/data/` |
+| Schedule | `.github/workflows/atlas-data.yml`: weekday mornings and evenings for everything (each with a backup slot, since GitHub drops some scheduled runs), plus seven runs during US trading hours for markets; output on the single-commit `atlas-data` branch, deployed to `probable-atlas/data/` |
 | Shared kit | `source/src/kit-*.js`: formatting, statistics (OLS with robust errors, probit, AUC/Brier, k-means, PCA), SVG charts at real pixel width, tables, theme switch, the Ask AI chat (`kit-chat.js`), the Insights bar (`kit-insights.js`), the 3D loader (`kit-3d.js`) and install support (`kit-app.js`); shared with the Sports Lab |
 | 3D scenes | [`assets/probable-3d`](../assets/probable-3d/): globe, yield-curve terrain and the Sports Lab arena, one bundle loaded on demand |
 | Economics | `source/src/econ-*.js`, `views-*.js`, `econ-fx.js`, `app.js`; build with `python3 source/build.py <data dir>` |

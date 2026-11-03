@@ -4,7 +4,7 @@ name: Sports Lab track record
 
 on:
   schedule:
-    - cron: "11 * * * *"             # hourly: log pregame numbers close to start, grade finished games
+    - cron: "11,41 * * * *"          # twice an hour (GitHub drops some scheduled runs): log pregame numbers, grade finished games
   workflow_dispatch:
   push:
     branches: ["main"]
