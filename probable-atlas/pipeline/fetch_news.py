@@ -68,6 +68,7 @@ LEAGUES = [('nfl', 'football/nfl', 'NFL'), ('ncaaf', 'football/college-football'
            ('seriea', 'soccer/ita.1', 'Serie A'), ('bund', 'soccer/ger.1', 'Bundesliga'), ('ligue1', 'soccer/fra.1', 'Ligue 1'), ('mls', 'soccer/usa.1', 'MLS'),
            ('ucl', 'soccer/uefa.champions', 'Champions League'), ('tennis', 'tennis/atp', 'Tennis'), ('golf', 'golf/pga', 'Golf'), ('ufc', 'mma/ufc', 'UFC')]
 
+NO_HOTLINK = re.compile(r'investing\.com/', re.I)
 NS = {'media': 'http://search.yahoo.com/mrss/', 'content': 'http://purl.org/rss/1.0/modules/content/', 'atom': 'http://www.w3.org/2005/Atom', 'dc': 'http://purl.org/dc/elements/1.1/'}
 
 
@@ -208,6 +209,9 @@ def atlas():
             for t, u, desc, d, im in rows[:40]:
                 if not t or not u.startswith('http'):
                     continue
+                t = re.sub(r'\s+\d{6,}$', '', t)   # a feed sometimes appends its article number to the headline
+                if im and NO_HOTLINK.search(im):    # hosts that refuse pictures shown on other sites
+                    im = None
                 x = clean(desc)
                 if x.lower().startswith(t.lower()[:40]):
                     x = clean(x[len(t):]) if len(x) > len(t) + 20 else ''

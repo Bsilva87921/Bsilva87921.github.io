@@ -8542,6 +8542,8 @@ window.UX = UX;
 
   /* ---------- news ---------- */
   const NEWS_URL = window.SPORTS_NEWS_URL || 'data/news.json';
+  const NAMES = { tennis: 'Tennis', golf: 'Golf', ufc: 'UFC' };
+  const FANTASY = /\bfantasy\b/i;   // fantasy-league advice is not news about the games
   async function liveNews() {
     if (SNAP() || !navigator.onLine) return [];
     const L = APP.LEAGUES.map(l => [l.id, l.path, l.short || l.name]).concat([['tennis', 'tennis/atp', 'Tennis'], ['golf', 'golf/pga', 'Golf'], ['ufc', 'mma/ufc', 'UFC']]);
@@ -8551,7 +8553,7 @@ window.UX = UX;
       return (j.articles || []).map(a => {
         const u = ((a.links || {}).web || {}).href, ims = (a.images || []).filter(i => i && i.url);
         return u && a.headline ? { id: u, t: a.headline, u, s: 'ESPN', d: a.published || a.lastModified, x: a.description || '', img: (ims.find(i => (i.width || 0) >= 400) || ims[0] || {}).url || null, lg, lgName: label, tm: (a.categories || []).filter(c => c.type === 'team' && c.description).map(c => c.description).slice(0, 4), tp: [lg] } : null;
-      }).filter(Boolean);
+      }).filter(it => it && !FANTASY.test(it.t + ' ' + it.x)).map(it => (it.x.trim().toLowerCase() === it.t.trim().toLowerCase() ? Object.assign(it, { x: '' }) : it));
     }));
     return res.flatMap(r => r.status === 'fulfilled' ? r.value : []);
   }
@@ -8560,8 +8562,9 @@ window.UX = UX;
   NEWS.init({
     url: [NEWS_URL], embed: 'SPORTS_NEWS', title: 'Sports news', lede: 'The latest from every league on the board, newest first.', live: liveNews,
     empty: SNAP() ? 'This saved copy has no news feed. The live site shows the latest headlines from every league.' : undefined,
-    topics: () => { const lgs = [...new Set(NEWS.items.map(i => i.lg))]; const T = []; if (FAV.count('team:')) T.push({ id: 'mine', label: '★ My teams', test: aboutFollowed, always: true }); return T.concat(lgs.map(lg => ({ id: lg, label: (NEWS.items.find(i => i.lg === lg) || {}).lgName || lgName(lg), test: it => it.lg === lg }))); },
-    tagOf: it => [it.lgName || lgName(it.lg)].filter(Boolean),
+    // one chip per league, in the board's order and with the board's names, whatever source a story came from
+    topics: () => { const have = new Set(NEWS.items.map(i => i.lg)), order = APP.LEAGUES.map(l => l.id).concat(['tennis', 'golf', 'ufc']), T = []; if (FAV.count('team:')) T.push({ id: 'mine', label: '★ My teams', test: aboutFollowed, always: true }); return T.concat(order.filter(lg => have.has(lg)).map(lg => ({ id: lg, label: NAMES[lg] || lgName(lg), test: it => it.lg === lg }))); },
+    tagOf: it => [NAMES[it.lg] || lgName(it.lg)].filter(Boolean),
     ask: q => ask(q), askText: it => `What does this mean for ${(it.tm && it.tm[0]) || it.lgName || 'the team'}? "${it.t}"`
   });
   APP.renderNews = el => { el.classList.add('kx-news'); NEWS.render(el); };
