@@ -1,6 +1,6 @@
 {
   "os": "mac",
-  "at": "2026-11-03T16:48:00.573Z",
+  "at": "2026-11-03T20:31:16.948Z",
   "pages": {
     "sports": {
       "title": "Probable Sports Lab — Bruno Silva",
@@ -8,11 +8,14 @@
       "canvases": 1,
       "insights": true,
       "insightItems": [
-        "Up next | Top matchup: Bayern at Atlético, Today 8:00 PM — Bayern | 42%",
+        "Live | 7 games  in progress: UCL",
+        "Closest | Closest live game: Bayern at Atlético, 30' — Bayern | 41%",
+        "Swing | Biggest swing: AS Roma went from 32% before the game to | 80%",
+        "Upset watch | Upset watch: AS Roma was 32% before kickoff and is now favored at | 80%",
+        "Up next | Top matchup: 76ers at Pistons, Thu, Nov 5 · 12:00 AM — Pistons | 59%",
         "Favorite | Biggest favorite on the slate: Toledo (NCAAF) vs Sacramento St | 94%",
         "Model vs line | Biggest gap with the betting line: the model gives Pistons 59% against the line's | 52%",
-        "Upset | Biggest recent upset: Minnesota won 3–1 with a pregame chance of | 21%",
-        "Track record | Track record: replayed without hindsight, the lab's favorite won 58% of 3,244 games outside soccer this season — and its odds beat \"home edge only\" by 3% across 4,126 games | 58%"
+        "Upset | Biggest recent upset: Minnesota won 3–1 with a pregame chance of | 21%"
       ],
       "askButton": "✦Ask AI",
       "installButton": true,
@@ -20,7 +23,7 @@
       "hOverflow": false,
       "serviceWorker": "https://bsilva87921.github.io/live-sports-lab/",
       "answer": {
-        "text": "BUILT-IN ANALYST\n\nNo games are live right now. Next up: Galatasaray vs VfB Stuttgart (UCL, Today 5:45 PM).\n\nWin chances: VFB 32% · draw 23% · GAL 46%\nOpen the game center\nWho will win MUN at ATM?\nWhat if ATM gets a red card?\nAny upsets brewing?",
+        "text": "BUILT-IN ANALYST\n\n7 games live, closest first:\n\nBodo/Glimt vs Lille (UCL, live · 30') — LILL 0, BODO 0. — LILL 20% · draw 25% · BODO 54% (pregame BODO 60%)\nAtlético Madrid vs Bayern Munich (UCL, live · 30') — MUN 0, ATM 0. — MUN 41% · draw 30% · ATM 29% (pregame MUN 45%)\nLASK Linz vs Slovan Bratislava (UCL, live · 30') — SLB 0, LAS 1. — SLB 4% · draw 10% · LAS 86% (pregame LAS 71%)\nBarcelona vs Aston Villa (UCL, live · 29') — AVL 0, BAR 1. — AVL 5% · draw 10% · BAR 86% (pregame BAR 74%)\nFeyenoord Rotterdam vs Internazionale (UCL, live · 29') — INT 1, FEY 0. — INT 77% · draw 16% · FEY 8% (prega",
         "error": false
       },
       "trackRecordShown": true,
@@ -31,34 +34,53 @@
         "400 https://site.web.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard?dates=20261102-20261104&limit=300"
       ],
       "news": {
-        "items": 291,
-        "asOf": "2026-11-03T16:49:10.775Z",
+        "items": 566,
+        "asOf": "2026-11-03T20:32:17.757Z",
         "cards": 24,
         "chips": [
-          "All 291",
-          "NFL 20",
-          "UCL 13",
-          "EPL 30",
-          "NCAAF 30",
-          "NBA 30",
-          "UFC 11",
+          "All 566",
+          "NFL 77",
+          "NCAAF 69",
+          "MLB 61",
+          "NBA 48",
           "WNBA 20",
-          "MLB 23",
           "NHL 29",
-          "Golf 13",
-          "LaLiga 17",
-          "Ligue 1 9",
-          "MLS 12"
+          "EPL 66",
+          "LaLiga 24",
+          "Serie A 22",
+          "Bundesliga 15",
+          "Ligue 1 11",
+          "MLS 17",
+          "UCL 31"
         ],
-        "imgs": 24,
-        "imgsLoaded": 21,
+        "imgs": 22,
+        "imgsLoaded": 16,
         "first": [
-          "NFL Power Rankings: Stacking all 32 teams for Week 9, plus best in-season trades",
-          "2026 NFL awards tracker: Odds for MVP, Rookie of the Year and more",
-          "It's time for a Week 8 fantasy football recap",
-          "Rest-of-season rankings: Irving, Tuten and Hubbard achieve RB1 status"
+          "Barcelona v Aston Villa: Champions League – live",
+          "Manchester United v Roma: Champions League – live",
+          "Missouri's Eli Drinkwitz: 'I'm not a candidate' for Florida State job",
+          "Shane Beamer praises Gamecocks' resilience through adversity"
         ]
       },
+      "reader": {
+        "open": true,
+        "title": "Barcelona v Aston Villa: Champions League – live",
+        "cta": "Read the full story on The Guardian ↗",
+        "more": 4,
+        "img": true,
+        "sources": [
+          "All sources",
+          "ESPN (246)",
+          "CBS Sports (107)",
+          "Sky Sports (55)",
+          "The Athletic (45)",
+          "The Guardian (43)",
+          "BBC Sport (36)",
+          "MLB.com (24)",
+          "MMA Fighting (10)"
+        ]
+      },
+      "readerOfficial": null,
       "search": [
         "BOSBoston CelticsNBA · 5-2 · next: Thu, Nov 5 · 12:30 AMTeam",
         "◷Boston Celtics at Houston RocketsNBA · Final · BOS 93–109 HOUGame",
@@ -66,9 +88,9 @@
         "✦Ask AI: “celtics”Answers from this page’s data and modelsAsk AI"
       ],
       "story": {
-        "slides": 6,
-        "kicker": "Up next · UCL",
-        "title": "Bayern at Atlético"
+        "slides": 7,
+        "kicker": "Live now",
+        "title": "7 games are in progress"
       },
       "extrasErrors": [
         "console: Failed to load resource: the server responded with a status of 400 ()"
@@ -101,28 +123,54 @@
       "errors": [],
       "httpFailures": [],
       "news": {
-        "items": 272,
-        "asOf": "2026-11-03T16:46:46+00:00",
+        "items": 274,
+        "asOf": "2026-11-03T20:23:58+00:00",
         "cards": 24,
         "chips": [
-          "All 272",
-          "Growth & GDP 60",
-          "Inflation 11",
-          "Jobs 17",
+          "All 274",
+          "Growth & GDP 61",
+          "Inflation 8",
+          "Jobs 20",
           "Central banks 30",
           "Trade 5",
           "World 50",
-          "Markets 109",
-          "Official releases 22"
+          "Markets 107",
+          "Official releases 21"
         ],
-        "imgs": 14,
-        "imgsLoaded": 8,
+        "imgs": 2,
+        "imgsLoaded": 2,
         "first": [
-          "Keeping mortgage interest relief approved",
-          "Binance co-CEO Richard Teng says hackers used fake job interviews, AI tool to steal $6.3 billion in crypto 108511116",
-          "Midterm elections could jolt stocks if Democrats sweep Congress",
-          "Sysco under pressure on Jetro acquisition costs, FY sales guidance"
+          "‘It’s good to be old’: I’ve been invited to a dozen free meals that turn into annuity sales pitches. Should I stop going?",
+          "A new Disney-WWE mashup has John Cena and the new Avengers movie working in tandem",
+          "YieldMax Universe Fund of Option Income ETFs declares $0.0528 dividend",
+          "YieldMax Memory & Storage Portfolio Option Inc ETF declares $0.3242 dividend"
         ]
+      },
+      "reader": {
+        "open": true,
+        "title": "‘It’s good to be old’: I’ve been invited to a dozen free meals that turn into annuity sales pitches. Should I stop going?",
+        "cta": "Read the full story on MarketWatch ↗",
+        "more": 0,
+        "img": true,
+        "sources": [
+          "All sources",
+          "Investing.com (60)",
+          "CNBC (53)",
+          "Financial Times (48)",
+          "CoinDesk (25)",
+          "BBC (22)",
+          "MarketWatch (20)",
+          "The Guardian (18)",
+          "European Central Bank (15)",
+          "Seeking Alpha (7)",
+          "Federal Reserve (4)",
+          "BEA (2)"
+        ]
+      },
+      "readerOfficial": {
+        "title": "Boris Vujčić: Integrated, open and resilient: Europe’s strengths in a fragmenting world",
+        "paras": 17,
+        "note": "Official release: the opening paragraphs; the rest is in the original. Source: European Central Bank."
       },
       "search": [
         "◍JapanEast Asia & Pacific · inflation 2.0%+0.7%Country",
@@ -141,14 +189,14 @@
       "canvases": 1,
       "insights": true,
       "insightItems": [
-        "S&P 500 | S&P 500 at 7,572: +0.40% on Nov 3, 2026, +10.6% this year, 3.2% below its record | +0.40%",
+        "S&P 500 | S&P 500 at 7,571: +0.39% on Nov 3, 2026, +10.6% this year, 3.2% below its record | +0.39%",
         "Regime | The regime model reads the market as calm, with probability | 96%",
         "Correction risk | Chance of a 10% fall within six months, against a 21% base rate (modest skill) | 37%",
-        "Volatility | VIX 20.6; the GARCH model expects daily S&P 500 swings of about | ±1.0%",
+        "Volatility | VIX 20.8; the GARCH model expects daily S&P 500 swings of about | ±1.0%",
         "Yield curve | 10-year Treasury 4.94% vs 3-month 4.16%: the curve is upward sloping, spread | +0.78 pp",
         "Risk appetite | Risk appetite gauge (six market readings): extreme fear | 21/100",
         "Valuation | CAPE 40.7, 99th percentile since 1881; history implies a 10-year real return near | 0.4%/yr",
-        "Biggest mover | KOSPI moved the most of 58 markets on Nov 2, 2026 | +2.2%"
+        "Biggest mover | Copper moved the most of 58 markets on Nov 3, 2026 | −2.4%"
       ],
       "askButton": "✦Ask AI",
       "installButton": true,
@@ -162,38 +210,66 @@
       "errors": [],
       "httpFailures": [],
       "news": {
-        "items": 272,
-        "asOf": "2026-11-03T16:46:46+00:00",
+        "items": 274,
+        "asOf": "2026-11-03T20:23:58+00:00",
         "cards": 24,
         "chips": [
-          "All 272",
-          "Markets 105",
-          "Fed & rates 40",
-          "Earnings 25",
+          "All 274",
+          "Markets 102",
+          "Fed & rates 39",
+          "Earnings 21",
           "Commodities 20",
-          "Crypto 42",
+          "Crypto 43",
           "Currencies 12",
-          "Economy 75",
-          "Official releases 22"
+          "Economy 76",
+          "Official releases 21"
         ],
-        "imgs": 14,
-        "imgsLoaded": 8,
+        "imgs": 2,
+        "imgsLoaded": 2,
         "first": [
-          "Keeping mortgage interest relief approved",
-          "Binance co-CEO Richard Teng says hackers used fake job interviews, AI tool to steal $6.3 billion in crypto 108511116",
-          "Midterm elections could jolt stocks if Democrats sweep Congress",
-          "Sysco under pressure on Jetro acquisition costs, FY sales guidance"
+          "‘It’s good to be old’: I’ve been invited to a dozen free meals that turn into annuity sales pitches. Should I stop going?",
+          "A new Disney-WWE mashup has John Cena and the new Avengers movie working in tandem",
+          "YieldMax Universe Fund of Option Income ETFs declares $0.0528 dividend",
+          "YieldMax Memory & Storage Portfolio Option Inc ETF declares $0.3242 dividend"
         ]
       },
+      "reader": {
+        "open": true,
+        "title": "‘It’s good to be old’: I’ve been invited to a dozen free meals that turn into annuity sales pitches. Should I stop going?",
+        "cta": "Read the full story on MarketWatch ↗",
+        "more": 0,
+        "img": true,
+        "sources": [
+          "All sources",
+          "Investing.com (60)",
+          "CNBC (53)",
+          "Financial Times (48)",
+          "CoinDesk (25)",
+          "BBC (22)",
+          "MarketWatch (20)",
+          "The Guardian (18)",
+          "European Central Bank (15)",
+          "Seeking Alpha (7)",
+          "Federal Reserve (4)",
+          "BEA (2)"
+        ]
+      },
+      "readerOfficial": {
+        "title": "Boris Vujčić: Integrated, open and resilient: Europe’s strengths in a fragmenting world",
+        "paras": 17,
+        "note": "Official release: the opening paragraphs; the rest is in the original. Source: European Central Bank."
+      },
       "search": [
-        "◆Gold (GLD)Core asset classes · $360.11−0.43%Market",
-        "◆Gold (GC)Dollar & commodities · $3,940.3−0.74%Market",
+        "◆Gold (GLD)Core asset classes · $359.39−0.63%Market",
+        "◆Gold (GC)Dollar & commodities · $3,928.5−1.04%Market",
+        "✉TSX movers: gainers lead 3-to-1 as gold miners slideInvesting.com · 1 h agoNews",
+        "✉Why we're keeping a hold rating on DuPont despite its beat-and-raise quarterCNBC · 1 h ag",
         "✦Ask AI: “gold”Answers from this page’s data and modelsAsk AI"
       ],
       "story": {
         "slides": 8,
         "kicker": "S&P 500 · Nov 3, 2026",
-        "title": "The S&P 500 rose 0.40% to 7,572"
+        "title": "The S&P 500 rose 0.39% to 7,571"
       },
       "extrasErrors": []
     }
