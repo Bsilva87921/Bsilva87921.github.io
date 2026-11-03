@@ -1,0 +1,35 @@
+name: Sports Lab probe (temporary)
+on:
+  push:
+    branches: ["sports-probe"]
+permissions:
+  contents: write
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Probe ESPN APIs
+        env: { OUT_DIR: out }
+        run: python live-sports-lab/probe/probe_api.py
+      - name: Record the live page
+        env: { OUT_DIR: out }
+        run: |
+          pip install --quiet playwright
+          python -m playwright install --with-deps chromium > /dev/null
+          python live-sports-lab/probe/record_har.py || echo "HAR recording failed"
+          ls -la out
+      - name: Save results
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd out
+          git init -q -b sports-probe-out
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A && git commit -qm "probe $(date -u +%FT%TZ)"
+          git push -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" sports-probe-out
