@@ -484,14 +484,15 @@ def sports():
             sources.append({'id': fid, 'name': name, 'kind': 'outlet', 'n': len(old), 'ok': False})
             print(f'  {fid:14s} failed ({type(e).__name__}: {str(e)[:80]}); kept {len(old)} previous')
         time.sleep(0.25)
-    return {'asOf': NOW.isoformat(timespec='seconds'), 'sources': sources, 'items': balance(finish(items, 4, 100000), 480)}
+    return {'asOf': NOW.isoformat(timespec='seconds'), 'sources': sources, 'items': balance(finish(items, 10, 100000), 480)}
 
 
 PER_PUB = {'The Athletic': 45, 'MLB.com': 30, 'MMA Fighting': 25}   # others: 160
 
 
-def balance(items, cap, floor=14):
-    """Newest first, a ceiling per publisher, and every league's newest `floor` stories kept whatever the cap."""
+def balance(items, cap, floor=14, recent_days=4):
+    """Newest first, a ceiling per publisher, and every league's newest `floor` stories kept whatever the cap (from
+    the last ten days, so quieter leagues still show); beyond those, only stories from the last `recent_days`."""
     from collections import Counter
     pub, kept = Counter(), []
     for it in items:
@@ -506,6 +507,8 @@ def balance(items, cap, floor=14):
             must.append(it)
         else:
             rest.append(it)
+    cut = (NOW - timedelta(days=recent_days)).isoformat()
+    rest = [it for it in rest if (it.get('d') or '') >= cut]
     out = must + rest[:max(0, cap - len(must))]
     return sorted(out, key=lambda x: x.get('d') or '', reverse=True)
 
