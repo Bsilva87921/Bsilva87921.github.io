@@ -1,7 +1,7 @@
 /* Probable Atlas · Economics: app shell (routing, scope, module nav, country drawer, events). */
 const TABS = [['live', 'Live now'], ['news', 'News'], ['indicators', 'Indicators'], ['models', 'Models & forecasts'], ['whatif', 'What-if lab'], ['recs', 'Recommendations'], ['history', 'History'], ['how', 'How it works']];
 const FIN_URL = window.ATLAS_DATA ? 'https://bsilva87921.github.io/probable-atlas/finance/' : 'finance/';
-const MODULES = [['econ', 'Economics', true], ['fin', 'Finance & markets', false, FIN_URL], ['comm', 'Commodities & scarcity'], ['wx', 'Weather & climate'], ['ag', 'Agriculture & food'], ['hunger', 'Hunger'], ['wealth', 'Wealth & inequality'], ['tech', 'Tech & innovation'], ['conflict', 'Conflict & security'], ['pulse', 'World Pulse']];
+const MODULES = [['econ', 'Economics', true], ['fin', 'Finance & markets', false, FIN_URL], ['comm', 'Commodities & scarcity'], ['wx', 'Weather & climate'], ['ag', 'Agriculture & food'], ['hunger', 'Hunger'], ['wealth', 'Wealth & inequality'], ['tech', 'Tech & innovation'], ['conflict', 'Conflict & security'], ['pol', 'Politics & governance'], ['health', 'Health & medicine'], ['pulse', 'World Pulse']];
 const STATE = K.store('atlas-econ-v1', { scope: 'WLD', tab: 'live', mapInd: 'g', indGrp: 'Growth & size', indFilter: 'top40', usSeries: 'UNRATE', usRange: '10', cSeries: 'imf:NGDP_RPCH', recModel: 'classic', wiIso: 'CHN' }, ['tab', 'scope', 'mapInd', 'indGrp', 'indFilter', 'usRange', 'recModel', 'usSeries', 'cSeries', 'wiIso']);
 
 const APP = (() => {

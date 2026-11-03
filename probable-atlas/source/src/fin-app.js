@@ -1,7 +1,7 @@
 /* Probable Atlas · Finance: app shell (tabs, module nav, asset drawer, events, theme, chat hookup). */
 const TABS = [['live', 'Live now'], ['news', 'News'], ['markets', 'Markets'], ['models', 'Models & forecasts'], ['whatif', 'What-if lab'], ['recs', 'Recommendations'], ['history', 'History'], ['how', 'How it works']];
 const ECON_URL = window.ATLAS_FIN_DATA ? 'https://bsilva87921.github.io/probable-atlas/' : '../';
-const MODULES = [['econ', 'Economics', false, ECON_URL], ['fin', 'Finance & markets', true], ['comm', 'Commodities & scarcity'], ['wx', 'Weather & climate'], ['ag', 'Agriculture & food'], ['hunger', 'Hunger'], ['wealth', 'Wealth & inequality'], ['tech', 'Tech & innovation'], ['conflict', 'Conflict & security'], ['pulse', 'World Pulse']];
+const MODULES = [['econ', 'Economics', false, ECON_URL], ['fin', 'Finance & markets', true], ['comm', 'Commodities & scarcity'], ['wx', 'Weather & climate'], ['ag', 'Agriculture & food'], ['hunger', 'Hunger'], ['wealth', 'Wealth & inequality'], ['tech', 'Tech & innovation'], ['conflict', 'Conflict & security'], ['pol', 'Politics & governance'], ['health', 'Health & medicine'], ['pulse', 'World Pulse']];
 const STATE = K.store('atlas-fin-v1', { tab: 'live', focus: '^GSPC', cmp: [], range: '5Y', mview: 'price', logY: true, sectPer: 'm1', cwin: '156', cback: 0, rHorizon: 'long', rRisk: 'med', hFrom: '1980', mAll: '0', lab: null }, ['tab', 'focus', 'cmp', 'range', 'mview', 'logY', 'sectPer', 'cwin', 'rHorizon', 'rRisk', 'hFrom', 'lab']);
 
 const HAS_CH = () => typeof CH !== 'undefined';

@@ -400,7 +400,7 @@ a{color:var(--accent)}
     <div class="hm-copy">
       <span class="hm-eyebrow">The world, in numbers</span>
       <h1>Probable <em>Atlas</em></h1>
-      <p class="hm-lede">Ten modules on how the world works, each with live data, forecasts that show their track record, a what-if lab, recommendations backed by evidence and an AI analyst. Two are live.</p>
+      <p class="hm-lede">Twelve modules on how the world works, each with live data, forecasts that show their track record, a what-if lab, recommendations backed by evidence and an AI analyst. Two are live.</p>
       <div class="hm-cta"><a class="hm-btn pri" href="../">Open Economics</a><a class="hm-btn" href="../finance/">Open Finance &amp; markets</a></div>
       <p class="hm-note" id="hmNote"></p>
     </div>
@@ -1423,7 +1423,8 @@ window.INS = INS; window.PX3D = PX3D; window.PAPP = PAPP;
     { k: 'fin', name: 'Finance & markets', on: true, href: '../finance/', icon: '◭', blurb: '61 markets and 34 rates daily since 1990, the S&P 500 since 1928, tested risk models, a portfolio lab and a 3D yield-curve terrain.', links: [['Live now', '../finance/#live'], ['Models', '../finance/#models'], ['Portfolio lab', '../finance/#whatif'], ['Ask AI', '../finance/?ask=Is%20a%20correction%20likely%3F']] },
     { k: 'comm', name: 'Commodities & scarcity', icon: '◆' }, { k: 'wx', name: 'Weather & climate', icon: '◌' }, { k: 'ag', name: 'Agriculture & food', icon: '❋' },
     { k: 'hunger', name: 'Hunger & food security', icon: '◒' }, { k: 'wealth', name: 'Wealth, poverty & inequality', icon: '◫' }, { k: 'tech', name: 'Tech & innovation', icon: '⌁' },
-    { k: 'conflict', name: 'Global conflict & security', icon: '◬' }, { k: 'pulse', name: 'World Pulse', icon: '✺', blurb: 'The capstone: one risk index across every module.' }
+    { k: 'conflict', name: 'Global conflict & security', icon: '◬' }, { k: 'pol', name: 'Politics & governance', icon: '◉' }, { k: 'health', name: 'Healthcare & medicine', icon: '✚' },
+    { k: 'pulse', name: 'World Pulse', icon: '✺', blurb: 'The capstone: one risk index across every module.' }
   ];
   const saved = k => { try { const x = JSON.parse(localStorage.getItem('atlas-ins-' + k) || 'null'); return x && x.items && x.items.length ? x : null; } catch (e) { return null; } };
   const ago = t => { const m = Math.round((Date.now() - t) / 60000); return m < 60 ? m + ' min ago' : m < 1440 ? Math.round(m / 60) + ' h ago' : Math.round(m / 1440) + ' d ago'; };
