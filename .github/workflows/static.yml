@@ -35,6 +35,10 @@ jobs:
         run: |
           mkdir -p probable-atlas/data
           if git fetch --depth=1 origin atlas-data; then git archive FETCH_HEAD | tar -x -C probable-atlas/data; fi
+      - name: Add Sports Lab track record
+        run: |
+          mkdir -p live-sports-lab/data
+          if git fetch --depth=1 origin sports-data; then git archive FETCH_HEAD track.json | tar -x -C live-sports-lab/data || true; fi
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact

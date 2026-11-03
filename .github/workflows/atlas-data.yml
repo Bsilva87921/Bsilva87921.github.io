@@ -74,6 +74,8 @@ jobs:
           mkdir -p probable-atlas/data
           cp out/*.json probable-atlas/data/
           rm -rf out prev
+          mkdir -p live-sports-lab/data
+          if git fetch --depth=1 origin sports-data; then git archive FETCH_HEAD track.json | tar -x -C live-sports-lab/data || true; fi
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
