@@ -26,7 +26,7 @@ async function launch() {
 }
 if (process.env.WAIT_FOR) { // wait until the new build is live (Pages deploys can lag the push)
   for (let i = 0; i < 60; i++) {
-    try { const t = await (await fetch(BASE + '/probable-atlas/finance/?nocache=' + Date.now(), { cache: 'no-store' })).text(); if (t.includes(process.env.WAIT_FOR)) { log('new build is live after', i * 20, 's'); break; } } catch (e) { /* retry */ }
+    try { const t = await (await fetch(BASE + (process.env.WAIT_URL || '/probable-atlas/finance/') + '?nocache=' + Date.now(), { cache: 'no-store' })).text(); if (t.includes(process.env.WAIT_FOR)) { log('new build is live after', i * 20, 's'); break; } } catch (e) { /* retry */ }
     await sleep(20000);
   }
   await sleep(20000);
