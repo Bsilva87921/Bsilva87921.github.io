@@ -53,6 +53,9 @@
 .brow .nm{display:flex;flex-direction:column;min-width:0}.brow .nm small{color:var(--muted);font-size:11px}
 .brow .lv{font:500 13px var(--f-mono);text-align:right}.brow .yt{font:500 12px var(--f-mono);text-align:right;white-space:nowrap}.brow .yt small{color:var(--muted);font-family:var(--f-sans)}
 @media (max-width:520px){.brow{grid-template-columns:minmax(0,1fr) auto 58px}.brow .yt,.brow .spark{display:none}}
+/* a narrow card (two columns on a small tablet) gets the compact row too, so the board never pushes the page sideways */
+.board{container-type:inline-size}
+@container (max-width:430px){.brow{grid-template-columns:minmax(0,1fr) auto 58px}.brow .yt,.brow .spark{display:none}}
 .movers{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-direction:column;gap:4px}
 .movers li{display:flex;justify-content:space-between;gap:10px;font-size:13.5px;padding:4px 0;border-bottom:1px dashed var(--line)}
 .exp-ctl{display:flex;flex-direction:column;gap:8px;margin-bottom:8px}

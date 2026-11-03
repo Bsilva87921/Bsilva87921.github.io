@@ -1,0 +1,41 @@
+# Downloads the photos listed in assets/photos/manifest.json, writes optimized AVIF and WebP sizes, and commits them.
+name: Photos
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+    paths:
+      - "assets/photos/manifest.json"
+      - "assets/photos/tools/**"
+      - ".github/workflows/photos.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: photos
+  cancel-in-progress: false
+
+jobs:
+  photos:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install sharp
+        working-directory: assets/photos/tools
+        run: npm install --no-save --no-audit --no-fund --no-package-lock sharp@0.34
+      - name: Download and optimize
+        run: node assets/photos/tools/fetch.mjs
+      - name: Commit the results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/photos
+          if git diff --cached --quiet; then echo "nothing new"; exit 0; fi
+          git commit -qm "Photos: optimized sizes from the manifest"
+          for i in 1 2 3 4 5; do git pull -q --rebase origin main && git push -q origin HEAD:main && break; sleep 6; done

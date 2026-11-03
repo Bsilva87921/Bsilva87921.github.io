@@ -1,0 +1,34 @@
+{
+  "about": "Photography for the Probable sites. The Photos workflow downloads each source once, crops it, and writes responsive AVIF and WebP sizes plus photos.json (sizes, blur placeholder, colour, credit). Entries with \"try\": true are candidates: only a 960px preview is written to try/.",
+  "photos": [
+    { "id": "earth-night-americas", "sizes": [640, 1280, 1920, 2560],
+      "src": { "url": "https://assets.science.nasa.gov/content/dam/science/esd/eo/images/imagerecords/144000/144898/BlackMarble_2016_3km.jpg" },
+      "crop": { "lon": [-128, 52], "lat": [6, 66] },
+      "alt": "The Americas, the Atlantic and Europe at night, lit by cities",
+      "credit": "NASA Earth Observatory (Joshua Stevens; Suomi NPP VIIRS data, Miguel Román, NASA GSFC)",
+      "link": "https://science.nasa.gov/earth/earth-observatory/earth-at-night/maps", "license": "Public domain (NASA)" },
+    { "id": "earth-night-eurasia", "sizes": [640, 1280, 1920, 2560],
+      "src": { "url": "https://assets.science.nasa.gov/content/dam/science/esd/eo/images/imagerecords/144000/144898/BlackMarble_2016_3km.jpg" },
+      "crop": { "lon": [-14, 146], "lat": [-4, 62] },
+      "alt": "Europe, Africa and Asia at night, lit by cities",
+      "credit": "NASA Earth Observatory (Joshua Stevens; Suomi NPP VIIRS data, Miguel Román, NASA GSFC)",
+      "link": "https://science.nasa.gov/earth/earth-observatory/earth-at-night/maps", "license": "Public domain (NASA)" },
+
+    { "id": "nyc-night-a", "try": true, "src": { "unsplash": "photo-1767908853602-26e1787c7db4" }, "alt": "Manhattan's skyline at night with the Empire State Building", "credit": "Ryan Fleischer", "link": "https://unsplash.com/photos/1lRJIS8Qxdo", "license": "Unsplash License" },
+    { "id": "nyc-night-b", "try": true, "src": { "unsplash": "photo-1736110695895-173d9c7bd67b" }, "alt": "A city of tall buildings at night", "credit": "CR", "link": "https://unsplash.com/photos/lt_epEmZ2uA", "license": "Unsplash License" },
+    { "id": "nyc-night-c", "try": true, "src": { "unsplash": "photo-1680677880779-9d34f40ec985" }, "alt": "New York City's skyline at night", "credit": "Suzi Kim", "link": "https://unsplash.com/photos/qBhhrtIQk5E", "license": "Unsplash License" },
+
+    { "id": "stadium-night", "try": true, "src": { "unsplash": "photo-1549333580-4cb2c5c8e421" }, "alt": "Mercedes-Benz Stadium in Atlanta lit up at night", "credit": "Christopher Alvarenga", "link": "https://unsplash.com/photos/GCEAqghDxRo", "license": "Unsplash License" },
+    { "id": "football-lights", "try": true, "src": { "unsplash": "photo-1508782478-2164581d40cd" }, "alt": "A crowd watching football under stadium lights", "credit": "Alex Korolkoff", "link": "https://unsplash.com/photos/b_y4wUk6WhE", "license": "Unsplash License" },
+    { "id": "baseball-night", "try": true, "src": { "unsplash": "photo-1480563597043-1c877e682fc7" }, "alt": "A baseball game at night", "credit": "Nick Jio", "link": "https://unsplash.com/photos/bYvo2ol_img", "license": "Unsplash License" },
+    { "id": "basketball-court", "try": true, "src": { "unsplash": "photo-1559369064-c4d65141e408" }, "alt": "A basketball court", "credit": "Patrick Schöpflin", "link": "https://unsplash.com/photos/hEQpoeUuJXA", "license": "Unsplash License" },
+    { "id": "hockey-rink", "try": true, "src": { "unsplash": "photo-1644553054315-9fb69509f932" }, "alt": "An indoor ice rink with a hockey goal", "credit": "Chris DeSort", "link": "https://unsplash.com/photos/-ofOCf-jen4", "license": "Unsplash License" },
+    { "id": "hockey-play", "try": true, "src": { "unsplash": "photo-1549956847-f77eb7058468" }, "alt": "Ice hockey players on the rink", "credit": "Markus Spiske", "link": "https://unsplash.com/photos/W2Hr3CQU8DI", "license": "Unsplash License" },
+    { "id": "soccer-goal", "try": true, "src": { "unsplash": "photo-1710937244418-0956afdcfe0b" }, "alt": "A soccer goal and ball on a grass field", "credit": "Richard Burlton", "link": "https://unsplash.com/photos/6SDYxef3kYw", "license": "Unsplash License" },
+    { "id": "soccer-ball", "try": true, "src": { "unsplash": "photo-1520804588595-ac2328f38c4a" }, "alt": "A soccer ball on green grass", "credit": "Wuilmar Matias-Morales", "link": "https://unsplash.com/photos/adcyN9XhzwY", "license": "Unsplash License" },
+    { "id": "tennis-aerial", "try": true, "src": { "unsplash": "photo-1600614282844-a885427b0c15" }, "alt": "A tennis court among trees, seen from above", "credit": "Yente Van Eynde", "link": "https://unsplash.com/photos/LqusW4i447A", "license": "Unsplash License" },
+    { "id": "golf-flag", "try": true, "src": { "unsplash": "photo-1687291134396-304d837a1d65" }, "alt": "A flag on a golf green at St Andrews", "credit": "Ryan Caven", "link": "https://unsplash.com/photos/YflWkIZqRfM", "license": "Unsplash License" },
+    { "id": "golf-aerial", "try": true, "src": { "unsplash": "photo-1639350059346-6dbe5a612c86" }, "alt": "A golf course among trees, seen from above", "credit": "Freysteinn G. Jonsson", "link": "https://unsplash.com/photos/93hEQg-8EWc", "license": "Unsplash License" },
+    { "id": "fight-ring", "try": true, "src": { "unsplash": "photo-1509563268479-0f004cf3f58b" }, "alt": "Two boxers in a ring in a crowded arena", "credit": "Joel Muniz", "link": "https://unsplash.com/photos/lUK16p_JtCM", "license": "Unsplash License" }
+  ]
+}

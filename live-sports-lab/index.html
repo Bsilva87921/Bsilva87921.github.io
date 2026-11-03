@@ -1062,7 +1062,16 @@ body.kx-pip{margin:0;padding:10px;background:var(--bg,#0b1220);color:var(--ink,#
 @media (max-width:640px){:root{--ins-h:38px}}
 .ins{--ins-bg:rgba(6,11,21,.86);--ins-ink:#EAF0F8;--ins-muted:#93A1B8;--ins-line:rgba(255,255,255,.08);--ins-accent:var(--led);--ins-accent-ink:#1B1300;--ins-font:var(--f-body);--ins-mono:var(--f-mono);--ins-max:1320px}
 .ins-stk{font-family:var(--f-display);font-size:12px;letter-spacing:.14em}
-@media (min-width:701px){.mast{top:calc(env(safe-area-inset-top,0px) + var(--ins-h))}}
+/* the pinned masthead sits just under the Insights bar and its 1px border, never under it */
+@media (min-width:701px){.mast{top:calc(env(safe-area-inset-top,0px) + var(--ins-h) + 1px)}}
+/* the masthead never overlaps itself: the wordmark keeps its width, the status pill shortens first, the tagline goes
+   next, and if the row still does not fit, the buttons move to a second row instead of covering the wordmark */
+.brand{flex:none}
+.mast-in{flex-wrap:wrap;row-gap:8px}
+.mast-actions{margin-left:auto}
+@media (max-width:1180px){.status .st-long{display:none}.status .st-short{display:inline}}
+@media (max-width:1060px){.brand .tag{display:none}}
+@media (min-width:701px) and (max-width:900px){.mast-actions .icon-btn .lbl{display:none}.mast-actions .icon-btn{padding:0 9px}}
 
 /* ---------- Live arena ---------- */
 .arena{position:relative;color:#E8EEF7;background:radial-gradient(120% 140% at 72% 0%,#13223d 0%,var(--arena-bg) 52%,#060a14 100%);border-bottom:1px solid var(--band-line);overflow:hidden}

@@ -692,7 +692,7 @@ body.kx-pip{margin:0;padding:10px;background:var(--bg,#0b1220);color:var(--ink,#
 @media (max-width:640px){:root{--ins-h:38px}}
 .ins{--ins-bg:color-mix(in srgb,var(--band) 90%,transparent);--ins-ink:var(--band-ink);--ins-muted:var(--band-muted);--ins-line:var(--band-line);--ins-accent:var(--band-accent);--ins-accent-ink:#081a18;--ins-font:var(--f-sans);--ins-mono:var(--f-mono)}
 .ins-stk{font-family:var(--f-mono);letter-spacing:.13em}
-.bar{top:calc(env(safe-area-inset-top,0px) + var(--ins-h))}
+.bar{top:calc(env(safe-area-inset-top,0px) + var(--ins-h) + 1px)}
 
 /* 3D masthead: title and modules on the left, the scene on the right */
 .mast.has3d .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);grid-template-areas:"brand stage" "mods stage";align-items:end;gap:14px 28px;padding-block:24px 20px}
