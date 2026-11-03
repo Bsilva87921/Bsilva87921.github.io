@@ -8297,7 +8297,7 @@ const NEWS = (() => {
     // stories without a picture get a compact text card with an accent edge instead of an empty frame
     return `<article class="kx-n-card${lead ? ' lead' : ''}${it.img ? '' : ' noimg'}" data-n="${k}">
       ${it.img ? `<a class="kx-n-media" href="${esc(it.u)}" ${nid(it)} target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">${img(it, 'kx-n-img')}</a>` : ''}
-      <div class="kx-n-body"><div class="kx-n-meta"><span class="kx-n-src">${esc(it.s || host(it.u))}</span><span class="kx-n-dot" aria-hidden="true">·</span><time datetime="${esc(it.d || '')}">${esc(ago(it.d))}</time>${tags(it)}${it.body ? '<span class="kx-n-full">Full text</span>' : ''}</div>
+      <div class="kx-n-body"><div class="kx-n-meta"><span class="kx-n-src">${esc(it.s || host(it.u))}</span><span class="kx-n-dot" aria-hidden="true">·</span><time datetime="${esc(it.d || '')}">${esc(ago(it.d))}</time>${tags(it)}${it.body ? `<span class="kx-n-full">${it.full ? 'Full text' : 'Read here'}</span>` : ''}</div>
       <h3 class="kx-n-h"><a href="${esc(it.u)}" ${nid(it)} target="_blank" rel="noopener">${esc(it.t)}</a></h3>
       ${it.x && norm(it.x) !== norm(it.t) ? `<p class="kx-n-x">${esc(it.x)}</p>` : ''}
       <div class="kx-n-acts">${O.ask ? `<button type="button" class="kx-n-btn" data-nask="${k}">✦ What it means</button>` : ''}<button type="button" class="kx-n-btn kx-ico" data-nshare="${k}" aria-label="Share this story">${window.SHARE ? SHARE.ICON : '↗'}</button></div></div>
@@ -8379,7 +8379,7 @@ const NEWS = (() => {
         <button type="button" class="kx-r-b kx-r-x" data-rclose aria-label="Close the story">×</button></header>
       <div class="kx-r-in">
         ${it.img ? `<figure class="kx-r-fig"><img src="${esc(it.img)}" alt="" referrerpolicy="no-referrer" onerror="this.parentNode.remove()"><figcaption>Image: ${name}</figcaption></figure>` : ''}
-        <div class="kx-r-tags">${tags(it)}${it.pw ? '<span class="kx-n-tag kx-r-pw">Subscription</span>' : ''}${body ? '<span class="kx-n-tag kx-r-off">Full text</span>' : ''}</div>
+        <div class="kx-r-tags">${tags(it)}${it.pw ? '<span class="kx-n-tag kx-r-pw">Subscription</span>' : ''}${body ? `<span class="kx-n-tag kx-r-off">${it.full ? 'Full text' : 'Opening paragraphs'}</span>` : ''}</div>
         <h2 class="kx-r-h" id="kxrH">${esc(it.t)}</h2>
         ${dek}
         ${body ? `<div class="kx-r-body">${body}</div>` : ''}
