@@ -1,0 +1,47 @@
+# Reusable: assembles the site with every data set (Atlas data, Sports Lab track record, news) and deploys it to
+# GitHub Pages. The data jobs call it after they save. One deploy runs at a time; a queued deploy is replaced by a
+# newer one, which is safe because each deploy takes the latest of everything when it starts.
+name: Deploy site
+
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    concurrency:
+      group: "pages"
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Add the data sets
+        run: |
+          mkdir -p probable-atlas/data live-sports-lab/data news-tmp
+          if git fetch --depth=1 origin atlas-data; then git archive FETCH_HEAD | tar -x -C probable-atlas/data; fi
+          if git fetch --depth=1 origin sports-data; then git archive FETCH_HEAD track.json | tar -x -C live-sports-lab/data || true; fi
+          if git fetch --depth=1 origin news-data; then git archive FETCH_HEAD | tar -x -C news-tmp || true; fi
+          cp news-tmp/news-atlas.json probable-atlas/data/news.json 2>/dev/null || true
+          cp news-tmp/news-sports.json live-sports-lab/data/news.json 2>/dev/null || true
+          rm -rf news-tmp
+          ls -la probable-atlas/data live-sports-lab/data
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

@@ -15,15 +15,11 @@ permissions:
   pages: write
   id-token: write
 
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
-
 jobs:
   track:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    concurrency:
+      group: "sports-track"
+      cancel-in-progress: false
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
@@ -54,18 +50,10 @@ jobs:
           git add -A
           git commit -qm "Sports Lab track record $(date -u +%Y-%m-%dT%H:%MZ)"
           git push -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" sports-data
-      - name: Assemble site
-        run: |
-          mkdir -p live-sports-lab/data probable-atlas/data
-          cp out/track.json live-sports-lab/data/ 2>/dev/null || true
-          if git fetch --depth=1 origin atlas-data; then git archive FETCH_HEAD | tar -x -C probable-atlas/data; fi
-          rm -rf out prev
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: '.'
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v5
+  deploy:
+    needs: track
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    uses: ./.github/workflows/deploy-site.yml
