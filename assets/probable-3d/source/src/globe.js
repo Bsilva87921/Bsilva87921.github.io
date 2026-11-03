@@ -18,7 +18,10 @@ export async function globe(el, data, opts) {
   camera.position.set(0, 0, 3.75); camera.lookAt(0, 0, 0);
   st.onResize = (w, h) => {            // fit the globe, its spikes and halo in both directions
     const a = w / h, vf = camera.fov * Math.PI / 360, hf = Math.atan(Math.tan(vf) * a), R = opts.fitRadius || 1.36;
-    camera.position.z = Math.max(R / Math.tan(vf), R / Math.tan(hf)) + 0.15; camera.lookAt(0, 0, 0);
+    camera.position.z = Math.max(R / Math.tan(vf), R / Math.tan(hf)) + 0.15;
+    // in a wide panel, slide the globe right so the caption on the left stays clear
+    const off = a > 1.5 ? -Math.min(1.6, (a - 1.25) * 0.75) : 0;
+    camera.position.x = off; camera.lookAt(off, 0, 0);
   };
   st.resize();
   // start with the user's longitude roughly facing the camera (Atlantic view by default)
@@ -37,7 +40,7 @@ export async function globe(el, data, opts) {
   const atmMat = new THREE.MeshBasicNodeMaterial({ transparent: true, depthWrite: false, blending: THREE.AdditiveBlending });
   const rr = uv().sub(0.5).length().mul(3.0);                                   // plane is 3 units wide → rr is world radius
   atmMat.colorNode = vec3(accent.r, accent.g, accent.b);
-  atmMat.opacityNode = smoothstep(0.985, 1.02, rr).mul(pow(oneMinus(smoothstep(1.0, 1.42, rr)), 2.0)).mul(0.55);
+  atmMat.opacityNode = smoothstep(0.985, 1.02, rr).mul(pow(oneMinus(smoothstep(1.0, 1.4, rr)), 2.2)).mul(0.42);
   const halo = new THREE.Mesh(new THREE.PlaneGeometry(3, 3), atmMat); halo.position.z = -0.05; halo.renderOrder = -1; scene.add(halo);
   /* graticule */
   {

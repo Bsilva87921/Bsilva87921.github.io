@@ -12,11 +12,12 @@ def px3d_css():
 R = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(R, 'src')
 JS = ['map-data.js', 'kit-core.js', 'kit-stats.js', 'kit-charts.js', 'kit-table.js', 'kit-ui.js', 'kit-chat.js', 'econ-data.js', 'econ-models.js',
-      'views-live.js', 'views-ind.js', 'views-models.js', 'views-whatif.js', 'views-reco.js', 'views-hist.js', 'econ-chat.js', 'kit-insights.js', 'kit-3d.js', 'globe-geo.js', 'econ-fx.js', 'app.js']
+      'views-live.js', 'views-ind.js', 'views-models.js', 'views-whatif.js', 'views-reco.js', 'views-hist.js', 'econ-chat.js', 'kit-insights.js', 'kit-3d.js', 'kit-app.js', 'globe-geo.js', 'econ-fx.js', 'app.js']
 read = lambda f: open(os.path.join(SRC, f), encoding='utf-8').read()
 TITLE = 'Probable Atlas Economics'
 DESC = 'Live world and US economics dashboard with forecasts, a what-if lab, evidence-based recommendations and an AI analyst.'
 BOOT = "<script>try{var t=localStorage.getItem('atlas-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>"
+PWA = '<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icons/atlas-apple-180.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Atlas"><meta name="theme-color" content="#0c1a22">'
 FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,500;0,600;1,400&display=swap">'
 css = read('style.css') + '\n' + read('kit-fx.css') + '\n' + px3d_css() + '\n' + read('atlas-fx.css'); body = read('body.html'); js = '\n'.join(read(f) for f in JS)
 js = js.replace('</script', '<\\/script')
@@ -41,6 +42,7 @@ def trimmed(data_dir):
 
 def page(snapshot=None, full_doc=True):
     head = f'<title>{TITLE}</title><meta name="description" content="{DESC}">{BOOT}{FONTS}<style>{css}</style>'
+    if snapshot is None and full_doc: head = PWA + head
     data = ''
     if snapshot is not None:
         data = '<script>window.ATLAS_DATA=' + json.dumps(snapshot, separators=(',', ':')).replace('</', '<\\/') + ';</script>'

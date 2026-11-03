@@ -19,7 +19,7 @@ export async function surface(el, data, opts) {
   const st = await new Stage(el, Object.assign({ fov: 32, bg: opts.bg || '#0c1a22', limits: { yaw: [-1.25, 0.95], pitch: [-0.22, 0.32], wrapYaw: false }, bloom: { strength: 0.6, radius: 0.4, threshold: 0.62 } }, opts)).init();
   const { scene, rig, camera } = st;
   const accent = new THREE.Color(opts.accent || '#F2B33D');
-  const setCam = a => { const far = a < 1.1 ? 1.55 : a < 1.6 ? 1.22 : 1; camera.position.set(1.6 * far, 3.7 * far, 9.4 * far); camera.lookAt(0, 0.5, 0); };
+  const setCam = a => { const far = a < 1.1 ? 1.8 : a < 1.6 ? 1.5 : a < 2 ? 1.12 : 1; camera.position.set(1.6 * far, 3.7 * far, 9.4 * far); camera.lookAt(0, 0.78, 0); };
   st.onResize = (w, h) => setCam(w / h); st.resize();
   st.yaw = -0.18; st.pitch = 0.02;
 
@@ -105,8 +105,8 @@ export async function surface(el, data, opts) {
   const lab = (text, cls, v) => { const e = st.label(text, cls); st.labels.push({ el: e, pos: v }); };
   for (let r = 0; r < R; r++) { const d = String(dates[r]); if (/-01$/.test(d) && +d.slice(0, 4) % 10 === 0) lab(d.slice(0, 4), 'px3d-tick', new THREE.Vector3(xOf(r), 0, D / 2 + 0.32)); }
   mats.forEach((m, k) => { if (['3M', '2Y', '10Y', '30Y'].includes(m.label)) lab(m.label, 'px3d-tick', new THREE.Vector3(W / 2 + 0.38, 0, zOf(k * SUB))); });
-  lab('Today', 'px3d-now', new THREE.Vector3(xOf(R - 1), Math.max(0, yAt(R - 1, C - 1)) * HY + 0.3, zOf(C - 1)));
-  for (let k = 1; k <= 4; k++) lab(2 * k + '%', 'px3d-tick px3d-y2', new THREE.Vector3(W / 2 + 0.12, 2 * k * HY, -D / 2));
+  lab('Today', 'px3d-now', new THREE.Vector3(xOf(R - 1) - 0.15, Math.max(0, yAt(R - 1, 0)) * HY + 0.42, zOf(0)));
+  for (let k = 1; k <= 4; k++) lab(2 * k + '%', 'px3d-tick px3d-y2', new THREE.Vector3(W / 2 + 0.1, 2 * k * HY, -D / 2));
 
   /* picking: ray against the surface */
   const ray = new THREE.Raycaster(), ndc = new THREE.Vector2();

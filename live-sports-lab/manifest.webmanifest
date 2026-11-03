@@ -1,0 +1,30 @@
+{
+  "id": "/live-sports-lab/",
+  "name": "Probable Sports Lab",
+  "short_name": "Sports Lab",
+  "description": "Live scores and win probabilities for 13 leagues plus tennis, golf and UFC, a 3D live arena, a 260-scenario what-if lab, standings projections, a published track record and an AI analyst. Analysis, not betting advice.",
+  "lang": "en-US",
+  "start_url": "/live-sports-lab/?source=app",
+  "scope": "/live-sports-lab/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone"],
+  "orientation": "any",
+  "background_color": "#060A13",
+  "theme_color": "#0B1220",
+  "categories": ["sports", "education", "entertainment"],
+  "icons": [
+    { "src": "icons/sports-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/sports-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/sports-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Live board", "url": "/live-sports-lab/#board", "icons": [{ "src": "icons/sports-192.png", "sizes": "192x192" }] },
+    { "name": "Hypothesis lab", "short_name": "What-if lab", "url": "/live-sports-lab/#lab", "icons": [{ "src": "icons/sports-192.png", "sizes": "192x192" }] },
+    { "name": "Standings & projections", "short_name": "Standings", "url": "/live-sports-lab/#standings", "icons": [{ "src": "icons/sports-192.png", "sizes": "192x192" }] },
+    { "name": "Ask AI", "url": "/live-sports-lab/?ask=Which%20games%20are%20closest%20right%20now%3F", "icons": [{ "src": "icons/sports-192.png", "sizes": "192x192" }] }
+  ],
+  "screenshots": [
+    { "src": "icons/screen-wide.jpg", "sizes": "1280x720", "type": "image/jpeg", "form_factor": "wide", "label": "The live board with the 3D arena" },
+    { "src": "icons/screen-narrow.jpg", "sizes": "390x844", "type": "image/jpeg", "form_factor": "narrow", "label": "The live arena on a phone" }
+  ]
+}

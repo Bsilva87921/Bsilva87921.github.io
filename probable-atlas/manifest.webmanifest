@@ -1,0 +1,31 @@
+{
+  "id": "/probable-atlas/",
+  "name": "Probable Atlas",
+  "short_name": "Atlas",
+  "description": "World and US economics and financial markets in one app: live data, tested forecasts, 3D views, what-if labs, recommendations and an AI analyst. Educational, not investment advice.",
+  "lang": "en-US",
+  "start_url": "/probable-atlas/app/?source=app",
+  "scope": "/probable-atlas/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone"],
+  "orientation": "any",
+  "background_color": "#071318",
+  "theme_color": "#0c1a22",
+  "categories": ["finance", "education", "news"],
+  "icons": [
+    { "src": "icons/atlas-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/atlas-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/atlas-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Economics", "url": "/probable-atlas/", "icons": [{ "src": "icons/atlas-192.png", "sizes": "192x192" }] },
+    { "name": "Finance & markets", "short_name": "Finance", "url": "/probable-atlas/finance/", "icons": [{ "src": "icons/atlas-192.png", "sizes": "192x192" }] },
+    { "name": "Portfolio lab", "url": "/probable-atlas/finance/#whatif", "icons": [{ "src": "icons/atlas-192.png", "sizes": "192x192" }] },
+    { "name": "Ask AI about the economy", "short_name": "Ask AI", "url": "/probable-atlas/?ask=How%20is%20the%20world%20economy%20doing%3F", "icons": [{ "src": "icons/atlas-192.png", "sizes": "192x192" }] }
+  ],
+  "screenshots": [
+    { "src": "icons/screen-econ.jpg", "sizes": "1280x720", "type": "image/jpeg", "form_factor": "wide", "label": "Economics with the 3D data globe" },
+    { "src": "icons/screen-fin.jpg", "sizes": "1280x720", "type": "image/jpeg", "form_factor": "wide", "label": "Finance with the 3D yield-curve terrain" },
+    { "src": "icons/screen-narrow.jpg", "sizes": "390x844", "type": "image/jpeg", "form_factor": "narrow", "label": "Economics on a phone" }
+  ]
+}

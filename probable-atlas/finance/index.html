@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta property="og:title" content="Probable Atlas · Finance"><meta property="og:description" content="Live markets dashboard: 60 markets and 34 rates since 1990, tested forecasts, a portfolio lab, evidence-based recommendations and an AI analyst."><meta property="og:type" content="website"><meta property="og:image" content="https://bsilva87921.github.io/probable-atlas/finance/preview.jpg"><meta name="theme-color" content="#0F1A1E"><title>Probable Atlas Finance</title><meta name="description" content="Live markets dashboard: 60 markets and 34 rates since 1990, tested forecasts, a portfolio lab, evidence-based recommendations and an AI analyst."><script>try{var t=localStorage.getItem('atlas-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,500;0,600;1,400&display=swap"><style>:root{
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta property="og:title" content="Probable Atlas · Finance"><meta property="og:description" content="Live markets dashboard: 60 markets and 34 rates since 1990, tested forecasts, a portfolio lab, evidence-based recommendations and an AI analyst."><meta property="og:type" content="website"><meta property="og:image" content="https://bsilva87921.github.io/probable-atlas/finance/preview.jpg"><meta name="theme-color" content="#0F1A1E"><link rel="manifest" href="../manifest.webmanifest"><link rel="apple-touch-icon" href="../icons/atlas-apple-180.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Atlas"><meta name="theme-color" content="#0c1a22"><title>Probable Atlas Finance</title><meta name="description" content="Live markets dashboard: 60 markets and 34 rates since 1990, tested forecasts, a portfolio lab, evidence-based recommendations and an AI analyst."><script>try{var t=localStorage.getItem('atlas-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,500;0,600;1,400&display=swap"><style>:root{
   color-scheme: light;
   --bg:#F2F4F1; --surface:#FFFFFF; --raised:#FFFFFF; --sunk:#E9ECE7; --line:#D8DDD6; --line-2:#C3CAC1;
   --ink:#121A1F; --ink-2:#3B4650; --muted:#65707A;
@@ -548,6 +548,19 @@ table.tbl{border-collapse:collapse;width:100%;font-size:13px}
 .px3d-fallback{position:absolute;inset:0;display:grid;place-items:center;color:rgba(220,232,246,.55);font:500 12px/1.4 system-ui,sans-serif;text-align:center;padding:16px}
 .px3d-on .px3d-fallback{display:none}
 
+/* ---------- Probable kit: Install app ---------- */
+.appbtn{appearance:none;display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 11px;border-radius:999px;border:1px solid color-mix(in srgb,currentColor 35%,transparent);background:transparent;color:inherit;font:600 12.5px/1 inherit;cursor:pointer;white-space:nowrap}
+.appbtn:hover{background:color-mix(in srgb,currentColor 10%,transparent)}
+.appbtn[hidden]{display:none!important}
+.apphelp{position:fixed;inset:0;z-index:95;background:rgba(5,10,18,.45);display:grid;place-items:end center;padding:16px 16px calc(16px + env(safe-area-inset-bottom,0px))}
+.apphelp-in{position:relative;width:min(420px,100%);background:#0f1726;color:#e9f0f8;border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:16px 18px;box-shadow:0 20px 60px rgba(0,0,0,.45);font:14px/1.5 system-ui,sans-serif}
+.apphelp-in b{font-size:15px}
+.apphelp-in ol{margin:8px 0;padding-left:20px}
+.apphelp-in p{margin:0;color:#a9b8c9;font-size:13px}
+.apphelp-x{position:absolute;right:10px;top:8px;appearance:none;border:0;background:none;color:#a9b8c9;font-size:20px;cursor:pointer}
+@media (min-width:700px){.apphelp{place-items:center}}
+.is-app .appbtn{display:none!important}
+
 /* Probable 3D overlay (labels, tooltip). Shared by the Probable sites. */
 .px3d-canvas{position:absolute;inset:0;width:100%!important;height:100%!important;display:block;outline:none}
 .px3d-overlay{position:absolute;inset:0;pointer-events:none;overflow:hidden}
@@ -560,6 +573,7 @@ table.tbl{border-collapse:collapse;width:100%;font-size:13px}
 .px3d-more{translate:-50% -100%;font-size:10.5px;color:rgba(226,236,248,.9);background:rgba(10,18,32,.65);padding:1px 5px;border-radius:6px}
 .px3d-glabel{translate:-50% -100%;font-weight:600;font-size:11px;letter-spacing:.01em;padding:2px 7px;border-radius:7px;background:rgba(8,18,26,.62);border:1px solid rgba(160,220,210,.22);backdrop-filter:blur(4px)}
 .px3d-tip{position:absolute;left:0;top:0;z-index:3;pointer-events:none;max-width:260px;display:grid;gap:3px;padding:9px 11px;border-radius:11px;background:rgba(9,16,28,.86);color:#eef4fb;border:1px solid rgba(255,255,255,.14);box-shadow:0 10px 30px rgba(0,0,0,.35);backdrop-filter:blur(10px) saturate(1.3);font:500 12.5px/1.35 var(--px3d-font,system-ui,sans-serif)}
+.px3d-tip[hidden]{display:none}
 .px3d-tip b{font-weight:700;font-size:13px}
 .px3d-sub{color:rgba(214,226,240,.78);font-size:11.5px}
 .px3d-big{font:700 20px/1.1 var(--px3d-num,ui-monospace,monospace);letter-spacing:-.01em}
@@ -4019,6 +4033,53 @@ const PX3D = (() => {
   return { mount, can, load, idle, still, motionToggle };
 })();
 
+/* Probable kit: installable-app support shared by the Probable sites. Registers the site's service worker (offline use and
+   fast starts), shows an "Install app" button where the browser offers installation (with instructions for iPhone, iPad
+   and Mac Safari), marks the page when it runs as an installed app, and opens Ask AI from an ?ask= link. */
+const PAPP = (() => {
+  const mm = q => !!(window.matchMedia && matchMedia(q).matches);
+  const standalone = () => mm('(display-mode: standalone)') || mm('(display-mode: window-controls-overlay)') || mm('(display-mode: fullscreen)') || navigator.standalone === true;
+  const embedded = () => !!(window.Capacitor || window.ATLAS_FIN_DATA || window.ATLAS_DATA || window.SPORTS_ARTIFACT);
+  let deferred = null, btn = null, help = null, O = {};
+  const ua = navigator.userAgent || '';
+  const ios = /iphone|ipad|ipod/i.test(ua) || (/macintosh/i.test(ua) && navigator.maxTouchPoints > 1);
+  const macSafari = /macintosh/i.test(ua) && /safari/i.test(ua) && !/chrome|crios|chromium|edg|firefox|fxios/i.test(ua) && !ios;
+  function init(o) {
+    O = o || {};
+    if ('serviceWorker' in navigator && (location.protocol === 'https:' || /^(localhost|127\.0\.0\.1)$/.test(location.hostname)) && !embedded() && O.sw) navigator.serviceWorker.register(O.sw, { scope: O.scope }).catch(() => { });
+    if (standalone()) document.documentElement.classList.add('is-app');
+    const host = typeof O.host === 'string' ? document.querySelector(O.host) : O.host;
+    if (host && !standalone() && !embedded()) {
+      btn = document.createElement('button'); btn.type = 'button'; btn.className = 'appbtn'; btn.hidden = true;
+      btn.innerHTML = '<svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true"><path d="M8 1.5v8.2M4.6 6.6 8 10l3.4-3.4M2.5 11.5v2h11v-2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Install app';
+      btn.setAttribute('aria-label', 'Install ' + (O.name || 'this site') + ' as an app');
+      if (O.before && host.contains(O.before)) host.insertBefore(btn, O.before); else host.appendChild(btn);
+      btn.addEventListener('click', onClick);
+      if (ios || macSafari) btn.hidden = false;
+    }
+    window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferred = e; if (btn) btn.hidden = false; });
+    window.addEventListener('appinstalled', () => { if (btn) btn.hidden = true; closeHelp(); });
+  }
+  async function onClick() {
+    if (deferred) { deferred.prompt(); try { const r = await deferred.userChoice; if (r && r.outcome === 'accepted' && btn) btn.hidden = true; } catch (e) { /* ignore */ } deferred = null; return; }
+    showHelp();
+  }
+  function closeHelp() { if (help) { help.remove(); help = null; } }
+  function showHelp() {
+    closeHelp();
+    help = document.createElement('div'); help.className = 'apphelp'; help.setAttribute('role', 'dialog'); help.setAttribute('aria-label', 'How to install');
+    const steps = ios ? '<li>Tap the <b>Share</b> button (the square with an arrow).</li><li>Choose <b>Add to Home Screen</b>, then <b>Add</b>.</li>'
+      : macSafari ? '<li>In the menu bar, choose <b>File → Add to Dock…</b></li><li>Click <b>Add</b>. It opens in its own window.</li>'
+        : '<li>In Chrome or Edge, use the <b>install</b> icon at the right of the address bar, or the menu → <b>Install</b>.</li><li>On Android, open the menu and choose <b>Install app</b>.</li>';
+    help.innerHTML = `<div class="apphelp-in"><b>Install ${O.name ? O.name.replace(/[<>&]/g, '') : 'this app'}</b><ol>${steps}</ol><p>It opens in its own window, starts faster and keeps the last data for when you're offline.</p><button type="button" class="apphelp-x" aria-label="Close">×</button></div>`;
+    document.body.appendChild(help);
+    help.addEventListener('click', e => { if (e.target.closest('.apphelp-x') || e.target === help) closeHelp(); });
+  }
+  // ?ask=… opens Ask AI with that question once the page is ready
+  function ask(openFn) { try { const q = new URLSearchParams(location.search).get('ask'); if (q && openFn) setTimeout(() => openFn(q.slice(0, 300)), 500); } catch (e) { /* ignore */ } }
+  return { init, standalone, ask };
+})();
+
 /* Probable Atlas · Finance 2.0: the pinned Insights bar (key readings from the live data and models) and the 3D
    US Treasury yield-curve terrain in the masthead. */
 const FX = (() => {
@@ -4075,6 +4136,9 @@ const FX = (() => {
   function init() {
     INS.mount({ ask: q => { if (HAS_CH()) CH.open(q); } });
     INS.set(insights());
+    try { localStorage.setItem('atlas-ins-fin', JSON.stringify({ t: Date.now(), items: INS.items.map(({ id, tag, tone, text, val, ask }) => ({ id, tag, tone, text, val, ask })) })); } catch (e) { /* storage unavailable */ }
+    PAPP.init({ sw: '../sw.js', scope: '/probable-atlas/', host: '.strip .r', before: document.getElementById('themeBtn'), name: 'Probable Atlas' });
+    PAPP.ask(q => { if (typeof CH !== 'undefined') CH.open(q); });
     if (document.getElementById('mast3d')) PX3D.idle(mount3d);
   }
   return { init, insights, surfaceData };

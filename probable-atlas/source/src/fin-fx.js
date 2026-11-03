@@ -54,6 +54,9 @@ const FX = (() => {
   function init() {
     INS.mount({ ask: q => { if (HAS_CH()) CH.open(q); } });
     INS.set(insights());
+    try { localStorage.setItem('atlas-ins-fin', JSON.stringify({ t: Date.now(), items: INS.items.map(({ id, tag, tone, text, val, ask }) => ({ id, tag, tone, text, val, ask })) })); } catch (e) { /* storage unavailable */ }
+    PAPP.init({ sw: '../sw.js', scope: '/probable-atlas/', host: '.strip .r', before: document.getElementById('themeBtn'), name: 'Probable Atlas' });
+    PAPP.ask(q => { if (typeof CH !== 'undefined') CH.open(q); });
     if (document.getElementById('mast3d')) PX3D.idle(mount3d);
   }
   return { init, insights, surfaceData };

@@ -19,9 +19,9 @@ def first(*paths):
 # shared Probable kit (chat, insights, 3D loader) and the 3D overlay styles: working copy, or the repo layout
 ATLAS = first(os.path.join(HERE, '..', 'atlas', 'src'), os.path.join(HERE, '..', '..', 'probable-atlas', 'source', 'src'))
 FX3D = first(os.path.join(HERE, '..', 'fx3d', 'src'), os.path.join(HERE, '..', '..', 'assets', 'probable-3d', 'source', 'src'))
-NEW_JS = ['13-track.js', 'atlas:kit-chat.js', '15-chat-sports.js', 'atlas:kit-insights.js', '17-insights.js', 'atlas:kit-3d.js', '16-arena.js']
+NEW_JS = ['13-track.js', 'atlas:kit-chat.js', '15-chat-sports.js', 'atlas:kit-insights.js', '17-insights.js', 'atlas:kit-3d.js', 'atlas:kit-app.js', '16-arena.js', '18-app.js']
 NEW_CSS = ['atlas:kit-fx.css', 'fx3d:px3d.css', 'fx.css']
-BRIDGE = 'window.CH = CH; window.INS = INS; window.PX3D = PX3D;\n'
+BRIDGE = 'window.CH = CH; window.INS = INS; window.PX3D = PX3D; window.PAPP = PAPP;\n'
 
 
 def read(name):
@@ -44,13 +44,18 @@ def build(orig=False, track=None, artifact=False):
         parts = []
         for n in NEW_JS:
             parts.append(read(n))
-            if n == 'atlas:kit-3d.js': parts.append(BRIDGE)
+            if n == 'atlas:kit-app.js': parts.append(BRIDGE)
         if artifact: boot += 'window.SPORTS_ARTIFACT = true;\n'
         js += '\n' + boot + '\n'.join(parts)
     html = shell.replace('/*STYLE*/', css, 1).replace('/*SCRIPT*/', js, 1)
     if not orig and not artifact:
         # the site shares one AI proxy setting with Probable Atlas (window.ATLAS_AI = { endpoint })
         html = html.replace('<script>', '<script src="../probable-atlas/ai-config.js"></script>\n<script>', 1)
+        # installable app (site only): manifest, icons and iOS home-screen settings
+        pwa = ('<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icons/sports-apple-180.png">'
+               '<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">'
+               '<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Sports Lab">')
+        html = html.replace('<meta name="theme-color"', pwa + '\n<meta name="theme-color"', 1)
     return html
 
 
