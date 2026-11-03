@@ -1,12 +1,14 @@
-/* Probable Atlas kit: "Ask Atlas" chat. A built-in analyst answers from the page's own data and models; when Claude is
-   available (the Claude-hosted copy, a site proxy, or the visitor's own API key) it gets the same data and models as tools. */
+/* Probable kit: the "Ask AI" chat shared by the Probable sites. A built-in analyst answers from the page's own data and
+   models; when Claude is available (the Claude-hosted copy, a site proxy, or the visitor's own API key) it gets the same
+   data and models as tools. A site plugs in with CH.init(adapter, state). */
 const CH = (() => {
-  const { esc } = K;
+  const esc = (typeof K !== 'undefined' && K.esc) || (s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])));
+  const mountCharts = el => { if (A && A.mount) A.mount(el); else if (typeof C !== 'undefined' && C.mount) { C.mount(el); if (C.gc) C.gc(); } };
   let A = null, ST = null, built = false, opened = false, busy = false, ctl = null;
   let engine = 'analyst', sample = null, sampleTools = false, sampleChecked = false;
   const turns = []; // LLM conversation (role/content strings)
   const cfg = window.ATLAS_AI || {};
-  const SNAP = !!(window.ATLAS_FIN_DATA || window.ATLAS_DATA);
+  let SNAP = !!(window.ATLAS_FIN_DATA || window.ATLAS_DATA);
   const KEYS = { key: 'atlas-ai-key', model: 'atlas-ai-model', engine: 'atlas-ai-engine' };
   const MODELS = [['claude-sonnet-5', 'Claude Sonnet 5'], ['claude-haiku-4-5-20251001', 'Claude Haiku 4.5 (fastest)'], ['claude-opus-5-5', 'Claude Opus 5.5 (most capable)']];
   const store = { get(k, s) { try { return (s ? sessionStorage : localStorage).getItem(k); } catch (e) { return null; } }, set(k, v, s) { try { (s ? sessionStorage : localStorage).setItem(k, v); } catch (e) { /* blocked */ } }, del(k) { try { localStorage.removeItem(k); sessionStorage.removeItem(k); } catch (e) { /* blocked */ } } };
@@ -41,13 +43,14 @@ const CH = (() => {
   function build() {
     if (built) return; built = true;
     const root = document.getElementById('chatRoot') || document.body.appendChild(Object.assign(document.createElement('div'), { id: 'chatRoot' }));
-    root.innerHTML = `<button type="button" class="askfab" id="askFab" aria-label="Ask Atlas a question"><b aria-hidden="true">✦</b>Ask Atlas</button>
+    const title = A.title || 'Ask AI';
+    root.innerHTML = `<button type="button" class="askfab" id="askFab" aria-label="${esc(title)}: ask a question about this page"><b aria-hidden="true">✦</b>${esc(title)}</button>
       <aside class="chat" id="chat" hidden role="dialog" aria-modal="false" aria-labelledby="chatTitle">
-        <div class="chd"><div><div class="eng" id="chatEng"></div><h2 id="chatTitle">Ask Atlas</h2></div><div class="acts"><button type="button" data-chat="settings" aria-label="Chat settings" title="Settings">⚙</button><button type="button" data-chat="new" aria-label="New conversation" title="New conversation">⟲</button><button type="button" data-chat="close" aria-label="Close chat">×</button></div></div>
+        <div class="chd"><div><div class="eng" id="chatEng"></div><h2 id="chatTitle">${esc(title)}</h2></div><div class="acts"><button type="button" data-chat="settings" aria-label="Chat settings" title="Settings">⚙</button><button type="button" data-chat="new" aria-label="New conversation" title="New conversation">⟲</button><button type="button" data-chat="close" aria-label="Close chat">×</button></div></div>
         <div class="set" id="chatSet" hidden></div>
         <div class="msgs" id="chatMsgs" aria-live="polite"></div>
-        <form id="chatForm"><textarea id="chatIn" rows="1" placeholder="Ask about the data, models, forecasts or your own scenario…" aria-label="Your question"></textarea><button type="submit" id="chatSend">Ask</button></form>
-        <div class="foot">Answers come from this page's data and models. Educational, not investment advice.</div>
+        <form id="chatForm"><textarea id="chatIn" rows="1" placeholder="${esc(A.placeholder || 'Ask about the data, models, forecasts or your own scenario…')}" aria-label="Your question"></textarea><button type="submit" id="chatSend">Ask</button></form>
+        <div class="foot">${esc(A.footer || 'Answers come from this page\'s data and models. Educational, not investment advice.')}</div>
       </aside>`;
     document.getElementById('askFab').addEventListener('click', () => open(''));
     document.getElementById('chatForm').addEventListener('submit', ev => { ev.preventDefault(); if (busy) { if (ctl) ctl.abort(); return; } const t = document.getElementById('chatIn'); const q = t.value.trim(); if (q) { t.value = ''; grow(t); send(q); } });
@@ -85,9 +88,9 @@ const CH = (() => {
     if (ev.target.id === 'apiModel') store.set(KEYS.model, ev.target.value);
   }
   function onClick(ev) {
-    const b = ev.target.closest('[data-chat]'), q = ev.target.closest('[data-q]');
+    const b = ev.target.closest('[data-chat]'), q = ev.target.closest('[data-q]:not([data-game])');
     if (q) { send(q.dataset.q); return; }
-    if (!b) { const lnk = ev.target.closest('[data-goto],[data-asset],[data-anchor]'); if (lnk && window.matchMedia('(max-width:900px)').matches) close(); return; }
+    if (!b) { const lnk = ev.target.closest('[data-goto],[data-asset],[data-anchor],[data-game],[data-tabgo]'); if (lnk && window.matchMedia('(max-width:900px)').matches) close(); return; }
     const a = b.dataset.chat;
     if (a === 'close') close();
     if (a === 'new') { turns.length = 0; welcome(); }
@@ -126,17 +129,18 @@ const CH = (() => {
     let res;
     try { res = A.answer(q, ST); } catch (e) { console.error(e); res = { html: `<p class="err">Sorry, that question tripped up the built-in analyst (${esc(e.message)}).</p>`, follow: A.suggestions(ST).slice(0, 3) }; }
     const d = bubble('bot', `<div class="meta">Built-in analyst${note ? ' · ' + esc(note) : ''}</div>${res.html}${followHTML(res.follow)}`);
-    C.mount(d); C.gc(); scrollEnd();
+    mountCharts(d); scrollEnd();
   }
   function toolList(attach) { // the adapter's tools plus a chart tool that draws into the current answer
     const tools = A.tools(ST).slice();
-    tools.push({ name: 'show_chart', description: 'Draw a chart in the chat for the user. kind: "price" (a market over a range), "compare" (several markets rebased to 100), or a model chart name from list_charts. Returns a short confirmation.', inputSchema: { type: 'object', properties: { kind: { type: 'string' }, ids: { type: 'array', items: { type: 'string' } }, range: { type: 'string', enum: ['1M', '3M', '6M', 'YTD', '1Y', '3Y', '5Y', '10Y', 'MAX'] } }, required: ['kind'] }, execute: input => { const h = A.chart(input || {}); if (!h) throw new Error('Unknown chart. Use kind "price" or "compare" with ids, or a name from list_charts.'); attach(h); return 'Chart shown to the user.'; } });
+    if (A.chart) tools.push(A.chartTool || { name: 'show_chart', description: 'Draw a chart in the chat for the user. kind: "price" (a market over a range), "compare" (several markets rebased to 100), or a model chart name from list_charts. Returns a short confirmation.', inputSchema: { type: 'object', properties: { kind: { type: 'string' }, ids: { type: 'array', items: { type: 'string' } }, range: { type: 'string', enum: ['1M', '3M', '6M', 'YTD', '1Y', '3Y', '5Y', '10Y', 'MAX'] } }, required: ['kind'] } });
+    const ct = tools[tools.length - 1]; if (A.chart && !ct.execute) ct.execute = input => { const h = A.chart(input || {}); if (!h) throw new Error('Unknown chart. Use a kind or name from list_charts.'); attach(h); return 'Chart shown to the user.'; };
     return tools;
   }
   async function llm(q) {
     const d = bubble('bot', `<div class="meta">${esc(ENG[engine])}</div><div class="att"></div><div class="body"><span class="think"><i></i><i></i><i></i> Thinking…</span></div><div class="stat src"></div>`);
     const body = d.querySelector('.body'), att = d.querySelector('.att'), stat = d.querySelector('.stat');
-    const attach = h => { const w = document.createElement('div'); w.innerHTML = h; att.appendChild(w); C.mount(w); scrollEnd(); };
+    const attach = h => { const w = document.createElement('div'); w.innerHTML = h; att.appendChild(w); mountCharts(w); scrollEnd(); };
     const tools = toolList(attach), looked = [];
     const wrap = tools.map(t => Object.assign({}, t, { execute: async (inp, cx) => { looked.push(t.name.replace(/_/g, ' ')); stat.textContent = 'Looked up: ' + Array.from(new Set(looked)).join(', '); return t.execute(inp || {}, cx); } }));
     const system = A.system(ST);
@@ -211,7 +215,7 @@ const CH = (() => {
     retireAge(q) { const m = q.match(/retire (?:at|by)\s?(?:age\s)?(\d{2})/); return m ? +m[1] : null; }
   };
 
-  function init(adapter, state) { A = adapter; ST = state; initEngine(); build(); checkSample(); }
+  function init(adapter, state) { A = adapter; ST = state; if (A.snapshot != null) SNAP = !!A.snapshot; initEngine(); build(); checkSample(); }
   function context(state) { ST = state; }
   return { init, open, close, isOpen, context, send, md, NLU };
 })();

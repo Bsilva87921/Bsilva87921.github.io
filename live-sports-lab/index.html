@@ -740,6 +740,200 @@ table.tbl.sx{min-width:0}
 [data-ix-player]{cursor:pointer}
 .dr-body .tile .sub{white-space:normal;overflow:visible;text-overflow:clip}
 
+
+/* ---------- Probable kit: pinned Insights bar ---------- */
+.ins{--ins-h:40px;position:sticky;top:0;z-index:70;padding-top:env(safe-area-inset-top,0px);background:var(--ins-bg,rgba(9,15,26,.92));color:var(--ins-ink,#eaf1f9);border-bottom:1px solid var(--ins-line,rgba(255,255,255,.1));backdrop-filter:saturate(1.5) blur(14px);-webkit-backdrop-filter:saturate(1.5) blur(14px)}
+.ins[hidden]{display:none!important}
+.ins-in{max-width:var(--ins-max,1320px);margin:0 auto;padding:0 16px;height:var(--ins-h);display:flex;align-items:center;gap:12px}
+.ins-stk{position:relative;flex:none;display:inline-flex;align-items:center;gap:5px;padding:4px 9px 4px 7px;border-radius:6px;background:var(--ins-accent,#FFB547);color:var(--ins-accent-ink,#14110a);font:800 10.5px/1.15 var(--ins-font,inherit);letter-spacing:.12em;text-transform:uppercase;transform:rotate(-2.5deg);box-shadow:0 1px 0 rgba(0,0,0,.25),0 6px 14px -4px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.45)}
+.ins-stk::after{content:"";position:absolute;right:0;top:0;width:8px;height:8px;border-radius:0 6px 0 4px;background:linear-gradient(225deg,rgba(255,255,255,.0) 50%,rgba(255,255,255,.55) 50%,rgba(0,0,0,.12));}
+.ins-view{flex:1;min-width:0;height:100%;display:flex;align-items:center;overflow:hidden}
+.ins-item{appearance:none;border:0;background:none;color:inherit;font:500 13.5px/1.3 var(--ins-font,inherit);display:flex;align-items:center;gap:9px;max-width:100%;min-width:0;padding:4px 6px;margin-left:-6px;border-radius:8px;cursor:pointer;text-align:left;animation:insIn .38s cubic-bezier(.2,.8,.2,1)}
+.ins-item:hover{background:rgba(255,255,255,.07)}
+.ins-item:focus-visible,.ins-b:focus-visible,.ins-ask:focus-visible{outline:2px solid var(--ins-accent,#FFB547);outline-offset:2px}
+.ins-tag{flex:none;display:inline-flex;align-items:center;gap:5px;font:700 10px/1 var(--ins-mono,ui-monospace,monospace);letter-spacing:.08em;text-transform:uppercase;padding:4px 7px;border-radius:999px;background:rgba(255,255,255,.08);color:var(--ins-muted,#a9b8c9)}
+.ins-tag span{font-size:8px}
+.ins-up .ins-tag span{color:#4fd18b}.ins-down .ins-tag span{color:#ff7a6b}.ins-warn .ins-tag span{color:#ffc145}.ins-live .ins-tag span{color:#ff5a5a;animation:insBlink 1.6s infinite}.ins-info .ins-tag span{color:var(--ins-accent,#FFB547)}
+.ins-txt{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ins-val{flex:none;font:700 13.5px/1 var(--ins-mono,ui-monospace,monospace);font-variant-numeric:tabular-nums;color:var(--ins-accent,#FFB547)}
+.ins-ctl{flex:none;display:flex;align-items:center;gap:2px}
+.ins-b{appearance:none;width:28px;height:28px;border:0;border-radius:8px;background:none;color:var(--ins-muted,#a9b8c9);font:600 15px/1 var(--ins-font,inherit);cursor:pointer;display:grid;place-items:center}
+.ins-b:hover{background:rgba(255,255,255,.09);color:var(--ins-ink,#fff)}
+.ins-p{font-size:10px;letter-spacing:-1px}
+.ins-n{min-width:30px;text-align:center;font:600 11px/1 var(--ins-mono,ui-monospace,monospace);color:var(--ins-muted,#a9b8c9);font-variant-numeric:tabular-nums}
+.ins-ask{appearance:none;margin-left:6px;display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 12px;border-radius:999px;border:1px solid color-mix(in srgb,var(--ins-accent,#FFB547) 55%,transparent);background:color-mix(in srgb,var(--ins-accent,#FFB547) 14%,transparent);color:var(--ins-ink,#fff);font:600 12.5px/1 var(--ins-font,inherit);cursor:pointer;white-space:nowrap}
+.ins-ask span{color:var(--ins-accent,#FFB547)}
+.ins-ask:hover{background:color-mix(in srgb,var(--ins-accent,#FFB547) 26%,transparent)}
+.ins-prog{position:absolute;left:0;bottom:-1px;height:2px;width:100%;transform-origin:left;transform:scaleX(0);background:linear-gradient(90deg,transparent,var(--ins-accent,#FFB547));opacity:.85;animation:insProg var(--ins-dur,7s) linear forwards;animation-play-state:paused}
+.ins-run .ins-prog{animation-play-state:running}
+.ins-paused .ins-prog{opacity:0}
+@keyframes insIn{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+@keyframes insProg{to{transform:scaleX(1)}}
+@keyframes insBlink{50%{opacity:.25}}
+@media (max-width:640px){.ins{--ins-h:38px}.ins-in{gap:8px;padding:0 10px 0 12px}.ins-stk{font-size:0;gap:0;padding:5px 6px}.ins-stk svg{width:12px;height:12px}.ins-item{font-size:12.5px;gap:7px}.ins-tag{display:none}.ins-n,[data-ins=prev]{display:none}.ins-ask{font-size:0;gap:0;padding:0 9px;margin-left:2px}.ins-ask span{font-size:13px}}
+@media (prefers-reduced-motion:reduce){.ins-item{animation:none}.ins-prog{display:none}.ins-live .ins-tag span{animation:none}}
+@media print{.ins{display:none}}
+
+/* ---------- Probable kit: 3D panels ---------- */
+.px3d{position:relative;overflow:hidden;isolation:isolate}
+.px3d-still{position:absolute;right:10px;bottom:10px;z-index:4;appearance:none;height:26px;padding:0 10px;border-radius:999px;border:1px solid rgba(255,255,255,.18);background:rgba(8,14,24,.55);color:rgba(230,238,248,.9);font:600 11px/1 system-ui,sans-serif;letter-spacing:.02em;cursor:pointer;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.px3d-still:hover{background:rgba(8,14,24,.78)}
+.px3d-still:focus-visible{outline:2px solid var(--px3d-accent,#FFB547);outline-offset:2px}
+.px3d-badge{position:absolute;left:12px;bottom:10px;z-index:4;font:700 9.5px/1 ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;color:rgba(220,232,246,.62);pointer-events:none}
+.px3d-fallback{position:absolute;inset:0;display:grid;place-items:center;color:rgba(220,232,246,.55);font:500 12px/1.4 system-ui,sans-serif;text-align:center;padding:16px}
+.px3d-on .px3d-fallback{display:none}
+
+/* Probable 3D overlay (labels, tooltip). Shared by the Probable sites. */
+.px3d-canvas{position:absolute;inset:0;width:100%!important;height:100%!important;display:block;outline:none}
+.px3d-overlay{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.px3d-label{position:absolute;left:0;top:0;white-space:nowrap;font:600 11px/1.2 var(--px3d-font,system-ui,sans-serif);letter-spacing:.06em;color:rgba(226,236,248,.86);transform:translate(-9999px,0);transition:opacity .25s;will-change:transform;text-shadow:0 1px 6px rgba(0,0,0,.6)}
+.px3d-lane{translate:-100% -50%;text-transform:uppercase;font-size:10.5px;color:rgba(190,210,235,.8)}
+.px3d-tick{translate:-50% 0;font-weight:500;font-size:10.5px;letter-spacing:.02em;color:rgba(170,192,220,.78)}
+.px3d-y{translate:-100% -50%}
+.px3d-y2{translate:4px -50%}
+.px3d-now{translate:-50% 2px;color:var(--px3d-accent,#FFB547);font-weight:800;letter-spacing:.14em;font-size:10.5px}
+.px3d-more{translate:-50% -100%;font-size:10.5px;color:rgba(226,236,248,.9);background:rgba(10,18,32,.65);padding:1px 5px;border-radius:6px}
+.px3d-glabel{translate:-50% -100%;font-weight:600;font-size:11px;letter-spacing:.01em;padding:2px 7px;border-radius:7px;background:rgba(8,18,26,.62);border:1px solid rgba(160,220,210,.22);backdrop-filter:blur(4px)}
+.px3d-tip{position:absolute;left:0;top:0;z-index:3;pointer-events:none;max-width:260px;display:grid;gap:3px;padding:9px 11px;border-radius:11px;background:rgba(9,16,28,.86);color:#eef4fb;border:1px solid rgba(255,255,255,.14);box-shadow:0 10px 30px rgba(0,0,0,.35);backdrop-filter:blur(10px) saturate(1.3);font:500 12.5px/1.35 var(--px3d-font,system-ui,sans-serif)}
+.px3d-tip b{font-weight:700;font-size:13px}
+.px3d-sub{color:rgba(214,226,240,.78);font-size:11.5px}
+.px3d-big{font:700 20px/1.1 var(--px3d-num,ui-monospace,monospace);letter-spacing:-.01em}
+.px3d-probs{font:600 11.5px/1.3 var(--px3d-num,ui-monospace,monospace);color:rgba(236,242,250,.92)}
+.px3d-hint{color:var(--px3d-accent,#FFB547);font-size:11px;font-weight:600}
+.px3d-split{display:flex;height:6px;border-radius:4px;overflow:hidden;margin:3px 0 1px;gap:2px}
+.px3d-split i{display:block;height:100%}
+.px3d-grabbing{cursor:grabbing!important}
+@media (prefers-reduced-motion:reduce){.px3d-label{transition:none}}
+
+/* ==========================================================================
+   Probable Sports Lab 2.0 — Insights bar tokens, Live arena (3D), Ask AI,
+   track record, and the refreshed surface (depth, motion, transitions).
+   ========================================================================== */
+:root{--ins-h:40px;--arena-bg:#0a1120}
+@media (max-width:640px){:root{--ins-h:38px}}
+.ins{--ins-bg:rgba(6,11,21,.86);--ins-ink:#EAF0F8;--ins-muted:#93A1B8;--ins-line:rgba(255,255,255,.08);--ins-accent:var(--led);--ins-accent-ink:#1B1300;--ins-font:var(--f-body);--ins-mono:var(--f-mono);--ins-max:1320px}
+.ins-stk{font-family:var(--f-display);font-size:12px;letter-spacing:.14em}
+@media (min-width:701px){.mast{top:calc(env(safe-area-inset-top,0px) + var(--ins-h))}}
+
+/* ---------- Live arena ---------- */
+.arena{position:relative;color:#E8EEF7;background:radial-gradient(120% 140% at 72% 0%,#13223d 0%,var(--arena-bg) 52%,#060a14 100%);border-bottom:1px solid var(--band-line);overflow:hidden}
+.arena::before{content:"";position:absolute;inset:0;background:radial-gradient(rgba(255,255,255,.035) 1px,transparent 1.3px) 0 0/5px 5px;pointer-events:none}
+.arena-in{position:relative;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.75fr);gap:20px;align-items:stretch;padding-block:22px 18px}
+.arena-copy{display:flex;flex-direction:column;justify-content:center;gap:12px;min-width:0;z-index:1}
+.arena-eyebrow{display:inline-flex;align-items:center;gap:8px;font:700 11.5px/1 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--led)}
+.arena-dot{width:8px;height:8px;border-radius:50%;background:#ff5a5a;box-shadow:0 0 0 0 rgba(255,90,90,.6);animation:arenaPing 2s infinite}
+@keyframes arenaPing{0%{box-shadow:0 0 0 0 rgba(255,90,90,.55)}70%{box-shadow:0 0 0 10px rgba(255,90,90,0)}100%{box-shadow:0 0 0 0 rgba(255,90,90,0)}}
+.arena-h{margin:0;font:900 clamp(30px,3.6vw,46px)/.95 var(--f-display);letter-spacing:.01em;text-transform:uppercase;color:#fff;text-wrap:balance}
+.arena-lede{margin:0;max-width:52ch;color:#AAB7CB;font-size:14.5px;line-height:1.5}
+.arena-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:8px}
+.astat{display:flex;flex-direction:column;gap:2px;padding:9px 11px;border-radius:10px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08);text-align:left;color:inherit;font:inherit;min-width:0}
+.astat b{font:800 24px/1 var(--f-display);letter-spacing:.02em;color:#fff;font-variant-numeric:tabular-nums}
+.astat span{font-size:11.5px;color:#93A1B8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.astat-btn{cursor:pointer;border-color:rgba(255,181,71,.35);background:rgba(255,181,71,.08)}
+.astat-btn:hover{background:rgba(255,181,71,.16)}
+.astat-btn b{color:var(--led)}
+.arena-legend{display:flex;flex-wrap:wrap;gap:12px;font-size:11.5px;color:#8E9BB2}
+.arena-legend span{display:inline-flex;align-items:center;gap:6px}
+.arena-legend i{width:10px;height:10px;border-radius:50%;display:inline-block}
+.lg-live{background:#FFB547;box-shadow:0 0 10px rgba(255,181,71,.8)}.lg-pre{background:#6d8fc4}.lg-post{background:#3b4a63}
+.lg-split i{background:linear-gradient(180deg,#e34948 0 58%,#2a78d6 58% 100%)}
+.arena-stage{position:relative;min-height:340px;border-radius:16px;background:var(--arena-bg);border:1px solid rgba(255,255,255,.07);box-shadow:inset 0 0 60px rgba(0,0,0,.45);--px3d-accent:var(--led);--px3d-font:var(--f-body);--px3d-num:var(--f-mono)}
+.arena-stage .px3d-canvas{border-radius:16px;-webkit-mask-image:radial-gradient(130% 120% at 50% 45%,#000 62%,transparent 100%);mask-image:radial-gradient(130% 120% at 50% 45%,#000 62%,transparent 100%)}
+.arena-2d .arena-stage{min-height:0;display:none}
+.arena-2d .arena-in{grid-template-columns:1fr}
+@media (max-width:900px){.arena-in{grid-template-columns:1fr;gap:14px;padding-block:16px 14px}.arena-stage{min-height:280px}.arena-lede{font-size:13.5px}}
+@media (max-width:520px){.arena-legend .lg-split{display:none}.arena-stage{min-height:250px}}
+@media (prefers-reduced-motion:reduce){.arena-dot{animation:none}}
+
+/* ---------- Ask AI ---------- */
+.askfab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:55;display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,181,71,.45);border-radius:999px;padding:11px 18px 11px 15px;background:linear-gradient(135deg,#101b30,#0a1120);color:#EAF0F8;font:700 14.5px var(--f-body);letter-spacing:.01em;box-shadow:0 10px 30px rgba(4,8,18,.4),0 0 0 4px rgba(255,181,71,.08)}
+.askfab b{color:var(--led);font-size:16px;line-height:1;text-shadow:0 0 10px rgba(255,181,71,.7)}
+.askfab:hover{border-color:var(--led);transform:translateY(-1px)}
+.chat{position:fixed;top:0;right:0;bottom:0;width:min(460px,100%);z-index:80;background:var(--bg);border-left:1px solid var(--line);display:flex;flex-direction:column;box-shadow:-12px 0 40px rgba(0,0,0,.25)}
+.chat .chd{background:var(--band);color:#EAF0F8;padding:calc(12px + env(safe-area-inset-top,0px)) 14px 12px;display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid var(--band-line)}
+.chat .chd h2{margin:0;font:900 24px/1 var(--f-display);letter-spacing:.03em;text-transform:uppercase}
+.chat .chd .eng{font:600 10.5px/1.3 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--led);margin-bottom:3px}
+.chat .chd .acts{display:flex;gap:6px}
+.chat .chd button{border:1px solid var(--band-line);background:transparent;color:#EAF0F8;border-radius:8px;min-width:34px;height:34px;font-size:15px;padding:0 9px}
+.chat .chd button:hover{border-color:#5d6d8a}
+.chat .msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:12px;overscroll-behavior:contain}
+.chat .msg{max-width:100%;font-size:14px;line-height:1.5}
+.chat .msg.user{align-self:flex-end;background:var(--accent);color:var(--on-accent);border-radius:14px 14px 4px 14px;padding:8px 12px;max-width:86%;white-space:pre-wrap;font-weight:500}
+.chat .msg.bot{align-self:stretch;background:var(--surface);border:1px solid var(--line);border-radius:4px 14px 14px 14px;padding:10px 12px;color:var(--ink-2);min-width:0}
+.chat .msg.bot b,.chat .msg.bot strong{color:var(--ink)}
+.chat .msg.bot p{margin:0 0 8px}.chat .msg.bot p:last-child{margin-bottom:0}
+.chat .msg.bot ul,.chat .msg.bot ol{margin:0 0 8px;padding-left:20px}
+.chat .msg.bot li{margin:2px 0}
+.chat .msg.bot h4{margin:8px 0 4px;font:700 14px var(--f-body);color:var(--ink)}
+.chat .msg.bot code{font:12.5px var(--f-mono);background:var(--sunk);padding:1px 4px;border-radius:4px}
+.chat .msg.bot table{border-collapse:collapse;font-size:12.5px;margin:6px 0;width:100%}
+.chat .msg.bot td,.chat .msg.bot th{border-bottom:1px solid var(--line);padding:4px 6px;text-align:right}
+.chat .msg.bot td:first-child,.chat .msg.bot th:first-child{text-align:left}
+.chat .msg .src{margin-top:6px;font-size:11.5px;color:var(--muted)}
+.chat .msg .meta{font:600 10.5px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;display:flex;gap:8px;align-items:center}
+.chat .msg .err{color:var(--bad)}
+.chat .chat-acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.chat .think{display:inline-flex;gap:4px;align-items:center;color:var(--muted);font-size:13px}
+.chat .think i{width:6px;height:6px;border-radius:50%;background:var(--muted);animation:askDot 1.2s infinite ease-in-out}
+.chat .think i:nth-child(2){animation-delay:.15s}.chat .think i:nth-child(3){animation-delay:.3s}
+@keyframes askDot{0%,80%,100%{opacity:.25}40%{opacity:1}}
+.chat .sugg{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.chat .sugg button{border:1px solid var(--line-2);background:var(--surface);border-radius:999px;padding:5px 11px;font-size:12.5px;color:var(--ink-2);text-align:left}
+.chat .sugg button:hover{border-color:var(--accent);color:var(--ink)}
+.chat .welcome{background:var(--accent-wash);border:1px solid var(--line);border-radius:12px;padding:12px;font-size:13.5px;color:var(--ink-2)}
+.chat .welcome b{color:var(--ink)}
+.chat form{border-top:1px solid var(--line);padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));display:flex;gap:8px;background:var(--surface);align-items:flex-end}
+.chat textarea{flex:1;resize:none;border:1px solid var(--line-2);border-radius:10px;padding:9px 11px;font:14px/1.4 var(--f-body);background:var(--bg);color:var(--ink);max-height:140px;min-height:40px}
+.chat form button{border:0;background:var(--accent);color:var(--on-accent);border-radius:10px;height:40px;padding:0 14px;font-weight:700}
+.chat .foot{font-size:11px;color:var(--muted);padding:0 12px 8px;background:var(--surface)}
+.chat .set{border-bottom:1px solid var(--line);background:var(--surface);padding:12px 14px;display:flex;flex-direction:column;gap:8px;font-size:13px}
+.chat .set label{display:flex;gap:8px;align-items:flex-start;color:var(--ink-2)}
+.chat .set input[type=password],.chat .set select{border:1px solid var(--line-2);border-radius:8px;padding:6px 9px;background:var(--bg);color:var(--ink);font:13px var(--f-mono);width:100%}
+.chat .set .note{font-size:12px;color:var(--muted)}
+.chat .acts2{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.chat .btn.sm{font-size:12.5px;padding:5px 10px}
+@media (max-width:640px){.askfab{padding:10px 15px 10px 13px}}
+@media (prefers-reduced-motion:reduce){.chat .think i{animation:none;opacity:.6}}
+
+/* ---------- track record ---------- */
+.track{padding:16px 18px;margin-bottom:16px;display:flex;flex-direction:column;gap:12px}
+.track .sec-h{margin:0}
+.track-lede{margin:0;color:var(--ink-2);max-width:78ch}
+.tk-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.tk{display:flex;flex-direction:column;gap:3px;padding:10px 12px;border-radius:10px;background:var(--sunk);border:1px solid var(--line)}
+.tk b{font:800 26px/1 var(--f-display);color:var(--ink);font-variant-numeric:tabular-nums}
+.tk span{font-size:12.5px;color:var(--muted)}
+.tk b.good,.track td.good{color:var(--good)}.tk b.bad,.track td.bad{color:var(--bad)}
+.track-grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.35fr);gap:14px;align-items:start}
+.tr-fig{margin:0;display:flex;flex-direction:column;gap:6px}
+.tr-fig svg{width:100%;height:auto;max-width:520px}
+.tr-fig figcaption{font-size:12px;color:var(--muted)}
+.tr-grid{stroke:var(--grid);stroke-width:1}.tr-ax{fill:var(--muted);font:11px var(--f-mono)}
+.tr-diag{stroke:var(--axis);stroke-width:1.5;stroke-dasharray:4 4}
+.tr-dot{fill:color-mix(in srgb,var(--accent) 70%,transparent);stroke:var(--surface);stroke-width:2}
+.track .tbl-wrap{overflow-x:auto;min-width:0}
+.track-tbl{font-size:12.5px;width:100%}
+.track-tbl th,.track-tbl td{white-space:nowrap;padding:6px 7px!important;letter-spacing:0!important}
+.track-tbl thead th{font-size:10.5px}
+.track-tbl tbody th{text-align:left;font-weight:700}
+.track-more summary{cursor:pointer;font-weight:700;color:var(--ink-2)}
+.track-live{display:flex;flex-direction:column;gap:8px;padding:12px;border-radius:12px;border:1px dashed var(--line-2)}
+.track .small{font-size:12.5px;margin:0}
+@media (max-width:900px){.track-grid{grid-template-columns:1fr}}
+
+/* ---------- refreshed surface ---------- */
+.mast{background-color:color-mix(in srgb,var(--band) 88%,transparent);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px)}
+.card,.fcard,.panel.tile,.hero{transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s,border-color .25s}
+.card:hover,.fcard:hover{transform:translateY(-3px);box-shadow:0 10px 26px -12px rgba(11,18,32,.35),0 0 0 1px var(--line-2)}
+.hero{background-image:radial-gradient(90% 120% at 100% 0%,var(--accent-wash),transparent 55%)}
+::view-transition-old(root),::view-transition-new(root){animation-duration:.28s}
+@supports (animation-timeline:view()){
+  @media (prefers-reduced-motion:no-preference){
+    #view-board .grid > *,.fcard{animation:riseIn linear both;animation-timeline:view();animation-range:entry 0% entry 55%}
+  }
+}
+@keyframes riseIn{from{opacity:.35;transform:translateY(18px) scale(.985)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.card,.fcard{transition:none}.card:hover,.fcard:hover{transform:none}}
 </style>
 </head>
 <body>
@@ -779,6 +973,7 @@ table.tbl.sx{min-width:0}
 <div class="drawer" id="drawer" hidden></div>
 <div class="tip" id="tip" role="tooltip" hidden></div>
 
+<script src="../probable-atlas/ai-config.js"></script>
 <script>
 /* ==========================================================================
    Probable — predictive models (pure functions, no DOM)
@@ -2044,7 +2239,7 @@ SNAPSHOT.stats = {"asOf":"2026-09-26","st":{"nfl":{"2026":"BUF|2|0|0|77|62||AFC|
     const lg = LG[g.lg];
     return fetchJSON(ESPN + lg.path + '/summary?event=' + encodeURIComponent(g.id), 10000);
   }
-  Object.assign(APP, { loadSnapshot, loadStatic, probe, refreshLive, loadSummary, fetchJSON, TEAMS, parseStandings, recOf, ESPN, ESPN2, num });
+  Object.assign(APP, { loadSnapshot, loadStatic, probe, refreshLive, loadSummary, fetchJSON, TEAMS, parseStandings, parseEvent, priorNets, recOf, ESPN, ESPN2, num });
 
   /* ---------- model glue ---------- */
   function ratingsFor(lgId) {
@@ -6279,10 +6474,19 @@ SNAPSHOT.stats = {"asOf":"2026-09-26","st":{"nfl":{"2026":"BUF|2|0|0|77|62||AFC|
     document.querySelectorAll('.tab').forEach(b => b.setAttribute('aria-selected', String(b.getAttribute('data-tab') === t)));
     if (t === 'board') renderBoard(); else if (t === 'stats') APP.renderStats(); else if (t === 'lab') renderLab(); else if (t === 'standings') renderStandings(); else renderMethod();
     if (DR) updateDrawer();
+    hooks('all');
   }
   APP.renderAll = renderAll;
+  // extensions (3D arena, insights, Ask AI, track record) listen here after every render
+  APP.onRender = APP.onRender || [];
+  function hooks(kind) { for (const f of APP.onRender) { try { f(kind, S.tab); } catch (e) { console.error(e); } } }
   function parseTab(h) { const m = String(h || '').match(/^stats-(teams|players|analytics|history)$/); if (m) { if (APP.SX) APP.SX.view = m[1]; return 'stats'; } return ['board', 'stats', 'lab', 'standings', 'method'].includes(h) ? h : null; }
-  function setTab(t) { const p = parseTab(t) || 'board'; S.tab = p; try { history.replaceState(null, '', '#' + (p === 'stats' && APP.SX && APP.SX.view !== 'teams' ? 'stats-' + APP.SX.view : p)); } catch (e) { /* ignore */ } renderAll(); window.scrollTo({ top: 0 }); }
+  function setTab(t) {
+    const p = parseTab(t) || 'board';
+    const go = () => { S.tab = p; try { history.replaceState(null, '', '#' + (p === 'stats' && APP.SX && APP.SX.view !== 'teams' ? 'stats-' + APP.SX.view : p)); } catch (e) { /* ignore */ } renderAll(); window.scrollTo({ top: 0 }); };
+    // a cross-fade between tabs where the browser supports view transitions (skipped for reduced motion)
+    if (p !== S.tab && document.startViewTransition && !(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) document.startViewTransition(go); else go();
+  }
   function schedule() {
     clearTimeout(S.timer);
     if (S.mode !== 'live' || !S.auto) { S.nextAt = 0; return; }
@@ -6295,6 +6499,7 @@ SNAPSHOT.stats = {"asOf":"2026-09-26","st":{"nfl":{"2026":"BUF|2|0|0|77|62||AFC|
     if (S.tab === 'board') renderBoard();
     else if (S.tab === 'standings' && !document.activeElement?.closest('#view-standings')) renderStandings();
     if (DR) { updateDrawer(); const g = APP.findGame(DR.id); if (g && g.state === 'in' && S.mode === 'live') loadSummaryInto(g); }
+    hooks('soft');
   }
   function applyTheme(t) { if (t) document.documentElement.setAttribute('data-theme', t); }
   function currentDark() { const a = document.documentElement.getAttribute('data-theme'); if (a) return a === 'dark'; return window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches; }
@@ -6363,9 +6568,914 @@ SNAPSHOT.stats = {"asOf":"2026-09-26","st":{"nfl":{"2026":"BUF|2|0|0|77|62||AFC|
     renderAll(); schedule();
   }
   APP.init = init;
+  Object.assign(APP, { setTab, featScore, featuredList, simTable, standLeagues, groupKey, renderBoard });
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => init()); else init();
 })();
 
+
+/* ==========================================================================
+   Probable — Track record: how often the lab's numbers have been right.
+   Data: data/track.json from the hourly pipeline (season replay without
+   look-ahead, in-game checkpoints, and a prospective log of the live board
+   against the betting line). Shown at the top of How it works, in the
+   Insights bar and to Ask AI.
+   ========================================================================== */
+(function () {
+  'use strict';
+  const APP = window.APP, S = APP.S, LG = APP.LG, esc = APP.esc;
+  let T = window.SPORTS_TRACK || null, tried = false;
+  const pc = (p, d) => isFinite(p) ? (p * 100).toFixed(d || 0) + '%' : '—';
+  const lgName = id => LG[id] ? (LG[id].short || LG[id].name) : id;
+  const ORDER = ['nfl', 'nba', 'wnba', 'mlb', 'nhl', 'epl', 'laliga', 'seriea', 'bund', 'ligue1', 'mls'];
+  async function load() {
+    if (T || tried) return; tried = true;
+    try { const r = await fetch('data/track.json', { cache: 'no-cache' }); if (r.ok) { T = await r.json(); refresh(); } } catch (e) { /* offline or not built yet */ }
+  }
+  const all = () => T && T.all;
+  function summary() {
+    const a = all(); if (!a || a.n < 50) return null;
+    // two-way sports read most naturally as "the favorite won X%"; soccer has draws, so it is left out of that number
+    const two = Object.entries(T.leagues).filter(([id]) => APP.kindOf(id) !== 'sc');
+    const n2 = two.reduce((s, [, x]) => s + x.n, 0), hit = two.reduce((s, [, x]) => s + x.acc * x.n, 0);
+    if (n2 >= 50) return { text: `Track record: replayed without hindsight, the lab's favorite won ${pc(hit / n2)} of ${n2.toLocaleString()} games outside soccer this season — and its odds beat "home edge only" by ${Math.round(a.skill * 100)}% across ${a.n.toLocaleString()} games`, val: pc(hit / n2) };
+    return { text: `Track record: replayed without hindsight across ${a.n.toLocaleString()} games, the lab's odds beat "home edge only" by`, val: Math.round(a.skill * 100) + '%' };
+  }
+  function facts(lg) {
+    if (!T) return { unavailable: 'The track record has not been computed yet.' };
+    const pick = x => x && { games: x.n, favoriteWon: x.acc, brier: x.brier, homeEdgeOnlyBrier: x.base, skillVsHomeEdge: x.skill, calibration: (x.bins || []).map(b => ({ predicted: b[3], actual: b[4], games: b[2] })), inGame: x.ingame, season: x.season };
+    const o = { asOf: T.asOf, method: T.method };
+    if (lg && T.leagues[lg]) Object.assign(o, { league: lgName(lg) }, pick(T.leagues[lg]));
+    else { o.overall = pick(T.all); o.byLeague = Object.fromEntries(Object.entries(T.leagues).map(([k, v]) => [lgName(k), { games: v.n, favoriteWon: v.acc, brier: v.brier, skill: v.skill }])); }
+    if (T.live && T.live.all) o.liveBoardVsLine = { since: T.live.since, games: T.live.all.n, board: T.live.all.model, line: T.live.all.line };
+    return o;
+  }
+  function answer(q, lg) {
+    if (!T || !T.all) return { md: 'The track record is still being computed: an hourly job replays every completed game this season with the lab\'s own model, using only results known before each game. Check *How it works* soon.', btn: [['Open How it works', 'method']] };
+    const x = lg && T.leagues[lg] ? T.leagues[lg] : T.all, name = lg && T.leagues[lg] ? lgName(lg) : 'all leagues';
+    const b = (x.bins || []).filter(z => z[2] >= 20).map(z => `- Picked at ${pc(z[0])}–${pc(Math.min(1, z[1]))}: won ${pc(z[4])} (${z[2]} games, predicted ${pc(z[3])})`).join('\n');
+    let md = `**Track record, ${name}${x.season ? ' (' + x.season + ')' : ''}:** the lab's favorite won **${pc(x.acc)}** of ${x.n.toLocaleString()} games. Its Brier score is ${x.brier.toFixed(3)} against ${x.base.toFixed(3)} for "home edge only" (lower is better), a skill of ${Math.round(x.skill * 100)}%.\n\n${b ? 'Calibration — when the lab said…\n' + b : ''}`;
+    if (x.ingame && x.ingame.length) md += `\n\nIn-game: ${x.ingame.map(s => `${s.stage} ${pc(s.acc)} right`).join(' · ')}.`;
+    if (T.live && T.live.all && T.live.all.n >= 10) { const L = T.live.all; md += `\n\nSince ${new Date(T.live.since).toLocaleDateString()}, the live board's pregame numbers (ratings blended with the line) picked ${pc(L.model.acc)} of ${L.n} games${L.line ? `; the betting line picked ${pc(L.line.acc)} of ${L.line.n}` : ''}.`; }
+    md += '\n\nThis is a replay with the rating model alone; the live board also leans on betting lines early in a season.';
+    return { md, btn: [['See the full track record', 'method']] };
+  }
+  function open() { APP.setTab('method'); setTimeout(() => { const el = document.getElementById('track'); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80); }
+
+  /* ---------------- section ---------------- */
+  function calib(x) {
+    const bins = (x.bins || []).filter(b => b[2] >= 5); if (!bins.length) return '';
+    const W = 420, H = 260, m = { l: 44, r: 14, t: 14, b: 38 }, X = p => m.l + (p - 0.3) / 0.7 * (W - m.l - m.r), Y = p => H - m.b - (p - 0.3) / 0.7 * (H - m.t - m.b);
+    const rMax = Math.max(...bins.map(b => b[2]));
+    const ticks = [0.4, 0.6, 0.8, 1].map(v => `<line x1="${X(v)}" x2="${X(v)}" y1="${m.t}" y2="${H - m.b}" class="tr-grid"/><text x="${X(v)}" y="${H - m.b + 16}" class="tr-ax" text-anchor="middle">${pc(v)}</text><line x1="${m.l}" x2="${W - m.r}" y1="${Y(v)}" y2="${Y(v)}" class="tr-grid"/><text x="${m.l - 6}" y="${Y(v) + 4}" class="tr-ax" text-anchor="end">${pc(v)}</text>`).join('');
+    const dots = bins.map(b => `<circle cx="${X(b[3]).toFixed(1)}" cy="${Y(b[4]).toFixed(1)}" r="${(4 + 10 * Math.sqrt(b[2] / rMax)).toFixed(1)}" class="tr-dot"><title>Predicted ${pc(b[3], 1)} · won ${pc(b[4], 1)} · ${b[2]} games</title></circle>`).join('');
+    return `<figure class="tr-fig"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Calibration: predicted chance of the favorite against how often it won">${ticks}<line x1="${X(0.3)}" y1="${Y(0.3)}" x2="${X(1)}" y2="${Y(1)}" class="tr-diag"/>${dots}<text x="${(m.l + W - m.r) / 2}" y="${H - 6}" class="tr-ax" text-anchor="middle">Chance the lab gave its favorite</text></svg><figcaption>Dots on the line mean the probabilities meant what they said: favorites given 70% won about 70% of the time. Dot size = games.</figcaption></figure>`;
+  }
+  function section() {
+    if (!T || !T.all) return `<section class="panel track" id="track"><div class="sec-h"><h2>Track record</h2></div><p class="muted">${tried ? 'The track record is being computed by an hourly job that replays every completed game this season with the lab\'s own model, using only results known before each game.' : 'Loading the track record…'}</p></section>`;
+    const a = T.all, ids = ORDER.filter(id => T.leagues[id]);
+    const season = x => String(x.season || '').replace(/^(\d{4}(?:-\d{2})?).*$/, '$1');
+    const two = ids.filter(id => APP.kindOf(id) !== 'sc'), n2 = two.reduce((s, id) => s + T.leagues[id].n, 0), acc2 = n2 ? two.reduce((s, id) => s + T.leagues[id].acc * T.leagues[id].n, 0) / n2 : a.acc;
+    const rows = ids.map(id => { const x = T.leagues[id]; return `<tr><th scope="row">${esc(lgName(id))} <span class="muted">${esc(season(x))}</span></th><td class="num">${x.n.toLocaleString()}</td><td class="num">${pc(x.acc)}${APP.kindOf(id) === 'sc' ? '<sup>*</sup>' : ''}</td><td class="num">${x.brier.toFixed(3)}</td><td class="num">${x.base.toFixed(3)}</td><td class="num ${x.skill > 0 ? 'good' : 'bad'}">${x.skill > 0 ? '+' : ''}${Math.round(x.skill * 100)}%</td></tr>`; }).join('');
+    const ig = ids.flatMap(id => (T.leagues[id].ingame || []).map(s => `<tr><th scope="row">${esc(lgName(id))}</th><td>${esc(s.stage)}</td><td class="num">${s.n.toLocaleString()}</td><td class="num">${pc(s.acc)}</td><td class="num">${s.brier.toFixed(3)}</td><td class="num">${s.leaderBrier.toFixed(3)}</td></tr>`)).join('');
+    const L = T.live && T.live.all;
+    const live = L && L.n ? `<div class="track-live"><span class="eyebrow">Live board vs the betting line · since ${esc(new Date(T.live.since).toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' }))}</span><div class="tk-row"><div class="tk"><b>${L.n}</b><span>games logged before start and graded</span></div><div class="tk"><b>${pc(L.model.acc)}</b><span>board favorite won · Brier ${L.model.brier.toFixed(3)}</span></div>${L.line ? `<div class="tk"><b>${pc(L.line.acc)}</b><span>betting-line favorite won · Brier ${L.line.brier.toFixed(3)} (${L.line.n} games)</span></div>` : ''}</div></div>` : `<p class="muted small">From now on every game is also logged an hour or so before it starts — the live board's number and the betting line — and graded once it ends, so the record will soon compare the board with the market.</p>`;
+    return `<section class="panel track" id="track">
+      <div class="sec-h"><h2>Track record</h2><span class="aside">Updated ${esc(new Date(T.asOf).toLocaleString([], { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }))}</span></div>
+      <p class="track-lede">Every completed game this season, predicted again with the lab's own rating model using only results known before it started — no hindsight. Brier score measures probability error (0 is perfect; lower is better); skill compares it with knowing only the home edge.</p>
+      <div class="tk-row"><div class="tk"><b>${a.n.toLocaleString()}</b><span>games graded</span></div><div class="tk"><b>${pc(acc2)}</b><span>the lab's favorite won (${n2.toLocaleString()} games outside soccer)</span></div><div class="tk"><b>${a.brier.toFixed(3)}</b><span>Brier score (home edge only: ${a.base.toFixed(3)})</span></div><div class="tk"><b class="${a.skill > 0 ? 'good' : 'bad'}">${a.skill > 0 ? '+' : ''}${Math.round(a.skill * 100)}%</b><span>skill vs home edge</span></div></div>
+      <div class="track-grid">${calib(a)}<div class="tbl-wrap"><table class="tbl track-tbl"><thead><tr><th>League</th><th>Games</th><th>Favorite won</th><th>Brier</th><th>Home edge</th><th>Skill</th></tr></thead><tbody>${rows}</tbody></table><p class="muted small">* Soccer has three outcomes, so its favorite wins less often; Brier there covers win, draw and loss.</p></div></div>
+      ${ig ? `<details class="track-more"><summary>In-game checkpoints (${ids.length} leagues)</summary><p class="muted small">The live models re-run from the score at the end of each period, against simply backing the team that leads.</p><div class="tbl-wrap"><table class="tbl track-tbl"><thead><tr><th>League</th><th>Moment</th><th>Games</th><th>Right</th><th>Brier</th><th>"Leader wins"</th></tr></thead><tbody>${ig}</tbody></table></div></details>` : ''}
+      ${live}
+      <p class="muted small">Limits: the replay uses the rating model alone (the live board also blends in betting lines early in a season), college football and the Champions League are left out because their ratings come from polls and domestic leagues, and the in-game checkpoints start each period without possession or field position.</p>
+    </section>`;
+  }
+  function refresh(kind, tab) {
+    if (tab == null) tab = S.tab;
+    if (!tried) load();
+    if (tab !== 'method') return;
+    const v = document.getElementById('view-method'); if (!v) return;
+    const old = document.getElementById('track'); const html = section();
+    if (old) old.outerHTML = html; else { const anchor = v.querySelector('.sec-h') || v.firstElementChild; if (anchor) anchor.insertAdjacentHTML('afterend', html); else v.insertAdjacentHTML('afterbegin', html); }
+  }
+  APP.onRender.push(refresh);
+  APP.track = { summary, facts, answer, open, load, get data() { return T; } };
+})();
+
+/* Probable kit: the "Ask AI" chat shared by the Probable sites. A built-in analyst answers from the page's own data and
+   models; when Claude is available (the Claude-hosted copy, a site proxy, or the visitor's own API key) it gets the same
+   data and models as tools. A site plugs in with CH.init(adapter, state). */
+const CH = (() => {
+  const esc = (typeof K !== 'undefined' && K.esc) || (s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])));
+  const mountCharts = el => { if (A && A.mount) A.mount(el); else if (typeof C !== 'undefined' && C.mount) { C.mount(el); if (C.gc) C.gc(); } };
+  let A = null, ST = null, built = false, opened = false, busy = false, ctl = null;
+  let engine = 'analyst', sample = null, sampleTools = false, sampleChecked = false;
+  const turns = []; // LLM conversation (role/content strings)
+  const cfg = window.ATLAS_AI || {};
+  let SNAP = !!(window.ATLAS_FIN_DATA || window.ATLAS_DATA);
+  const KEYS = { key: 'atlas-ai-key', model: 'atlas-ai-model', engine: 'atlas-ai-engine' };
+  const MODELS = [['claude-sonnet-5', 'Claude Sonnet 5'], ['claude-haiku-4-5-20251001', 'Claude Haiku 4.5 (fastest)'], ['claude-opus-5-5', 'Claude Opus 5.5 (most capable)']];
+  const store = { get(k, s) { try { return (s ? sessionStorage : localStorage).getItem(k); } catch (e) { return null; } }, set(k, v, s) { try { (s ? sessionStorage : localStorage).setItem(k, v); } catch (e) { /* blocked */ } }, del(k) { try { localStorage.removeItem(k); sessionStorage.removeItem(k); } catch (e) { /* blocked */ } } };
+  const apiKey = () => store.get(KEYS.key, true) || store.get(KEYS.key);
+  const ENG = { analyst: 'Built-in analyst', claude: 'Claude · your Claude account', endpoint: 'Claude · site service', key: 'Claude · your API key' };
+
+  /* ---------------- tiny safe markdown ---------------- */
+  function md(src) {
+    const inline = s => esc(s)
+      .replace(/`([^`]+)`/g, '<code>$1</code>')
+      .replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>')
+      .replace(/(^|[\s(])\*([^*\s][^*]*?)\*(?=[\s).,;:!?]|$)/g, '$1<i>$2</i>')
+      .replace(/\[([^\]]+)\]\((https:\/\/[^)\s]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+    const lines = String(src || '').replace(/\r/g, '').split('\n'); let out = '', list = null, para = [], table = [];
+    const flushP = () => { if (para.length) { out += `<p>${inline(para.join(' '))}</p>`; para = []; } };
+    const flushL = () => { if (list) { out += `<${list.t}>${list.items.map(i => `<li>${inline(i)}</li>`).join('')}</${list.t}>`; list = null; } };
+    const flushT = () => { if (table.length) { const rows = table.filter(r => !/^\s*\|?\s*:?-{2,}/.test(r)).map(r => r.replace(/^\s*\||\|\s*$/g, '').split('|').map(c => c.trim())); out += `<table>${rows.map((r, k) => `<tr>${r.map(c => k ? `<td>${inline(c)}</td>` : `<th>${inline(c)}</th>`).join('')}</tr>`).join('')}</table>`; table = []; } };
+    for (const ln of lines) {
+      if (/^\s*\|.*\|\s*$/.test(ln)) { flushP(); flushL(); table.push(ln); continue; } else flushT();
+      const h = ln.match(/^\s*#{1,4}\s+(.*)$/); if (h) { flushP(); flushL(); out += `<h4>${inline(h[1])}</h4>`; continue; }
+      const ul = ln.match(/^\s*[-*•]\s+(.*)$/), ol = ln.match(/^\s*\d+[.)]\s+(.*)$/);
+      if (ul || ol) { flushP(); const t = ul ? 'ul' : 'ol'; if (!list || list.t !== t) { flushL(); list = { t, items: [] }; } list.items.push((ul || ol)[1]); continue; }
+      if (!ln.trim()) { flushP(); flushL(); continue; }
+      if (list && /^\s{2,}/.test(ln)) { list.items[list.items.length - 1] += ' ' + ln.trim(); continue; }
+      flushL(); para.push(ln.trim());
+    }
+    flushP(); flushL(); flushT();
+    return out;
+  }
+
+  /* ---------------- UI ---------------- */
+  function build() {
+    if (built) return; built = true;
+    const root = document.getElementById('chatRoot') || document.body.appendChild(Object.assign(document.createElement('div'), { id: 'chatRoot' }));
+    const title = A.title || 'Ask AI';
+    root.innerHTML = `<button type="button" class="askfab" id="askFab" aria-label="${esc(title)}: ask a question about this page"><b aria-hidden="true">✦</b>${esc(title)}</button>
+      <aside class="chat" id="chat" hidden role="dialog" aria-modal="false" aria-labelledby="chatTitle">
+        <div class="chd"><div><div class="eng" id="chatEng"></div><h2 id="chatTitle">${esc(title)}</h2></div><div class="acts"><button type="button" data-chat="settings" aria-label="Chat settings" title="Settings">⚙</button><button type="button" data-chat="new" aria-label="New conversation" title="New conversation">⟲</button><button type="button" data-chat="close" aria-label="Close chat">×</button></div></div>
+        <div class="set" id="chatSet" hidden></div>
+        <div class="msgs" id="chatMsgs" aria-live="polite"></div>
+        <form id="chatForm"><textarea id="chatIn" rows="1" placeholder="${esc(A.placeholder || 'Ask about the data, models, forecasts or your own scenario…')}" aria-label="Your question"></textarea><button type="submit" id="chatSend">Ask</button></form>
+        <div class="foot">${esc(A.footer || 'Answers come from this page\'s data and models. Educational, not investment advice.')}</div>
+      </aside>`;
+    document.getElementById('askFab').addEventListener('click', () => open(''));
+    document.getElementById('chatForm').addEventListener('submit', ev => { ev.preventDefault(); if (busy) { if (ctl) ctl.abort(); return; } const t = document.getElementById('chatIn'); const q = t.value.trim(); if (q) { t.value = ''; grow(t); send(q); } });
+    const ta = document.getElementById('chatIn');
+    ta.addEventListener('keydown', ev => { if (ev.key === 'Enter' && !ev.shiftKey) { ev.preventDefault(); document.getElementById('chatForm').requestSubmit(); } });
+    ta.addEventListener('input', () => grow(ta));
+    document.getElementById('chat').addEventListener('click', onClick);
+    document.getElementById('chat').addEventListener('change', onChange);
+    welcome(); paintEng();
+  }
+  const grow = t => { t.style.height = 'auto'; t.style.height = Math.min(140, t.scrollHeight) + 'px'; };
+  function paintEng() { const e = document.getElementById('chatEng'); if (e) e.textContent = ENG[engine]; }
+  function welcome() {
+    const m = document.getElementById('chatMsgs'); if (!m) return;
+    m.innerHTML = `<div class="welcome">${A.welcome()}<div class="sugg">${A.suggestions(ST).map(q => `<button type="button" data-q="${esc(q)}">${esc(q)}</button>`).join('')}</div></div>`;
+  }
+  function open(q) {
+    build(); opened = true;
+    document.getElementById('chat').hidden = false; document.getElementById('askFab').hidden = true;
+    checkSample();
+    if (q) send(q); else setTimeout(() => document.getElementById('chatIn').focus(), 30);
+  }
+  function close() { if (!built) return; opened = false; document.getElementById('chat').hidden = true; document.getElementById('askFab').hidden = false; if (ctl) ctl.abort(); }
+  const isOpen = () => opened;
+  function settings() {
+    const s = document.getElementById('chatSet'); if (!s.hidden) { s.hidden = true; return; }
+    const opts = [['analyst', 'Built-in analyst: instant, free, answers from this page\'s data and models', true], ['claude', 'Claude, using your Claude account (in the Claude app)', !!sample], ['endpoint', 'Claude through this site\'s service', !!cfg.endpoint && !SNAP], ['key', 'Claude with your own Anthropic API key', !SNAP]];
+    s.innerHTML = opts.filter(o => o[2]).map(([v, l]) => `<label><input type="radio" name="eng" value="${v}" ${engine === v ? 'checked' : ''} data-eng> <span>${esc(l)}</span></label>`).join('') +
+      (!SNAP ? `<div id="keyBox" ${engine === 'key' ? '' : 'hidden'}><input type="password" id="apiKey" placeholder="sk-ant-…" value="${esc(apiKey() || '')}" autocomplete="off" aria-label="Anthropic API key"><div class="acts2"><select id="apiModel" aria-label="Model">${MODELS.map(([v, l]) => `<option value="${v}" ${(store.get(KEYS.model) || MODELS[0][0]) === v ? 'selected' : ''}>${esc(l)}</option>`).join('')}</select></div><label><input type="checkbox" id="keyKeep" ${store.get(KEYS.key) ? 'checked' : ''}> <span>Remember on this device (otherwise only for this tab)</span></label><div class="acts2"><button type="button" class="btn sm pri" data-chat="savekey">Use this key</button><button type="button" class="btn sm" data-chat="forget">Forget key</button></div><div class="note">Your key is sent only to api.anthropic.com from your browser and usage is billed to your account. Use a key with a spending limit.</div></div>` : '') +
+      (sample ? '' : SNAP ? '<div class="note">Claude answers appear here when this page is opened in the Claude app and you allow it to use Claude.</div>' : '');
+    s.hidden = false;
+  }
+  function onChange(ev) {
+    if (ev.target.matches('[data-eng]')) { engine = ev.target.value; store.set(KEYS.engine, engine); paintEng(); const kb = document.getElementById('keyBox'); if (kb) kb.hidden = engine !== 'key'; if (engine === 'key' && !apiKey()) document.getElementById('apiKey').focus(); }
+    if (ev.target.id === 'apiModel') store.set(KEYS.model, ev.target.value);
+  }
+  function onClick(ev) {
+    const b = ev.target.closest('[data-chat]'), q = ev.target.closest('[data-q]:not([data-game])');
+    if (q) { send(q.dataset.q); return; }
+    if (!b) { const lnk = ev.target.closest('[data-goto],[data-asset],[data-anchor],[data-game],[data-tabgo]'); if (lnk && window.matchMedia('(max-width:900px)').matches) close(); return; }
+    const a = b.dataset.chat;
+    if (a === 'close') close();
+    if (a === 'new') { turns.length = 0; welcome(); }
+    if (a === 'settings') settings();
+    if (a === 'savekey') { const v = document.getElementById('apiKey').value.trim(); if (!/^sk-ant-/.test(v)) { alertMsg('That does not look like an Anthropic API key (it should start with sk-ant-).'); return; } store.del(KEYS.key); store.set(KEYS.key, v, !document.getElementById('keyKeep').checked); engine = 'key'; store.set(KEYS.engine, 'key'); paintEng(); document.getElementById('chatSet').hidden = true; alertMsg('Key saved. Questions now go to Claude with this page\'s data and models as tools.'); }
+    if (a === 'forget') { store.del(KEYS.key); if (engine === 'key') engine = 'analyst'; paintEng(); document.getElementById('chatSet').hidden = true; alertMsg('Key removed from this browser.'); }
+  }
+  function alertMsg(t) { bubble('bot', `<div class="meta">Note</div><p>${esc(t)}</p>`); }
+  function bubble(role, html) {
+    const m = document.getElementById('chatMsgs'), d = document.createElement('div'); d.className = 'msg ' + role; d.innerHTML = html; m.appendChild(d);
+    d.scrollIntoView({ block: 'end', behavior: 'smooth' }); return d;
+  }
+  function scrollEnd() { const m = document.getElementById('chatMsgs'); m.scrollTop = m.scrollHeight; }
+  function setBusy(v) { busy = v; const b = document.getElementById('chatSend'); b.textContent = v ? 'Stop' : 'Ask'; }
+
+  /* ---------------- engines ---------------- */
+  function checkSample() {
+    if (sampleChecked || !window.claude || typeof window.claude.use !== 'function') return; sampleChecked = true;
+    window.claude.use('sample').then(s => { if (!s) return; sample = s; s.limits().then(l => { sampleTools = !!(l && l.tools); }).catch(() => {}); if (engine === 'analyst' && store.get(KEYS.engine) !== 'analyst') { engine = 'claude'; paintEng(); } }).catch(() => {});
+  }
+  function initEngine() {
+    const saved = store.get(KEYS.engine);
+    if (saved === 'key' && apiKey() && !SNAP) engine = 'key';
+    else if (cfg.endpoint && !SNAP && saved !== 'analyst') engine = 'endpoint';
+    else engine = 'analyst';
+  }
+  const followHTML = list => list && list.length ? `<div class="sugg">${list.map(q => `<button type="button" data-q="${esc(q)}">${esc(q)}</button>`).join('')}</div>` : '';
+  function send(q) {
+    if (!built) build();
+    if (!opened) { opened = true; document.getElementById('chat').hidden = false; document.getElementById('askFab').hidden = true; }
+    bubble('user', esc(q));
+    if (engine === 'analyst') return analyst(q);
+    return llm(q);
+  }
+  function analyst(q, note) {
+    let res;
+    try { res = A.answer(q, ST); } catch (e) { console.error(e); res = { html: `<p class="err">Sorry, that question tripped up the built-in analyst (${esc(e.message)}).</p>`, follow: A.suggestions(ST).slice(0, 3) }; }
+    const d = bubble('bot', `<div class="meta">Built-in analyst${note ? ' · ' + esc(note) : ''}</div>${res.html}${followHTML(res.follow)}`);
+    mountCharts(d); scrollEnd();
+  }
+  function toolList(attach) { // the adapter's tools plus a chart tool that draws into the current answer
+    const tools = A.tools(ST).slice();
+    if (A.chart) tools.push(A.chartTool || { name: 'show_chart', description: 'Draw a chart in the chat for the user. kind: "price" (a market over a range), "compare" (several markets rebased to 100), or a model chart name from list_charts. Returns a short confirmation.', inputSchema: { type: 'object', properties: { kind: { type: 'string' }, ids: { type: 'array', items: { type: 'string' } }, range: { type: 'string', enum: ['1M', '3M', '6M', 'YTD', '1Y', '3Y', '5Y', '10Y', 'MAX'] } }, required: ['kind'] } });
+    const ct = tools[tools.length - 1]; if (A.chart && !ct.execute) ct.execute = input => { const h = A.chart(input || {}); if (!h) throw new Error('Unknown chart. Use a kind or name from list_charts.'); attach(h); return 'Chart shown to the user.'; };
+    return tools;
+  }
+  async function llm(q) {
+    const d = bubble('bot', `<div class="meta">${esc(ENG[engine])}</div><div class="att"></div><div class="body"><span class="think"><i></i><i></i><i></i> Thinking…</span></div><div class="stat src"></div>`);
+    const body = d.querySelector('.body'), att = d.querySelector('.att'), stat = d.querySelector('.stat');
+    const attach = h => { const w = document.createElement('div'); w.innerHTML = h; att.appendChild(w); mountCharts(w); scrollEnd(); };
+    const tools = toolList(attach), looked = [];
+    const wrap = tools.map(t => Object.assign({}, t, { execute: async (inp, cx) => { looked.push(t.name.replace(/_/g, ' ')); stat.textContent = 'Looked up: ' + Array.from(new Set(looked)).join(', '); return t.execute(inp || {}, cx); } }));
+    const system = A.system(ST);
+    turns.push({ role: 'user', content: q });
+    while (turns.length > 12) turns.shift();
+    if (turns[0].role !== 'user') turns.shift();
+    setBusy(true); ctl = new AbortController();
+    let text = '';
+    const show = t => { text = t; body.innerHTML = md(t); scrollEnd(); };
+    try {
+      if (engine === 'claude') {
+        if (!sample) throw { code: 'not_available' };
+        const input = [{ role: 'user', content: system }].concat(turns);
+        const opts = { signal: ctl.signal, onText: ({ text: t }) => show(t), cache: false };
+        if (sampleTools) opts.tools = wrap;
+        const r = await sample(input, opts); show(r.text);
+      } else {
+        const send = engine === 'key' ? payload => fetch('https://api.anthropic.com/v1/messages', { method: 'POST', signal: ctl.signal, headers: { 'content-type': 'application/json', 'x-api-key': apiKey(), 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' }, body: JSON.stringify(payload) })
+          : payload => fetch(cfg.endpoint, { method: 'POST', signal: ctl.signal, headers: { 'content-type': 'application/json' }, body: JSON.stringify(payload) });
+        const model = engine === 'key' ? (store.get(KEYS.model) || MODELS[0][0]) : (cfg.model || undefined);
+        show(await messagesLoop(send, model, system, turns, wrap, show));
+      }
+      turns.push({ role: 'assistant', content: text || '(no answer)' });
+      d.insertAdjacentHTML('beforeend', followHTML(A.suggestions(ST).slice(0, 3)));
+    } catch (e) {
+      turns.pop();
+      const code = e && e.code, msg = e && (e.message || e.code) || String(e);
+      if (code === 'cancelled' || (e && e.name === 'AbortError')) { body.innerHTML = text ? md(text) + '<p class="muted">(stopped)</p>' : '<p class="muted">Stopped.</p>'; }
+      else {
+        d.remove();
+        const why = code === 'not_granted' ? 'Claude was not allowed for this page' : code === 'rate_limited' ? 'Claude is busy or your usage limit was reached' : code === 'sampling_disabled' ? 'Claude is not available for this account' : /401|invalid x-api-key|authentication/i.test(msg) ? 'the API key was rejected' : 'Claude could not be reached (' + String(msg).slice(0, 80) + ')';
+        if (code === 'not_granted' || code === 'sampling_disabled') { engine = 'analyst'; paintEng(); }
+        analyst(q, 'used because ' + why);
+      }
+    } finally { setBusy(false); ctl = null; }
+  }
+  async function messagesLoop(send, model, system, hist, tools, show) {
+    const msgs = hist.map(t => ({ role: t.role, content: t.content })); let text = '';
+    const toolDefs = tools.map(t => ({ name: t.name, description: t.description, input_schema: t.inputSchema || { type: 'object', properties: {} } }));
+    for (let round = 0; round < 6; round++) {
+      const payload = { max_tokens: 1400, system, messages: msgs, tools: toolDefs }; if (model) payload.model = model;
+      const r = await send(payload); let j = null; try { j = await r.json(); } catch (e) { /* not json */ }
+      if (!r.ok || !j || !j.content) throw new Error((j && j.error && j.error.message) || ('HTTP ' + r.status));
+      msgs.push({ role: 'assistant', content: j.content });
+      const tx = j.content.filter(c => c.type === 'text').map(c => c.text).join('\n').trim();
+      if (tx) { text += (text ? '\n\n' : '') + tx; show(text); }
+      if (j.stop_reason !== 'tool_use') break;
+      const results = [];
+      for (const u of j.content.filter(c => c.type === 'tool_use')) {
+        const t = tools.find(x => x.name === u.name);
+        try { const out = await t.execute(u.input || {}); results.push({ type: 'tool_result', tool_use_id: u.id, content: typeof out === 'string' ? out : JSON.stringify(out).slice(0, 30000) }); }
+        catch (e) { results.push({ type: 'tool_result', tool_use_id: u.id, content: 'Error: ' + (e.message || e), is_error: true }); }
+      }
+      msgs.push({ role: 'user', content: results });
+    }
+    return text;
+  }
+
+  /* ---------------- shared language helpers for module analysts ---------------- */
+  const NLU = {
+    norm: s => ' ' + String(s || '').toLowerCase().replace(/[’']/g, "'").replace(/[^a-z0-9%$&+./\- ']/g, ' ').replace(/\s+/g, ' ').trim() + ' ',
+    has: (q, words) => words.some(w => w instanceof RegExp ? w.test(q) : q.includes(w)),
+    score: (q, words) => words.reduce((s, w) => s + ((w instanceof RegExp ? w.test(q) : q.includes(w)) ? 1 : 0), 0),
+    money(q) { // $50k, 50,000, $1.2m, 1 million
+      const out = []; const re = /\$?\s?(\d[\d,]*(?:\.\d+)?)\s?(k|thousand|m|mm|million|b|billion)?\b/g; let m;
+      while ((m = re.exec(q))) { const raw = m[1].replace(/,/g, ''); let v = parseFloat(raw); const u = m[2]; if (u === 'k' || u === 'thousand') v *= 1e3; else if (u === 'm' || u === 'mm' || u === 'million') v *= 1e6; else if (u === 'b' || u === 'billion') v *= 1e9; const hasDollar = q[m.index] === '$' || /\$\s?$/.test(q.slice(Math.max(0, m.index - 2), m.index + 1)); out.push({ v, i: m.index, len: m[0].length, dollar: hasDollar || !!u, txt: m[0] }); }
+      return out;
+    },
+    pct(q) { const out = []; const re = /([+-]?\d+(?:\.\d+)?)\s?(%|percent|pct|bp|bps|basis points|points|pts|pp)/g; let m; while ((m = re.exec(q))) out.push({ v: parseFloat(m[1]) * (/bp|basis/.test(m[2]) ? 0.01 : 1), unit: m[2], i: m.index }); return out; },
+    years(q) { const m = q.match(/(\d{1,2})\s?(?:more\s)?(?:years?|yrs?)\b/); return m ? +m[1] : null; },
+    age(q) { const m = q.match(/\b(?:i'?m|i am|age|aged)\s(\d{2})\b/) || q.match(/\b(\d{2})\s?(?:years? old|yo)\b/); return m ? +m[1] : null; },
+    retireAge(q) { const m = q.match(/retire (?:at|by)\s?(?:age\s)?(\d{2})/); return m ? +m[1] : null; }
+  };
+
+  function init(adapter, state) { A = adapter; ST = state; if (A.snapshot != null) SNAP = !!A.snapshot; initEngine(); build(); checkSample(); }
+  function context(state) { ST = state; }
+  return { init, open, close, isOpen, context, send, md, NLU };
+})();
+
+/* ==========================================================================
+   Probable — Ask AI for the Sports Lab. A built-in analyst answers from the
+   live board, team ratings, the win-probability models, the 260-scenario
+   what-if library, standings simulations and the track record. With Claude
+   (site service, a visitor's API key, or the Claude-hosted copy) the same
+   functions are tools. Analysis, not betting advice.
+   ========================================================================== */
+(function () {
+  'use strict';
+  const APP = window.APP, S = APP.S, LG = APP.LG, LEAGUES = APP.LEAGUES, PM = window.PM, esc = APP.esc;
+  const pc = p => isFinite(p) ? Math.round(p * 100) + '%' : '—';
+  const kindOf = APP.kindOf, lgN = id => LG[id].short || LG[id].name;
+  const clone = o => JSON.parse(JSON.stringify(o));
+  const norm = s => ' ' + String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[’']/g, "'").replace(/[^a-z0-9%&+.\- ']/g, ' ').replace(/\s+/g, ' ').trim() + ' ';
+  const has = (q, ws) => ws.some(w => w instanceof RegExp ? w.test(q) : q.includes(w));
+  const nowRef = () => S.mode === 'snapshot' && S.capturedAt ? +new Date(S.capturedAt) : Date.now();
+
+  /* ---------------- leagues and teams ---------------- */
+  const LGW = { nfl: ['nfl', 'pro football', 'super bowl'], ncaaf: ['college football', 'ncaaf', 'cfb', 'ncaa football'], mlb: ['mlb', 'baseball', 'world series'], nba: ['nba', 'pro basketball'], wnba: ['wnba'], nhl: ['nhl', 'hockey', 'stanley cup'], epl: ['premier league', 'epl', 'english football'], laliga: ['laliga', 'la liga', 'spanish'], seriea: ['serie a', 'italian'], bund: ['bundesliga', 'german'], ligue1: ['ligue 1', 'french'], mls: ['mls'], ucl: ['champions league', 'ucl'] };
+  function leagueIn(q) { for (const [id, ws] of Object.entries(LGW)) if (ws.some(w => q.includes(' ' + w + ' '))) return id; if (/ soccer | football club /.test(q)) return 'epl'; return null; }
+  const STOP = new Set(['the', 'and', 'for', 'who', 'win', 'are', 'can', 'all', 'new', 'how', 'why', 'odd', 'top', 'out', 'man', 'was', 'its', 'not', 'any', 'one', 'two', 'now', 'see', 'get', 'set', 'lab', 'oct', 'nov', 'dec', 'sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'pro', 'per', 'off', 'def', 'net', 'run', 'bet', 'fan', 'tie', 'ot']);
+  let TIX = null, TIXv = '';
+  function teamIndex() {
+    const v = S.lastUpdate + '|' + S.mode; if (TIX && TIXv === v) return TIX;
+    const m = new Map();
+    const add = (lg, t) => { if (!t || !t.abbr) return; const k = lg + '|' + t.abbr; const o = m.get(k) || { lg, abbr: t.abbr, name: t.name || t.abbr, short: t.short || '' }; if (t.name && t.name.length > o.name.length) o.name = t.name; if (t.short && !o.short) o.short = t.short; m.set(k, o); };
+    for (const l of LEAGUES) { for (const r of S.data[l.id].standings || []) add(l.id, { abbr: r.abbr || r.key, name: r.name }); for (const g of S.data[l.id].games || []) { add(l.id, g.home); add(l.id, g.away); } }
+    TIX = [...m.values()].map(t => {
+      const n = norm(t.name).trim(), parts = n.split(' ');
+      const keys = new Set([n]);
+      if (t.short) keys.add(norm(t.short).trim());
+      if (parts.length > 1) { keys.add(parts[parts.length - 1]); if (parts.length > 2) keys.add(parts.slice(-2).join(' ')); keys.add(parts.slice(0, -1).join(' ')); }
+      return Object.assign(t, { keys: [...keys].filter(k => k.length >= 3 && !STOP.has(k)) });
+    });
+    TIXv = v; return TIX;
+  }
+  function gameOf(lg, abbr) {
+    const gs = (S.data[lg].games || []).filter(g => !g.void && (g.home.abbr === abbr || g.away.abbr === abbr));
+    const t = g => +new Date(g.start), ref = nowRef();
+    return gs.find(g => g.state === 'in') || gs.filter(g => g.state === 'pre').sort((a, b) => t(a) - t(b))[0] || gs.filter(g => g.state === 'post').sort((a, b) => t(b) - t(a))[0] || null;
+  }
+  // teams named in a question, best match first; league words and current games break ties
+  function teamsIn(raw, lgHint) {
+    const q = norm(raw), up = String(raw || '');
+    const hits = [];
+    for (const t of teamIndex()) {
+      let best = 0;
+      for (const k of t.keys) if (q.includes(' ' + k + ' ')) best = Math.max(best, k.length + (k.includes(' ') ? 4 : 0));
+      if (new RegExp('\\b' + t.abbr.replace(/[^A-Z0-9&]/gi, '') + '\\b').test(up) && t.abbr.length >= 2 && t.abbr === t.abbr.toUpperCase()) best = Math.max(best, 6);
+      if (!best) continue;
+      const g = gameOf(t.lg, t.abbr);
+      best += (lgHint && t.lg === lgHint ? 30 : 0) + (g && g.state === 'in' ? 3 : g && g.state === 'pre' ? 2 : g ? 1 : 0) + ({ nfl: 1.5, nba: 1.4, mlb: 1.3, nhl: 1.2, epl: 1.1 }[t.lg] || 0);
+      hits.push({ t, s: best, pos: Math.min(...t.keys.map(k => { const i = q.indexOf(' ' + k + ' '); return i < 0 ? 1e9 : i; })) });
+    }
+    hits.sort((a, b) => b.s - a.s);
+    const out = []; const seenName = new Set();
+    for (const h of hits) { const nk = norm(h.t.name); if (seenName.has(nk + h.t.lg)) continue; if (out.some(o => o.t.keys.some(k => h.t.keys.includes(k)) && o.t.lg !== h.t.lg && o.s >= h.s)) continue; seenName.add(nk + h.t.lg); out.push(h); if (out.length >= 2) break; }
+    return out.sort((a, b) => a.pos - b.pos).map(h => h.t);
+  }
+  function findGame(raw, lgHint) {
+    const ts = teamsIn(raw, lgHint);
+    if (ts.length >= 2) {
+      const [a, b] = ts; const gs = (S.data[a.lg].games || []).filter(g => [g.home.abbr, g.away.abbr].includes(a.abbr) && [g.home.abbr, g.away.abbr].includes(b.abbr));
+      if (gs.length) return { g: gs.find(g => g.state === 'in') || gs.find(g => g.state === 'pre') || gs[0], teams: ts };
+      return { g: null, teams: ts };
+    }
+    if (ts.length === 1) return { g: gameOf(ts[0].lg, ts[0].abbr), teams: ts };
+    return { g: null, teams: [] };
+  }
+
+  /* ---------------- facts ---------------- */
+  const sideName = (g, s) => g[s].name;
+  function gameFacts(g) {
+    const P = APP.predict(g), L = APP.lineProbs(g), k = kindOf(g.lg), ex = P.ex;
+    const pr = r => ({ home: +r.pH.toFixed(3), away: +(r.pA != null ? r.pA : 1 - r.pH - (r.pD || 0)).toFixed(3), draw: r.pD ? +r.pD.toFixed(3) : undefined });
+    const o = { id: g.id, league: lgN(g.lg), home: g.home.name, away: g.away.name, homeAbbr: g.home.abbr, awayAbbr: g.away.abbr, state: { pre: 'scheduled', in: 'live', post: 'final' }[g.state], start: g.start, status: g.detail || '', neutralSite: !!g.neutral, venue: g.venue || undefined };
+    if (g.state !== 'pre') o.score = { home: g.home.score, away: g.away.score };
+    o.pregame = pr(P.pre);
+    if (g.state === 'in') o.now = pr(P.now);
+    if (g.state === 'post') o.winner = g.home.winner ? g.home.name : g.away.winner ? g.away.name : 'draw';
+    o.expectedScore = { home: +ex.eH.toFixed(1), away: +ex.eA.toFixed(1), unit: PM.SP[LG[g.lg].sp].unit || (k === 'bb' ? 'runs' : k === 'hk' || k === 'sc' ? 'goals' : 'points') };
+    o.source = { model: 'team ratings', line: 'betting line', blend: 'ratings blended with the betting line (ratings weight ' + Math.round((ex.w || 0) * 100) + '%)', none: 'no rating yet' }[P.src] || P.src;
+    if (L) o.line = { provider: g.line.src, home: +L.pH.toFixed(3), away: +L.pA.toFixed(3), spread: g.line.spread, total: g.line.total, text: g.line.text };
+    if (g.espnWP) o.espnWinProbability = { home: g.espnWP.pH / 100, away: g.espnWP.pA / 100 };
+    const h = S.hist.get(g.id); if (h && h.length > 2) o.winProbHistory = h.slice(-12).map(([t, p]) => ({ t: new Date(t).toISOString().slice(11, 16) + 'Z', home: +p.toFixed(3) }));
+    if (g.state === 'in') o.situation = g.sit;
+    return o;
+  }
+  function gameMD(g, short) {
+    const f = gameFacts(g), sc = kindOf(g.lg) === 'sc', P = APP.predict(g);
+    const m = sc ? `**${g.home.name}** vs **${g.away.name}**` : `**${g.away.name}** at **${g.home.name}**`;
+    const when = g.state === 'pre' ? APP.when(g.start) : g.state === 'in' ? 'live · ' + (g.detail || '') : 'final · ' + (g.detail || '');
+    const R = g.state === 'in' ? f.now : f.pregame, fav = R.home >= R.away ? 'home' : 'away';
+    let t = `${m} (${f.league}, ${when})`;
+    if (g.state !== 'pre') t += ` — ${g.away.abbr} ${g.away.score ?? 0}, ${g.home.abbr} ${g.home.score ?? 0}`;
+    if (g.state === 'post') { t += `. Before the game the lab had ${g[fav].name} at ${pc(R[fav])}${(fav === 'home' ? g.home.winner : g.away.winner) ? ', and they won' : ', so this was an upset'}.`; return t; }
+    t += `.\n\n- **${g.state === 'in' ? 'Now' : 'Win chances'}:** ${g.away.abbr} ${pc(R.away)}${R.draw ? ` · draw ${pc(R.draw)}` : ''} · ${g.home.abbr} ${pc(R.home)}`;
+    if (g.state === 'in') t += ` (pregame ${g[fav].abbr} ${pc(f.pregame[fav])})`;
+    if (short) return t;
+    t += `\n- **Expected score:** ${g.away.abbr} ${f.expectedScore.away} – ${f.expectedScore.home} ${g.home.abbr} (${f.expectedScore.unit})`;
+    t += `\n- **Built from:** ${f.source}`;
+    if (f.line) t += `\n- **Betting line (${esc(f.line.provider)}):** ${g.home.abbr} ${pc(f.line.home)}${f.line.text ? ' · ' + f.line.text : ''}${Math.abs(f.line.home - f.pregame.home) >= 0.05 ? ` — the model differs by ${Math.round(Math.abs(f.line.home - f.pregame.home) * 100)} points` : ''}`;
+    if (f.espnWinProbability) t += `\n- **ESPN's live model:** ${g.home.abbr} ${pc(f.espnWinProbability.home)}`;
+    return t;
+  }
+  function teamFacts(lg, abbr) {
+    const R = APP.ratingsFor(lg), r = R && R.teams[abbr], row = (S.data[lg].standings || []).find(x => x.key === abbr || x.abbr === abbr);
+    const rk = APP.teamRank ? (() => { const g = { lg, home: { abbr }, away: { abbr: '' } }; try { return APP.teamRank(g, 'home'); } catch (e) { return null; } })() : null;
+    const o = { team: (row && row.name) || abbr, league: lgN(lg), abbr };
+    if (row) o.record = row.w + '-' + row.l + (row.t ? '-' + row.t : '') + (isFinite(row.pts) ? ` (${row.pts} pts)` : ''), o.group = row.group, o.streak = row.streak || undefined;
+    if (r) o.rating = { net: +r.net.toFixed(2), unit: PM.SP[LG[lg].sp].unit || '', source: r.source === 'prior' ? 'last season (regressed)' : 'this season' };
+    if (rk) o.powerRank = rk.rank + ' of ' + rk.n;
+    const g = gameOf(lg, abbr); if (g) o.game = gameFacts(g);
+    try {
+      if (!LG[lg].noStandings && (S.data[lg].standings || []).length && APP.simTable) {
+        const sim = APP.simTable(lg, null, 0, {})[abbr];
+        if (sim && sim.rank) { const n = LG[lg].playoffN; o.projection = n ? { playoffs: +sim.rank.slice(1, n + 1).reduce((a, b) => a + b, 0).toFixed(3), topSeed: +sim.rank[1].toFixed(3) } : { title: +sim.rank[1].toFixed(3), top4: +sim.rank.slice(1, (LG[lg].top || 4) + 1).reduce((a, b) => a + b, 0).toFixed(3) }; }
+      }
+    } catch (e) { /* standings sim unavailable */ }
+    return o;
+  }
+
+  /* ---------------- what-if ---------------- */
+  const sideOf = (g, abbrOrSide) => abbrOrSide === 'home' || abbrOrSide === 'away' ? abbrOrSide : g.home.abbr === abbrOrSide ? 'home' : g.away.abbr === abbrOrSide ? 'away' : null;
+  function whatIf(g, picks) {
+    const SC = APP.scen, lg = LG[g.lg], sp = PM.SP[lg.sp], kind = sp.kind;
+    const T = { home: g.home, away: g.away }, cx = { lgId: g.lg, sp, ab: s => T[s].abbr };
+    let st = clone(APP.stateFrom(g)); const conds = [], applied = [], skipped = [];
+    let chance = null;
+    for (const p of picks) {
+      const it = SC.find(kind, p.id); if (!it) { skipped.push(p.id + ' (unknown)'); continue; }
+      const side = it.per ? (sideOf(g, p.side) || (it.per === 'bat' ? SC.batting(st) : st.poss || 'home')) : null;
+      const lab = SC.label ? SC.label(it, side ? T[side].abbr : '', side ? T[side === 'home' ? 'away' : 'home'].abbr : '', st, cx) : it.lab;
+      const av = SC.avail(it, st, side || 'home', cx); if (av !== true) { skipped.push(lab + ' — ' + String(av).replace(/\{T\}/g, side ? T[side].abbr : '')); continue; }
+      if (it.type === 'cond') { conds.push({ id: it.id, side }); applied.push(lab); }
+      else if (it.type === 'event') { it.ev(st, side, cx); applied.push(lab); }
+      else if (it.type === 'chance') { chance = { it, side, lab }; applied.push(lab); }
+    }
+    const m = SC.mods(kind, sp, conds), neutral = m.neutral ? true : !!g.neutral;
+    const lineH = g.neutral ? 0 : sp.hfa, newH = neutral ? 0 : sp.hfa * m.hfa;
+    const ex0 = APP.expFor(g.lg, g.home.abbr, g.away.abbr, g.line, { neutral, hfaMul: m.hfa, hfaDelta: newH - lineH, adjH: m.adjH, adjA: m.adjA, pace: m.pace });
+    const ex = Object.assign({}, ex0); ex.eH *= m.mulH; ex.eA *= m.mulA; ex.mu = ex.eH - ex.eA; ex.total = ex.eH + ex.eA; ex.vol = m.vol;
+    const run = s => APP.evaluate(g.lg, s, ex, { n: kind === 'bb' ? 4000 : 6000, seed: 7, playoff: g.playoff });
+    let res;
+    if (chance) {
+      const brs = chance.it.br(st, chance.side, cx), tot = brs.reduce((a, b) => a + b.p, 0) || 1;
+      const outs = brs.map(b => { const s2 = clone(st); b.ev(s2); return { p: b.p / tot, lab: String(b.lab || '').replace(/\{T\}/g, T[chance.side].abbr), r: run(s2) }; });
+      const mix = k => outs.reduce((a, o) => a + o.p * (o.r[k] || 0), 0);
+      res = { pH: mix('pH'), pA: mix('pA'), pD: mix('pD'), branches: outs.map(o => ({ outcome: o.lab, chance: +o.p.toFixed(3), homeWin: +o.r.pH.toFixed(3) })) };
+    } else res = run(st);
+    const P = APP.predict(g), base = g.state === 'in' ? P.now : P.pre;
+    return { applied, skipped, before: { home: +base.pH.toFixed(3), away: +(base.pA ?? 1 - base.pH).toFixed(3) }, after: { home: +res.pH.toFixed(3), away: +(res.pA ?? 1 - res.pH - (res.pD || 0)).toFixed(3), draw: res.pD ? +res.pD.toFixed(3) : undefined }, branches: res.branches };
+  }
+  // match plain words to the scenario library ("what if Seattle loses its QB?")
+  function matchScenarios(raw, g) {
+    const SC = APP.scen, kind = kindOf(g.lg), q = norm(raw);
+    const tn = [g.home, g.away].flatMap(t => [t.name, t.short, t.abbr].filter(Boolean).map(x => norm(x).trim()));
+    let qq = q; for (const x of tn) qq = qq.split(' ' + x + ' ').join(' {t} ');
+    const words = qq.split(' ').filter(w => w.length >= 2 && !['if', 'what', 'happens', 'the', 'and', 'their', 'its', 'his', 'with', 'does', 'did', 'will', 'would', 'game', 'they', 'gets', 'get', 'has', 'have', 'to', 'of', 'in', 'on', 'at', 'is', 'an', 'a'].includes(w));
+    const syn = { qb: ['quarterback'], td: ['touchdown'], fg: ['field goal', 'kick'], hr: ['homer', 'home run', 'homerun'], pk: ['penalty kick', 'penalty'], rc: ['red card', 'sent off'], g: ['goal', 'scores'], sup: ['superstar', 'star'], pen: ['penalty'] };
+    const scored = SC.list(kind).map(it => {
+      const lab = norm(it.lab.replace(/\{T\}|\{O\}/g, ' ')), tip = norm(it.tip || '');
+      let s = words.includes(it.id) ? 3 : 0; for (const w of words) { if (lab.includes(' ' + w + ' ') || lab.includes(' ' + w)) s += 2; else if (tip.includes(' ' + w)) s += 0.5; }
+      for (const [k, arr] of Object.entries(syn)) if (it.id === k || it.id.startsWith(k)) for (const a of arr) if (q.includes(' ' + a)) s += 2.5;
+      if (/ td | touchdown /.test(q) && it.id === 'td') s += 3; if (/ three /.test(q) && it.id === 'p3') s += 3; if (/ home run | homer /.test(q) && it.id === 'hr') s += 3;
+      if (/ (loses|lose|without|injur|out) /.test(q) && it.type === 'cond' && it.cat === 'pers') s += 1.5;
+      if (/ (score|scores) /.test(q) && it.type === 'event' && it.cat === 'score') s += 1;
+      return { it, s };
+    }).filter(x => x.s >= 2.5).sort((a, b) => b.s - a.s);
+    if (!scored.length) return [];
+    const ts = teamsIn(raw, g.lg).filter(t => t.lg === g.lg);
+    const side = ts.length ? sideOf(g, ts[0].abbr) : null;
+    return [{ id: scored[0].it.id, side, lab: scored[0].it.lab, alt: scored.slice(1, 4).map(x => x.it.lab) }];
+  }
+
+  /* ---------------- built-in analyst ---------------- */
+  const GLOSS = {
+    'win probability': 'Live win probability re-runs a model of the rest of the game from the current state. Football and basketball use a Brownian-motion model of the score margin (Stern, 1994), with football adding the expected points of the current possession; baseball simulates the rest of the game plate appearance by plate appearance; hockey and soccer treat goals as Poisson processes (with power plays, pulled goalies, red cards and a Dixon–Coles draw correction); tennis chains serve points to games, sets and the match.',
+    'ratings': 'Each team gets a rating in its sport\'s own unit — points, runs or goals per game above an average opponent on a neutral field — from scoring margin (or record through the sport\'s scoring spread), regressed toward average with phantom games. Early in a season NBA and NHL ratings lean on last season. When a betting line exists, the pregame prior blends ratings and line, trusting ratings more as games accumulate (weight = games ÷ (games + K)).',
+    'elo': 'Elo replays a season game by game: the winner takes rating points from the loser, more for an upset and (here) more for a bigger margin, with a home edge. It ends up close to SRS but reacts to recent form.',
+    'pythagorean': 'Pythagorean expectation turns points scored and allowed into an expected win rate: PF^x ÷ (PF^x + PA^x), with x = 2.37 in the NFL, 14 in basketball, 1.83 in baseball and 2.05 in hockey. Teams that win more than it predicts have usually been lucky in close games.',
+    'srs': 'SRS (Simple Rating System) is a team\'s average margin with the home edge removed plus the average rating of its opponents, solved for all teams at once; the opponents\' part is its strength of schedule.',
+    'what-if': 'The what-if simulator re-runs the same models after a change: an event (a touchdown, a red card), a condition that stays on (a star out, snow, a back-to-back) or a chance play whose outcomes are blended by their odds (a field-goal try, a penalty kick). The library holds about 260 situations.',
+    'projections': 'Season projections simulate the rest of the season 1,600 times from each team\'s rating, treating remaining games as matchups against an average opponent (tiebreakers aren\'t modeled), and count how often each team finishes in each place.',
+    'line': 'A betting line (spread or moneyline) is the market\'s estimate. The lab converts it to a probability with the vig removed and shows it next to the model so disagreements are visible; early in a season the pregame number leans on it.'
+  };
+  function explain(q) {
+    const k = /elo/.test(q) ? 'elo' : /pythag/.test(q) ? 'pythagorean' : /\bsrs\b|strength of schedule/.test(q) ? 'srs' : /what.?if|scenario|simulat/.test(q) ? 'what-if' : /projection|playoff odds|season sim/.test(q) ? 'projections' : /line|spread|moneyline|betting|market/.test(q) ? 'line' : /rating|power rank|pregame/.test(q) ? 'ratings' : 'win probability';
+    return { md: `**${k[0].toUpperCase() + k.slice(1)}.** ${GLOSS[k]}\n\nThe full method, parameters and limits are in *How it works*.`, btn: [['Open How it works', 'method']] };
+  }
+  const listMD = gs => gs.map(g => '- ' + gameMD(g, true).replace(/\n\n- /, ' — ').replace(/\*\*Win chances:\*\* |\*\*Now:\*\* /, '')).join('\n');
+  let lastGameId = null;               // a follow-up like "should they go for it?" refers to the last game discussed
+  function intents(raw) {
+    const q = norm(raw), lg = leagueIn(q); let F = findGame(raw, lg);
+    if (!F.g && !F.teams.length && lastGameId && / (they|them|it|this game|that game|the game|he|she|their|still|now) /.test(q)) { const g = APP.findGame(lastGameId); if (g) F = { g, teams: [] }; }
+    const r = intents2(raw, q, lg, F);
+    if (r && r.game) lastGameId = r.game.id;
+    return r;
+  }
+  function intents2(raw, q, lg, F) {
+    const ref = nowRef(), all = APP.allGames().filter(g => !g.void && (!lg || g.lg === lg));
+    if (has(q, [/ how (does|do|is) .*(model|probabilit|odds|rating|work)/, ' explain ', ' what is elo ', ' elo ', ' pythag', ' srs ', ' methodology ', ' how it works ', ' what does the line '])) return explain(q);
+    if (has(q, [' accura', ' track record', ' how good are', ' calibrat', ' brier', ' trust ', ' reliable', ' been right'])) return APP.track ? APP.track.answer(q, lg) : { md: 'The track record is still loading.' };
+    if (F.g && has(q, [' should ', ' go for it ', ' punt ', ' kick a field goal ', ' bunt ', ' steal ', ' walk him ', ' intentional ', ' take a three ', ' foul '])) {
+      const d = APP.scen.decide(kindOf(F.g.lg), APP.stateFrom(F.g), { lgId: F.g.lg, sp: PM.SP[LG[F.g.lg].sp], ab: s => F.g[s].abbr }, s => APP.evaluate(F.g.lg, s, APP.expFor(F.g.lg, F.g.home.abbr, F.g.away.abbr, F.g.line, { neutral: F.g.neutral }), { n: 5000, seed: 7 }));
+      if (!d) return { md: `There's no coaching decision to compare in ${F.g.away.abbr} at ${F.g.home.abbr} right now. Decisions appear for 4th downs, late last possessions, and baseball base-runner spots.`, game: F.g };
+      return { md: `**${d.title}** (${F.g[d.team].name}):\n\n${d.opts.sort((a, b) => b.p - a.p).map((o, i) => `- ${i ? '' : '**'}${o.lab}: win chance ${pc(o.p)}${i ? '' : '**'}`).join('\n')}${d.note ? '\n\n' + d.note : ''}`, game: F.g };
+    }
+    if (F.g && has(q, [' what if ', ' what happens if ', ' what happens when ', ' if they ', ' suppose ', ' imagine ', /^ if /])) {
+      const m = matchScenarios(raw, F.g);
+      if (!m.length) return { md: `I couldn't match that to the ${kindOf(F.g.lg) === 'sc' ? 'soccer' : lgN(F.g.lg)} scenario library. Open the game and pick from the list — or try wording like "what if ${F.g.home.abbr} scores a touchdown" or "what if ${F.g.away.abbr} loses its best player".`, game: F.g };
+      const r = whatIf(F.g, m);
+      if (!r.applied.length) return { md: `That scenario isn't possible in the current game state: ${r.skipped.join('; ')}.`, game: F.g };
+      const g = F.g, d = r.after.home - r.before.home;
+      return { md: `**What if: ${r.applied.join(' + ').replace(/\{T\}|\{O\}/g, '')}** in ${g.away.abbr} at ${g.home.abbr}\n\n- ${g.home.abbr}: ${pc(r.before.home)} → **${pc(r.after.home)}** (${d >= 0 ? '+' : ''}${Math.round(d * 100)} points)\n- ${g.away.abbr}: ${pc(r.before.away)} → **${pc(r.after.away)}**${r.after.draw ? `\n- Draw: ${pc(r.after.draw)}` : ''}${r.branches ? '\n\nOutcomes blended by their odds:\n' + r.branches.map(b => `- ${b.outcome} (${pc(b.chance)}): ${g.home.abbr} ${pc(b.homeWin)}`).join('\n') : ''}${m[0].alt.length ? `\n\nRelated scenarios: ${m[0].alt.map(x => x.replace(/\{T\}|\{O\}/g, '…')).join(' · ')}.` : ''}`, game: g, scen: m[0] };
+    }
+    if (has(q, [' playoff', ' standings', ' make the ', ' title odds', ' win the league', ' relegat', ' top seed', ' table ', ' division ', ' champion'])) {
+      const t = F.teams[0], L = (t && t.lg) || lg || S.lastSpecific || 'nfl';
+      if (LG[L].noStandings) return { md: `${lgN(L)} has no standings table in the lab (college football uses the AP / CFP poll; the Champions League is a knockout). Try the Stats center for its history.` };
+      if (t) { const f = teamFacts(t.lg, t.abbr); return { md: `**${f.team}** (${f.league}) — ${f.record || 'no record yet'}${f.powerRank ? ` · power rank ${f.powerRank}` : ''}.${f.projection ? (f.projection.playoffs != null ? `\n\n- **Make the playoffs:** ${pc(f.projection.playoffs)}\n- **Top seed:** ${pc(f.projection.topSeed)}` : `\n\n- **Win the league:** ${pc(f.projection.title)}\n- **Finish top ${LG[t.lg].top || 4}:** ${pc(f.projection.top4)}`) : ''}\n\nFrom 1,600 simulated seasons using current ratings. Change ratings or lock results in *Standings & projections*.`, btn: [['Open Standings & projections', 'standings']] }; }
+      const sim = APP.simTable(L, null, 0, {}), n = LG[L].playoffN, top = LG[L].top || 4;
+      const rows = (S.data[L].standings || []).map(r => ({ r, s: sim[r.key] })).filter(x => x.s).map(x => ({ ...x, v: n ? x.s.rank.slice(1, n + 1).reduce((a, b) => a + b, 0) : x.s.rank[1] })).sort((a, b) => b.v - a.v).slice(0, 8);
+      return { md: `**${lgN(L)} — ${n ? 'chance to make the playoffs' : 'chance to win the league'}** (1,600 simulated seasons):\n\n| Team | Record | ${n ? 'Playoffs' : 'Title'} |\n|---|---|---|\n${rows.map(x => `| ${x.r.name} | ${x.r.w}-${x.r.l}${x.r.t ? '-' + x.r.t : ''} | ${pc(x.v)} |`).join('\n')}`, btn: [['Open Standings & projections', 'standings']] };
+    }
+    if (F.g && !F.teams.length && has(q, [' win ', ' odds', ' chance', ' favored', ' score', ' who '])) return { md: gameMD(F.g), game: F.g };
+    if (F.g && F.teams.length) {
+      if (F.teams.length === 1 && !has(q, [' win ', ' odds', ' chance', ' favored', ' favorite', ' beat ', ' predict', ' game', ' play', ' score', ' tonight', ' today', ' tomorrow', ' next '])) {
+        const t = F.teams[0], f = teamFacts(t.lg, t.abbr);
+        return { md: `**${f.team}** (${f.league})${f.record ? ' — ' + f.record : ''}${f.powerRank ? ` · power rank ${f.powerRank}` : ''}${f.rating ? ` · rating ${f.rating.net > 0 ? '+' : ''}${f.rating.net} ${f.rating.unit} vs an average team (${f.rating.source})` : ''}.\n\n${gameMD(F.g)}`, game: F.g };
+      }
+      return { md: gameMD(F.g), game: F.g };
+    }
+    if (F.teams.length === 2 && !F.g) {
+      const [a, b] = F.teams;
+      if (a.lg !== b.lg) return { md: `${a.name} and ${b.name} play in different leagues, so there's no head-to-head model. Ask about either team.` };
+      const ex = APP.expFor(a.lg, a.abbr, b.abbr, null, { neutral: true }), r = APP.evaluate(a.lg, APP.fixBase(a.lg, APP.baseState(kindOf(a.lg))), ex, { n: 3000, seed: 9 });
+      return { md: `They aren't scheduled in the current window, so here is a **neutral-site** projection from current ratings:\n\n- ${a.name}: **${pc(r.pH)}**\n- ${b.name}: **${pc(r.pA ?? 1 - r.pH - (r.pD || 0))}**${r.pD ? `\n- Draw: ${pc(r.pD)}` : ''}\n- Expected score: ${a.abbr} ${ex.eH.toFixed(1)} – ${ex.eA.toFixed(1)} ${b.abbr}\n\nTry any matchup in the *Hypothesis lab*.`, btn: [['Open the Hypothesis lab', 'lab']] };
+    }
+    if (F.teams.length === 1 && !F.g) { const t = F.teams[0], f = teamFacts(t.lg, t.abbr); return { md: `**${f.team}** (${f.league})${f.record ? ' — ' + f.record : ''}${f.powerRank ? ` · power rank ${f.powerRank}` : ''}. No game in the current window.` }; }
+    if (has(q, [' upset', ' underdog', ' long shot', ' longshot', ' surprise'])) {
+      const live = all.filter(g => g.state === 'in').map(g => ({ g, P: APP.predict(g) })).filter(x => x.P.pre.pH < 0.4 && x.P.now.pH > 0.5 || (x.P.pre.pA ?? 1) < 0.4 && (x.P.now.pA ?? 0) > 0.5);
+      const dogs = all.filter(g => g.state === 'pre' && +new Date(g.start) - ref < 36 * 3600e3).map(g => ({ g, P: APP.predict(g) })).filter(x => x.P.src !== 'none').map(x => ({ ...x, d: Math.min(x.P.pre.pH, x.P.pre.pA ?? 1 - x.P.pre.pH) })).sort((a, b) => a.d - b.d).slice(0, 4);
+      const fin = all.filter(g => g.state === 'post' && ref - +new Date(g.start) < 48 * 3600e3).map(g => { const P = APP.predict(g), w = g.home.winner ? 'home' : g.away.winner ? 'away' : null; return w && P.src !== 'none' ? { g, w, p: w === 'home' ? P.pre.pH : (P.pre.pA ?? 1 - P.pre.pH) } : null; }).filter(Boolean).sort((a, b) => a.p - b.p).slice(0, 3);
+      return { md: (live.length ? `**Upsets in progress:**\n${listMD(live.map(x => x.g))}\n\n` : '') + (fin.length ? `**Biggest recent upsets:**\n${fin.map(x => `- ${x.g[x.w].name} won with a ${pc(x.p)} pregame chance (${x.g.away.abbr} ${x.g.away.score}–${x.g.home.score} ${x.g.home.abbr})`).join('\n')}\n\n` : '') + (dogs.length ? `**Biggest underdogs coming up:**\n${dogs.map(x => { const s = x.P.pre.pH < (x.P.pre.pA ?? 1 - x.P.pre.pH) ? 'home' : 'away'; return `- ${x.g[s].name} ${pc(x.d)} vs ${x.g[s === 'home' ? 'away' : 'home'].name} (${APP.when(x.g.start)})`; }).join('\n')}` : 'No big underdogs in the next 36 hours.') };
+    }
+    if (has(q, [' live', ' right now', ' in progress', ' scores', ' score ', ' on now', ' happening'])) {
+      const live = all.filter(g => g.state === 'in');
+      if (!live.length) { const nx = all.filter(g => g.state === 'pre').sort((a, b) => new Date(a.start) - new Date(b.start))[0]; return { md: `No ${lg ? lgN(lg) + ' ' : ''}games are live right now.${nx ? ` Next up: ${gameMD(nx, true)}` : ''}`, game: nx || null }; }
+      const ord = live.map(g => ({ g, P: APP.predict(g) })).sort((a, b) => Math.abs(a.P.now.pH - 0.5) - Math.abs(b.P.now.pH - 0.5)).map(x => x.g).slice(0, 10);
+      return { md: `**${live.length} game${live.length === 1 ? '' : 's'} live**${lg ? ' in ' + lgN(lg) : ''}, closest first:\n\n${listMD(ord)}` };
+    }
+    if (has(q, [' tonight', ' today', ' tomorrow', ' this weekend', ' upcoming', ' schedule', ' next ', ' slate', ' who plays', ' games '])) {
+      const h = / tomorrow /.test(q) ? [12, 48] : / weekend /.test(q) ? [0, 120] : [-1, 30];
+      const up = all.filter(g => g.state === 'pre' && +new Date(g.start) - ref >= h[0] * 3600e3 && +new Date(g.start) - ref <= h[1] * 3600e3);
+      const best = (APP.featuredList ? APP.featuredList(up) : up).slice(0, 8);
+      if (!best.length) return { md: `No ${lg ? lgN(lg) + ' ' : ''}games on that slate in the lab's window.` };
+      return { md: `**${up.length} ${lg ? lgN(lg) + ' ' : ''}game${up.length === 1 ? '' : 's'} coming up** — the top-ranked matchups:\n\n${listMD(best)}` };
+    }
+    if (has(q, [' tennis', ' golf', ' ufc', ' pga', ' atp', ' wta', ' fight'])) {
+      const t = S.extras || {};
+      const parts = [];
+      if (/tennis|atp|wta/.test(q) && t.tennis) parts.push('**Tennis:** ' + t.tennis.slice(0, 5).map(m => `${m.a} vs ${m.b}${m.sa && m.sa.length ? ' (' + m.sa.map((x, i) => x + '-' + (m.sb[i] ?? '')).join(' ') + ')' : ''}`).join('; '));
+      if (/golf|pga/.test(q) && t.golf) parts.push(`**Golf — ${t.golf.name}:** ` + (t.golf.players || []).slice(0, 5).map((p, i) => `${i + 1}. ${p.name} ${p.toPar > 0 ? '+' : ''}${p.toPar}${t.golf.win ? ' (' + pc(t.golf.win[i] && t.golf.win[i].p) + ' to win)' : ''}`).join('; '));
+      if (/ufc|fight/.test(q) && t.ufc) { const c = t.ufc.next || t.ufc.last; parts.push(`**UFC — ${c.name}:** ` + c.fights.slice(0, 4).map(f => `${f[0]} vs ${f[1]}${f[3] ? ' — ' + f[3] : ''}`).join('; ')); }
+      return { md: parts.length ? parts.join('\n\n') : 'Nothing loaded for that sport right now.' };
+    }
+    return null;
+  }
+  function suggestions() {
+    const out = [], live = APP.allGames().filter(g => g.state === 'in'), pre = APP.allGames().filter(g => g.state === 'pre');
+    const f = (APP.featuredList ? APP.featuredList(live.concat(pre)) : live.concat(pre))[0];
+    if (live.length) out.push('Which live games are closest right now?');
+    if (f) out.push(`Who will win ${f.away.abbr} at ${f.home.abbr}?`);
+    if (f) { const k = kindOf(f.lg); out.push(k === 'fb' ? `What if ${f.home.abbr} loses its QB?` : k === 'bk' ? `What if ${f.away.abbr}'s superstar sits?` : k === 'sc' ? `What if ${f.home.abbr} gets a red card?` : `What if ${f.home.abbr} scores next?`); }
+    out.push('Any upsets brewing?', 'Who makes the NFL playoffs?', 'How accurate is the model?', 'How does live win probability work?');
+    return out.slice(0, 6);
+  }
+  const btns = r => {
+    const b = [];
+    if (r.game) b.push(`<button type="button" class="btn sm pri" data-game="${esc(r.game.id)}"${r.scen ? ` data-q="${esc(r.scen.id + (r.scen.side ? ':' + r.scen.side : ''))}"` : ''}>${r.scen ? 'Try it in the game center' : 'Open the game center'}</button>`);
+    for (const [lab, tab] of r.btn || []) b.push(`<button type="button" class="btn sm" data-tabgo="${esc(tab)}">${esc(lab)}</button>`);
+    return b.length ? `<div class="pill-row chat-acts">${b.join('')}</div>` : '';
+  };
+  function answer(raw) {
+    const r = intents(raw);
+    if (!r) return { html: `<p>I can answer from this page's live data: <b>who's favored</b> in any game, <b>what-ifs</b> ("what if Seattle loses its QB?"), <b>coaching decisions</b> ("should they go for it?"), <b>playoff odds</b>, <b>upsets</b>, <b>live scores</b> and <b>how the models work</b>. Name a team or a league to get started.</p>`, follow: suggestions() };
+    return { html: window.CH.md(r.md) + btns(r), follow: suggestions().filter(s => s !== raw).slice(0, 3) };
+  }
+
+  /* ---------------- tools for Claude ---------------- */
+  const gameById = id => APP.findGame(String(id || '')) || null;
+  const needGame = i => { const g = gameById(i.game_id) || (i.teams ? findGame(i.teams).g : null); if (!g) throw new Error('No game found. Use get_board or find_game first.'); return g; };
+  function tools() {
+    return [
+      { name: 'get_board', description: 'List games on the board (live, upcoming, final) with win probabilities. Filter by league id (nfl, ncaaf, mlb, nba, wnba, nhl, epl, laliga, seriea, bund, ligue1, mls, ucl) and state.', inputSchema: { type: 'object', properties: { league: { type: 'string' }, state: { type: 'string', enum: ['live', 'upcoming', 'final', 'all'] }, limit: { type: 'number' } } },
+        execute: i => { const st = { live: 'in', upcoming: 'pre', final: 'post' }[i.state]; let gs = APP.allGames().filter(g => !g.void && (!i.league || g.lg === i.league) && (!st || g.state === st)); gs = (APP.featuredList ? APP.featuredList(gs).concat(gs.filter(g => !APP.featuredList(gs).includes(g))) : gs).slice(0, Math.min(40, i.limit || 25)); return { mode: S.mode, capturedAt: S.mode === 'snapshot' ? S.capturedAt : undefined, count: gs.length, games: gs.map(g => { const f = gameFacts(g); return { id: f.id, league: f.league, away: f.away, home: f.home, state: f.state, start: f.start, status: f.status, score: f.score, pregameHome: f.pregame.home, nowHome: f.now ? f.now.home : undefined, draw: (f.now || f.pregame).draw }; }) }; } },
+      { name: 'find_game', description: 'Find the current, next or last game for one or two teams named in plain words ("Seahawks", "Chiefs vs Broncos", "Real Madrid").', inputSchema: { type: 'object', properties: { teams: { type: 'string' }, league: { type: 'string' } }, required: ['teams'] }, execute: i => { const r = findGame(i.teams, i.league); return r.g ? gameFacts(r.g) : { found: false, teams: r.teams.map(t => t.name + ' (' + lgN(t.lg) + ')') }; } },
+      { name: 'get_game', description: 'Full detail for one game: status, score, pregame and live win probabilities, expected score, betting line, model source, recent win-probability history and the live situation.', inputSchema: { type: 'object', properties: { game_id: { type: 'string' } }, required: ['game_id'] }, execute: i => gameFacts(needGame(i)) },
+      { name: 'list_scenarios', description: 'The what-if scenarios available for a game\'s sport (id, label, type). {T} is the team the scenario is about.', inputSchema: { type: 'object', properties: { game_id: { type: 'string' }, category: { type: 'string' } }, required: ['game_id'] }, execute: i => { const g = needGame(i); return APP.scen.list(kindOf(g.lg)).filter(x => !i.category || x.cat === i.category).map(x => ({ id: x.id, label: x.lab, type: x.type, category: x.cat, perTeam: !!x.per })); } },
+      { name: 'run_what_if', description: 'Re-run the win-probability model for a game after scenarios (events, conditions, chance plays). Each scenario: {id from list_scenarios, team: "home" | "away" | team abbreviation}.', inputSchema: { type: 'object', properties: { game_id: { type: 'string' }, scenarios: { type: 'array', items: { type: 'object', properties: { id: { type: 'string' }, team: { type: 'string' } }, required: ['id'] } } }, required: ['game_id', 'scenarios'] }, execute: i => { const g = needGame(i); return Object.assign({ game: g.away.abbr + ' at ' + g.home.abbr }, whatIf(g, (i.scenarios || []).map(s => ({ id: s.id, side: s.team })))); } },
+      { name: 'coach_decision', description: 'Compare a coach\'s options in the current live state (4th down, last possession, steal/bunt/walk) by win probability.', inputSchema: { type: 'object', properties: { game_id: { type: 'string' } }, required: ['game_id'] }, execute: i => { const g = needGame(i); const d = APP.scen.decide(kindOf(g.lg), APP.stateFrom(g), { lgId: g.lg, sp: PM.SP[LG[g.lg].sp], ab: s => g[s].abbr }, s => APP.evaluate(g.lg, s, APP.expFor(g.lg, g.home.abbr, g.away.abbr, g.line, { neutral: g.neutral }), { n: 5000, seed: 7 })); return d ? { title: d.title, team: g[d.team].name, options: d.opts.map(o => ({ option: o.lab, winChance: +o.p.toFixed(3) })), note: d.note } : { none: 'No decision point in the current state.' }; } },
+      { name: 'get_team', description: 'A team\'s record, rating, power rank, season projection and current/next game.', inputSchema: { type: 'object', properties: { team: { type: 'string' }, league: { type: 'string' } }, required: ['team'] }, execute: i => { const t = teamsIn(i.team, i.league)[0]; if (!t) throw new Error('Team not found in the loaded leagues.'); return teamFacts(t.lg, t.abbr); } },
+      { name: 'get_standings', description: 'A league table with records and simulated season odds (playoffs and top seed, or title and top four in soccer).', inputSchema: { type: 'object', properties: { league: { type: 'string' }, top: { type: 'number' } }, required: ['league'] }, execute: i => { const L = i.league; if (!LG[L] || LG[L].noStandings) throw new Error('No standings for that league.'); const sim = APP.simTable(L, null, 0, {}), n = LG[L].playoffN; return (S.data[L].standings || []).map(r => { const s = sim[r.key]; return { team: r.name, group: r.group, record: r.w + '-' + r.l + (r.t ? '-' + r.t : ''), points: r.pts, playoffs: s && n ? +s.rank.slice(1, n + 1).reduce((a, b) => a + b, 0).toFixed(3) : undefined, title: s && !n ? +s.rank[1].toFixed(3) : undefined }; }).sort((a, b) => (b.playoffs ?? b.title ?? 0) - (a.playoffs ?? a.title ?? 0)).slice(0, Math.min(40, i.top || 20)); } },
+      { name: 'get_track_record', description: 'How well the lab\'s pregame and in-game probabilities have matched results (accuracy, Brier score, calibration), overall or for one league.', inputSchema: { type: 'object', properties: { league: { type: 'string' } } }, execute: i => APP.track ? APP.track.facts(i.league) : { unavailable: true } },
+      { name: 'explain_method', description: 'Plain-language explanation of a method: win probability, ratings, elo, pythagorean, srs, what-if, projections, line.', inputSchema: { type: 'object', properties: { topic: { type: 'string' } }, required: ['topic'] }, execute: i => GLOSS[String(i.topic || '').toLowerCase()] || GLOSS['win probability'] },
+      { name: 'open_view', description: 'Navigate the page for the user: open a game\'s game center (game_id) or a tab (board, stats, lab, standings, method).', inputSchema: { type: 'object', properties: { game_id: { type: 'string' }, tab: { type: 'string' } } }, execute: i => { if (i.game_id) { APP.openGame(i.game_id); return 'Opened the game center.'; } if (i.tab) { APP.setTab(i.tab); return 'Opened ' + i.tab + '.'; } return 'Nothing to open.'; } }
+    ];
+  }
+  function system() {
+    const live = APP.allGames().filter(g => g.state === 'in').length;
+    return `You are Ask AI, the analyst built into "Probable Sports Lab", a live multi-sport analytics site by Bruno Silva covering 13 team leagues plus tennis, golf and UFC. Today is ${new Date(nowRef()).toDateString()}; data mode: ${S.mode}${S.mode === 'snapshot' ? ' (a real-data snapshot captured ' + S.capturedAt + ', not live)' : ' (ESPN live feed)'}; ${live} games live.
+Answer questions about games, teams, win probabilities, what-if scenarios, coaching decisions, standings odds and the models. Always use the tools for numbers; never invent scores, odds or records. Say whether a number is pregame or live, and when the model and the betting line differ, say so and why it might (ratings vs market). Mention uncertainty plainly — a 70% favorite loses about 3 times in 10. Keep answers short (under 180 words), lead with the answer, use bullets for lists. Offer to open the game center or a tab when useful (open_view). This is analysis, not betting advice; don't recommend wagers.`;
+  }
+  function welcome() {
+    const live = APP.allGames().filter(g => g.state === 'in').length;
+    return `<p><b>Ask AI about any game, team or what-if.</b> I read the same live board, ratings and models as this page${live ? ` — ${live} game${live === 1 ? ' is' : 's are'} live right now` : ''}.</p>`;
+  }
+  const adapter = { title: 'Ask AI', placeholder: 'Ask about a game, a team, a what-if, playoff odds…', footer: 'Answers come from this page\'s live data and models. Analysis, not betting advice.', snapshot: !!window.SPORTS_ARTIFACT, welcome, suggestions, answer, tools, system };
+  let started = false;
+  APP.onRender.push(() => {
+    if (!window.CH) return;
+    if (!started) { started = true; window.CH.init(adapter, S); }
+    else window.CH.context(S);
+  });
+  document.addEventListener('click', e => { const b = e.target.closest('[data-tabgo]'); if (b) { APP.setTab(b.dataset.tabgo); if (window.matchMedia('(max-width:900px)').matches && window.CH) window.CH.close(); } });
+  APP.ask = { findGame, teamsIn, gameFacts, teamFacts, whatIf, matchScenarios, intents, tools };
+})();
+
+/* Probable kit: the pinned Insights bar shared by the Probable sites. It stays at the top while the page scrolls and
+   rotates through the site's key live insights; each one can jump to where it comes from or go to Ask AI.
+   Auto-rotation pauses on hover, on keyboard focus, with the pause button, and starts paused for reduced motion. */
+const INS = (() => {
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const reduce = () => !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+  let root = null, items = [], i = 0, timer = null, held = false, paused = false, O = {}, sig = '';
+  const ICON = { up: '▲', down: '▼', warn: '!', live: '●', info: '✦' };
+  function mount(opts) {
+    O = Object.assign({ interval: 7000 }, opts || {});
+    if (root) return;
+    root = document.createElement('div');
+    root.className = 'ins'; root.id = 'insBar';
+    root.setAttribute('role', 'region'); root.setAttribute('aria-roledescription', 'carousel'); root.setAttribute('aria-label', 'Insights');
+    root.innerHTML = `<div class="ins-in">
+      <span class="ins-stk" aria-hidden="true"><svg viewBox="0 0 16 16" width="13" height="13"><path d="M8 0l1.8 5.2L15 7l-5.2 1.8L8 14l-1.8-5.2L1 7l5.2-1.8z" fill="currentColor"/></svg>Insights</span>
+      <div class="ins-view" aria-live="off"></div>
+      <div class="ins-ctl">
+        <button type="button" class="ins-b" data-ins="prev" aria-label="Previous insight">‹</button>
+        <span class="ins-n" aria-hidden="true"></span>
+        <button type="button" class="ins-b" data-ins="next" aria-label="Next insight">›</button>
+        <button type="button" class="ins-b ins-p" data-ins="pause" aria-pressed="false" aria-label="Pause insights">❚❚</button>
+        <button type="button" class="ins-ask" data-ins="ask"><span aria-hidden="true">✦</span> Ask AI</button>
+      </div></div><i class="ins-prog" aria-hidden="true"></i>`;
+    (O.parent || document.body).insertBefore(root, (O.parent || document.body).firstChild);
+    paused = reduce() || O.paused === true;
+    root.addEventListener('click', onClick);
+    root.addEventListener('mouseenter', () => { held = true; sync(); });
+    root.addEventListener('mouseleave', () => { held = false; sync(); });
+    root.addEventListener('focusin', () => { held = true; sync(); });
+    root.addEventListener('focusout', e => { if (!root.contains(e.relatedTarget)) { held = false; sync(); } });
+    document.addEventListener('visibilitychange', sync);
+    paintPause();
+  }
+  function onClick(e) {
+    const b = e.target.closest('[data-ins]'); if (!b) return;
+    const a = b.dataset.ins, it = items[i];
+    if (a === 'prev' || a === 'next') { go(a === 'next' ? 1 : -1, true); return; }
+    if (a === 'pause') { paused = !paused; paintPause(); sync(); return; }
+    if (a === 'ask') { if (O.ask) O.ask(it && it.ask ? it.ask : ''); return; }
+    if (a === 'go' && it) { if (typeof it.go === 'function') it.go(); else if (O.go) O.go(it); }
+  }
+  function paintPause() {
+    const p = root && root.querySelector('.ins-p'); if (!p) return;
+    p.setAttribute('aria-pressed', String(paused)); p.setAttribute('aria-label', paused ? 'Play insights' : 'Pause insights'); p.textContent = paused ? '▶' : '❚❚';
+    root.classList.toggle('ins-paused', paused);
+  }
+  function set(list) {
+    const next = (list || []).filter(x => x && x.text);
+    const s = next.map(x => x.id + '|' + x.text + '|' + (x.val || '')).join('\n');
+    if (s === sig) return; sig = s;
+    const cur = items[i] && items[i].id;
+    items = next; const k = items.findIndex(x => x.id === cur); i = k >= 0 ? k : 0;
+    if (!root) return;
+    root.hidden = !items.length;
+    render(false); sync();
+  }
+  function render(announce) {
+    const v = root.querySelector('.ins-view'), it = items[i]; if (!it) { v.innerHTML = ''; return; }
+    v.setAttribute('aria-live', announce ? 'polite' : 'off');
+    const tone = it.tone || 'info';
+    v.innerHTML = `<button type="button" class="ins-item ins-${esc(tone)}" data-ins="go" title="${esc(it.text + (it.val ? ' ' + it.val : ''))}">${it.tag ? `<span class="ins-tag"><span aria-hidden="true">${ICON[tone] || ICON.info}</span>${esc(it.tag)}</span>` : ''}<span class="ins-txt">${esc(it.text)}</span>${it.val ? `<b class="ins-val">${esc(it.val)}</b>` : ''}</button>`;
+    root.querySelector('.ins-n').textContent = items.length > 1 ? (i + 1) + '/' + items.length : '';
+    root.querySelectorAll('[data-ins=prev],[data-ins=next],.ins-p,.ins-n').forEach(b => { b.hidden = items.length < 2; });
+    const prog = root.querySelector('.ins-prog'); prog.style.animation = 'none'; void prog.offsetWidth; prog.style.animation = '';
+    root.style.setProperty('--ins-dur', (O.interval / 1000) + 's');
+  }
+  function go(d, manual) { if (!items.length) return; i = (i + d + items.length) % items.length; render(!!manual); sync(); }
+  function sync() {
+    clearTimeout(timer);
+    const run = !paused && !held && !document.hidden && items.length > 1;
+    if (root) root.classList.toggle('ins-run', run);
+    if (run) timer = setTimeout(() => go(1, false), O.interval);
+  }
+  return { mount, set, go: d => go(d, true), get items() { return items; } };
+})();
+
+/* ==========================================================================
+   Probable — Insights for the pinned bar: the handful of things worth knowing
+   right now, computed from the live board, the models and the track record.
+   Each insight opens the game (or section) it comes from, or goes to Ask AI.
+   ========================================================================== */
+(function () {
+  'use strict';
+  const APP = window.APP, S = APP.S, LG = APP.LG;
+  const pc = p => Math.round(p * 100) + '%';
+  const lgName = g => LG[g.lg].short || LG[g.lg].name;
+  const nm = (g, s) => APP.shortName(g[s], g.lg);
+  const fav = (P, g) => { const h = P.pH >= (P.pA ?? 1 - P.pH); return { side: h ? 'home' : 'away', p: h ? P.pH : (P.pA ?? 1 - P.pH) }; };
+  function list() {
+    if (S.mode === 'loading') return [];
+    const out = [], all = APP.allGames().filter(g => !g.void), cap = S.mode === 'snapshot';
+    const live = all.filter(g => g.state === 'in');
+    const now = cap && S.capturedAt ? +new Date(S.capturedAt) : Date.now();
+    const open = id => () => APP.openGame(id);
+    if (live.length) {
+      const lgs = [...new Set(live.map(lgName))];
+      out.push({ id: 'live', tag: cap ? 'At capture' : 'Live', tone: 'live', text: `${live.length} game${live.length === 1 ? '' : 's'} ${cap ? 'were' : ''} in progress: ${lgs.slice(0, 4).join(', ')}${lgs.length > 4 ? '…' : ''}`, val: '', go: () => { APP.setTab('board'); setTimeout(() => { const h = [...document.querySelectorAll('#view-board .sec-h h2')].find(x => /live now|in progress/i.test(x.textContent)); if (h) h.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 60); }, ask: 'Which live games are closest right now?' });
+      const pr = live.map(g => ({ g, P: APP.predict(g) })).filter(x => x.P.src !== 'none' || x.g.state === 'in');
+      const close = pr.slice().sort((a, b) => Math.abs(a.P.now.pH - (a.P.now.pA ?? 1 - a.P.now.pH)) - Math.abs(b.P.now.pH - (b.P.now.pA ?? 1 - b.P.now.pH)))[0];
+      if (close) { const f = fav(close.P.now, close.g); out.push({ id: 'close-' + close.g.id, tag: 'Closest', tone: 'live', text: `Closest live game: ${nm(close.g, 'away')} at ${nm(close.g, 'home')}, ${close.g.detail || ''} — ${nm(close.g, f.side)}`, val: pc(f.p), go: open(close.g.id), ask: `Who will win ${close.g.away.abbr} at ${close.g.home.abbr}?` }); }
+      const sw = pr.map(x => ({ ...x, d: x.P.now.pH - x.P.pre.pH })).filter(x => Math.abs(x.d) > 0.12).sort((a, b) => Math.abs(b.d) - Math.abs(a.d))[0];
+      if (sw) { const s = sw.d > 0 ? 'home' : 'away', from = s === 'home' ? sw.P.pre.pH : (sw.P.pre.pA ?? 1 - sw.P.pre.pH), to = s === 'home' ? sw.P.now.pH : (sw.P.now.pA ?? 1 - sw.P.now.pH); out.push({ id: 'swing-' + sw.g.id, tag: 'Swing', tone: sw.d > 0 ? 'up' : 'down', text: `Biggest swing: ${nm(sw.g, s)} went from ${pc(from)} before the game to`, val: pc(to), go: open(sw.g.id), ask: `Why did the odds in ${sw.g.away.abbr} at ${sw.g.home.abbr} swing so much?` }); }
+      const up = pr.filter(x => { const pre = x.P.pre, n = x.P.now; const dogH = pre.pH < 0.36, dogA = (pre.pA ?? 1 - pre.pH) < 0.36; return (dogH && n.pH > 0.5) || (dogA && (n.pA ?? 1 - n.pH) > 0.5); })[0];
+      if (up) { const s = up.P.pre.pH < 0.36 ? 'home' : 'away'; out.push({ id: 'upset-' + up.g.id, tag: 'Upset watch', tone: 'warn', text: `Upset watch: ${nm(up.g, s)} was ${pc(s === 'home' ? up.P.pre.pH : (up.P.pre.pA ?? 1 - up.P.pre.pH))} before kickoff and is now favored at`, val: pc(s === 'home' ? up.P.now.pH : (up.P.now.pA ?? 1 - up.P.now.pH)), go: open(up.g.id), ask: `Can ${up.g[s].name} hold on to win?` }); }
+    }
+    const pre = all.filter(g => g.state === 'pre' && +new Date(g.start) - now < 36 * 3600e3 && +new Date(g.start) > now - 3600e3);
+    const feat = APP.featuredList ? APP.featuredList(pre)[0] : null;
+    if (feat) { const P = APP.predict(feat), f = fav(P.pre, feat); out.push({ id: 'next-' + feat.id, tag: 'Up next', tone: 'info', text: `Top matchup: ${nm(feat, 'away')} at ${nm(feat, 'home')}, ${APP.when(feat.start)} — ${nm(feat, f.side)}`, val: pc(f.p), go: open(feat.id), ask: `Who will win ${feat.away.abbr} at ${feat.home.abbr}, and why?` }); }
+    const favs = pre.map(g => ({ g, P: APP.predict(g) })).filter(x => x.P.src !== 'none').map(x => ({ ...x, f: fav(x.P.pre, x.g) })).sort((a, b) => b.f.p - a.f.p);
+    if (favs[0] && favs[0].f.p > 0.7) { const x = favs[0]; out.push({ id: 'fav-' + x.g.id, tag: 'Favorite', tone: 'info', text: `Biggest favorite on the slate: ${nm(x.g, x.f.side)} (${lgName(x.g)}) vs ${nm(x.g, x.f.side === 'home' ? 'away' : 'home')}`, val: pc(x.f.p), go: open(x.g.id), ask: `How likely is an upset in ${x.g.away.abbr} at ${x.g.home.abbr}?` }); }
+    const gap = pre.concat(live).map(g => ({ g, P: APP.predict(g), L: APP.lineProbs(g) })).filter(x => x.L && x.P.src === 'blend').map(x => ({ ...x, d: x.P.pre.pH - x.L.pH })).sort((a, b) => Math.abs(b.d) - Math.abs(a.d))[0];
+    if (gap && Math.abs(gap.d) >= 0.06) { const s = gap.d > 0 ? 'home' : 'away'; out.push({ id: 'gap-' + gap.g.id, tag: 'Model vs line', tone: 'info', text: `Biggest gap with the betting line: the model gives ${nm(gap.g, s)} ${pc(s === 'home' ? gap.P.pre.pH : 1 - gap.P.pre.pH)} against the line's`, val: pc(s === 'home' ? gap.L.pH : 1 - gap.L.pH), go: open(gap.g.id), ask: `Why does the model disagree with the betting line on ${gap.g.away.abbr} at ${gap.g.home.abbr}?` }); }
+    const fin = all.filter(g => g.state === 'post' && now - +new Date(g.start) < 48 * 3600e3).map(g => { const P = APP.predict(g); const w = g.home.winner ? 'home' : g.away.winner ? 'away' : null; return w && P.src !== 'none' ? { g, w, p: w === 'home' ? P.pre.pH : (P.pre.pA ?? 1 - P.pre.pH) } : null; }).filter(Boolean).sort((a, b) => a.p - b.p)[0];
+    if (fin && fin.p < 0.35) out.push({ id: 'upset-' + fin.g.id, tag: 'Upset', tone: 'down', text: `Biggest recent upset: ${nm(fin.g, fin.w)} won ${fin.g.away.score}–${fin.g.home.score} with a pregame chance of`, val: pc(fin.p), go: open(fin.g.id), ask: `How big an upset was ${fin.g.away.abbr} at ${fin.g.home.abbr}?` });
+    const T = APP.track && APP.track.summary && APP.track.summary();
+    if (T) out.push({ id: 'track', tag: 'Track record', tone: 'info', text: T.text, val: T.val, go: () => APP.track.open(), ask: 'How accurate are the Sports Lab predictions?' });
+    return out.slice(0, 8);
+  }
+  let mounted = false, tm = null;
+  function refresh() {
+    if (!window.INS) return;
+    if (!mounted) { mounted = true; window.INS.mount({ ask: q => { if (window.CH) window.CH.open(q); } }); }
+    clearTimeout(tm); tm = setTimeout(() => { try { window.INS.set(list()); } catch (e) { console.error(e); } }, 30);
+  }
+  APP.onRender.push(refresh);
+  APP.insights = { list };
+})();
+
+/* Probable kit: loader for the shared 3D bundle (Three.js r186, WebGPU with a WebGL 2 fallback). The bundle loads after
+   the page is interactive and only when the browser can draw it; if it can't, the page keeps its 2D design.
+   A "still" toggle stops the motion and is remembered per visitor. */
+const PX3D = (() => {
+  const URL_ = window.PROBABLE_3D_URL || '/assets/probable-3d/probable-3d.js?v=1';
+  const KEY = 'px3d-still';
+  const ls = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* blocked */ } } };
+  const reduce = () => !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+  const still = () => reduce() || ls.get(KEY) === '1';
+  let mod = null;
+  function can() {
+    try { if (navigator.gpu) return true; const c = document.createElement('canvas'); return !!(c.getContext('webgl2')); } catch (e) { return false; }
+  }
+  function load() { return mod || (mod = import(URL_)); }
+  const idle = fn => (window.requestIdleCallback ? requestIdleCallback(fn, { timeout: 1800 }) : setTimeout(fn, 350));
+  async function mount(el, kind, data, opts) {
+    if (!el || !can()) throw new Error('3D not available');
+    const m = await load();
+    const ctl = await m.mount(el, kind, data, Object.assign({ reducedMotion: still() }, opts || {}));
+    el.classList.add('px3d-on');
+    return ctl;
+  }
+  // a small "motion" switch inside a 3D panel
+  function motionToggle(host, ctl) {
+    if (!host || host.querySelector('.px3d-still')) return;
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'px3d-still';
+    const paint = () => { const s = ls.get(KEY) === '1' || reduce(); b.setAttribute('aria-pressed', String(s)); b.textContent = s ? '▶ Motion' : '❚❚ Still'; b.title = s ? 'Turn the 3D motion back on' : 'Stop the 3D motion'; };
+    b.addEventListener('click', () => { const s = !(ls.get(KEY) === '1'); ls.set(KEY, s ? '1' : '0'); if (ctl && ctl.setPaused) ctl.setPaused(s || reduce()); paint(); });
+    paint(); host.appendChild(b);
+  }
+  return { mount, can, load, idle, still, motionToggle };
+})();
+
+window.CH = CH; window.INS = INS; window.PX3D = PX3D;
+
+/* ==========================================================================
+   Probable — Live arena (3D hero on the Live board). Every game in a 40-hour
+   window on one timeline: lanes by sport, a glowing NOW line, one orb per
+   game split by each team's win probability. Uses the shared Probable 3D
+   bundle (WebGPU with a WebGL 2 fallback) and keeps a 2D summary when the
+   browser can't draw it.
+   ========================================================================== */
+(function () {
+  'use strict';
+  const APP = window.APP, S = APP.S, LG = APP.LG, esc = APP.esc;
+  const LANES = [['fb', 'Football'], ['bk', 'Basketball'], ['bb', 'Baseball'], ['hk', 'Hockey'], ['sc', 'Soccer']];
+  const WIN = [-10, 30];                                   // hours around now
+  let el = null, ctl = null, mounting = false, lastSig = '', failed = false;
+
+  function build() {
+    if (el) return el;
+    el = document.createElement('section');
+    el.className = 'arena'; el.id = 'arena'; el.setAttribute('aria-label', 'Live arena: every game on one 3D timeline');
+    el.innerHTML = `<div class="wrap arena-in">
+      <div class="arena-copy">
+        <span class="arena-eyebrow"><i class="arena-dot" aria-hidden="true"></i>Live arena · 3D</span>
+        <h2 class="arena-h">Every game, one timeline</h2>
+        <p class="arena-lede">Each orb is a game, split between the two teams' colors by each side's chance to win. Live games glow on a beam of light; the line marks now. Drag to look around and tap an orb to open the game.</p>
+        <div class="arena-stats" id="arenaStats"></div>
+        <div class="arena-legend" aria-hidden="true"><span><i class="lg-live"></i>Live</span><span><i class="lg-pre"></i>Upcoming</span><span><i class="lg-post"></i>Final</span><span class="lg-split"><i></i>Color share = win chance</span></div>
+      </div>
+      <div class="arena-stage px3d" id="arenaStage"><div class="px3d-fallback" id="arenaFb">Loading the 3D arena…</div></div>
+    </div>`;
+    const mast = document.querySelector('.mast');
+    mast.parentNode.insertBefore(el, mast.nextSibling);
+    return el;
+  }
+
+  const laneOf = g => APP.kindOf(g.lg);
+  function games() {
+    const now = Date.now(), w0 = now + WIN[0] * 3600e3, w1 = now + WIN[1] * 3600e3;
+    return APP.allGames().filter(g => !g.void && g.start && +new Date(g.start) >= w0 - 3 * 3600e3 && +new Date(g.start) <= w1);
+  }
+  function data() {
+    const now = S.mode === 'snapshot' && S.capturedAt ? +new Date(S.capturedAt) : Date.now();
+    const gs = games(), used = new Set(gs.map(laneOf));
+    const out = gs.map(g => {
+      const P = APP.predict(g), live = g.state === 'in', R = live ? P.now : P.pre;
+      const pD = R.pD || 0, pH = R.pH, pA = R.pA != null ? R.pA : 1 - pH - pD;
+      const sc = APP.kindOf(g.lg) === 'sc';
+      const rh = APP.teamRank ? APP.teamRank(g, 'home') : null, ra = APP.teamRank ? APP.teamRank(g, 'away') : null;
+      const rk = Math.min(rh ? rh.rank : 99, ra ? ra.rank : 99);
+      const score = g.state === 'pre' ? '' : ` · ${g.away.abbr} ${g.away.score ?? 0}–${g.home.score ?? 0} ${g.home.abbr}`;
+      return {
+        id: g.id, lane: laneOf(g), t: +new Date(g.start), state: g.state, pH, pA, pD,
+        cH: APP.teamColor(g.lg, g.home), cA: APP.teamColor(g.lg, g.away), hAbbr: g.home.abbr, aAbbr: g.away.abbr,
+        title: sc ? `${g.home.name} vs ${g.away.name}` : `${g.away.name} at ${g.home.name}`,
+        sub: `${LG[g.lg].short || LG[g.lg].name} · ${g.state === 'pre' ? APP.when(g.start) : g.detail || ''}${score}${g.state === 'post' ? ' · pregame odds' : ''}`,
+        rank: g.state === 'in' ? 0 : rk
+      };
+    });
+    return { now, games: out, lanes: LANES.filter(([k]) => used.has(k)).map(([id, label]) => ({ id, label })), window: [now + WIN[0] * 3600e3, now + WIN[1] * 3600e3] };
+  }
+  function stats(d) {
+    const live = d.games.filter(g => g.state === 'in').length, up = d.games.filter(g => g.state === 'pre' && g.t - d.now < 24 * 3600e3).length;
+    const fin = d.games.filter(g => g.state === 'post').length;
+    const close = d.games.filter(g => g.state === 'in').sort((a, b) => Math.abs(a.pH - a.pA) - Math.abs(b.pH - b.pA))[0];
+    const cap = S.mode === 'snapshot';
+    return `<div class="astat"><b>${live}</b><span>${cap ? 'live at capture' : 'live now'}</span></div><div class="astat"><b>${up}</b><span>in the next 24 h</span></div><div class="astat"><b>${fin}</b><span>final, last 10 h</span></div>` +
+      (close ? `<button type="button" class="astat astat-btn" data-game="${esc(close.id)}"><b>${Math.round(Math.max(close.pH, close.pA) * 100)}%</b><span>closest live: ${esc(close.aAbbr)}–${esc(close.hAbbr)}</span></button>` : '');
+  }
+  async function mount(d) {
+    if (ctl || mounting || failed) return;
+    mounting = true;
+    const stage = document.getElementById('arenaStage'), fb = document.getElementById('arenaFb');
+    try {
+      ctl = await window.PX3D.mount(stage, 'arena', d, {
+        bg: getComputedStyle(document.documentElement).getPropertyValue('--arena-bg').trim() || '#0a1120',
+        accent: '#FFB547',
+        onPick: g => { if (g && g.id) APP.openGame(g.id); },
+        onFail: () => { failed = true; }
+      });
+      const badge = document.createElement('span'); badge.className = 'px3d-badge'; badge.textContent = ctl.backend === 'WebGPU' ? 'WebGPU' : 'WebGL 2'; stage.appendChild(badge);
+      window.PX3D.motionToggle(stage, ctl);
+    } catch (e) {
+      failed = true;
+      if (fb) fb.textContent = 'This browser can’t draw the 3D arena, so the board below has everything.';
+      el.classList.add('arena-2d');
+    } finally { mounting = false; }
+  }
+  function refresh(kind, tab) {
+    if (S.mode === 'loading') return;
+    build();
+    const show = tab === 'board' && !S.q;
+    el.hidden = !show;
+    if (!show) return;
+    const d = data();
+    const sig = d.games.map(g => g.id + g.state + Math.round(g.pH * 100)).join(',') + '|' + Math.round(d.now / 600e3);
+    document.getElementById('arenaStats').innerHTML = stats(d);
+    if (sig === lastSig && ctl) return; lastSig = sig;
+    if (ctl) ctl.update(d);
+    else if (window.PX3D) window.PX3D.idle(() => mount(d));
+  }
+  APP.onRender.push(refresh);
+  APP.arena = { data, get ctl() { return ctl; } };
+})();
 </script>
 </body>
 </html>

@@ -77,7 +77,11 @@ async function updateArchive(lgId) {
   const today = ymd(new Date()), recent = ymd(new Date(Date.now() - 3 * 864e5));
   const want = [];
   if (L.calendarType === 'day' || (Array.isArray(L.calendar) && typeof L.calendar[0] === 'string')) {
-    for (const d of L.calendar || []) { const k = ymd(new Date(d)); if (k < today && (!ar.done[k] || k >= recent)) want.push(['dates=' + k, k]); }
+    let days = (L.calendar || []).map(d => ymd(new Date(d)));
+    // some leagues (MLB) list only a few marker dates: then walk every day of the season so far
+    const span = Math.max(1, (Math.min(Date.now(), new Date(L.season.endDate || Date.now()).getTime()) - new Date(L.season.startDate).getTime()) / 864e5);
+    if (L.season.startDate && days.length < span * 0.4) { days = []; for (let t = new Date(L.season.startDate).getTime(); t < Date.now(); t += 864e5) days.push(ymd(new Date(t))); }
+    for (const k of days) if (k < today && (!ar.done[k] || k >= recent)) want.push(['dates=' + k, k]);
   } else {
     for (const st of L.calendar || []) { if (!['2', '3'].includes(String(st.value))) continue; for (const w of st.entries || []) { const k = 'w' + st.value + '-' + w.value; if (new Date(w.startDate) > new Date()) continue; const fresh = new Date(w.endDate) > new Date(Date.now() - 4 * 864e5); if (!ar.done[k] || fresh) want.push([`dates=${season}&seasontype=${st.value}&week=${w.value}`, k]); } }
   }
