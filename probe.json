@@ -1,0 +1,1355 @@
+{
+ "nba_2026-03-01": {
+  "url": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20260301",
+  "status": 200,
+  "sec": 0.35,
+  "bytes": 155868,
+  "events": 11,
+  "completed": 11,
+  "with_odds": 0,
+  "with_linescores": 11,
+  "providers": {},
+  "odds_sample_completed": null
+ },
+ "nba_2026-10-30": {
+  "url": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261030",
+  "status": 200,
+  "sec": 0.24,
+  "bytes": 238100,
+  "events": 10,
+  "completed": 10,
+  "with_odds": 0,
+  "with_linescores": 10,
+  "providers": {},
+  "odds_sample_completed": null
+ },
+ "nfl_2025_w10": {
+  "url": "https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?dates=2025&seasontype=2&week=10",
+  "status": 200,
+  "sec": 0.21,
+  "bytes": 126029,
+  "events": 14,
+  "completed": 14,
+  "with_odds": 0,
+  "with_linescores": 14,
+  "providers": {},
+  "odds_sample_completed": null
+ },
+ "nfl_2026_w8": {
+  "url": "https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?dates=2026&seasontype=2&week=8",
+  "status": 200,
+  "sec": 0.28,
+  "bytes": 244319,
+  "events": 14,
+  "completed": 13,
+  "with_odds": 1,
+  "with_linescores": 13,
+  "providers": {
+   "DraftKings": 1
+  },
+  "odds_sample_completed": null
+ },
+ "nfl_day_20261026": {
+  "url": "https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?dates=20261026",
+  "status": 200,
+  "sec": 0.17,
+  "bytes": 14404,
+  "events": 1,
+  "completed": 1,
+  "with_odds": 0,
+  "with_linescores": 1,
+  "providers": {},
+  "odds_sample_completed": null
+ },
+ "ncaaf_2026_w9": {
+  "url": "https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?groups=80&limit=300&dates=2026&seasontype=2&week=9",
+  "status": 200,
+  "sec": 0.34,
+  "bytes": 916834,
+  "events": 56,
+  "completed": 56,
+  "with_odds": 0,
+  "with_linescores": 56,
+  "providers": {},
+  "odds_sample_completed": null
+ },
+ "mlb_2026-07-15": {
+  "url": "https://site.web.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard?dates=20260715",
+  "status": 200,
+  "sec": 0.15,
+  "bytes": 1393,
+  "events": 0,
+  "completed": 0,
+  "with_odds": 0,
+  "with_linescores": 0,
+  "providers": {},
+  "odds_sample_completed": null
+ },
+ "mlb_2026-10-30": {
+  "url": "https://site.web.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard?dates=20261030",
+  "status": 200,
+  "sec": 0.1,
+  "bytes": 1393,
+  "events": 0,
+  "completed": 0,
+  "with_odds": 0,
+  "with_linescores": 0,
+  "providers": {},
+  "odds_sample_completed": null
+ },
+ "nhl_2026-01-15": {
+  "url": "https://site.web.api.espn.com/apis/site/v2/sports/hockey/nhl/scoreboard?dates=20260115",
+  "status": 200,
+  "sec": 0.18,
+  "bytes": 191244,
+  "events": 10,
+  "completed": 10,
+  "with_odds": 0,
+  "with_linescores": 10,
+  "providers": {},
+  "odds_sample_completed": null
+ },
+ "nhl_2026-10-30": {
+  "url": "https://site.web.api.espn.com/apis/site/v2/sports/hockey/nhl/scoreboard?dates=20261030",
+  "status": 200,
+  "sec": 0.28,
+  "bytes": 94038,
+  "events": 3,
+  "completed": 3,
+  "with_odds": 0,
+  "with_linescores": 3,
+  "providers": {},
+  "odds_sample_completed": null
+ },
+ "wnba_2026-07-15": {
+  "url": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/wnba/scoreboard?dates=20260715",
+  "status": 200,
+  "sec": 0.22,
+  "bytes": 58735,
+  "events": 3,
+  "completed": 3,
+  "with_odds": 0,
+  "with_linescores": 3,
+  "providers": {},
+  "odds_sample_completed": null
+ },
+ "epl_2026-02-21": {
+  "url": "https://site.web.api.espn.com/apis/site/v2/sports/soccer/eng.1/scoreboard?dates=20260221",
+  "status": 200,
+  "sec": 0.21,
+  "bytes": 56174,
+  "events": 5,
+  "completed": 5,
+  "with_odds": 0,
+  "with_linescores": 0,
+  "providers": {
+   "(null entries)": 5
+  },
+  "odds_sample_completed": null
+ },
+ "epl_2026-10-31": {
+  "url": "https://site.web.api.espn.com/apis/site/v2/sports/soccer/eng.1/scoreboard?dates=20261031",
+  "status": 200,
+  "sec": 0.18,
+  "bytes": 92808,
+  "events": 8,
+  "completed": 8,
+  "with_odds": 0,
+  "with_linescores": 0,
+  "providers": {
+   "(null entries)": 8
+  },
+  "odds_sample_completed": null
+ },
+ "laliga_2026-10-26": {
+  "url": "https://site.web.api.espn.com/apis/site/v2/sports/soccer/esp.1/scoreboard?dates=20261026",
+  "status": 200,
+  "sec": 0.11,
+  "bytes": 12797,
+  "events": 1,
+  "completed": 1,
+  "with_odds": 0,
+  "with_linescores": 0,
+  "providers": {
+   "(null entries)": 1
+  },
+  "odds_sample_completed": null
+ },
+ "mls_2026-07-04": {
+  "url": "https://site.web.api.espn.com/apis/site/v2/sports/soccer/usa.1/scoreboard?dates=20260704",
+  "status": 200,
+  "sec": 0.14,
+  "bytes": 2253,
+  "events": 0,
+  "completed": 0,
+  "with_odds": 0,
+  "with_linescores": 0,
+  "providers": {},
+  "odds_sample_completed": null
+ },
+ "ucl_2026-10-21": {
+  "url": "https://site.web.api.espn.com/apis/site/v2/sports/soccer/uefa.champions/scoreboard?dates=20261021",
+  "status": 200,
+  "sec": 0.21,
+  "bytes": 102874,
+  "events": 9,
+  "completed": 9,
+  "with_odds": 0,
+  "with_linescores": 0,
+  "providers": {
+   "(null entries)": 9
+  },
+  "odds_sample_completed": null
+ },
+ "nba_range": {
+  "url": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261025-20261101&limit=300",
+  "status": 400,
+  "sec": 0.2,
+  "bytes": 0
+ },
+ "calendars": {
+  "nfl": {
+   "status": 200,
+   "season": {
+    "year": 2026,
+    "startDate": "2026-08-06T07:00Z",
+    "endDate": "2027-02-16T07:59Z",
+    "displayName": "2026",
+    "type": {
+     "id": "2",
+     "type": 2,
+     "name": "Regular Season",
+     "abbreviation": "reg"
+    }
+   },
+   "calendarType": "list",
+   "calendarIsWhitelist": true,
+   "calendar_len": 4,
+   "calendar_head": [
+    {
+     "label": "Preseason",
+     "value": "1",
+     "startDate": "2026-08-06T07:00Z",
+     "endDate": "2026-09-06T06:59Z",
+     "entries": [
+      {
+       "label": "Hall of Fame Weekend",
+       "alternateLabel": "HOF",
+       "detail": "Aug 6-12",
+       "value": "1",
+       "startDate": "2026-08-06T07:00Z",
+       "endDate": "2026-08-13T06:59Z"
+      },
+      {
+       "label": "Preseason Week 1",
+       "alternateLabel": "Pre Wk 1",
+       "detail": "Aug 13-19",
+       "value": "2",
+       "startDate": "2026-08-13T07:00Z",
+       "endDate": "2026-08-20T06:59Z"
+      },
+      {
+       "label": "Preseason Week 2",
+       "alternateLabel": "Pre Wk 2",
+       "detail": "Aug 20-26",
+       "value": "3",
+       "startDate": "2026-08-20T07:00Z",
+       "endDate": "2026-08-27T06:59Z"
+      },
+      {
+       "label": "Preseason Week 3",
+       "alternateLabel": "Pre Wk 3",
+       "detail": "Aug 27-Sep 5",
+       "value": "4",
+       "startDate": "2026-08-27T07:00Z",
+       "endDate": "2026-09-06T06:59Z"
+      }
+     ]
+    },
+    {
+     "label": "Regular Season",
+     "value": "2",
+     "startDate": "2026-09-06T07:00Z",
+     "endDate": "2027-01-13T07:59Z",
+     "entries": [
+      {
+       "label": "Week 1",
+       "alternateLabel": "Week 1",
+       "detail": "Sep 6-15",
+       "value": "1",
+       "startDate": "2026-09-06T07:00Z",
+       "endDate": "2026-09-16T06:59Z"
+      },
+      {
+       "label": "Week 2",
+       "alternateLabel": "Week 2",
+       "detail": "Sep 16-22",
+       "value": "2",
+       "startDate": "2026-09-16T07:00Z",
+       "endDate": "2026-09-23T06:59Z"
+      },
+      {
+       "label": "Week 3",
+       "alternateLabel": "Week 3",
+       "detail": "Sep 23-29",
+       "value": "3",
+       "startDate": "2026-09-23T07:00Z",
+       "endDate": "2026-09-30T06:59Z"
+      },
+      {
+       "label": "Week 4",
+       "alternateLabel": "Week 4",
+       "detail": "Sep 30-Oct 6",
+       "value": "4",
+       "startDate": "2026-09-30T07:00Z",
+       "endDate": "2026-10-07T06:59Z"
+      },
+      {
+       "label": "Week 5",
+       "alternateLabel": "Week 5",
+       "detail": "Oct 7-13",
+       "value": "5",
+       "startDate": "2026-10-07T07:00Z",
+       "endDate": "2026-10-14T06:59Z"
+      },
+      {
+       "label": "Week 6",
+       "alternateLabel": "Week 6",
+       "detail": "Oct 14-20",
+       "value": "6",
+       "startDate": "2026-10-14T07:00Z",
+       "endDate": "2026-10-21T06:59Z"
+      },
+      {
+       "label": "Week 7",
+       "alternateLabel": "Week 7",
+       "detail": "Oct 21-27",
+       "value": "7",
+       "startDate": "2026-10-21T07:00Z",
+       "endDate": "2026-10-28T06:59Z"
+      },
+      {
+       "label": "Week 8",
+       "alternateLabel": "Week 8",
+       "detail": "Oct 28-Nov 3",
+       "value": "8",
+       "startDate": "2026-10-28T07:00Z",
+       "endDate": "2026-11-04T07:59Z"
+      },
+      {
+       "label": "Week 9",
+       "alternateLabel": "Week 9",
+       "detail": "Nov 4-10",
+       "value": "9",
+       "startDate": "2026-11-04T08:00Z",
+       "endDate": "2026-11-11T07:59Z"
+      },
+      {
+       "label": "Week 10",
+       "alternateLabel": "Week 10",
+       "detail": "Nov 11-17",
+       "value": "10",
+       "startDate": "2026-11-11T08:00Z",
+       "endDate": "2026-11-18T07:59Z"
+      },
+      {
+       "label": "Week 11",
+       "alternateLabel": "Week 11",
+       "detail": "Nov 18-24",
+       "value": "11",
+       "startDate": "2026-11-18T08:00Z",
+       "endDate": "2026-11-25T07:59Z"
+      },
+      {
+       "label": "Week 12",
+       "alternateLabel": "Week 12",
+       "detail": "Nov 25-Dec 1",
+       "value": "12",
+       "startDate": "2026-11-25T08:00Z",
+       "endDate": "2026-12-02T07:59Z"
+      },
+      {
+       "label": "Week 13",
+       "alternateLabel": "Week 13",
+       "detail": "Dec 2-8",
+       "value": "13",
+       "startDate": "2026-12-02T08:00Z",
+       "endDate": "2026-12-09T07:59Z"
+      },
+      {
+       "label": "Week 14",
+       "alternateLabel": "Week 14",
+       "detail": "Dec 9-15",
+       "value": "14",
+       "startDate": "2026-12-09T08:00Z",
+       "endDate": "2026-12-16T07:59Z"
+      },
+      {
+       "label": "Week 15",
+       "alternateLabel": "Week 15",
+       "detail": "Dec 16-22",
+       "value": "15",
+       "startDate": "2026-12-16T08:00Z",
+       "endDate": "2026-12-23T07:59Z"
+      },
+      {
+       "label": "Week 16",
+       "alternateLabel": "Week 16",
+       "detail": "Dec 23-29",
+       "value": "16",
+       "startDate": "2026-12-23T08:00Z",
+       "endDate": "2026-12-30T07:59Z"
+      },
+      {
+       "label": "Week 17",
+       "alternateLabel": "Week 17",
+       "detail": "Dec 30-Jan 5",
+       "value": "17",
+       "startDate": "2026-12-30T08:00Z",
+       "endDate": "2027-01-06T07:59Z"
+      },
+      {
+       "label": "Week 18",
+       "alternateLabel": "Week 18",
+       "detail": "Jan 6-12",
+       "value": "18",
+       "startDate": "2027-01-06T08:00Z",
+       "endDate": "2027-01-13T07:59Z"
+      }
+     ]
+    },
+    {
+     "label": "Postseason",
+     "value": "3",
+     "startDate": "2027-01-13T08:00Z",
+     "endDate": "2027-02-16T07:59Z",
+     "entries": [
+      {
+       "label": "Wild Card",
+       "alternateLabel": "Wild Card",
+       "detail": "Jan 13-19",
+       "value": "1",
+       "startDate": "2027-01-13T08:00Z",
+       "endDate": "2027-01-20T07:59Z"
+      },
+      {
+       "label": "Divisional Round",
+       "alternateLabel": "Div Rd",
+       "detail": "Jan 20-26",
+       "value": "2",
+       "startDate": "2027-01-20T08:00Z",
+       "endDate": "2027-01-27T07:59Z"
+      },
+      {
+       "label": "Conference Championship",
+       "alternateLabel": "Conf Champ",
+       "detail": "Jan 27-Feb 2",
+       "value": "3",
+       "startDate": "2027-01-27T08:00Z",
+       "endDate": "2027-02-03T07:59Z"
+      },
+      {
+       "label": "Super Bowl",
+       "alternateLabel": "Super Bowl",
+       "detail": "Feb 3-15",
+       "value": "4",
+       "startDate": "2027-02-03T08:00Z",
+       "endDate": "2027-02-16T07:59Z"
+      }
+     ]
+    }
+   ],
+   "calendar_tail": [
+    {
+     "label": "Postseason",
+     "value": "3",
+     "startDate": "2027-01-13T08:00Z",
+     "endDate": "2027-02-16T07:59Z",
+     "entries": [
+      {
+       "label": "Wild Card",
+       "alternateLabel": "Wild Card",
+       "detail": "Jan 13-19",
+       "value": "1",
+       "startDate": "2027-01-13T08:00Z",
+       "endDate": "2027-01-20T07:59Z"
+      },
+      {
+       "label": "Divisional Round",
+       "alternateLabel": "Div Rd",
+       "detail": "Jan 20-26",
+       "value": "2",
+       "startDate": "2027-01-20T08:00Z",
+       "endDate": "2027-01-27T07:59Z"
+      },
+      {
+       "label": "Conference Championship",
+       "alternateLabel": "Conf Champ",
+       "detail": "Jan 27-Feb 2",
+       "value": "3",
+       "startDate": "2027-01-27T08:00Z",
+       "endDate": "2027-02-03T07:59Z"
+      },
+      {
+       "label": "Super Bowl",
+       "alternateLabel": "Super Bowl",
+       "detail": "Feb 3-15",
+       "value": "4",
+       "startDate": "2027-02-03T08:00Z",
+       "endDate": "2027-02-16T07:59Z"
+      }
+     ]
+    },
+    {
+     "label": "Off Season",
+     "value": "4",
+     "startDate": "2027-02-16T08:00Z",
+     "endDate": "2027-08-01T06:59Z"
+    }
+   ],
+   "events": 14,
+   "day": null,
+   "week": {
+    "number": 8,
+    "teamsOnBye": [
+     {
+      "id": "18",
+      "uid": "s:20~l:28~t:18",
+      "location": "New Orleans",
+      "name": "Saints",
+      "abbreviation": "NO",
+      "displayName": "New Orleans Saints",
+      "shortDisplayName": "Saints",
+      "isActive": true,
+      "links": [
+       {
+        "rel": [
+         "clubhouse",
+         "desktop",
+         "team"
+        ],
+        "href": "https://www.espn.com/nfl/team/_/name/no/new-orleans-saints",
+        "text": "Clubhouse",
+        "isExternal": false,
+        "isPremium": false
+       }
+      ],
+      "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/no.png",
+      "logoDark": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/scoreboard/no.png"
+     },
+     {
+      "id": "19",
+      "uid": "s:20~l:28~t:19",
+      "location": "New York",
+      "name": "Giants",
+      "abbreviation": "NYG",
+      "displayName": "New York Giants",
+      "shortDisplayName": "Giants",
+      "isActive": true,
+      "links": [
+       {
+        "rel": [
+         "clubhouse",
+         "desktop",
+         "team"
+        ],
+        "href": "https://www.espn.com/nfl/team/_/name/nyg/new-york-giants",
+        "text": "Clubhouse",
+        "isExternal": false,
+        "isPremium": false
+       }
+      ],
+      "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/nyg.png",
+      "logoDark": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/scoreboard/nyg.png"
+     },
+     {
+      "id": "25",
+      "uid": "s:20~l:28~t:25",
+      "location": "San Francisco",
+      "name": "49ers",
+      "abbreviation": "SF",
+      "displayName": "San Francisco 49ers",
+      "shortDisplayName": "49ers",
+      "isActive": true,
+      "links": [
+       {
+        "rel": [
+         "clubhouse",
+         "desktop",
+         "team"
+        ],
+        "href": "https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers",
+        "text": "Clubhouse",
+        "isExternal": false,
+        "isPremium": false
+       }
+      ],
+      "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/sf.png",
+      "logoDark": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/scoreboard/sf.png"
+     },
+     {
+      "id": "34",
+      "uid": "s:20~l:28~t:34",
+      "location": "Houston",
+      "name": "Texans",
+      "abbreviation": "HOU",
+      "displayName": "Houston Texans",
+      "shortDisplayName": "Texans",
+      "isActive": true,
+      "links": [
+       {
+        "rel": [
+         "clubhouse",
+         "desktop",
+         "team"
+        ],
+        "href": "https://www.espn.com/nfl/team/_/name/hou/houston-texans",
+        "text": "Clubhouse",
+        "isExternal": false,
+        "isPremium": false
+       }
+      ],
+      "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/hou.png",
+      "logoDark": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/scoreboard/hou.png"
+     }
+    ]
+   }
+  },
+  "ncaaf": {
+   "status": 200,
+   "season": {
+    "year": 2026,
+    "startDate": "2026-02-01T08:00Z",
+    "endDate": "2027-01-28T07:59Z",
+    "displayName": "2026",
+    "type": {
+     "id": "2",
+     "type": 2,
+     "name": "Regular Season",
+     "abbreviation": "reg"
+    }
+   },
+   "calendarType": "list",
+   "calendarIsWhitelist": true,
+   "calendar_len": 3,
+   "calendar_head": [
+    {
+     "label": "Regular Season",
+     "value": "2",
+     "startDate": "2026-08-22T07:00Z",
+     "endDate": "2026-12-13T07:59Z",
+     "entries": [
+      {
+       "label": "Week 1",
+       "alternateLabel": "Week 1",
+       "detail": "Aug 22-Sep 7",
+       "value": "1",
+       "startDate": "2026-08-22T07:00Z",
+       "endDate": "2026-09-08T06:59Z"
+      },
+      {
+       "label": "Week 2",
+       "alternateLabel": "Week 2",
+       "detail": "Sep 8-13",
+       "value": "2",
+       "startDate": "2026-09-08T07:00Z",
+       "endDate": "2026-09-14T06:59Z"
+      },
+      {
+       "label": "Week 3",
+       "alternateLabel": "Week 3",
+       "detail": "Sep 14-20",
+       "value": "3",
+       "startDate": "2026-09-14T07:00Z",
+       "endDate": "2026-09-21T06:59Z"
+      },
+      {
+       "label": "Week 4",
+       "alternateLabel": "Week 4",
+       "detail": "Sep 21-27",
+       "value": "4",
+       "startDate": "2026-09-21T07:00Z",
+       "endDate": "2026-09-28T06:59Z"
+      },
+      {
+       "label": "Week 5",
+       "alternateLabel": "Week 5",
+       "detail": "Sep 28-Oct 4",
+       "value": "5",
+       "startDate": "2026-09-28T07:00Z",
+       "endDate": "2026-10-05T06:59Z"
+      },
+      {
+       "label": "Week 6",
+       "alternateLabel": "Week 6",
+       "detail": "Oct 5-11",
+       "value": "6",
+       "startDate": "2026-10-05T07:00Z",
+       "endDate": "2026-10-12T06:59Z"
+      },
+      {
+       "label": "Week 7",
+       "alternateLabel": "Week 7",
+       "detail": "Oct 12-18",
+       "value": "7",
+       "startDate": "2026-10-12T07:00Z",
+       "endDate": "2026-10-19T06:59Z"
+      },
+      {
+       "label": "Week 8",
+       "alternateLabel": "Week 8",
+       "detail": "Oct 19-25",
+       "value": "8",
+       "startDate": "2026-10-19T07:00Z",
+       "endDate": "2026-10-26T06:59Z"
+      },
+      {
+       "label": "Week 9",
+       "alternateLabel": "Week 9",
+       "detail": "Oct 26-Nov 1",
+       "value": "9",
+       "startDate": "2026-10-26T07:00Z",
+       "endDate": "2026-11-02T07:59Z"
+      },
+      {
+       "label": "Week 10",
+       "alternateLabel": "Week 10",
+       "detail": "Nov 2-8",
+       "value": "10",
+       "startDate": "2026-11-02T08:00Z",
+       "endDate": "2026-11-09T07:59Z"
+      },
+      {
+       "label": "Week 11",
+       "alternateLabel": "Week 11",
+       "detail": "Nov 9-15",
+       "value": "11",
+       "startDate": "2026-11-09T08:00Z",
+       "endDate": "2026-11-16T07:59Z"
+      },
+      {
+       "label": "Week 12",
+       "alternateLabel": "Week 12",
+       "detail": "Nov 16-22",
+       "value": "12",
+       "startDate": "2026-11-16T08:00Z",
+       "endDate": "2026-11-23T07:59Z"
+      },
+      {
+       "label": "Week 13",
+       "alternateLabel": "Week 13",
+       "detail": "Nov 23-29",
+       "value": "13",
+       "startDate": "2026-11-23T08:00Z",
+       "endDate": "2026-11-30T07:59Z"
+      },
+      {
+       "label": "Week 14",
+       "alternateLabel": "Week 14",
+       "detail": "Nov 30-Dec 6",
+       "value": "14",
+       "startDate": "2026-11-30T08:00Z",
+       "endDate": "2026-12-07T07:59Z"
+      },
+      {
+       "label": "Week 15",
+       "alternateLabel": "Week 15",
+       "detail": "Dec 7-12",
+       "value": "15",
+       "startDate": "2026-12-07T08:00Z",
+       "endDate": "2026-12-13T07:59Z"
+      }
+     ]
+    },
+    {
+     "label": "Postseason",
+     "value": "3",
+     "startDate": "2026-12-13T08:00Z",
+     "endDate": "2027-01-28T07:59Z",
+     "entries": [
+      {
+       "label": "Bowls",
+       "alternateLabel": "Bowls",
+       "detail": "Dec 13-Jan 27",
+       "value": "1",
+       "startDate": "2026-12-13T08:00Z",
+       "endDate": "2027-01-28T07:59Z"
+      },
+      {
+       "label": "CFP",
+       "alternateLabel": "CFP",
+       "detail": "Dec 18-Jan 28",
+       "value": "999",
+       "startDate": "2026-12-18T08:00Z",
+       "endDate": "2027-01-28T07:59Z"
+      }
+     ]
+    },
+    {
+     "label": "Off Season",
+     "value": "4",
+     "startDate": "2027-01-28T08:00Z",
+     "endDate": "2027-02-01T07:59Z",
+     "entries": [
+      {
+       "label": "All-Star",
+       "alternateLabel": "All-Star",
+       "detail": "Jan 28-31",
+       "value": "1",
+       "startDate": "2027-01-28T08:00Z",
+       "endDate": "2027-02-01T07:59Z"
+      }
+     ]
+    }
+   ],
+   "calendar_tail": [
+    {
+     "label": "Postseason",
+     "value": "3",
+     "startDate": "2026-12-13T08:00Z",
+     "endDate": "2027-01-28T07:59Z",
+     "entries": [
+      {
+       "label": "Bowls",
+       "alternateLabel": "Bowls",
+       "detail": "Dec 13-Jan 27",
+       "value": "1",
+       "startDate": "2026-12-13T08:00Z",
+       "endDate": "2027-01-28T07:59Z"
+      },
+      {
+       "label": "CFP",
+       "alternateLabel": "CFP",
+       "detail": "Dec 18-Jan 28",
+       "value": "999",
+       "startDate": "2026-12-18T08:00Z",
+       "endDate": "2027-01-28T07:59Z"
+      }
+     ]
+    },
+    {
+     "label": "Off Season",
+     "value": "4",
+     "startDate": "2027-01-28T08:00Z",
+     "endDate": "2027-02-01T07:59Z",
+     "entries": [
+      {
+       "label": "All-Star",
+       "alternateLabel": "All-Star",
+       "detail": "Jan 28-31",
+       "value": "1",
+       "startDate": "2027-01-28T08:00Z",
+       "endDate": "2027-02-01T07:59Z"
+      }
+     ]
+    }
+   ],
+   "events": 17,
+   "day": null,
+   "week": {
+    "number": 10
+   }
+  },
+  "mlb": {
+   "status": 200,
+   "season": {
+    "year": 2026,
+    "startDate": "2026-02-19T08:00Z",
+    "endDate": "2026-11-12T07:59Z",
+    "displayName": "2026",
+    "type": {
+     "id": "3",
+     "type": 3,
+     "name": "Postseason",
+     "abbreviation": "post"
+    }
+   },
+   "calendarType": "day",
+   "calendarIsWhitelist": false,
+   "calendar_len": 24,
+   "calendar_head": [
+    "2026-02-19T08:00Z",
+    "2026-07-13T07:00Z",
+    "2026-07-15T07:00Z"
+   ],
+   "calendar_tail": [
+    "2026-11-10T08:00Z",
+    "2026-11-11T08:00Z"
+   ],
+   "events": 1,
+   "day": {
+    "date": "2026-10-28"
+   },
+   "week": null
+  },
+  "nba": {
+   "status": 200,
+   "season": {
+    "year": 2027,
+    "startDate": "2026-09-30T07:00Z",
+    "endDate": "2027-06-26T06:59Z",
+    "displayName": "2026-27",
+    "type": {
+     "id": "2",
+     "type": 2,
+     "name": "Regular Season",
+     "abbreviation": "reg"
+    }
+   },
+   "calendarType": "day",
+   "calendarIsWhitelist": true,
+   "calendar_len": 174,
+   "calendar_head": [
+    "2026-10-03T07:00Z",
+    "2026-10-04T07:00Z",
+    "2026-10-05T07:00Z"
+   ],
+   "calendar_tail": [
+    "2027-04-09T07:00Z",
+    "2027-04-11T07:00Z"
+   ],
+   "events": 15,
+   "day": {
+    "date": "2026-11-02"
+   },
+   "week": null
+  },
+  "wnba": {
+   "status": 200,
+   "season": {
+    "year": 2026,
+    "startDate": "2026-04-03T07:00Z",
+    "endDate": "2026-11-05T07:59Z",
+    "displayName": "2026",
+    "type": {
+     "id": "3",
+     "type": 3,
+     "name": "Postseason",
+     "abbreviation": "post"
+    }
+   },
+   "calendarType": "day",
+   "calendarIsWhitelist": true,
+   "calendar_len": 136,
+   "calendar_head": [
+    "2026-04-25T07:00Z",
+    "2026-04-26T07:00Z",
+    "2026-04-27T07:00Z"
+   ],
+   "calendar_tail": [
+    "2026-10-29T07:00Z",
+    "2026-10-31T07:00Z"
+   ],
+   "events": 1,
+   "day": {
+    "date": "2026-10-31"
+   },
+   "week": null
+  },
+  "nhl": {
+   "status": 200,
+   "season": {
+    "year": 2027,
+    "startDate": "2026-09-15T07:00Z",
+    "endDate": "2027-07-01T06:59Z",
+    "displayName": "2026-27",
+    "type": {
+     "id": "2",
+     "type": 2,
+     "name": "Regular Season",
+     "abbreviation": "reg"
+    }
+   },
+   "calendarType": "day",
+   "calendarIsWhitelist": true,
+   "calendar_len": 193,
+   "calendar_head": [
+    "2026-09-19T07:00Z",
+    "2026-09-20T07:00Z",
+    "2026-09-21T07:00Z"
+   ],
+   "calendar_tail": [
+    "2027-04-09T07:00Z",
+    "2027-04-10T07:00Z"
+   ],
+   "events": 4,
+   "day": {
+    "date": "2026-11-02"
+   },
+   "week": null
+  },
+  "epl": {
+   "status": 200,
+   "season": {
+    "year": 2026,
+    "startDate": "2026-06-01T04:00Z",
+    "endDate": "2027-06-01T03:59Z",
+    "displayName": "2026-27 English Premier League",
+    "type": {
+     "id": "1",
+     "type": 14308,
+     "name": "2026-27 English Premier League",
+     "abbreviation": "2026-27 English Premier League"
+    }
+   },
+   "calendarType": "day",
+   "calendarIsWhitelist": true,
+   "calendar_len": 77,
+   "calendar_head": [
+    "2026-08-21T07:00Z",
+    "2026-08-22T07:00Z",
+    "2026-08-23T07:00Z"
+   ],
+   "calendar_tail": [
+    "2027-05-23T07:00Z",
+    "2027-05-30T07:00Z"
+   ],
+   "events": 1,
+   "day": {
+    "date": "2026-11-02"
+   },
+   "week": null
+  },
+  "laliga": {
+   "status": 200,
+   "season": {
+    "year": 2026,
+    "startDate": "2026-06-01T04:00Z",
+    "endDate": "2027-06-01T03:59Z",
+    "displayName": "2026-27 Spanish LALIGA",
+    "type": {
+     "id": "1",
+     "type": 14357,
+     "name": "2026-27 LALIGA",
+     "abbreviation": "2026-27 LALIGA"
+    }
+   },
+   "calendarType": "day",
+   "calendarIsWhitelist": true,
+   "calendar_len": 81,
+   "calendar_head": [
+    "2026-08-15T07:00Z",
+    "2026-08-16T07:00Z",
+    "2026-08-17T07:00Z"
+   ],
+   "calendar_tail": [
+    "2027-05-23T07:00Z",
+    "2027-05-30T07:00Z"
+   ],
+   "events": 1,
+   "day": {
+    "date": "2026-11-02"
+   },
+   "week": null
+  },
+  "seriea": {
+   "status": 200,
+   "season": {
+    "year": 2026,
+    "startDate": "2026-06-05T04:00Z",
+    "endDate": "2027-07-01T03:59Z",
+    "displayName": "2026-27 Italian Serie A",
+    "type": {
+     "id": "1",
+     "type": 14240,
+     "name": "2026-27 Italian Serie A",
+     "abbreviation": "2026-27 Italian Serie A"
+    }
+   },
+   "calendarType": "day",
+   "calendarIsWhitelist": true,
+   "calendar_len": 82,
+   "calendar_head": [
+    "2026-08-22T07:00Z",
+    "2026-08-23T07:00Z",
+    "2026-08-24T07:00Z"
+   ],
+   "calendar_tail": [
+    "2027-05-23T07:00Z",
+    "2027-05-30T07:00Z"
+   ],
+   "events": 2,
+   "day": {
+    "date": "2026-11-02"
+   },
+   "week": null
+  },
+  "bund": {
+   "status": 200,
+   "season": {
+    "year": 2026,
+    "startDate": "2026-07-01T04:00Z",
+    "endDate": "2027-07-01T03:59Z",
+    "displayName": "2026-27 German Bundesliga",
+    "type": {
+     "id": "1",
+     "type": 14358,
+     "name": "2026-27 German Bundesliga",
+     "abbreviation": "2026-27 Bundesliga"
+    }
+   },
+   "calendarType": "day",
+   "calendarIsWhitelist": true,
+   "calendar_len": 56,
+   "calendar_head": [
+    "2026-08-28T07:00Z",
+    "2026-08-29T07:00Z",
+    "2026-08-30T07:00Z"
+   ],
+   "calendar_tail": [
+    "2027-05-15T07:00Z",
+    "2027-05-22T07:00Z"
+   ],
+   "events": 2,
+   "day": {
+    "date": "2026-11-01"
+   },
+   "week": null
+  },
+  "ligue1": {
+   "status": 200,
+   "season": {
+    "year": 2026,
+    "startDate": "2026-06-01T04:00Z",
+    "endDate": "2027-06-01T03:59Z",
+    "displayName": "2026-27 French Ligue 1",
+    "type": {
+     "id": "1",
+     "type": 14252,
+     "name": "2026-27 Ligue 1",
+     "abbreviation": "2026-27 Ligue 1"
+    }
+   },
+   "calendarType": "day",
+   "calendarIsWhitelist": true,
+   "calendar_len": 76,
+   "calendar_head": [
+    "2026-08-21T07:00Z",
+    "2026-08-22T07:00Z",
+    "2026-08-23T07:00Z"
+   ],
+   "calendar_tail": [
+    "2027-05-22T07:00Z",
+    "2027-05-29T07:00Z"
+   ],
+   "events": 1,
+   "day": {
+    "date": "2026-11-02"
+   },
+   "week": null
+  },
+  "mls": {
+   "status": 200,
+   "season": {
+    "year": 2026,
+    "startDate": "2026-01-01T10:00Z",
+    "endDate": "2026-12-31T04:59Z",
+    "displayName": "2026 MLS",
+    "type": {
+     "id": "1",
+     "type": 13846,
+     "name": "Regular Season",
+     "abbreviation": "2026 MLS"
+    }
+   },
+   "calendarType": "day",
+   "calendarIsWhitelist": true,
+   "calendar_len": 69,
+   "calendar_head": [
+    "2026-02-21T08:00Z",
+    "2026-02-22T08:00Z",
+    "2026-02-28T08:00Z"
+   ],
+   "calendar_tail": [
+    "2026-11-01T07:00Z",
+    "2026-11-07T08:00Z"
+   ],
+   "events": 6,
+   "day": {
+    "date": "2026-11-01"
+   },
+   "week": null
+  },
+  "ucl": {
+   "status": 200,
+   "season": {
+    "year": 2026,
+    "startDate": "2026-07-01T04:00Z",
+    "endDate": "2027-07-01T03:59Z",
+    "displayName": "2026-27 UEFA Champions League",
+    "type": {
+     "id": "1",
+     "type": 14534,
+     "name": "League Phase",
+     "abbreviation": "League Phase"
+    }
+   },
+   "calendarType": "list",
+   "calendarIsWhitelist": true,
+   "calendar_len": 1,
+   "calendar_head": [
+    {
+     "label": "UEFA Champions League",
+     "startDate": "2026-07-01T04:00Z",
+     "endDate": "2027-07-01T03:59Z",
+     "entries": [
+      {
+       "label": "League Phase",
+       "detail": "Sep 8-Jan 27",
+       "value": "1",
+       "startDate": "2026-08-27T07:00Z",
+       "endDate": "2027-02-15T07:59Z"
+      },
+      {
+       "label": "Knockout Round Playoffs",
+       "detail": "Feb 15-Mar 7",
+       "value": "2",
+       "startDate": "2027-02-15T08:00Z",
+       "endDate": "2027-03-08T07:59Z"
+      },
+      {
+       "label": "Rd of 16",
+       "detail": "Mar 8-Apr 4",
+       "value": "3",
+       "startDate": "2027-03-08T08:00Z",
+       "endDate": "2027-04-05T06:59Z"
+      },
+      {
+       "label": "Quarterfinals",
+       "detail": "Apr 5-25",
+       "value": "4",
+       "startDate": "2027-04-05T07:00Z",
+       "endDate": "2027-04-26T06:59Z"
+      },
+      {
+       "label": "Semifinals",
+       "detail": "Apr 26-May 31",
+       "value": "5",
+       "startDate": "2027-04-26T07:00Z",
+       "endDate": "2027-06-01T06:59Z"
+      },
+      {
+       "label": "Final",
+       "detail": "Jun 1-30",
+       "value": "6",
+       "startDate": "2027-06-01T07:00Z",
+       "endDate": "2027-07-01T06:59Z"
+      }
+     ]
+    }
+   ],
+   "calendar_tail": [
+    {
+     "label": "UEFA Champions League",
+     "startDate": "2026-07-01T04:00Z",
+     "endDate": "2027-07-01T03:59Z",
+     "entries": [
+      {
+       "label": "League Phase",
+       "detail": "Sep 8-Jan 27",
+       "value": "1",
+       "startDate": "2026-08-27T07:00Z",
+       "endDate": "2027-02-15T07:59Z"
+      },
+      {
+       "label": "Knockout Round Playoffs",
+       "detail": "Feb 15-Mar 7",
+       "value": "2",
+       "startDate": "2027-02-15T08:00Z",
+       "endDate": "2027-03-08T07:59Z"
+      },
+      {
+       "label": "Rd of 16",
+       "detail": "Mar 8-Apr 4",
+       "value": "3",
+       "startDate": "2027-03-08T08:00Z",
+       "endDate": "2027-04-05T06:59Z"
+      },
+      {
+       "label": "Quarterfinals",
+       "detail": "Apr 5-25",
+       "value": "4",
+       "startDate": "2027-04-05T07:00Z",
+       "endDate": "2027-04-26T06:59Z"
+      },
+      {
+       "label": "Semifinals",
+       "detail": "Apr 26-May 31",
+       "value": "5",
+       "startDate": "2027-04-26T07:00Z",
+       "endDate": "2027-06-01T06:59Z"
+      },
+      {
+       "label": "Final",
+       "detail": "Jun 1-30",
+       "value": "6",
+       "startDate": "2027-06-01T07:00Z",
+       "endDate": "2027-07-01T06:59Z"
+      }
+     ]
+    }
+   ],
+   "events": 9,
+   "day": {
+    "date": "2026-11-03"
+   },
+   "week": null
+  }
+ },
+ "standings": {
+  "nba_2025": {
+   "status": 200,
+   "entries": 30,
+   "season": {
+    "year": 2027,
+    "displayName": "2026-27"
+   },
+   "name": "National Basketball Association"
+  },
+  "nba_2026": {
+   "status": 200,
+   "entries": 30,
+   "season": {
+    "year": 2027,
+    "displayName": "2026-27"
+   },
+   "name": "National Basketball Association"
+  },
+  "nba_cur": {
+   "status": 200,
+   "entries": 30,
+   "season": {
+    "year": 2027,
+    "displayName": "2026-27"
+   },
+   "name": "National Basketball Association"
+  },
+  "nfl_2025": {
+   "status": 200,
+   "entries": 32,
+   "season": {
+    "year": 2026,
+    "displayName": "2026"
+   },
+   "name": "National Football League"
+  },
+  "epl_2025": {
+   "status": 200,
+   "entries": 20,
+   "season": {
+    "year": 2026,
+    "displayName": "2026-27 English Premier League"
+   },
+   "name": "English Premier League"
+  },
+  "mlb_2025": {
+   "status": 200,
+   "entries": 30,
+   "season": {
+    "year": 2026,
+    "displayName": "2026"
+   },
+   "name": "Major League Baseball"
+  }
+ }
+}

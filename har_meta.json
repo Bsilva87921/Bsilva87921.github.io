@@ -1,0 +1,34 @@
+{
+ "t0": 1793664140351,
+ "t1": 1793664160263,
+ "mode": "live",
+ "counts": {
+  "nfl": "14 games / 32 standings",
+  "ncaaf": "63 games / 0 standings",
+  "mlb": "0 games / 30 standings",
+  "nba": "31 games / 30 standings",
+  "wnba": "0 games / 15 standings",
+  "nhl": "33 games / 32 standings",
+  "epl": "20 games / 20 standings",
+  "laliga": "20 games / 20 standings",
+  "seriea": "20 games / 20 standings",
+  "bund": "18 games / 18 standings",
+  "ligue1": "18 games / 18 standings",
+  "mls": "30 games / 30 standings",
+  "ucl": "18 games / 0 standings"
+ },
+ "opened": [],
+ "console": [
+  "error: Failed to load resource: the server responded with a status of 400 ()",
+  "error: Failed to load resource: the server responded with a status of 400 ()",
+  "error: Failed to load resource: the server responded with a status of 400 ()",
+  "error: Failed to load resource: the server responded with a status of 400 ()",
+  "error: Failed to load resource: the server responded with a status of 400 ()",
+  "error: Failed to load resource: the server responded with a status of 400 ()",
+  "error: Failed to load resource: the server responded with a status of 400 ()",
+  "error: Failed to load resource: the server responded with a status of 400 ()",
+  "error: Failed to load resource: the server responded with a status of 400 ()",
+  "error: Failed to load resource: the server responded with a status of 400 ()",
+  "error: Failed to load resource: the server responded with a status of 400 ()"
+ ]
+}
