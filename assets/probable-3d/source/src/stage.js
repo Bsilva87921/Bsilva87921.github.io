@@ -120,11 +120,28 @@ export class Stage {
     return { x: (p.x * 0.5 + 0.5) * this.w, y: (-p.y * 0.5 + 0.5) * this.h, z: p.z };
   }
   placeLabels() {
+    const groups = {};
     for (const l of this.labels) {
       const s = this.project(l.pos);
       const hide = s.z > 1 || s.x < -40 || s.x > this.w + 40 || s.y < -20 || s.y > this.h + 20 || (l.hidden && l.hidden());
       l.el.style.opacity = hide ? '0' : '';
-      if (!hide) l.el.style.transform = `translate(${Math.round(s.x + (l.dx || 0))}px, ${Math.round(s.y + (l.dy || 0))}px)`;
+      if (hide) continue;
+      const x = s.x + (l.dx || 0), y = s.y + (l.dy || 0);
+      if (l.group) { (groups[l.group] || (groups[l.group] = [])).push({ l, x, y }); continue; }
+      l.el.style.transform = `translate(${Math.round(x)}px, ${Math.round(y)}px)`;
+    }
+    // labels in a group (centered pills) never sit on top of each other: a later one steps away in its own direction
+    for (const k in groups) {
+      const G = groups[k].sort((a, b) => a.x - b.x);
+      for (const g of G) { g.w = g.l.w || (g.l.w = g.l.el.offsetWidth || 40); g.h = g.l.h || (g.l.h = g.l.el.offsetHeight || 18); }
+      for (let i = 1; i < G.length; i++) {
+        const b = G[i];
+        for (let j = 0; j < i; j++) {
+          const a = G[j];
+          if (Math.abs(b.x - a.x) < (a.w + b.w) / 2 + 3 && Math.abs(b.y - a.y) < (a.h + b.h) / 2 + 2) b.y = a.y + (b.l.push || -1) * ((a.h + b.h) / 2 + 3);
+        }
+      }
+      for (const g of G) g.l.el.style.transform = `translate(${Math.round(g.x)}px, ${Math.round(g.y)}px)`;
     }
   }
 

@@ -70,8 +70,8 @@ export async function skyline(el, data, opts) {
       const T = { d, mesh, cap, h, x: px, i };
       // labels: the move at the tip, the market under the row
       T.val = st.label(`${d.v > 0.004 ? '▲' : d.v < -0.004 ? '▼' : '•'} ${d.label}`, 'px3d-sky-val ' + (Math.abs(d.v) < 0.05 ? 'flat' : up ? 'up' : 'dn'));
-      T.valPos = new THREE.Vector3(px, h, 0); st.labels.push({ el: T.val, pos: T.valPos, dy: up ? -16 : 6 });
-      const nm = st.label(d.short || d.name, 'px3d-tick px3d-sky-name' + (up ? '' : ' above')); st.labels.push({ el: nm, pos: new THREE.Vector3(px, 0, 0.5), dy: up ? 5 : -5 });
+      T.valPos = new THREE.Vector3(px, h, 0); st.labels.push({ el: T.val, pos: T.valPos, dy: up ? -16 : 6, group: 'val', push: up ? -1 : 1 });
+      const nm = st.label(d.short || d.name, 'px3d-tick px3d-sky-name' + (up ? '' : ' above')); st.labels.push({ el: nm, pos: new THREE.Vector3(px, 0, 0.5), dy: up ? 5 : -5, group: up ? 'nameDn' : 'nameUp', push: up ? 1 : -1 });
       towers.push(T);
     });
     zero.scale.set(width + 1.2, 1, 1); floor.scale.set(Math.max(1, (width + 4) / 20), 1, 1);
