@@ -13,9 +13,11 @@
 Probable Atlas explains how the world economy and financial markets are doing — with forecasts that show their own track record.
 
 • Economics: 214 economies from the IMF and World Bank and 52 US series from the Federal Reserve. US recession odds, a GDP nowcast, inflation forecasts, the Taylor rule, and a 3D globe of growth, inflation, unemployment or debt.
-• Finance & markets: 61 markets and 34 rates daily since 1990 and the S&P 500 since 1928. Volatility and value-at-risk, market regimes, correction risk, long-run expected returns, and a 3D terrain of the Treasury yield curve since 1990.
+• Finance & markets: 61 markets and 34 rates daily since 1990 and the S&P 500 since 1928. Volatility and value-at-risk, market regimes, correction risk, long-run expected returns, and a 3D market skyline of today's moves.
 • What-if labs: shock the economy or a portfolio and see the effect; a portfolio lab with an efficient frontier, Monte Carlo plans and historical stress tests.
 • Recommendations backed by evidence, each with its trade-offs.
+• News from the Federal Reserve, the ECB, BLS, BEA, the IMF and major outlets, filtered by topic.
+• Follow markets and countries for alerts on big moves, 52-week highs or lows and new forecasts; a daily briefing in story form; search everything; share cards.
 • Ask AI: ask about the data, the forecasts or your own scenario.
 • Works offline with the last data on your device.
 

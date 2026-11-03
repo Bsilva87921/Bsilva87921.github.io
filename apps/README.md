@@ -4,8 +4,8 @@ Two apps built from the live sites, in two forms.
 
 | App | Covers | Install from the web | Native project |
 |---|---|---|---|
-| **Probable Sports Lab** | 13 leagues plus tennis, golf and UFC: live win probabilities, the 3D live arena, what-if lab, standings projections, track record, Ask AI | [bsilva87921.github.io/live-sports-lab](https://bsilva87921.github.io/live-sports-lab/) → **Install app** | [`sports-lab/`](sports-lab/) · `io.github.bsilva87921.sportslab` |
-| **Probable Atlas** | Home screen + Economics + Finance & markets (and future modules): 3D globe and yield-curve terrain, forecasts with track records, what-if labs, Ask AI | [bsilva87921.github.io/probable-atlas/app](https://bsilva87921.github.io/probable-atlas/app/) → **Install app** | [`atlas/`](atlas/) · `io.github.bsilva87921.atlas` |
+| **Probable Sports Lab** | 13 leagues plus tennis, golf and UFC: live win probabilities, the 3D scoreboard carousel, news, followed teams with alerts, search, the daily briefing, share cards, what-if lab, standings projections, track record, Ask AI | [bsilva87921.github.io/live-sports-lab](https://bsilva87921.github.io/live-sports-lab/) → **Install app** | [`sports-lab/`](sports-lab/) · `io.github.bsilva87921.sportslab` |
+| **Probable Atlas** | Home screen + Economics + Finance & markets (and future modules): 3D globe and market skyline, news, followed markets and countries with alerts, search, the daily briefing, share cards, forecasts with track records, what-if labs, Ask AI | [bsilva87921.github.io/probable-atlas/app](https://bsilva87921.github.io/probable-atlas/app/) → **Install app** | [`atlas/`](atlas/) · `io.github.bsilva87921.atlas` |
 
 ## 1. Installable web apps (live now)
 Both sites are installable apps (web app manifest + service worker): own icon and window, app shortcuts, instant starts, and the last data kept for offline use. They keep working in any browser.
@@ -14,7 +14,7 @@ Both sites are installable apps (web app manifest + service worker): own icon an
 - **Windows / Mac (Chrome, Edge):** the install icon in the address bar. **Mac Safari:** File → *Add to Dock*.
 
 ## 2. App Store and Google Play (ready to build)
-Each folder is a [Capacitor](https://capacitorjs.com) project that packages the site's own files (the page, the 3D bundle, icons); data comes from the same live sources as the website.
+Each folder is a [Capacitor](https://capacitorjs.com) project that packages the site's own files (the page, the 3D bundle, icons); data and headlines come from the same live sources as the website. Native plugins: App, Status Bar and Splash Screen, plus Haptics (taps), Local Notifications (alerts for what you follow), Share and Filesystem (share cards through the system share sheet).
 
 The **Native app builds** workflow (Actions tab) runs on every change here and produces, for each app, a test **Android APK** and an **Xcode project** that it checks with an iOS simulator build. Download them from the workflow run's *Artifacts*.
 

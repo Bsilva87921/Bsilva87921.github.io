@@ -6,7 +6,7 @@ const HERE = path.dirname(new URL(import.meta.url).pathname), APPDIR = path.reso
 const WWW = path.join(APPDIR, 'www');
 fs.rmSync(WWW, { recursive: true, force: true }); fs.mkdirSync(path.join(WWW, 'assets/probable-3d'), { recursive: true });
 let html = fs.readFileSync(path.join(SITE, 'live-sports-lab/index.html'), 'utf8');
-const boot = '<script>window.PROBABLE_NATIVE = true; window.SPORTS_TRACK_URL = "https://bsilva87921.github.io/live-sports-lab/data/track.json";</script>';
+const boot = '<script>window.PROBABLE_NATIVE = true; window.SPORTS_TRACK_URL = "https://bsilva87921.github.io/live-sports-lab/data/track.json"; window.SPORTS_NEWS_URL = "https://bsilva87921.github.io/live-sports-lab/data/news.json";</script>';
 html = html.replace('<script src="../probable-atlas/ai-config.js"></script>', boot + '<script src="ai-config.js"></script>');
 html = html.replace(/<link rel="manifest"[^>]*>/, '');
 fs.writeFileSync(path.join(WWW, 'index.html'), html);
