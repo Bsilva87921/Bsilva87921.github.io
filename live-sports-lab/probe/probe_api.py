@@ -19,7 +19,8 @@ def odds_summary(js):
         c = (e.get('competitions') or [{}])[0]
         st = ((c.get('status') or e.get('status') or {}).get('type') or {})
         if st.get('completed'): post += 1
-        od = c.get('odds') or []
+        od = [o for o in (c.get('odds') or []) if isinstance(o, dict)]
+        if c.get('odds') and not od: prov['(null entries)'] = prov.get('(null entries)', 0) + 1
         if od:
             with_odds += 1; p = (od[0].get('provider') or {}).get('name'); prov[p] = prov.get(p, 0) + 1
             if sample is None and st.get('completed'): sample = {k: od[0].get(k) for k in ['details', 'overUnder', 'spread', 'moneyline', 'homeTeamOdds', 'awayTeamOdds', 'drawOdds', 'provider']}
@@ -47,7 +48,10 @@ PAST = {
   'nba_range': W + 'basketball/nba/scoreboard?dates=20261025-20261101&limit=300',
 }
 for k, url in PAST.items():
-    st, js, sec, size = get(url); R[k] = {'url': url, 'status': st, 'sec': sec, 'bytes': size, **(odds_summary(js) if js else {})}
+    st, js, sec, size = get(url)
+    try: summ = odds_summary(js) if js else {}
+    except Exception as e: summ = {'error': repr(e)[:200]}
+    R[k] = {'url': url, 'status': st, 'sec': sec, 'bytes': size, **summ}
     if js and k in ('nba_2026-03-01', 'nfl_2026_w8', 'epl_2026-10-31', 'mlb_2026-07-15', 'nhl_2026-10-30'):
         json.dump(js, open(f'{OUT}/raw/{k}.json', 'w'))
 # calendars and seasons from the current scoreboards
