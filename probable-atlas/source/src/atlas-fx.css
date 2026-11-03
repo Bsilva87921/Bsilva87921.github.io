@@ -16,7 +16,6 @@
 .m3-cap b{font:600 13px/1.2 var(--f-sans)}
 .m3-cap span{font-size:11.5px;color:var(--band-muted);max-width:62ch}
 .mast.no3d .mast-3d{display:none}
-.mast.fin .mast-3d .px3d-still{top:10px;bottom:auto}   /* the terrain's front corner and Today sit bottom right */
 .mast.no3d .wrap{grid-template-columns:1fr;grid-template-areas:"brand" "mods"}
 .mast.has3d .grat{opacity:.12}
 @media (max-width:900px){
@@ -48,3 +47,22 @@
 .m3-chips button{appearance:none;height:26px;padding:0 10px;border-radius:999px;border:1px solid color-mix(in srgb,var(--band-ink) 18%,transparent);background:rgba(4,14,18,.55);color:var(--band-ink);font:600 11.5px/1 var(--f-sans);cursor:pointer;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
 .m3-chips button[aria-pressed="true"]{background:var(--band-accent);border-color:var(--band-accent);color:#062321}
 .m3-chips button:focus-visible{outline:2px solid var(--band-accent);outline-offset:2px}
+
+/* drawers open above the pinned Insights bar (z 70); Ask AI stays on top */
+.scrim{z-index:73}.drawer{z-index:74}.chat{z-index:78}
+
+/* ---------- Atlas extras: kit tokens, follow and share in the drawers, Your markets, headlines ---------- */
+:root{--kx-font:var(--f-sans);--kx-display:var(--f-serif);--kx-mono:var(--f-mono);--kx-up:var(--good-ink);--kx-down:var(--crit-ink)}
+.bar .scope .kx-s-btn{height:34px}
+.drawer .dh .dh-x{display:inline-flex;align-items:center;gap:6px;margin-left:auto;flex:none}
+.drawer .dh .dh-x .fav-btn,.drawer .dh .dh-b{appearance:none;width:34px;height:34px;padding:0;border-radius:8px;border:1px solid var(--band-line);background:transparent;color:var(--band-ink);display:inline-grid;place-items:center;cursor:pointer}
+.drawer .dh .dh-x .fav-btn:hover,.drawer .dh .dh-b:hover{background:color-mix(in srgb,var(--band-ink) 8%,transparent)}
+.drawer .dh .dh-x .fav-btn.on{color:var(--band-accent);border-color:color-mix(in srgb,var(--band-accent) 60%,transparent);background:color-mix(in srgb,var(--band-accent) 14%,transparent)}
+.drawer .dh .dh-b svg{width:16px;height:16px}
+.fx-hint{margin:14px 0 0;padding:10px 14px;border:1px dashed var(--line-2);border-radius:12px;color:var(--muted);font-size:13px;line-height:1.45}
+.fx-hint span{color:var(--accent-ink);margin-right:4px}
+.fx-mine{margin-top:4px;grid-template-columns:repeat(auto-fill,minmax(190px,1fr))}
+.fx-news-mini{margin-top:14px}
+.fx-news-mini .kx-n-list{margin-top:4px}
+.dr-news .kx-n-list{margin-top:6px}
+#newsHost{padding-block:6px 10px;display:flex;flex-direction:column;gap:14px}

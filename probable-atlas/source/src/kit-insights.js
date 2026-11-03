@@ -20,10 +20,12 @@ const INS = (() => {
         <span class="ins-n" aria-hidden="true"></span>
         <button type="button" class="ins-b" data-ins="next" aria-label="Next insight">›</button>
         <button type="button" class="ins-b ins-p" data-ins="pause" aria-pressed="false" aria-label="Pause insights">❚❚</button>
+        <button type="button" class="ins-b ins-sh" data-ins="share" aria-label="Share this insight" title="Share" hidden><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M12 3v12M7.5 7.5 12 3l4.5 4.5M5 13v6h14v-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <button type="button" class="ins-ask" data-ins="ask"><span aria-hidden="true">✦</span> Ask AI</button>
       </div></div><i class="ins-prog" aria-hidden="true"></i>`;
     (O.parent || document.body).insertBefore(root, (O.parent || document.body).firstChild);
     paused = reduce() || O.paused === true;
+    if (O.share) root.querySelector('.ins-sh').hidden = false;
     root.addEventListener('click', onClick);
     root.addEventListener('mouseenter', () => { held = true; sync(); });
     root.addEventListener('mouseleave', () => { held = false; sync(); });
@@ -38,6 +40,7 @@ const INS = (() => {
     if (a === 'prev' || a === 'next') { go(a === 'next' ? 1 : -1, true); return; }
     if (a === 'pause') { paused = !paused; paintPause(); sync(); return; }
     if (a === 'ask') { if (O.ask) O.ask(it && it.ask ? it.ask : ''); return; }
+    if (a === 'share') { if (O.share && it) O.share(it); return; }
     if (a === 'go' && it) { if (typeof it.go === 'function') it.go(); else if (O.go) O.go(it); }
   }
   function paintPause() {
@@ -72,5 +75,5 @@ const INS = (() => {
     if (root) root.classList.toggle('ins-run', run);
     if (run) timer = setTimeout(() => go(1, false), O.interval);
   }
-  return { mount, set, go: d => go(d, true), get items() { return items; } };
+  return { mount, set, go: d => go(d, true), get items() { return items; }, get current() { return items[i] || null; }, get el() { return root; } };
 })();

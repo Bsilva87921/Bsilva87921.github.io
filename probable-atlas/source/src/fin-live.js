@@ -44,6 +44,7 @@ const FV = (() => {
       ${kv ? U.card('Risk and return', '', kv) : ''}
       <div class="pill-row"><button type="button" class="btn pri" data-goto="markets" data-focus="${esc(id)}">Chart it in Markets</button><button type="button" class="btn" data-ask="${esc('How is ' + F.short(id) + ' doing, and what are the risks?')}">Ask AI about ${esc(F.short(id))}</button><button type="button" class="btn" data-close>Close</button></div></div>`);
     C.mount(document.getElementById('drawer'));
+    if (typeof FINX !== 'undefined') { try { FINX.onAsset(id); } catch (e) { console.error(e); } }
   }
 
   /* ---------------- Live now ---------------- */

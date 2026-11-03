@@ -1,5 +1,5 @@
 /* Probable Atlas · Economics: app shell (routing, scope, module nav, country drawer, events). */
-const TABS = [['live', 'Live now'], ['indicators', 'Indicators'], ['models', 'Models & forecasts'], ['whatif', 'What-if lab'], ['recs', 'Recommendations'], ['history', 'History'], ['how', 'How it works']];
+const TABS = [['live', 'Live now'], ['news', 'News'], ['indicators', 'Indicators'], ['models', 'Models & forecasts'], ['whatif', 'What-if lab'], ['recs', 'Recommendations'], ['history', 'History'], ['how', 'How it works']];
 const FIN_URL = window.ATLAS_DATA ? 'https://bsilva87921.github.io/probable-atlas/finance/' : 'finance/';
 const MODULES = [['econ', 'Economics', true], ['fin', 'Finance & markets', false, FIN_URL], ['comm', 'Commodities & scarcity'], ['wx', 'Weather & climate'], ['ag', 'Agriculture & food'], ['hunger', 'Hunger'], ['wealth', 'Wealth & inequality'], ['tech', 'Tech & innovation'], ['conflict', 'Conflict & security'], ['pulse', 'World Pulse']];
 const STATE = K.store('atlas-econ-v1', { scope: 'WLD', tab: 'live', mapInd: 'g', indGrp: 'Growth & size', indFilter: 'top40', usSeries: 'UNRATE', usRange: '10', cSeries: 'imf:NGDP_RPCH', recModel: 'classic', wiIso: 'CHN' }, ['tab', 'scope', 'mapInd', 'indGrp', 'indFilter', 'usRange', 'recModel', 'usSeries', 'cSeries', 'wiIso']);
@@ -33,10 +33,11 @@ const APP = (() => {
     syncScopeUI();
     let html = '';
     try {
-      html = STATE.tab === 'live' ? V.live(STATE) : STATE.tab === 'indicators' ? VI.view(STATE) : STATE.tab === 'models' ? VM.view(STATE) : STATE.tab === 'whatif' ? VW.view(STATE) : STATE.tab === 'recs' ? VR.view(STATE) : STATE.tab === 'history' ? VH.view(STATE) : VH.how();
+      html = STATE.tab === 'live' ? V.live(STATE) : STATE.tab === 'news' ? '<div id="newsHost"></div>' : STATE.tab === 'indicators' ? VI.view(STATE) : STATE.tab === 'models' ? VM.view(STATE) : STATE.tab === 'whatif' ? VW.view(STATE) : STATE.tab === 'recs' ? VR.view(STATE) : STATE.tab === 'history' ? VH.view(STATE) : VH.how();
     } catch (e) { console.error(e); html = `<div class="card empty">Something went wrong building this view (${esc(e.message)}). Try another tab or scope.</div>`; }
     main.innerHTML = html;
     C.mount(main); C.gc(); T.gc();
+    if (typeof EX !== 'undefined') { try { EX.after(main, STATE, keepScroll); } catch (e) { console.error(e); } }
     if (!keepScroll) { const bar = $('.bar'); const top = bar.getBoundingClientRect().top + scrollY; if (scrollY > top) scrollTo({ top, behavior: 'instant' in document.documentElement.style ? 'instant' : 'auto' }); }
     STATE.save();
     if (typeof CH !== 'undefined') CH.context(STATE);
@@ -66,6 +67,7 @@ const APP = (() => {
       ${recs.length ? `<div><div class="sec-h" style="margin-top:4px"><h2 style="font-size:18px">Top recommendations</h2></div>${R.list(recs)}</div>` : ''}
       <div class="pill-row"><button type="button" class="btn pri" data-scopeto="${iso}">Open ${esc(c.name)} in every tab</button><button type="button" class="btn" data-close>Close</button></div></div>`);
     C.mount($('#drawer'));
+    if (typeof EX !== 'undefined') { try { EX.onCountry(iso); } catch (e) { console.error(e); } }
   }
 
   /* ---------------- events ---------------- */
@@ -118,6 +120,7 @@ const APP = (() => {
     E.buildCatalog(); header(); hashRoute();
     if (typeof CH !== 'undefined') CH.init(ECHAT.adapter(), STATE);
     if (typeof FX !== 'undefined') { try { FX.init(STATE); } catch (e) { console.error(e); } }
+    if (typeof EX !== 'undefined') { try { EX.init(STATE); } catch (e) { console.error(e); } }
     render(true);
   }
   return { start, render, openCountry, go };

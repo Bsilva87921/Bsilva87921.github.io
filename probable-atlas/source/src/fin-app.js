@@ -1,5 +1,5 @@
 /* Probable Atlas · Finance: app shell (tabs, module nav, asset drawer, events, theme, chat hookup). */
-const TABS = [['live', 'Live now'], ['markets', 'Markets'], ['models', 'Models & forecasts'], ['whatif', 'What-if lab'], ['recs', 'Recommendations'], ['history', 'History'], ['how', 'How it works']];
+const TABS = [['live', 'Live now'], ['news', 'News'], ['markets', 'Markets'], ['models', 'Models & forecasts'], ['whatif', 'What-if lab'], ['recs', 'Recommendations'], ['history', 'History'], ['how', 'How it works']];
 const ECON_URL = window.ATLAS_FIN_DATA ? 'https://bsilva87921.github.io/probable-atlas/' : '../';
 const MODULES = [['econ', 'Economics', false, ECON_URL], ['fin', 'Finance & markets', true], ['comm', 'Commodities & scarcity'], ['wx', 'Weather & climate'], ['ag', 'Agriculture & food'], ['hunger', 'Hunger'], ['wealth', 'Wealth & inequality'], ['tech', 'Tech & innovation'], ['conflict', 'Conflict & security'], ['pulse', 'World Pulse']];
 const STATE = K.store('atlas-fin-v1', { tab: 'live', focus: '^GSPC', cmp: [], range: '5Y', mview: 'price', logY: true, sectPer: 'm1', cwin: '156', cback: 0, rHorizon: 'long', rRisk: 'med', hFrom: '1980', mAll: '0', lab: null }, ['tab', 'focus', 'cmp', 'range', 'mview', 'logY', 'sectPer', 'cwin', 'rHorizon', 'rRisk', 'hFrom', 'lab']);
@@ -28,10 +28,11 @@ const APP = (() => {
     document.title = `Probable Atlas · Finance · ${TABS.find(t => t[0] === STATE.tab)[1]}`;
     let html = '';
     try {
-      html = STATE.tab === 'live' ? FV.live(STATE) : STATE.tab === 'markets' ? VMK.view(STATE) : STATE.tab === 'models' ? VMO.view(STATE) : STATE.tab === 'whatif' ? VL.view(STATE) : STATE.tab === 'recs' ? VRF.view(STATE) : STATE.tab === 'history' ? VHF.view(STATE) : VHF.how();
+      html = STATE.tab === 'live' ? FV.live(STATE) : STATE.tab === 'news' ? '<div id="newsHost"></div>' : STATE.tab === 'markets' ? VMK.view(STATE) : STATE.tab === 'models' ? VMO.view(STATE) : STATE.tab === 'whatif' ? VL.view(STATE) : STATE.tab === 'recs' ? VRF.view(STATE) : STATE.tab === 'history' ? VHF.view(STATE) : VHF.how();
     } catch (e) { console.error(e); html = `<div class="card empty">Something went wrong building this view (${esc(e.message)}). Try another tab.</div>`; }
     main.innerHTML = html;
     C.mount(main); C.gc(); T.gc();
+    if (typeof FINX !== 'undefined') { try { FINX.after(main, STATE, keepScroll); } catch (e) { console.error(e); } }
     if (!keepScroll) { const bar = $('.bar'); const top = bar.getBoundingClientRect().top + scrollY; if (scrollY > top) scrollTo({ top, behavior: 'instant' in document.documentElement.style ? 'instant' : 'auto' }); }
     STATE.save();
     if (HAS_CH()) CH.context(STATE);
@@ -93,6 +94,7 @@ const APP = (() => {
     header(); hashRoute();
     if (HAS_CH()) CH.init(FCHAT.adapter(), STATE);
     if (typeof FX !== 'undefined') { try { FX.init(STATE); } catch (e) { console.error(e); } }
+    if (typeof FINX !== 'undefined') { try { FINX.init(STATE); } catch (e) { console.error(e); } }
     setTimeout(() => render(true), 0);
   }
   return { start, render, go };

@@ -1,5 +1,5 @@
 /* Probable Atlas · Finance 2.0: the pinned Insights bar (key readings from the live data and models) and the 3D
-   US Treasury yield-curve terrain in the masthead. */
+   market skyline in the masthead (today's move in the major markets). */
 const FX = (() => {
   const { esc } = K;
   const ok = v => v != null && isFinite(v);
@@ -15,19 +15,19 @@ const FX = (() => {
     const out = [], tryAdd = f => { try { const x = f(); if (x) out.push(x); } catch (e) { console.warn('insight', e); } };
     tryAdd(() => {
       const q = F.quote('^GSPC'), y = F.ytd('^GSPC'), dd = F.drawdown('^GSPC');
-      return { id: 'spx', tag: 'S&P 500', tone: q.pct >= 0 ? 'up' : 'down', text: `S&P 500 at ${K.num(q.last, 0)}: ${sg(q.pct, 2, '%')} on ${K.isoLab(q.date)}, ${sg(y, 1, '%')} this year${dd && dd.dd < -0.5 ? `, ${K.num(-dd.dd, 1)}% below its record` : ', at a record'}`, val: sg(q.pct, 2, '%'), go: () => FV.openAsset('^GSPC'), ask: 'How is the S&P 500 doing, and what are the risks?' };
+      return { id: 'spx', tag: 'S&P 500', tone: q.pct >= 0 ? 'up' : 'down', text: `S&P 500 at ${K.num(q.last, 0)}: ${sg(q.pct, 2, '%')} on ${K.isoLab(q.date)}, ${sg(y, 1, '%')} this year${dd && dd.dd < -0.5 ? `, ${K.num(-dd.dd, 1)}% below its record` : ', at a record'}`, val: sg(q.pct, 2, '%'), story: { kicker: 'S&P 500 · ' + K.isoLab(q.date), title: `The S&P 500 ${q.pct >= 0 ? 'rose' : 'fell'} ${K.num(Math.abs(q.pct), 2)}% to ${K.num(q.last, 0)}`, value: sg(q.pct, 2, '%'), sub: `${sg(y, 1, '%')} this year · ${dd && dd.dd < -0.5 ? K.num(-dd.dd, 1) + '% below its record' : 'at a record high'}`, spark: '^GSPC' }, go: () => FV.openAsset('^GSPC'), ask: 'How is the S&P 500 doing, and what are the risks?' };
     });
-    tryAdd(() => { const rg = FM.regime(); const p = rg.now[rg.state]; return { id: 'regime', tag: 'Regime', tone: rg.state === 0 ? 'up' : rg.state === 2 ? 'down' : 'warn', text: `The regime model reads the market as ${rg.names[rg.state].toLowerCase()}, with probability`, val: K.num(p * 100, 0) + '%', go: toCard('models', 'Market regimes'), ask: 'What does the regime model say right now?' }; });
-    tryAdd(() => { const d = FM.dd10(); if (!d.now) return null; const hi = d.now.p > d.baseRate * 1.25; return { id: 'corr', tag: 'Correction risk', tone: hi ? 'warn' : 'info', text: `Chance of a 10% fall within six months, against a ${K.num(d.baseRate * 100, 0)}% base rate (modest skill)`, val: K.num(d.now.p * 100, 0) + '%', go: toCard('models', 'Correction and bear-market risk'), ask: 'Is a correction likely?' }; });
-    tryAdd(() => { const v = F.lastVal('^VIX'), vm = FM.volModel(); return { id: 'vol', tag: 'Volatility', tone: v >= 22 ? 'warn' : 'info', text: `VIX ${K.num(v, 1)}; the GARCH model expects daily S&P 500 swings of about`, val: '±' + K.num(vm.sdDay, 1) + '%', go: toCard('models', 'Volatility and value-at-risk'), ask: 'How volatile are markets right now?' }; });
-    tryAdd(() => { const s10 = F.lastVal('DGS10'), s3 = F.lastVal('DGS3MO'); if (!ok(s10) || !ok(s3)) return null; const d = s10 - s3; return { id: 'curve', tag: 'Yield curve', tone: d < 0 ? 'warn' : 'info', text: `10-year Treasury ${K.num(s10, 2)}% vs 3-month ${K.num(s3, 2)}%: the curve is ${d < 0 ? 'inverted' : 'upward sloping'}, spread`, val: sg(d, 2, ' pp'), go: () => { APP.go({ tab: 'markets' }); setTimeout(() => scrollToTitle('Yield curve'), 90); }, ask: 'What is the yield curve saying?' }; });
-    tryAdd(() => { const ap = FM.appetite(); if (!ok(ap.now)) return null; return { id: 'appetite', tag: 'Risk appetite', tone: ap.now < 30 ? 'down' : ap.now > 70 ? 'up' : 'info', text: `Risk appetite gauge (six market readings): ${ap.label.toLowerCase()}`, val: K.num(ap.now, 0) + '/100', go: toCard('models', 'Risk appetite gauge'), ask: 'What does the risk appetite gauge measure?' }; });
-    tryAdd(() => { const cp = FM.cape(); if (!cp) return null; return { id: 'cape', tag: 'Valuation', tone: cp.pctile > 90 ? 'warn' : 'info', text: `CAPE ${K.num(cp.last.cape, 1)}, ${K.ord(Math.round(cp.pctile))} percentile since 1881; history implies a 10-year real return near`, val: K.num(cp.fc, 1) + '%/yr', go: toCard('models', 'Long-run expected returns'), ask: 'Are stocks overvalued?' }; });
+    tryAdd(() => { const rg = FM.regime(); const p = rg.now[rg.state]; return { id: 'regime', tag: 'Regime', tone: rg.state === 0 ? 'up' : rg.state === 2 ? 'down' : 'warn', text: `The regime model reads the market as ${rg.names[rg.state].toLowerCase()}, with probability`, val: K.num(p * 100, 0) + '%', story: { kicker: 'Market regime', title: `The model reads a ${rg.names[rg.state].toLowerCase()} market`, value: K.num(p * 100, 0) + '%', sub: 'How confident the three-state regime model is in that reading' }, go: toCard('models', 'Market regimes'), ask: 'What does the regime model say right now?' }; });
+    tryAdd(() => { const d = FM.dd10(); if (!d.now) return null; const hi = d.now.p > d.baseRate * 1.25; return { id: 'corr', tag: 'Correction risk', tone: hi ? 'warn' : 'info', text: `Chance of a 10% fall within six months, against a ${K.num(d.baseRate * 100, 0)}% base rate (modest skill)`, val: K.num(d.now.p * 100, 0) + '%', story: { kicker: 'Correction risk', title: 'Chance of a 10% fall in the S&P 500 within six months', value: K.num(d.now.p * 100, 0) + '%', sub: `The usual rate is ${K.num(d.baseRate * 100, 0)}% · the model has modest skill` }, go: toCard('models', 'Correction and bear-market risk'), ask: 'Is a correction likely?' }; });
+    tryAdd(() => { const v = F.lastVal('^VIX'), vm = FM.volModel(); return { id: 'vol', tag: 'Volatility', tone: v >= 22 ? 'warn' : 'info', text: `VIX ${K.num(v, 1)}; the GARCH model expects daily S&P 500 swings of about`, val: '±' + K.num(vm.sdDay, 1) + '%', story: { kicker: 'Volatility', title: 'Expected daily swing in the S&P 500', value: '±' + K.num(vm.sdDay, 1) + '%', sub: `VIX ${K.num(v, 1)} · from a GARCH volatility model`, spark: '^VIX' }, go: toCard('models', 'Volatility and value-at-risk'), ask: 'How volatile are markets right now?' }; });
+    tryAdd(() => { const s10 = F.lastVal('DGS10'), s3 = F.lastVal('DGS3MO'); if (!ok(s10) || !ok(s3)) return null; const d = s10 - s3; return { id: 'curve', tag: 'Yield curve', tone: d < 0 ? 'warn' : 'info', text: `10-year Treasury ${K.num(s10, 2)}% vs 3-month ${K.num(s3, 2)}%: the curve is ${d < 0 ? 'inverted' : 'upward sloping'}, spread`, val: sg(d, 2, ' pp'), story: { kicker: 'Yield curve', title: `10-year ${K.num(s10, 2)}% vs 3-month ${K.num(s3, 2)}%`, value: sg(d, 2, ' pp'), sub: d < 0 ? 'Inverted: short-term rates are above long-term rates' : 'Upward sloping: long-term rates are above short-term rates', spark: 'DGS10' }, go: () => { APP.go({ tab: 'markets' }); setTimeout(() => scrollToTitle('Yield curve'), 90); }, ask: 'What is the yield curve saying?' }; });
+    tryAdd(() => { const ap = FM.appetite(); if (!ok(ap.now)) return null; return { id: 'appetite', tag: 'Risk appetite', tone: ap.now < 30 ? 'down' : ap.now > 70 ? 'up' : 'info', text: `Risk appetite gauge (six market readings): ${ap.label.toLowerCase()}`, val: K.num(ap.now, 0) + '/100', story: { kicker: 'Risk appetite', title: `Risk appetite reads “${ap.label}”`, value: K.num(ap.now, 0) + '/100', sub: 'Six market readings combined · 0 is extreme fear, 100 extreme greed' }, go: toCard('models', 'Risk appetite gauge'), ask: 'What does the risk appetite gauge measure?' }; });
+    tryAdd(() => { const cp = FM.cape(); if (!cp) return null; return { id: 'cape', tag: 'Valuation', tone: cp.pctile > 90 ? 'warn' : 'info', text: `CAPE ${K.num(cp.last.cape, 1)}, ${K.ord(Math.round(cp.pctile))} percentile since 1881; history implies a 10-year real return near`, val: K.num(cp.fc, 1) + '%/yr', story: { kicker: 'Valuation', title: `US stocks are pricier than ${K.num(cp.pctile, 0)}% of the time since 1881`, value: K.num(cp.fc, 1) + '%', sub: `Real return a year that history implies for the next decade · CAPE ${K.num(cp.last.cape, 1)}` }, go: toCard('models', 'Long-run expected returns'), ask: 'Are stocks overvalued?' }; });
     tryAdd(() => {   // biggest mover of the day among the tracked markets
       const ids = F.GROUPS.flatMap(([g]) => F.assets(g)).filter(id => F.ser(id) && F.ser(id).log && F.ser(id).cls !== 'vol');
       const mv = ids.map(id => ({ id, q: F.quote(id) })).filter(x => x.q && ok(x.q.pct)).sort((a, b) => Math.abs(b.q.pct) - Math.abs(a.q.pct))[0];
       if (!mv || Math.abs(mv.q.pct) < 1) return null;
-      return { id: 'mover', tag: 'Biggest mover', tone: mv.q.pct >= 0 ? 'up' : 'down', text: `${F.short(mv.id)} moved the most of ${ids.length} markets on ${K.isoLab(mv.q.date)}`, val: sg(mv.q.pct, 1, '%'), go: () => FV.openAsset(mv.id), ask: `Why did ${F.short(mv.id)} move so much?` };
+      return { id: 'mover', tag: 'Biggest mover', tone: mv.q.pct >= 0 ? 'up' : 'down', text: `${F.short(mv.id)} moved the most of ${ids.length} markets on ${K.isoLab(mv.q.date)}`, val: sg(mv.q.pct, 1, '%'), story: { kicker: 'Biggest mover · ' + K.isoLab(mv.q.date), title: `${F.short(mv.id)} moved the most of ${ids.length} markets`, value: sg(mv.q.pct, 1, '%'), sub: `Last ${F.money(mv.id, mv.q.last)}`, spark: mv.id }, go: () => FV.openAsset(mv.id), ask: `Why did ${F.short(mv.id)} move so much?` };
     });
     return out;
   }
@@ -38,13 +38,35 @@ const FX = (() => {
     me.ix.forEach(i => { for (const id of ids) { let v = NaN; for (let j = i; j >= Math.max(0, i - 25) && !ok(v); j--) v = F.at(id, j); z.push(ok(v) ? v : NaN); } });
     return { dates: me.keys, mats: FV.MLAB.map(l => ({ label: l, name: NM[l] || l })), z };
   }
+  // today's move in the major markets for the 3D skyline (core = shown on narrow screens)
+  // [id, label, name, group, tier (1 always shown, 2 from 9 towers, 3 from 12), in the 6-tower phone set]
+  const SKY = [['^GSPC', 'S&P 500', 'S&P 500', 'Stocks', 1, 1], ['^IXIC', 'Nasdaq', 'Nasdaq Composite', 'Stocks', 1, 1], ['^DJI', 'Dow', 'Dow Jones Industrial Average', 'Stocks', 3, 0], ['^RUT', 'Russell', 'Russell 2000 (small caps)', 'Stocks', 1, 0],
+    ['^STOXX50E', 'Europe', 'Euro Stoxx 50', 'World', 3, 0], ['^N225', 'Japan', 'Nikkei 225', 'World', 3, 0], ['DGS10', '10-yr', '10-year Treasury yield', 'Rates', 1, 1], ['DX-Y.NYB', 'Dollar', 'US dollar index (DXY)', 'Dollar', 1, 0],
+    ['GC=F', 'Gold', 'Gold futures', 'Commodities', 1, 1], ['CL=F', 'Oil', 'WTI crude oil futures', 'Commodities', 1, 1], ['BTC-USD', 'Bitcoin', 'Bitcoin', 'Crypto', 1, 1], ['^VIX', 'VIX', 'VIX volatility index (fear gauge)', 'Fear', 2, 0]];
+  function skylineData() {
+    const items = [];
+    for (const [id, short, name, grp, tier, core6] of SKY) {
+      if (!F.has(id)) continue;
+      const q = F.quote(id), sr = F.ser(id); if (!q || !sr) continue;
+      if (sr.log) {
+        if (!ok(q.pct)) continue;
+        const m1 = F.chg(id, 21), ytd = F.ytd(id);
+        items.push({ id, short, name, grp, tier, core6: !!core6, v: q.pct, label: sg(q.pct, 1, '%'), exact: sg(q.pct, 2, '%'), last: `${F.fmtLevel(id, q.last)} · ${K.isoLab(q.date)}`, sub: `1 month ${ok(m1) ? sg(m1, 1, '%') : '—'} · this year ${ok(ytd) ? sg(ytd, 1, '%') : '—'}` });
+      } else {
+        if (!ok(q.chg)) continue;
+        const bp = q.chg * 100, m1 = F.chg(id, 21);
+        items.push({ id, short, name, grp, tier, core6: !!core6, v: bp / 10, label: sg(bp, 0, ' bp'), last: `${K.num(q.last, 2)}% · ${K.isoLab(q.date)}`, sub: `1 month ${ok(m1) ? sg(m1 * 100, 0, ' bp') : '—'} · a 1% tower = 10 bp` });
+      }
+    }
+    return { items };
+  }
   let ctl = null;
   async function mount3d() {
     const host = document.getElementById('mast3d'); if (!host || ctl) return;
     const mast = document.querySelector('.mast');
     try {
       const bg = getComputedStyle(mast).backgroundColor;
-      ctl = await PX3D.mount(host, 'surface', surfaceData(), { bg: toHex(bg), accent: getComputedStyle(document.documentElement).getPropertyValue('--band-accent').trim() || '#F2B33D' });
+      ctl = await PX3D.mount(host, 'skyline', skylineData(), { bg: toHex(bg), accent: getComputedStyle(document.documentElement).getPropertyValue('--band-accent').trim() || '#F2B33D', onPick: d => { if (d && d.id) { if (window.HAPTIC) HAPTIC.tap(); FV.openAsset(d.id); } } });
       const b = document.createElement('span'); b.className = 'px3d-badge'; b.textContent = ctl.backend === 'WebGPU' ? 'WebGPU' : 'WebGL 2'; host.appendChild(b);
       PX3D.motionToggle(host, ctl);
       mast.classList.add('has3d-on');
@@ -52,12 +74,12 @@ const FX = (() => {
   }
   function toHex(c) { const m = String(c).match(/\d+(\.\d+)?/g); if (!m) return '#0c1a22'; return '#' + m.slice(0, 3).map(x => (+x | 0).toString(16).padStart(2, '0')).join(''); }
   function init() {
-    INS.mount({ ask: q => { if (HAS_CH()) CH.open(q); } });
+    INS.mount({ ask: q => { if (HAS_CH()) CH.open(q); }, share: it => { if (typeof FINX !== 'undefined') FINX.shareInsight(it); } });
     INS.set(insights());
-    try { localStorage.setItem('atlas-ins-fin', JSON.stringify({ t: Date.now(), items: INS.items.map(({ id, tag, tone, text, val, ask }) => ({ id, tag, tone, text, val, ask })) })); } catch (e) { /* storage unavailable */ }
+    try { localStorage.setItem('atlas-ins-fin', JSON.stringify({ t: Date.now(), items: INS.items.map(({ id, tag, tone, text, val, ask, story }) => ({ id, tag, tone, text, val, ask, story })) })); } catch (e) { /* storage unavailable */ }
     PAPP.init({ sw: '../sw.js', scope: '/probable-atlas/', host: '.strip .r', before: document.getElementById('themeBtn'), name: 'Probable Atlas' });
     PAPP.ask(q => { if (typeof CH !== 'undefined') CH.open(q); });
     if (document.getElementById('mast3d')) PX3D.idle(mount3d);
   }
-  return { init, insights, surfaceData };
+  return { init, insights, surfaceData, skylineData, get ctl() { return ctl; } };
 })();
