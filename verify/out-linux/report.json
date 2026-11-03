@@ -1,31 +1,452 @@
 {
   "os": "linux",
-  "at": "2026-11-03T17:04:44.678Z",
-  "pages": {},
+  "at": "2026-11-03T20:31:46.802Z",
+  "pages": {
+    "sports": {
+      "title": "Probable Sports Lab — Bruno Silva",
+      "px3d": "WebGL2",
+      "canvases": 1,
+      "insights": true,
+      "insightItems": [
+        "Live | 7 games  in progress: UCL",
+        "Closest | Closest live game: Bayern at Atlético, 31' — Bayern | 41%",
+        "Swing | Biggest swing: AS Roma went from 32% before the game to | 80%",
+        "Upset watch | Upset watch: AS Roma was 32% before kickoff and is now favored at | 80%",
+        "Up next | Top matchup: 76ers at Pistons, Thu, Nov 5 · 12:00 AM — Pistons | 59%",
+        "Favorite | Biggest favorite on the slate: Toledo (NCAAF) vs Sacramento St | 94%",
+        "Model vs line | Biggest gap with the betting line: the model gives Pistons 59% against the line's | 52%",
+        "Upset | Biggest recent upset: Minnesota won 3–1 with a pregame chance of | 21%"
+      ],
+      "askButton": "✦Ask AI",
+      "installButton": true,
+      "themeAttr": null,
+      "hOverflow": false,
+      "serviceWorker": "https://bsilva87921.github.io/live-sports-lab/",
+      "answer": {
+        "text": "BUILT-IN ANALYST\n\n7 games live, closest first:\n\nBodo/Glimt vs Lille (UCL, live · 31') — LILL 0, BODO 0. — LILL 20% · draw 26% · BODO 54% (pregame BODO 60%)\nAtlético Madrid vs Bayern Munich (UCL, live · 31') — MUN 0, ATM 0. — MUN 41% · draw 30% · ATM 29% (pregame MUN 45%)\nBarcelona vs Aston Villa (UCL, live · 30') — AVL 0, BAR 1. — AVL 5% · draw 10% · BAR 86% (pregame BAR 74%)\nLASK Linz vs Slovan Bratislava (UCL, live · 31') — SLB 0, LAS 1. — SLB 4% · draw 10% · LAS 86% (pregame LAS 71%)\nFeyenoord Rotterdam vs Internazionale (UCL, live · 30') — INT 1, FEY 0. — INT 77% · draw 16% · FEY 8% (prega",
+        "error": false
+      },
+      "trackRecordShown": true,
+      "errors": [
+        "console: Failed to load resource: the server responded with a status of 400 ()"
+      ],
+      "httpFailures": [
+        "400 https://site.web.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard?dates=20261102-20261104&limit=300"
+      ],
+      "news": {
+        "items": 480,
+        "asOf": "2026-11-03T20:23:58+00:00",
+        "cards": 24,
+        "chips": [
+          "All 480",
+          "NFL 77",
+          "NCAAF 69",
+          "MLB 61",
+          "NBA 48",
+          "WNBA 14",
+          "NHL 29",
+          "EPL 66",
+          "LaLiga 14",
+          "Serie A 10",
+          "Bundesliga 6",
+          "Ligue 1 3",
+          "MLS 7",
+          "UCL 31"
+        ],
+        "imgs": 22,
+        "imgsLoaded": 22,
+        "first": [
+          "Barcelona v Aston Villa: Champions League – live",
+          "Manchester United v Roma: Champions League – live",
+          "Missouri's Eli Drinkwitz: 'I'm not a candidate' for Florida State job",
+          "Shane Beamer praises Gamecocks' resilience through adversity"
+        ]
+      },
+      "reader": {
+        "open": true,
+        "title": "Barcelona v Aston Villa: Champions League – live",
+        "cta": "Read the full story on The Guardian ↗",
+        "more": 4,
+        "img": true,
+        "sources": [
+          "All sources",
+          "ESPN (160)",
+          "CBS Sports (107)",
+          "Sky Sports (55)",
+          "The Athletic (45)",
+          "The Guardian (43)",
+          "BBC Sport (36)",
+          "MLB.com (24)",
+          "MMA Fighting (10)"
+        ]
+      },
+      "readerOfficial": null,
+      "search": [
+        "BOSBoston CelticsNBA · 5-2 · next: Thu, Nov 5 · 12:30 AMTeam",
+        "◷Boston Celtics at Houston RocketsNBA · Final · BOS 93–109 HOUGame",
+        "◷Milwaukee Bucks at Boston CelticsNBA · Thu, Nov 5 · 12:30 AMGame",
+        "✦Ask AI: “celtics”Answers from this page’s data and modelsAsk AI"
+      ],
+      "story": {
+        "slides": 7,
+        "kicker": "Live now",
+        "title": "7 games are in progress"
+      },
+      "extrasErrors": [
+        "console: Failed to load resource: the server responded with a status of 400 ()",
+        "console: Failed to load resource: net::ERR_FAILED",
+        "console: Failed to load resource: net::ERR_FAILED",
+        "console: Failed to load resource: net::ERR_FAILED",
+        "console: Failed to load resource: net::ERR_FAILED",
+        "console: Failed to load resource: net::ERR_FAILED",
+        "console: Failed to load resource: net::ERR_FAILED",
+        "console: Failed to load resource: net::ERR_FAILED"
+      ],
+      "dark": {
+        "title": "Probable Sports Lab — Bruno Silva",
+        "px3d": "WebGL2",
+        "canvases": 1,
+        "insights": true,
+        "insightItems": [
+          "Live | 7 games  in progress: UCL",
+          "Closest | Closest live game: Bayern at Atlético, 31' — Bayern | 41%",
+          "Swing | Biggest swing: AS Roma went from 32% before the game to | 80%",
+          "Upset watch | Upset watch: AS Roma was 32% before kickoff and is now favored at | 80%",
+          "Up next | Top matchup: 76ers at Pistons, Thu, Nov 5 · 12:00 AM — Pistons | 59%",
+          "Favorite | Biggest favorite on the slate: Toledo (NCAAF) vs Sacramento St | 94%",
+          "Model vs line | Biggest gap with the betting line: the model gives Pistons 59% against the line's | 52%",
+          "Upset | Biggest recent upset: Minnesota won 3–1 with a pregame chance of | 21%"
+        ],
+        "askButton": "✦Ask AI",
+        "installButton": true,
+        "themeAttr": null,
+        "hOverflow": false,
+        "errors": [
+          "console: Failed to load resource: the server responded with a status of 400 ()"
+        ]
+      },
+      "mobile": {
+        "title": "Probable Sports Lab — Bruno Silva",
+        "px3d": "WebGL2",
+        "canvases": 1,
+        "insights": true,
+        "insightItems": [
+          "Live | 7 games  in progress: UCL",
+          "Closest | Closest live game: Bayern at Atlético, 32' — Bayern | 41%",
+          "Swing | Biggest swing: AS Roma went from 32% before the game to | 81%",
+          "Upset watch | Upset watch: AS Roma was 32% before kickoff and is now favored at | 81%",
+          "Up next | Top matchup: 76ers at Pistons, Thu, Nov 5 · 12:00 AM — Pistons | 59%",
+          "Favorite | Biggest favorite on the slate: Toledo (NCAAF) vs Sacramento St | 94%",
+          "Model vs line | Biggest gap with the betting line: the model gives Pistons 59% against the line's | 52%",
+          "Upset | Biggest recent upset: Minnesota won 3–1 with a pregame chance of | 21%"
+        ],
+        "askButton": "✦Ask AI",
+        "installButton": true,
+        "themeAttr": null,
+        "hOverflow": false,
+        "errors": [
+          "console: Failed to load resource: the server responded with a status of 400 ()"
+        ],
+        "askLinkAnswered": true
+      }
+    },
+    "econ": {
+      "title": "Probable Atlas · Economics · World",
+      "px3d": "WebGL2",
+      "canvases": 1,
+      "insights": true,
+      "insightItems": [
+        "World | The IMF sees the world economy growing in 2026 (2025: 3.5%) — World Economic Outlook (October 2026) | 3.1%",
+        "US recession | Chance of a US recession within 12 months (yield-curve probit, out-of-sample AUC 0.78) | 13%",
+        "GDP nowcast | US GDP nowcast for Q4 2026, annualized (Atlanta Fed GDPNow 3.7%) | 2.6%",
+        "US inflation | US inflation is 3.7%; the model's 12-month forecast is | 2.9%",
+        "Fed policy | Fed funds 3.88% vs the Taylor rule's 5.6%: policy looks loose by | −1.7 pp",
+        "Contraction | Economies the IMF expects to shrink in 2026, out of 189 | 14",
+        "Fastest growing | Fastest-growing economy in 2026: Guyana | +22.3%",
+        "High inflation | Economies with double-digit inflation in 2026 | 23"
+      ],
+      "askButton": "✦Ask AI",
+      "installButton": true,
+      "themeAttr": null,
+      "hOverflow": false,
+      "serviceWorker": "https://bsilva87921.github.io/probable-atlas/",
+      "answer": {
+        "text": "BUILT-IN ANALYST\n\nWorld economy (IMF World Economic Outlook (October 2026)): growth 3.1% in 2026, 3.4% expected in 2027; inflation 4.7%. Fastest growing: Guyana 22.3%, South Sudan 10.5%, Ethiopia 9.2%.\n\nAlerts\n\nWorld growth 3.1% in 2026\n10 economies (5m+ people) are forecast to shrink in 2026\n9 economies have inflation of 20% or more\nOpen Live now →\nWill the US go into recession?\nWhich countries have the highest inflation?\nHow is China doing?",
+        "error": false
+      },
+      "errors": [],
+      "httpFailures": [],
+      "news": {
+        "items": 274,
+        "asOf": "2026-11-03T20:23:58+00:00",
+        "cards": 24,
+        "chips": [
+          "All 274",
+          "Growth & GDP 61",
+          "Inflation 8",
+          "Jobs 20",
+          "Central banks 30",
+          "Trade 5",
+          "World 50",
+          "Markets 107",
+          "Official releases 21"
+        ],
+        "imgs": 2,
+        "imgsLoaded": 2,
+        "first": [
+          "‘It’s good to be old’: I’ve been invited to a dozen free meals that turn into annuity sales pitches. Should I stop going?",
+          "A new Disney-WWE mashup has John Cena and the new Avengers movie working in tandem",
+          "YieldMax Universe Fund of Option Income ETFs declares $0.0528 dividend",
+          "YieldMax Memory & Storage Portfolio Option Inc ETF declares $0.3242 dividend"
+        ]
+      },
+      "reader": {
+        "open": true,
+        "title": "‘It’s good to be old’: I’ve been invited to a dozen free meals that turn into annuity sales pitches. Should I stop going?",
+        "cta": "Read the full story on MarketWatch ↗",
+        "more": 0,
+        "img": true,
+        "sources": [
+          "All sources",
+          "Investing.com (60)",
+          "CNBC (53)",
+          "Financial Times (48)",
+          "CoinDesk (25)",
+          "BBC (22)",
+          "MarketWatch (20)",
+          "The Guardian (18)",
+          "European Central Bank (15)",
+          "Seeking Alpha (7)",
+          "Federal Reserve (4)",
+          "BEA (2)"
+        ]
+      },
+      "readerOfficial": {
+        "title": "Boris Vujčić: Integrated, open and resilient: Europe’s strengths in a fragmenting world",
+        "paras": 17,
+        "note": "Official release: the opening paragraphs; the rest is in the original. Source: European Central Bank."
+      },
+      "search": [
+        "◍JapanEast Asia & Pacific · inflation 2.0%+0.7%Country",
+        "✦Ask AI: “japan”Answers from this page’s data and modelsAsk AI"
+      ],
+      "story": {
+        "slides": 8,
+        "kicker": "World economy · IMF outlook, Oct 2026",
+        "title": "The IMF sees the world economy growing 3.1% in 2026"
+      },
+      "extrasErrors": [],
+      "dark": {
+        "title": "Probable Atlas · Economics · World",
+        "px3d": "WebGL2",
+        "canvases": 1,
+        "insights": true,
+        "insightItems": [
+          "World | The IMF sees the world economy growing in 2026 (2025: 3.5%) — World Economic Outlook (October 2026) | 3.1%",
+          "US recession | Chance of a US recession within 12 months (yield-curve probit, out-of-sample AUC 0.78) | 13%",
+          "GDP nowcast | US GDP nowcast for Q4 2026, annualized (Atlanta Fed GDPNow 3.7%) | 2.6%",
+          "US inflation | US inflation is 3.7%; the model's 12-month forecast is | 2.9%",
+          "Fed policy | Fed funds 3.88% vs the Taylor rule's 5.6%: policy looks loose by | −1.7 pp",
+          "Contraction | Economies the IMF expects to shrink in 2026, out of 189 | 14",
+          "Fastest growing | Fastest-growing economy in 2026: Guyana | +22.3%",
+          "High inflation | Economies with double-digit inflation in 2026 | 23"
+        ],
+        "askButton": "✦Ask AI",
+        "installButton": true,
+        "themeAttr": null,
+        "hOverflow": false,
+        "errors": []
+      },
+      "mobile": {
+        "title": "Probable Atlas · Economics · World",
+        "px3d": "WebGL2",
+        "canvases": 1,
+        "insights": true,
+        "insightItems": [
+          "World | The IMF sees the world economy growing in 2026 (2025: 3.5%) — World Economic Outlook (October 2026) | 3.1%",
+          "US recession | Chance of a US recession within 12 months (yield-curve probit, out-of-sample AUC 0.78) | 13%",
+          "GDP nowcast | US GDP nowcast for Q4 2026, annualized (Atlanta Fed GDPNow 3.7%) | 2.6%",
+          "US inflation | US inflation is 3.7%; the model's 12-month forecast is | 2.9%",
+          "Fed policy | Fed funds 3.88% vs the Taylor rule's 5.6%: policy looks loose by | −1.7 pp",
+          "Contraction | Economies the IMF expects to shrink in 2026, out of 189 | 14",
+          "Fastest growing | Fastest-growing economy in 2026: Guyana | +22.3%",
+          "High inflation | Economies with double-digit inflation in 2026 | 23"
+        ],
+        "askButton": "✦Ask AI",
+        "installButton": true,
+        "themeAttr": null,
+        "hOverflow": false,
+        "errors": [],
+        "askLinkAnswered": true
+      }
+    },
+    "fin": {
+      "title": "Probable Atlas · Finance · Live now",
+      "px3d": "WebGL2",
+      "canvases": 1,
+      "insights": true,
+      "insightItems": [
+        "S&P 500 | S&P 500 at 7,571: +0.39% on Nov 3, 2026, +10.6% this year, 3.2% below its record | +0.39%",
+        "Regime | The regime model reads the market as calm, with probability | 96%",
+        "Correction risk | Chance of a 10% fall within six months, against a 21% base rate (modest skill) | 37%",
+        "Volatility | VIX 20.8; the GARCH model expects daily S&P 500 swings of about | ±1.0%",
+        "Yield curve | 10-year Treasury 4.94% vs 3-month 4.16%: the curve is upward sloping, spread | +0.78 pp",
+        "Risk appetite | Risk appetite gauge (six market readings): extreme fear | 21/100",
+        "Valuation | CAPE 40.7, 99th percentile since 1881; history implies a 10-year real return near | 0.4%/yr",
+        "Biggest mover | Copper moved the most of 58 markets on Nov 3, 2026 | −2.4%"
+      ],
+      "askButton": "✦Ask AI",
+      "installButton": true,
+      "themeAttr": null,
+      "hOverflow": false,
+      "serviceWorker": "https://bsilva87921.github.io/probable-atlas/",
+      "answer": {
+        "text": "BUILT-IN ANALYST\n\nModel odds, S&P 500:\n\n5% pullback within 3 months: 45% (base rate 31%; out of sample AUC 0.56, Brier skill +5%)\n10% correction within 6 months: 37% (base rate 21%; out of sample AUC 0.55, Brier skill +5%)\n20% bear market within 12 months: 27% (base rate 14%; out of sample AUC 0.53, Brier skill +5%)\n\nWhat drives the 6-month reading: valuations (CAPE) raise it, credit spreads lower it, implied volatility raise it.\n\nHow much to trust it: out of sample these models beat the base rate only modestly, so read them as a tilt, not a forecast. Declines are normal: the S&P 500 fell 10%+",
+        "error": false
+      },
+      "errors": [],
+      "httpFailures": [],
+      "news": {
+        "items": 274,
+        "asOf": "2026-11-03T20:23:58+00:00",
+        "cards": 24,
+        "chips": [
+          "All 274",
+          "Markets 102",
+          "Fed & rates 39",
+          "Earnings 21",
+          "Commodities 20",
+          "Crypto 43",
+          "Currencies 12",
+          "Economy 76",
+          "Official releases 21"
+        ],
+        "imgs": 2,
+        "imgsLoaded": 2,
+        "first": [
+          "‘It’s good to be old’: I’ve been invited to a dozen free meals that turn into annuity sales pitches. Should I stop going?",
+          "A new Disney-WWE mashup has John Cena and the new Avengers movie working in tandem",
+          "YieldMax Universe Fund of Option Income ETFs declares $0.0528 dividend",
+          "YieldMax Memory & Storage Portfolio Option Inc ETF declares $0.3242 dividend"
+        ]
+      },
+      "reader": {
+        "open": true,
+        "title": "‘It’s good to be old’: I’ve been invited to a dozen free meals that turn into annuity sales pitches. Should I stop going?",
+        "cta": "Read the full story on MarketWatch ↗",
+        "more": 0,
+        "img": true,
+        "sources": [
+          "All sources",
+          "Investing.com (60)",
+          "CNBC (53)",
+          "Financial Times (48)",
+          "CoinDesk (25)",
+          "BBC (22)",
+          "MarketWatch (20)",
+          "The Guardian (18)",
+          "European Central Bank (15)",
+          "Seeking Alpha (7)",
+          "Federal Reserve (4)",
+          "BEA (2)"
+        ]
+      },
+      "readerOfficial": {
+        "title": "Boris Vujčić: Integrated, open and resilient: Europe’s strengths in a fragmenting world",
+        "paras": 17,
+        "note": "Official release: the opening paragraphs; the rest is in the original. Source: European Central Bank."
+      },
+      "search": [
+        "◆Gold (GLD)Core asset classes · $359.39−0.63%Market",
+        "◆Gold (GC)Dollar & commodities · $3,928.5−1.04%Market",
+        "✉TSX movers: gainers lead 3-to-1 as gold miners slideInvesting.com · 1 h agoNews",
+        "✉Why we're keeping a hold rating on DuPont despite its beat-and-raise quarterCNBC · 1 h ag",
+        "✦Ask AI: “gold”Answers from this page’s data and modelsAsk AI"
+      ],
+      "story": {
+        "slides": 8,
+        "kicker": "S&P 500 · Nov 3, 2026",
+        "title": "The S&P 500 rose 0.39% to 7,571"
+      },
+      "extrasErrors": [],
+      "dark": {
+        "title": "Probable Atlas · Finance · Live now",
+        "px3d": "WebGL2",
+        "canvases": 1,
+        "insights": true,
+        "insightItems": [
+          "S&P 500 | S&P 500 at 7,571: +0.39% on Nov 3, 2026, +10.6% this year, 3.2% below its record | +0.39%",
+          "Regime | The regime model reads the market as calm, with probability | 96%",
+          "Correction risk | Chance of a 10% fall within six months, against a 21% base rate (modest skill) | 37%",
+          "Volatility | VIX 20.8; the GARCH model expects daily S&P 500 swings of about | ±1.0%",
+          "Yield curve | 10-year Treasury 4.94% vs 3-month 4.16%: the curve is upward sloping, spread | +0.78 pp",
+          "Risk appetite | Risk appetite gauge (six market readings): extreme fear | 21/100",
+          "Valuation | CAPE 40.7, 99th percentile since 1881; history implies a 10-year real return near | 0.4%/yr",
+          "Biggest mover | Copper moved the most of 58 markets on Nov 3, 2026 | −2.4%"
+        ],
+        "askButton": "✦Ask AI",
+        "installButton": true,
+        "themeAttr": null,
+        "hOverflow": false,
+        "errors": []
+      },
+      "mobile": {
+        "title": "Probable Atlas · Finance · Live now",
+        "px3d": "WebGL2",
+        "canvases": 1,
+        "insights": true,
+        "insightItems": [
+          "S&P 500 | S&P 500 at 7,571: +0.39% on Nov 3, 2026, +10.6% this year, 3.2% below its record | +0.39%",
+          "Regime | The regime model reads the market as calm, with probability | 96%",
+          "Correction risk | Chance of a 10% fall within six months, against a 21% base rate (modest skill) | 37%",
+          "Volatility | VIX 20.8; the GARCH model expects daily S&P 500 swings of about | ±1.0%",
+          "Yield curve | 10-year Treasury 4.94% vs 3-month 4.16%: the curve is upward sloping, spread | +0.78 pp",
+          "Risk appetite | Risk appetite gauge (six market readings): extreme fear | 21/100",
+          "Valuation | CAPE 40.7, 99th percentile since 1881; history implies a 10-year real return near | 0.4%/yr",
+          "Biggest mover | Copper moved the most of 58 markets on Nov 3, 2026 | −2.4%"
+        ],
+        "askButton": "✦Ask AI",
+        "installButton": true,
+        "themeAttr": null,
+        "hOverflow": false,
+        "errors": [],
+        "askLinkAnswered": true
+      }
+    },
+    "home": {
+      "title": "Probable Atlas",
+      "px3d": "WebGL2",
+      "canvases": 1,
+      "insights": true,
+      "insightItems": [
+        "Econ · World | The IMF sees the world economy growing in 2026 (2025: 3.5%) — World Economic Outlook (October 2026) | 3.1%",
+        "Econ · US recession | Chance of a US recession within 12 months (yield-curve probit, out-of-sample AUC 0.78) | 13%",
+        "Econ · GDP nowcast | US GDP nowcast for Q4 2026, annualized (Atlanta Fed GDPNow 3.7%) | 2.6%",
+        "Econ · US inflation | US inflation is 3.7%; the model's 12-month forecast is | 2.9%",
+        "Econ · Fed policy | Fed funds 3.88% vs the Taylor rule's 5.6%: policy looks loose by | −1.7 pp",
+        "Markets · S&P 500 | S&P 500 at 7,571: +0.39% on Nov 3, 2026, +10.6% this year, 3.2% below its record | +0.39%",
+        "Markets · Regime | The regime model reads the market as calm, with probability | 96%",
+        "Markets · Correction risk | Chance of a 10% fall within six months, against a 21% base rate (modest skill) | 37%",
+        "Markets · Volatility | VIX 20.8; the GARCH model expects daily S&P 500 swings of about | ±1.0%",
+        "Markets · Yield curve | 10-year Treasury 4.94% vs 3-month 4.16%: the curve is upward sloping, spread | +0.78 pp"
+      ],
+      "askButton": null,
+      "installButton": true,
+      "themeAttr": null,
+      "hOverflow": false,
+      "errors": [],
+      "httpFailures": [],
+      "readings": 10,
+      "extras": {
+        "news": 24,
+        "search": true,
+        "ring": true
+      }
+    }
+  },
   "browser": "Chromium headless 153.0.8010.12",
   "webgpu": {
     "api": true,
     "adapter": null
-  },
-  "finTerrain": {
-    "title": "Probable Atlas · Finance · Live now",
-    "px3d": "WebGL2",
-    "canvases": 1,
-    "insights": true,
-    "insightItems": [
-      "S&P 500 | S&P 500 at 7,578: +0.49% on Nov 3, 2026, +10.7% this year, 3.1% below its record | +0.49%",
-      "Regime | The regime model reads the market as calm, with probability | 96%",
-      "Correction risk | Chance of a 10% fall within six months, against a 21% base rate (modest skill) | 37%",
-      "Volatility | VIX 20.9; the GARCH model expects daily S&P 500 swings of about | ±1.0%",
-      "Yield curve | 10-year Treasury 4.94% vs 3-month 4.16%: the curve is upward sloping, spread | +0.78 pp",
-      "Risk appetite | Risk appetite gauge (six market readings): extreme fear | 21/100",
-      "Valuation | CAPE 40.7, 99th percentile since 1881; history implies a 10-year real return near | 0.4%/yr",
-      "Biggest mover | KOSPI moved the most of 58 markets on Nov 2, 2026 | +2.2%"
-    ],
-    "askButton": "✦Ask AI",
-    "installButton": true,
-    "themeAttr": null,
-    "hOverflow": false,
-    "errors": []
   }
 }
