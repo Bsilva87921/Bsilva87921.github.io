@@ -6,9 +6,9 @@ const OS = process.argv[2] || 'linux';
 const OUT = 'verify/out-' + OS; fs.mkdirSync(OUT, { recursive: true });
 const BASE = 'https://bsilva87921.github.io';
 const PAGES = [
-  { k: 'sports', path: '/live-sports-lab/', q: 'Which games are closest right now?' },
-  { k: 'econ', path: '/probable-atlas/', q: 'How is the world economy doing?' },
-  { k: 'fin', path: '/probable-atlas/finance/', q: 'Is a correction likely?' },
+  { k: 'sports', path: '/live-sports-lab/', q: 'Which games are closest right now?', sq: 'celtics' },
+  { k: 'econ', path: '/probable-atlas/', q: 'How is the world economy doing?', sq: 'japan' },
+  { k: 'fin', path: '/probable-atlas/finance/', q: 'Is a correction likely?', sq: 'gold' },
 ];
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const OG_ONLY = process.env.OG_ONLY === '1' && OS !== 'mac';   // second pass: previews and the terrain only
@@ -96,6 +96,25 @@ for (const P of PAGES) {
   if (P.k === 'sports') { await pg.goto(BASE + P.path + '#method'); await sleep(5000); R.trackRecordShown = await pg.evaluate(() => /Track record/i.test(document.body.innerText)); await pg.screenshot({ path: `${OUT}/track-${P.k}.png` }); }
   R.errors = pg._errs.slice(0, 12); R.httpFailures = [...new Set(pg._fails)].slice(0, 12);
   await ctx.close();
+  // 3.0: the News tab, search everything and today's briefing
+  ({ ctx, pg } = await open(BASE + P.path, { wait: 9000 }));
+  try {
+    R.news = await pg.evaluate(async k => {
+      if (k === 'sports') APP.setTab('news'); else APP.go({ tab: 'news' });
+      await new Promise(r => setTimeout(r, 5000));
+      const imgs = [...document.querySelectorAll('.kx-n-card img')];
+      return { items: window.NEWS ? NEWS.items.length : null, asOf: window.NEWS ? NEWS.asOf : null, cards: document.querySelectorAll('.kx-n-card').length, chips: [...document.querySelectorAll('.kx-chip')].map(c => c.textContent.trim().replace(/\s+/g, ' ')).slice(0, 14), imgs: imgs.length, imgsLoaded: imgs.filter(i => i.complete && i.naturalWidth > 0).length, first: [...document.querySelectorAll('.kx-n-card .kx-n-h')].slice(0, 4).map(h => h.textContent.trim()) };
+    }, P.k);
+    await pg.screenshot({ path: `${OUT}/news-${P.k}.png` });
+    R.search = await pg.evaluate(async q => { SRCH.open(q); await new Promise(r => setTimeout(r, 700)); return [...document.querySelectorAll('.kx-s-row')].slice(0, 6).map(r => r.textContent.trim().replace(/\s+/g, ' ').slice(0, 90)); }, P.sq);
+    await pg.screenshot({ path: `${OUT}/search-${P.k}.png` });
+    await pg.keyboard.press('Escape');
+    R.story = await pg.evaluate(async () => { STORY.open(); await new Promise(r => setTimeout(r, 1500)); return { slides: document.querySelectorAll('.kx-st-bars span').length, kicker: ((document.querySelector('.kx-st-kick') || {}).textContent || '').trim(), title: ((document.querySelector('.kx-st-title') || {}).textContent || '').trim() }; });
+    await pg.screenshot({ path: `${OUT}/story-${P.k}.png` });
+  } catch (e) { R.extrasError = String(e).slice(0, 300); }
+  R.extrasErrors = pg._errs.slice(0, 8);
+  await ctx.close();
+  log(P.k, 'extras', JSON.stringify({ news: R.news && { items: R.news.items, cards: R.news.cards, imgs: R.news.imgs, loaded: R.news.imgsLoaded }, search: R.search && R.search.length, story: R.story && R.story.slides, err: R.extrasError || null }));
   log(P.k, JSON.stringify({ px3d: R.px3d, insights: R.insights, n: R.insightItems && R.insightItems.length, ask: R.askButton, errors: R.errors.length, fails: R.httpFailures.length }));
   if (OS === 'mac') continue;
   // desktop, dark
@@ -123,6 +142,7 @@ if (OS !== 'mac' && !OG_ONLY) {
   const { pg } = await open(BASE + '/probable-atlas/app/', { ctx, wait: 10000 });
   report.pages.home = await state(pg); report.pages.home.errors = pg._errs.slice(0, 8); report.pages.home.httpFailures = [...new Set(pg._fails)].slice(0, 8);
   report.pages.home.readings = await pg.evaluate(() => document.querySelectorAll('#hmRead .hm-r').length);
+  report.pages.home.extras = await pg.evaluate(() => ({ news: document.querySelectorAll('#hmNews .kx-n-card').length, search: !!document.querySelector('#hmActs .kx-s-btn'), ring: !!document.querySelector('#insBar .kx-st-ring') }));
   await pg.screenshot({ path: `${OUT}/desk-home.png` });
   await pg.setViewportSize({ width: 390, height: 844 }); await sleep(2500); await pg.screenshot({ path: `${OUT}/mob-home.png` });
   await ctx.close();
@@ -151,8 +171,8 @@ if (OS !== 'mac') {
     .s{position:absolute;left:446px;top:56px;width:900px;border-radius:14px;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.12)}
     .s img{display:block;width:900px}
   </style></head><body><div class="l"><div class="eb">LIVE · 3D · AI</div><h1>Live Sports Probability Lab</h1>
-    <p>13 leagues plus tennis, UFC and golf. Live win odds for every game, a 3D arena of the next 40 hours, and a track record graded every hour.</p>
-    <div class="ch"><span>WebGPU 3D</span><span>Ask AI</span><span>Monte Carlo</span><span>Track record</span></div>
+    <p>13 leagues plus tennis, UFC and golf. Live win odds for every game on a 3D scoreboard, news from every league, alerts for your teams, and a track record graded every hour.</p>
+    <div class="ch"><span>WebGPU 3D</span><span>Ask AI</span><span>News</span><span>Track record</span></div>
     <div class="f"><div><b>Bruno Silva</b><small>bsilva87921.github.io</small></div><span class="go">Open live ›</span></div></div>
     <div class="s"><img src="data:image/png;base64,${shot}"></div></body></html>`, { waitUntil: 'networkidle' });
   await card.evaluate(() => document.fonts.ready); await sleep(800);
