@@ -4,8 +4,9 @@
    1. Replay: every completed game of each league's current season, in start-time order, predicted with
       the lab's own rating model using only games that had finished before it started (no look-ahead),
       plus in-game checkpoints rebuilt from period scores (end of Q1/half/Q3, periods, innings, 45'/75').
-   2. Prospective log: each run records what the live board shows for games about to start (ratings
-      blended with the betting line, and the line itself), then grades them once they are final.
+   2. Prospective log: each run records what the live board shows for games starting within 18 hours (ratings
+      blended with the betting line, and the line itself), keeps the last reading before each start, then grades
+      them once they are final.
    Output: track.json for the site, plus the archive and log it keeps between runs.
    Usage: OUT_DIR=out PREV_DIR=prev node track.mjs [--offline DIR] */
 import fs from 'node:fs';
@@ -176,9 +177,11 @@ async function prospective() {
   const now = Date.now();
   for (const g of APP.allGames()) {
     const e = log.games[g.id];
-    if (g.state === 'pre' && new Date(g.start) - now < 3 * 3600e3 && new Date(g.start) - now > -15 * 60e3) {
+    // games starting within 18 hours: GitHub's hourly schedule can run late, so each run refreshes the entry and the
+    // last reading taken before the start is the one graded (hours before start kept in h)
+    if (g.state === 'pre' && new Date(g.start) - now < 18 * 3600e3 && new Date(g.start) - now > -15 * 60e3) {
       const P = APP.predict(g), L = APP.lineProbs(g);
-      log.games[g.id] = { lg: g.lg, d: g.start, m: g.away.abbr + '@' + g.home.abbr, src: P.src, p: [+P.pre.pH.toFixed(4), +(P.pre.pD || 0).toFixed(4)], line: L ? [+L.pH.toFixed(4), +(L.pD || 0).toFixed(4)] : null, at: new Date(now).toISOString() };
+      log.games[g.id] = { lg: g.lg, d: g.start, m: g.away.abbr + '@' + g.home.abbr, src: P.src, p: [+P.pre.pH.toFixed(4), +(P.pre.pD || 0).toFixed(4)], line: L ? [+L.pH.toFixed(4), +(L.pD || 0).toFixed(4)] : null, at: new Date(now).toISOString(), h: +((new Date(g.start) - now) / 3600e3).toFixed(1) };
     } else if (e && !e.o && g.state === 'post' && !g.void) { e.o = (g.home.score > g.away.score ? 'H' : g.away.score > g.home.score ? 'A' : kindOf(g.lg) === 'sc' ? 'D' : 'T'); e.f = g.away.score + '-' + g.home.score; }
   }
   // keep 400 days
