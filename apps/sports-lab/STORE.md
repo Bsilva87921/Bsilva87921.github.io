@@ -15,7 +15,7 @@ Probable Sports Lab turns every live game into a win probability you can questio
 • Live board for 13 leagues — NFL, college football, NBA, WNBA, MLB, NHL, the Premier League, LaLiga, Serie A, Bundesliga, Ligue 1, MLS and the Champions League — plus tennis, golf and UFC.
 • 3D scoreboard: a turning ring of live game cards with the score, the clock and each team's chance to win; tap one to open the game.
 • Follow your teams: their games come first, and you get alerts when they start, go down to the wire and finish.
-• News from every league, a daily briefing in story form, search everything, and share cards for any game.
+• News from ESPN, CBS Sports, BBC Sport, Sky Sports, The Guardian and more, read right in the app; a daily briefing in story form; search everything; share cards for any game.
 • What-if lab with 260 scenarios: a touchdown, a red card, a star sitting out, snow, a 4th-down decision — the model re-runs instantly.
 • Standings and projections from 1,600 simulated seasons.
 • A published track record: the model's past predictions graded without hindsight, with calibration.

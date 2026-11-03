@@ -4987,7 +4987,7 @@ const NEWS = (() => {
     const body = it.body && it.body.length ? it.body.map(p => `<p>${esc(p)}</p>`).join('') : '';
     const dek = it.x && norm(it.x) !== norm(it.t) && !(body && norm(it.body[0]).startsWith(norm(it.x).slice(0, 60))) ? `<p class="kx-r-dek">${esc(it.x)}</p>` : '';
     const note = body
-      ? `Official release${it.full ? ', in full' : ': the opening of the release'}. Source: ${esc(it.credit || it.s)}.`
+      ? `${it.full ? 'Official release, in full.' : 'Official release: the opening paragraphs; the rest is in the original.'} Source: ${esc(it.credit || it.s)}.`
       : `This is the publisher's summary. ${app ? 'The full article opens right here in the app.' : 'The full article opens on the publisher’s site.'}${it.pw ? ` ${name} may ask you to subscribe.` : ''}`;
     const more = related(it, 4);
     return `<header class="kx-r-bar"><span class="kx-r-src"><span class="kx-r-ini" aria-hidden="true">${esc((it.s || '?').trim().charAt(0).toUpperCase())}</span><span><b>${name}</b><small><span class="kx-r-when">${esc(ago(it.d))}</span>${it.d ? `<span class="kx-r-at"> · ${esc(new Date(it.d).toLocaleString([], { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }))}</span>` : ''}</small></span></span>
@@ -4999,7 +4999,7 @@ const NEWS = (() => {
         <h2 class="kx-r-h" id="kxrH">${esc(it.t)}</h2>
         ${dek}
         ${body ? `<div class="kx-r-body">${body}</div>` : ''}
-        <div class="kx-r-cta"><a class="kx-btn pri" href="${esc(it.u)}" target="_blank" rel="noopener" data-rout>${body && it.full ? 'View the original' : app ? 'Read the full story' : `Read the full story on ${name}`} <span aria-hidden="true">${app ? '→' : '↗'}</span></a>${O.ask ? '<button type="button" class="kx-btn" data-rask>✦ What it means</button>' : ''}<button type="button" class="kx-btn kx-ico" data-rshare aria-label="Share this story">${window.SHARE ? SHARE.ICON : '↗'}</button></div>
+        <div class="kx-r-cta"><a class="kx-btn pri" href="${esc(it.u)}" target="_blank" rel="noopener" data-rout>${body ? (it.full ? 'View the original' : 'Continue reading') : app ? 'Read the full story' : `Read the full story on ${name}`} <span aria-hidden="true">${app ? '→' : '↗'}</span></a>${O.ask ? '<button type="button" class="kx-btn" data-rask>✦ What it means</button>' : ''}<button type="button" class="kx-btn kx-ico" data-rshare aria-label="Share this story">${window.SHARE ? SHARE.ICON : '↗'}</button></div>
         <p class="kx-r-note">${note}</p>
         ${more.length ? `<section class="kx-r-more"><h3>More on this</h3><ul class="kx-n-list${more.some(x => x.img) ? '' : ' nopics'}">${more.map(x => `<li><a href="${esc(x.u)}" data-rrel="${esc(key(x))}">${more.some(y => y.img) ? img(x, 'kx-n-thumb') : ''}<span><b>${esc(x.t)}</b><small>${esc(x.s || host(x.u))} · ${esc(ago(x.d))}</small></span></a></li>`).join('')}</ul></section>` : ''}
       </div>`;

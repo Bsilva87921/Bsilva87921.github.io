@@ -7,7 +7,7 @@ Each item is a headline, its link, the publisher, the time, the feed's own summa
 feed offers one; nothing else is copied from news outlets' articles. Official releases that may be reproduced (the
 Federal Reserve Board and BEA, as US government works; the ECB, with the ECB cited as the source) also carry their
 text ("body"), so the pages can show them in full. Sports headlines come from ESPN and other outlets' public feeds
-(CBS Sports, BBC Sport, Sky Sports, The Guardian, MLB.com, The Athletic, MMA Fighting, MMA Junkie, the ATP Tour).
+(CBS Sports, BBC Sport, Sky Sports, The Guardian, MLB.com, The Athletic, MMA Fighting).
 A feed that fails keeps its stories from the previous run (PREV_DIR), so one outage never empties the page.
 Standard library only.
 """
@@ -123,8 +123,6 @@ SPORTS_FEEDS = [
     ('ath-ncaaf', 'The Athletic', 'https://www.nytimes.com/athletic/rss/college-football/', 'ncaaf', True),
     ('ath-epl', 'The Athletic', 'https://www.nytimes.com/athletic/rss/premier-league/', 'epl', True),
     ('mmaf', 'MMA Fighting', ['https://www.mmafighting.com/rss/index.xml', 'https://www.mmafighting.com/rss/current'], 'ufc', False),
-    ('mmaj', 'MMA Junkie', 'https://mmajunkie.usatoday.com/feed', 'ufc', False),
-    ('atp', 'ATP Tour', 'https://www.atptour.com/en/media/rss-feed/xml-feed', 'tennis', False),
 ]
 # soccer stories from general feeds: the competition named first wins, then the clubs (2025-26 top flights)
 SOCCER = [(lg, re.compile(rx, re.I)) for lg, rx in [
@@ -193,7 +191,8 @@ class Paras(HTMLParser):
             self.buf.append(d)
 
 
-BOILER = re.compile(r'^(last update|for release|for immediate release|media (contact|inquiries)|back to top|share|print|related (links|information)|implementation note|subscribe|accessible version|return to text|footnotes?)\b', re.I)
+BOILER = re.compile(r'^(last update|for release|for immediate release|(for )?media (contact|inquiries)|back to top|share|print|related (links|information)|implementation note|subscribe|accessible version|return to text|footnotes?)\b|\[email[^\]]*protected\]', re.I)
+DATELINE = re.compile(r'^[A-Z][\w .\'-]{2,40}, \d{1,2} [A-Z][a-z]+ \d{4}\.?$|^[A-Z][a-z]+ \d{1,2}, \d{4}$')
 
 
 def article_text(raw, limit=4200):
@@ -212,7 +211,7 @@ def article_text(raw, limit=4200):
     best = max(groups.values(), key=lambda g: sum(len(x) for x in g))
     out, n, complete = [], 0, True
     for txt in best:
-        if len(txt) < 30 or BOILER.search(txt):
+        if len(txt) < 30 or BOILER.search(txt) or DATELINE.match(txt):
             continue
         if n + len(txt) > limit and out:
             complete = False
@@ -485,7 +484,30 @@ def sports():
             sources.append({'id': fid, 'name': name, 'kind': 'outlet', 'n': len(old), 'ok': False})
             print(f'  {fid:14s} failed ({type(e).__name__}: {str(e)[:80]}); kept {len(old)} previous')
         time.sleep(0.25)
-    return {'asOf': NOW.isoformat(timespec='seconds'), 'sources': sources, 'items': finish(items, 3, 420)}
+    return {'asOf': NOW.isoformat(timespec='seconds'), 'sources': sources, 'items': balance(finish(items, 4, 100000), 480)}
+
+
+PER_PUB = {'The Athletic': 45, 'MLB.com': 30, 'MMA Fighting': 25}   # others: 160
+
+
+def balance(items, cap, floor=14):
+    """Newest first, a ceiling per publisher, and every league's newest `floor` stories kept whatever the cap."""
+    from collections import Counter
+    pub, kept = Counter(), []
+    for it in items:
+        if pub[it['s']] >= PER_PUB.get(it['s'], 160):
+            continue
+        pub[it['s']] += 1
+        kept.append(it)
+    lg, must, rest = Counter(), [], []
+    for it in kept:
+        if lg[it.get('lg')] < floor:
+            lg[it.get('lg')] += 1
+            must.append(it)
+        else:
+            rest.append(it)
+    out = must + rest[:max(0, cap - len(must))]
+    return sorted(out, key=lambda x: x.get('d') or '', reverse=True)
 
 
 def main():

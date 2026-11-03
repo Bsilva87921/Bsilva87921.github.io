@@ -14,7 +14,7 @@ Both sites are installable apps (web app manifest + service worker): own icon an
 - **Windows / Mac (Chrome, Edge):** the install icon in the address bar. **Mac Safari:** File → *Add to Dock*.
 
 ## 2. App Store and Google Play (ready to build)
-Each folder is a [Capacitor](https://capacitorjs.com) project that packages the site's own files (the page, the 3D bundle, icons); data and headlines come from the same live sources as the website. Native plugins: App, Status Bar and Splash Screen, plus Haptics (taps), Local Notifications (alerts for what you follow), Share and Filesystem (share cards through the system share sheet).
+Each folder is a [Capacitor](https://capacitorjs.com) project that packages the site's own files (the page, the 3D bundle, icons); data and headlines come from the same live sources as the website. Native plugins: App, Status Bar and Splash Screen, plus Browser (articles and other outside links open in an in-app browser: Safari View Controller on iPhone, Chrome Custom Tabs on Android), Haptics (taps), Local Notifications (alerts for what you follow), Share and Filesystem (share cards through the system share sheet).
 
 The **Native app builds** workflow (Actions tab) runs on every change here and produces, for each app, a test **Android APK** and an **Xcode project** that it checks with an iOS simulator build. Download them from the workflow run's *Artifacts*.
 

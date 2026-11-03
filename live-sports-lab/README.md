@@ -20,10 +20,13 @@ NHL, the Premier League, LaLiga, Serie A, Bundesliga, Ligue 1, MLS and the Champ
   optional proxy (shared with Probable Atlas, see [`../probable-atlas/ai-proxy`](../probable-atlas/ai-proxy/)), Claude
   answers using 11 of the lab's functions as tools: the board, any game, scenarios, what-ifs, coaching decisions,
   teams, standings, the track record, the methods and navigation. Links can open it with a question: `?ask=...`.
-- **News.** A News tab with the latest headlines from every league on the board, plus tennis, golf and UFC: lead story,
-  filters by league, a search box, "What it means" (asks Ask AI) and share. Each game center lists recent headlines about
-  its two teams. Headlines come from ESPN's public news feeds, refreshed by a scheduled job twice an hour
-  (`.github/workflows/news.yml`, `probable-atlas/pipeline/fetch_news.py`) and topped up live in the browser.
+- **News.** A News tab with the latest headlines from every league on the board, plus tennis, golf and UFC, from ESPN,
+  CBS Sports, BBC Sport, Sky Sports, The Guardian, MLB.com, The Athletic, MMA Fighting, MMA Junkie and the ATP Tour:
+  lead story, filters by league and source, a search box, "What it means" (asks Ask AI) and share. Soccer stories from
+  general feeds are sorted into the lab's leagues by competition and club. Tapping a story opens it in a reader on the
+  page (picture, summary, related stories, previous and next); the full article is one tap away, inside the app in the
+  apps. Each game center lists recent headlines about its two teams. Refreshed by a scheduled job twice an hour
+  (`.github/workflows/news.yml`, `probable-atlas/pipeline/fetch_news.py`) and topped up live from ESPN in the browser.
 - **Follow teams and get alerts.** Star a team in any game center: its games lead the board and the carousel, it gets a
   News filter, and you get alerts when its game starts, goes down to the wire, changes leader late and ends (confetti
   when it wins). Alerts show in the page and, once you turn them on, as notifications; the installed app's icon shows how
