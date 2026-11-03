@@ -106,6 +106,18 @@ for (const P of PAGES) {
       return { items: window.NEWS ? NEWS.items.length : null, asOf: window.NEWS ? NEWS.asOf : null, cards: document.querySelectorAll('.kx-n-card').length, chips: [...document.querySelectorAll('.kx-chip')].map(c => c.textContent.trim().replace(/\s+/g, ' ')).slice(0, 14), imgs: imgs.length, imgsLoaded: imgs.filter(i => i.complete && i.naturalWidth > 0).length, first: [...document.querySelectorAll('.kx-n-card .kx-n-h')].slice(0, 4).map(h => h.textContent.trim()) };
     }, P.k);
     await pg.screenshot({ path: `${OUT}/news-${P.k}.png` });
+    // 3.1: tapping a headline opens the reader on the page
+    R.reader = await pg.evaluate(async () => {
+      const a = document.querySelector('.kx-n-card .kx-n-h a'); if (!a) return null; a.click();
+      await new Promise(r => setTimeout(r, 1200));
+      const Rd = document.querySelector('.kx-reader'); if (!Rd || Rd.hidden) return { open: false };
+      const im = Rd.querySelector('.kx-r-fig img');
+      return { open: true, title: (Rd.querySelector('.kx-r-h') || {}).textContent, cta: (Rd.querySelector('[data-rout]') || {}).textContent, more: Rd.querySelectorAll('.kx-r-more li').length, img: im ? (im.complete && im.naturalWidth > 0) : null, sources: [...document.querySelectorAll('[data-nsrc] option')].map(o => o.textContent).slice(0, 12) };
+    });
+    await pg.screenshot({ path: `${OUT}/reader-${P.k}.png` });
+    R.readerOfficial = await pg.evaluate(async () => { const it = NEWS.items.find(x => x.body); if (!it) return null; NEWS.open(it); await new Promise(r => setTimeout(r, 900)); return { title: it.t, paras: document.querySelectorAll('.kx-r-body p').length, note: (document.querySelector('.kx-r-note') || {}).textContent }; });
+    if (R.readerOfficial) await pg.screenshot({ path: `${OUT}/reader-official-${P.k}.png` });
+    await pg.keyboard.press('Escape'); await new Promise(r => setTimeout(r, 400));
     R.search = await pg.evaluate(async q => { SRCH.open(q); await new Promise(r => setTimeout(r, 700)); return [...document.querySelectorAll('.kx-s-row')].slice(0, 6).map(r => r.textContent.trim().replace(/\s+/g, ' ').slice(0, 90)); }, P.sq);
     await pg.screenshot({ path: `${OUT}/search-${P.k}.png` });
     await pg.keyboard.press('Escape');
