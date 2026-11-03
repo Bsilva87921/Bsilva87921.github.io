@@ -2,7 +2,7 @@
    the page is interactive and only when the browser can draw it; if it can't, the page keeps its 2D design.
    A "still" toggle stops the motion and is remembered per visitor. */
 const PX3D = (() => {
-  const URL_ = window.PROBABLE_3D_URL || '/assets/probable-3d/probable-3d.js?v=2';
+  const URL_ = window.PROBABLE_3D_URL || '/assets/probable-3d/probable-3d.js?v=3';
   const KEY = 'px3d-still';
   const ls = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* blocked */ } } };
   const reduce = () => !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);

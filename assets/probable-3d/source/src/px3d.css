@@ -20,3 +20,15 @@
 .px3d-split i{display:block;height:100%}
 .px3d-grabbing{cursor:grabbing!important}
 @media (prefers-reduced-motion:reduce){.px3d-label{transition:none}}
+/* market skyline */
+.px3d-sky-val{translate:-50% -100%;font:800 11px/1 var(--px3d-num,ui-monospace,monospace);letter-spacing:-.02em;padding:3px 5px;border-radius:7px;background:rgba(6,14,20,.72);border:1px solid rgba(255,255,255,.12);text-shadow:none;white-space:nowrap}
+.px3d-sky-val.up{color:#5ee6a1}.px3d-sky-val.dn{color:#ff8a84;translate:-50% 0}.px3d-sky-val.flat{color:#c6d0dd}
+.px3d-sky-name{font-size:10.5px;font-weight:600;color:rgba(214,228,238,.86)}
+.px3d-sky-grp{font:700 9px/1 var(--px3d-num,ui-monospace,monospace);letter-spacing:.14em;text-transform:uppercase;color:rgba(160,186,200,.62)}
+.px3d-big.up{color:#5ee6a1}.px3d-big.dn{color:#ff8a84}
+/* carousel arrows */
+.px3d-nav{position:absolute;top:50%;z-index:4;translate:0 -50%;appearance:none;width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(8,14,24,.55);color:#e9f0f8;font:700 20px/1 system-ui,sans-serif;display:grid;place-items:center;cursor:pointer;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.px3d-nav:hover{background:rgba(8,14,24,.82)}
+.px3d-nav:focus-visible{outline:2px solid var(--px3d-accent,#FFB547);outline-offset:2px}
+.px3d-nav.prev{left:10px}.px3d-nav.next{right:10px}
+.px3d-sky-name.above{translate:-50% -100%}

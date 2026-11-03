@@ -1,7 +1,7 @@
 /* Probable Atlas — service worker: the app shell is cached for instant, offline starts; pages and data are fetched
    fresh when online (network first, with a time limit) and the last good copy is served when offline. */
-const V = 'atlas-v2', DATA = 'atlas-data';
-const SHELL = ["/probable-atlas/app/", "/probable-atlas/", "/probable-atlas/finance/", "/probable-atlas/manifest.webmanifest", "/probable-atlas/icons/atlas-192.png", "/probable-atlas/icons/atlas-512.png", "/assets/probable-3d/probable-3d.js?v=2", "/probable-atlas/ai-config.js"];
+const V = 'atlas-v3', DATA = 'atlas-data';
+const SHELL = ["/probable-atlas/app/", "/probable-atlas/", "/probable-atlas/finance/", "/probable-atlas/manifest.webmanifest", "/probable-atlas/icons/atlas-192.png", "/probable-atlas/icons/atlas-512.png", "/assets/probable-3d/probable-3d.js?v=3", "/probable-atlas/ai-config.js"];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(V).then(c => Promise.all(SHELL.map(u => c.add(new Request(u, { cache: 'reload' })).catch(() => { })))).then(() => self.skipWaiting()));
 });

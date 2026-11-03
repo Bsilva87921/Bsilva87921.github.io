@@ -5,8 +5,10 @@
 import { arena } from './arena.js';
 import { globe } from './globe.js';
 import { surface } from './surface.js';
-const KINDS = { arena, globe, surface };
-export const version = '1.0.0';
+import { carousel } from './carousel.js';
+import { skyline } from './skyline.js';
+const KINDS = { arena, globe, surface, carousel, skyline };
+export const version = '1.1.0';
 const KEY = 'px3d-backend';
 const lsGet = k => { try { return localStorage.getItem(k); } catch (e) { return null; } };
 const lsSet = (k, v) => { try { localStorage.setItem(k, v); } catch (e) { /* storage unavailable */ } };
@@ -26,6 +28,8 @@ export async function mount(el, kind, data, opts) {
     update(d) { last = d; if (cur && cur.update) cur.update(d); },
     setPaused(p) { if (cur && cur.setPaused) cur.setPaused(p); },
     focus(...a) { if (cur && cur.focus) cur.focus(...a); },
+    step(k) { if (cur && cur.step) cur.step(k); },
+    get front() { return cur ? cur.front : null; },
     destroy() { dead = true; if (cur) cur.destroy(); cur = null; }
   };
   if (cur.backend === 'WebGPU') {

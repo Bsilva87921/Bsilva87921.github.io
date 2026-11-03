@@ -1,6 +1,6 @@
 /* Probable __NAME__ — service worker: the app shell is cached for instant, offline starts; pages and data are fetched
    fresh when online (network first, with a time limit) and the last good copy is served when offline. */
-const V = '__KEY__-v2', DATA = '__KEY__-data';
+const V = '__KEY__-v3', DATA = '__KEY__-data';
 const SHELL = __SHELL__;
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(V).then(c => Promise.all(SHELL.map(u => c.add(new Request(u, { cache: 'reload' })).catch(() => { })))).then(() => self.skipWaiting()));

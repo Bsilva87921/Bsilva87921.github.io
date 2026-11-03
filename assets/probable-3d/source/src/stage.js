@@ -191,7 +191,7 @@ export class Stage {
       if (d.moved < 8) {
         const it = this.pickAt(p.x, p.y);
         if (it) {
-          if (e.pointerType === 'touch' && this.hover !== it) { this.hover = it; this.showTip(it, p.x, p.y); if (this.onHover) this.onHover(it); this.dirty = true; return; }
+          if (e.pointerType === 'touch' && this.hover !== it && !this.opts.tapOpens) { this.hover = it; this.showTip(it, p.x, p.y); if (this.onHover) this.onHover(it); this.dirty = true; return; }
           if (this.onPick) this.onPick(it.data);
         } else if (e.pointerType === 'touch') { this.hover = null; this.tip.hidden = true; if (this.onHover) this.onHover(null); }
       }
