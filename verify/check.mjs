@@ -11,6 +11,7 @@ const PAGES = [
   { k: 'fin', path: '/probable-atlas/finance/', q: 'Is a correction likely?' },
 ];
 const sleep = ms => new Promise(r => setTimeout(r, ms));
+const OG_ONLY = process.env.OG_ONLY === '1' && OS !== 'mac';   // second pass: previews and the terrain only
 const report = { os: OS, at: new Date().toISOString(), pages: {} };
 const log = (...a) => console.log(...a);
 
@@ -22,6 +23,13 @@ async function launch() {
     }
   }
   return { b: await chromium.launch(), mode: 'Chromium headless' };
+}
+if (process.env.WAIT_FOR) { // wait until the new build is live (Pages deploys can lag the push)
+  for (let i = 0; i < 60; i++) {
+    try { const t = await (await fetch(BASE + '/probable-atlas/finance/?nocache=' + Date.now(), { cache: 'no-store' })).text(); if (t.includes(process.env.WAIT_FOR)) { log('new build is live after', i * 20, 's'); break; } } catch (e) { /* retry */ }
+    await sleep(20000);
+  }
+  await sleep(20000);
 }
 const { b, mode } = await launch();
 report.browser = mode + ' ' + b.version();
@@ -75,6 +83,7 @@ async function ask(pg, q) {
 }
 
 for (const P of PAGES) {
+  if (OG_ONLY) break;
   const R = report.pages[P.k] = {};
   // desktop, light
   let { ctx, pg } = await open(BASE + P.path);
@@ -102,7 +111,12 @@ for (const P of PAGES) {
   await pg.screenshot({ path: `${OUT}/mob-${P.k}.png` }); await ctx.close();
 }
 
-if (OS !== 'mac') {
+if (OG_ONLY) {
+  const { ctx: c0, pg: p0 } = await open(BASE + '/probable-atlas/finance/', { wait: 13000 });
+  report.finTerrain = await state(p0); report.finTerrain.errors = p0._errs.slice(0, 6);
+  const e0 = await p0.$('#mast3d'); if (e0) await e0.screenshot({ path: `${OUT}/3d-fin.png` }); await c0.close();
+}
+if (OS !== 'mac' && !OG_ONLY) {
   // the Atlas app home screen, after visiting both modules so it has saved readings
   const ctx = await b.newContext({ viewport: { width: 1360, height: 900 }, colorScheme: 'light' });
   for (const p of ['/probable-atlas/', '/probable-atlas/finance/']) { const x = await open(BASE + p, { ctx, wait: 9000 }); await x.pg.close(); }
@@ -113,6 +127,8 @@ if (OS !== 'mac') {
   await pg.setViewportSize({ width: 390, height: 844 }); await sleep(2500); await pg.screenshot({ path: `${OUT}/mob-home.png` });
   await ctx.close();
 
+}
+if (OS !== 'mac') {
   // 1200x630 previews: Atlas pages as they are; the Sports Lab as a card with a capture of the page
   for (const k of ['econ', 'fin']) {
     const P = PAGES.find(x => x.k === k);

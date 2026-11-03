@@ -26,6 +26,9 @@ jobs:
           npm install --no-audit --no-fund playwright@1.63.0
           if [ "${{ matrix.name }}" = "linux" ]; then npx playwright install --with-deps chromium; fi
       - name: Check the live sites
+        env:
+          OG_ONLY: "1"
+          WAIT_FOR: "probable-3d.js?v=2"
         run: node verify/check.mjs ${{ matrix.name }}
       - name: Keep the results on this branch
         if: always()
