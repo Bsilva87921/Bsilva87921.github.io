@@ -69,7 +69,11 @@ const APP = (() => {
   }
 
   /* ---------------- events ---------------- */
-  function go(patch, keepScroll) { Object.assign(STATE, patch); render(keepScroll); }
+  function go(patch, keepScroll) {
+    const tabChange = (patch.tab && patch.tab !== STATE.tab) || (patch.scope && patch.scope !== STATE.scope);
+    Object.assign(STATE, patch);
+    if (tabChange && document.startViewTransition && !(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) document.startViewTransition(() => render(keepScroll)); else render(keepScroll);
+  }
   function bind() {
     document.addEventListener('click', ev => {
       const t = ev.target;
@@ -113,6 +117,7 @@ const APP = (() => {
     try { await E.load(); } catch (e) { $('#main').innerHTML = `<div class="card empty">Could not load the data (${esc(e.message)}). Please refresh in a minute.</div>`; return; }
     E.buildCatalog(); header(); hashRoute();
     if (typeof CH !== 'undefined') CH.init(ECHAT.adapter(), STATE);
+    if (typeof FX !== 'undefined') { try { FX.init(STATE); } catch (e) { console.error(e); } }
     render(true);
   }
   return { start, render, openCountry, go };

@@ -322,7 +322,7 @@ table.tbl{border-collapse:collapse;width:100%;font-size:13px}
 .tbl .sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
 .more-link{font-size:12.5px;margin-top:auto}
 
-/* ---------- Ask Atlas chat (shared) ---------- */
+/* ---------- Ask AI chat (shared) ---------- */
 .askbtn{margin-left:auto;display:inline-flex;align-items:center;gap:6px;border:1px solid var(--accent);background:var(--accent-wash);color:var(--accent-ink);border-radius:999px;padding:5px 12px;font-size:13px;font-weight:600}
 .askbtn:hover{background:var(--accent);color:var(--on-accent)}
 .askfab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:55;display:inline-flex;align-items:center;gap:8px;border:1px solid var(--band-line);border-radius:999px;padding:11px 16px 11px 14px;background:var(--band);color:var(--band-ink);font:600 14px var(--f-sans);box-shadow:0 8px 28px rgba(0,0,0,.28)}
@@ -505,6 +505,120 @@ table.tbl{border-collapse:collapse;width:100%;font-size:13px}
 .mg .c.tot{font-weight:600}
 .mg .c.empty{background:transparent}
 .tip .mix{margin-top:4px;font-size:11.5px;color:var(--muted);max-width:240px}
+
+/* ---------- Probable kit: pinned Insights bar ---------- */
+.ins{--ins-h:40px;position:sticky;top:0;z-index:70;padding-top:env(safe-area-inset-top,0px);background:var(--ins-bg,rgba(9,15,26,.92));color:var(--ins-ink,#eaf1f9);border-bottom:1px solid var(--ins-line,rgba(255,255,255,.1));backdrop-filter:saturate(1.5) blur(14px);-webkit-backdrop-filter:saturate(1.5) blur(14px)}
+.ins[hidden]{display:none!important}
+.ins-in{max-width:var(--ins-max,1320px);margin:0 auto;padding:0 16px;height:var(--ins-h);display:flex;align-items:center;gap:12px}
+.ins-stk{position:relative;flex:none;display:inline-flex;align-items:center;gap:5px;padding:4px 9px 4px 7px;border-radius:6px;background:var(--ins-accent,#FFB547);color:var(--ins-accent-ink,#14110a);font:800 10.5px/1.15 var(--ins-font,inherit);letter-spacing:.12em;text-transform:uppercase;transform:rotate(-2.5deg);box-shadow:0 1px 0 rgba(0,0,0,.25),0 6px 14px -4px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.45)}
+.ins-stk::after{content:"";position:absolute;right:0;top:0;width:8px;height:8px;border-radius:0 6px 0 4px;background:linear-gradient(225deg,rgba(255,255,255,.0) 50%,rgba(255,255,255,.55) 50%,rgba(0,0,0,.12));}
+.ins-view{flex:1;min-width:0;height:100%;display:flex;align-items:center;overflow:hidden}
+.ins-item{appearance:none;border:0;background:none;color:inherit;font:500 13.5px/1.3 var(--ins-font,inherit);display:flex;align-items:center;gap:9px;max-width:100%;min-width:0;padding:4px 6px;margin-left:-6px;border-radius:8px;cursor:pointer;text-align:left;animation:insIn .38s cubic-bezier(.2,.8,.2,1)}
+.ins-item:hover{background:rgba(255,255,255,.07)}
+.ins-item:focus-visible,.ins-b:focus-visible,.ins-ask:focus-visible{outline:2px solid var(--ins-accent,#FFB547);outline-offset:2px}
+.ins-tag{flex:none;display:inline-flex;align-items:center;gap:5px;font:700 10px/1 var(--ins-mono,ui-monospace,monospace);letter-spacing:.08em;text-transform:uppercase;padding:4px 7px;border-radius:999px;background:rgba(255,255,255,.08);color:var(--ins-muted,#a9b8c9)}
+.ins-tag span{font-size:8px}
+.ins-up .ins-tag span{color:#4fd18b}.ins-down .ins-tag span{color:#ff7a6b}.ins-warn .ins-tag span{color:#ffc145}.ins-live .ins-tag span{color:#ff5a5a;animation:insBlink 1.6s infinite}.ins-info .ins-tag span{color:var(--ins-accent,#FFB547)}
+.ins-txt{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ins-val{flex:none;font:700 13.5px/1 var(--ins-mono,ui-monospace,monospace);font-variant-numeric:tabular-nums;color:var(--ins-accent,#FFB547)}
+.ins-ctl{flex:none;display:flex;align-items:center;gap:2px}
+.ins-b{appearance:none;width:28px;height:28px;border:0;border-radius:8px;background:none;color:var(--ins-muted,#a9b8c9);font:600 15px/1 var(--ins-font,inherit);cursor:pointer;display:grid;place-items:center}
+.ins-b:hover{background:rgba(255,255,255,.09);color:var(--ins-ink,#fff)}
+.ins-p{font-size:10px;letter-spacing:-1px}
+.ins-n{min-width:30px;text-align:center;font:600 11px/1 var(--ins-mono,ui-monospace,monospace);color:var(--ins-muted,#a9b8c9);font-variant-numeric:tabular-nums}
+.ins-ask{appearance:none;margin-left:6px;display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 12px;border-radius:999px;border:1px solid color-mix(in srgb,var(--ins-accent,#FFB547) 55%,transparent);background:color-mix(in srgb,var(--ins-accent,#FFB547) 14%,transparent);color:var(--ins-ink,#fff);font:600 12.5px/1 var(--ins-font,inherit);cursor:pointer;white-space:nowrap}
+.ins-ask span{color:var(--ins-accent,#FFB547)}
+.ins-ask:hover{background:color-mix(in srgb,var(--ins-accent,#FFB547) 26%,transparent)}
+.ins-prog{position:absolute;left:0;bottom:-1px;height:2px;width:100%;transform-origin:left;transform:scaleX(0);background:linear-gradient(90deg,transparent,var(--ins-accent,#FFB547));opacity:.85;animation:insProg var(--ins-dur,7s) linear forwards;animation-play-state:paused}
+.ins-run .ins-prog{animation-play-state:running}
+.ins-paused .ins-prog{opacity:0}
+@keyframes insIn{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+@keyframes insProg{to{transform:scaleX(1)}}
+@keyframes insBlink{50%{opacity:.25}}
+@media (max-width:640px){.ins{--ins-h:38px}.ins-in{gap:8px;padding:0 10px 0 12px}.ins-stk{font-size:0;gap:0;padding:5px 6px}.ins-stk svg{width:12px;height:12px}.ins-item{font-size:12.5px;gap:7px}.ins-tag{display:none}.ins-n,[data-ins=prev]{display:none}.ins-ask{font-size:0;gap:0;padding:0 9px;margin-left:2px}.ins-ask span{font-size:13px}}
+@media (prefers-reduced-motion:reduce){.ins-item{animation:none}.ins-prog{display:none}.ins-live .ins-tag span{animation:none}}
+@media print{.ins{display:none}}
+
+/* ---------- Probable kit: 3D panels ---------- */
+.px3d{position:relative;overflow:hidden;isolation:isolate}
+.px3d-still{position:absolute;right:10px;bottom:10px;z-index:4;appearance:none;height:26px;padding:0 10px;border-radius:999px;border:1px solid rgba(255,255,255,.18);background:rgba(8,14,24,.55);color:rgba(230,238,248,.9);font:600 11px/1 system-ui,sans-serif;letter-spacing:.02em;cursor:pointer;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.px3d-still:hover{background:rgba(8,14,24,.78)}
+.px3d-still:focus-visible{outline:2px solid var(--px3d-accent,#FFB547);outline-offset:2px}
+.px3d-badge{position:absolute;left:12px;bottom:10px;z-index:4;font:700 9.5px/1 ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;color:rgba(220,232,246,.62);pointer-events:none}
+.px3d-fallback{position:absolute;inset:0;display:grid;place-items:center;color:rgba(220,232,246,.55);font:500 12px/1.4 system-ui,sans-serif;text-align:center;padding:16px}
+.px3d-on .px3d-fallback{display:none}
+
+/* Probable 3D overlay (labels, tooltip). Shared by the Probable sites. */
+.px3d-canvas{position:absolute;inset:0;width:100%!important;height:100%!important;display:block;outline:none}
+.px3d-overlay{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.px3d-label{position:absolute;left:0;top:0;white-space:nowrap;font:600 11px/1.2 var(--px3d-font,system-ui,sans-serif);letter-spacing:.06em;color:rgba(226,236,248,.86);transform:translate(-9999px,0);transition:opacity .25s;will-change:transform;text-shadow:0 1px 6px rgba(0,0,0,.6)}
+.px3d-lane{translate:-100% -50%;text-transform:uppercase;font-size:10.5px;color:rgba(190,210,235,.8)}
+.px3d-tick{translate:-50% 0;font-weight:500;font-size:10.5px;letter-spacing:.02em;color:rgba(170,192,220,.78)}
+.px3d-y{translate:-100% -50%}
+.px3d-y2{translate:4px -50%}
+.px3d-now{translate:-50% 2px;color:var(--px3d-accent,#FFB547);font-weight:800;letter-spacing:.14em;font-size:10.5px}
+.px3d-more{translate:-50% -100%;font-size:10.5px;color:rgba(226,236,248,.9);background:rgba(10,18,32,.65);padding:1px 5px;border-radius:6px}
+.px3d-glabel{translate:-50% -100%;font-weight:600;font-size:11px;letter-spacing:.01em;padding:2px 7px;border-radius:7px;background:rgba(8,18,26,.62);border:1px solid rgba(160,220,210,.22);backdrop-filter:blur(4px)}
+.px3d-tip{position:absolute;left:0;top:0;z-index:3;pointer-events:none;max-width:260px;display:grid;gap:3px;padding:9px 11px;border-radius:11px;background:rgba(9,16,28,.86);color:#eef4fb;border:1px solid rgba(255,255,255,.14);box-shadow:0 10px 30px rgba(0,0,0,.35);backdrop-filter:blur(10px) saturate(1.3);font:500 12.5px/1.35 var(--px3d-font,system-ui,sans-serif)}
+.px3d-tip b{font-weight:700;font-size:13px}
+.px3d-sub{color:rgba(214,226,240,.78);font-size:11.5px}
+.px3d-big{font:700 20px/1.1 var(--px3d-num,ui-monospace,monospace);letter-spacing:-.01em}
+.px3d-probs{font:600 11.5px/1.3 var(--px3d-num,ui-monospace,monospace);color:rgba(236,242,250,.92)}
+.px3d-hint{color:var(--px3d-accent,#FFB547);font-size:11px;font-weight:600}
+.px3d-split{display:flex;height:6px;border-radius:4px;overflow:hidden;margin:3px 0 1px;gap:2px}
+.px3d-split i{display:block;height:100%}
+.px3d-grabbing{cursor:grabbing!important}
+@media (prefers-reduced-motion:reduce){.px3d-label{transition:none}}
+
+/* ---------- Probable Atlas 2.0: Insights bar tokens, 3D masthead, refreshed surface ---------- */
+:root{--ins-h:40px}
+@media (max-width:640px){:root{--ins-h:38px}}
+.ins{--ins-bg:color-mix(in srgb,var(--band) 90%,transparent);--ins-ink:var(--band-ink);--ins-muted:var(--band-muted);--ins-line:var(--band-line);--ins-accent:var(--band-accent);--ins-accent-ink:#081a18;--ins-font:var(--f-sans);--ins-mono:var(--f-mono)}
+.ins-stk{font-family:var(--f-mono);letter-spacing:.13em}
+.bar{top:calc(env(safe-area-inset-top,0px) + var(--ins-h))}
+
+/* 3D masthead: title and modules on the left, the scene on the right */
+.mast.has3d .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);grid-template-areas:"brand stage" "mods stage";align-items:end;gap:14px 28px;padding-block:24px 20px}
+.mast.has3d .brand{grid-area:brand;align-self:end;gap:6px}
+.mast.has3d .brand h1{font-size:clamp(30px,4.2vw,48px)}
+.mast.has3d .modnav{grid-area:mods;justify-content:flex-start;max-width:none;align-self:start}
+.mast-3d{grid-area:stage;position:relative;margin:0;height:300px;min-width:0;border-radius:18px;border:1px solid var(--band-line);background:color-mix(in srgb,var(--band) 70%,#000);box-shadow:inset 0 0 60px rgba(0,0,0,.35),0 18px 40px -24px rgba(0,0,0,.6);--px3d-accent:var(--band-accent);--px3d-font:var(--f-sans);--px3d-num:var(--f-mono)}
+.mast-3d .px3d-canvas{border-radius:18px;-webkit-mask-image:radial-gradient(140% 130% at 50% 50%,#000 60%,transparent 100%);mask-image:radial-gradient(140% 130% at 50% 50%,#000 60%,transparent 100%)}
+.m3-cap{position:absolute;left:14px;top:12px;right:14px;z-index:3;display:flex;flex-direction:column;gap:2px;pointer-events:none;color:var(--band-ink)}
+.m3-cap b{font:600 13px/1.2 var(--f-sans)}
+.m3-cap span{font-size:11.5px;color:var(--band-muted);max-width:62ch}
+.mast.no3d .mast-3d{display:none}
+.mast.no3d .wrap{grid-template-columns:1fr;grid-template-areas:"brand" "mods"}
+.mast.has3d .grat{opacity:.12}
+@media (max-width:900px){
+  .mast.has3d .wrap{grid-template-columns:1fr;grid-template-areas:"brand" "stage" "mods";align-items:start}
+  .mast-3d{height:250px}
+  .m3-cap span{display:none}
+}
+
+/* Ask AI */
+.askfab{background:linear-gradient(135deg,var(--band),color-mix(in srgb,var(--band) 75%,#000));box-shadow:0 10px 30px rgba(0,0,0,.32),0 0 0 4px color-mix(in srgb,var(--band-accent) 14%,transparent)}
+.askfab b{text-shadow:0 0 10px color-mix(in srgb,var(--band-accent) 70%,transparent)}
+.askfab:hover{transform:translateY(-1px)}
+
+/* refreshed surface: depth on hover, smooth transitions, scroll-linked entrances */
+.card,.tile{transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s,border-color .25s}
+.card:hover{box-shadow:0 14px 34px -22px rgba(0,0,0,.45);border-color:color-mix(in srgb,var(--accent) 35%,var(--line))}
+.tile:hover{transform:translateY(-2px);box-shadow:0 12px 28px -18px rgba(0,0,0,.4)}
+::view-transition-old(root),::view-transition-new(root){animation-duration:.26s}
+@supports (animation-timeline:view()){
+  @media (prefers-reduced-motion:no-preference){
+    #main .card{animation:atlasRise linear both;animation-timeline:view();animation-range:entry 0% entry 45%}
+  }
+}
+@keyframes atlasRise{from{opacity:.4;transform:translateY(16px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.card,.tile{transition:none}.tile:hover{transform:none}}
+
+/* globe indicator switch */
+.m3-chips{position:absolute;left:12px;bottom:40px;z-index:4;display:flex;gap:5px;flex-wrap:wrap;max-width:calc(100% - 110px)}
+.m3-chips button{appearance:none;height:26px;padding:0 10px;border-radius:999px;border:1px solid color-mix(in srgb,var(--band-ink) 18%,transparent);background:rgba(4,14,18,.55);color:var(--band-ink);font:600 11.5px/1 var(--f-sans);cursor:pointer;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.m3-chips button[aria-pressed="true"]{background:var(--band-accent);border-color:var(--band-accent);color:#062321}
+.m3-chips button:focus-visible{outline:2px solid var(--band-accent);outline-offset:2px}
 </style><script src="../ai-config.js"></script></head><body>
 <div class="strip">
   <div class="wrap">
@@ -512,7 +626,7 @@ table.tbl{border-collapse:collapse;width:100%;font-size:13px}
     <span class="r"><span class="fresh" id="fresh"><span><span class="dot"></span>Loading data…</span></span><button type="button" class="themebtn" id="themeBtn">☾ Dark mode</button></span>
   </div>
 </div>
-<header class="mast fin">
+<header class="mast fin has3d">
   <svg class="grat" id="grat" aria-hidden="true" preserveAspectRatio="none"></svg>
   <div class="wrap">
     <div class="brand">
@@ -521,6 +635,10 @@ table.tbl{border-collapse:collapse;width:100%;font-size:13px}
       <span class="sub">Stocks, bonds, rates, commodities and crypto: 60 markets daily since 1990 and the S&amp;P 500 since 1928, with tested forecasts, a portfolio lab and recommendations that show their evidence.</span>
     </div>
     <nav class="modnav" id="modnav" aria-label="Atlas modules"></nav>
+    <figure class="mast-3d px3d" id="mast3d" aria-label="3D view: the US Treasury yield curve every month since 1990">
+      <figcaption class="m3-cap"><b>The yield curve since 1990</b><span>Every month's Treasury curve as one terrain · 3-month in front, 30-year at the back · drag to turn, hover to read · coral = inverted</span></figcaption>
+      <div class="px3d-fallback">Loading the 3D yield-curve terrain…</div>
+    </figure>
   </div>
 </header>
 <div class="bar">
@@ -528,7 +646,7 @@ table.tbl{border-collapse:collapse;width:100%;font-size:13px}
     <div class="scope">
       <span class="lab">Find</span>
       <label class="picker"><span class="sr">Open a market</span><select id="assetSel" aria-label="Open a market"><option value="">Any market or rate…</option></select></label>
-      <button type="button" class="askbtn" data-ask="" aria-label="Ask Atlas a question"><span aria-hidden="true">✦</span> Ask Atlas</button>
+      <button type="button" class="askbtn" data-ask="" aria-label="Ask AI a question about this page"><span aria-hidden="true">✦</span> Ask AI</button>
     </div>
     <div class="tabs" role="tablist" id="tabs" aria-label="Sections"></div>
   </div>
@@ -1333,15 +1451,17 @@ const U = (() => {
   return { sec, tile, badge, card, src, alerts, upDown, seg, sel, skill, theme, current, THEME_BOOT };
 })();
 
-/* Probable Atlas kit: "Ask Atlas" chat. A built-in analyst answers from the page's own data and models; when Claude is
-   available (the Claude-hosted copy, a site proxy, or the visitor's own API key) it gets the same data and models as tools. */
+/* Probable kit: the "Ask AI" chat shared by the Probable sites. A built-in analyst answers from the page's own data and
+   models; when Claude is available (the Claude-hosted copy, a site proxy, or the visitor's own API key) it gets the same
+   data and models as tools. A site plugs in with CH.init(adapter, state). */
 const CH = (() => {
-  const { esc } = K;
+  const esc = (typeof K !== 'undefined' && K.esc) || (s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])));
+  const mountCharts = el => { if (A && A.mount) A.mount(el); else if (typeof C !== 'undefined' && C.mount) { C.mount(el); if (C.gc) C.gc(); } };
   let A = null, ST = null, built = false, opened = false, busy = false, ctl = null;
   let engine = 'analyst', sample = null, sampleTools = false, sampleChecked = false;
   const turns = []; // LLM conversation (role/content strings)
   const cfg = window.ATLAS_AI || {};
-  const SNAP = !!(window.ATLAS_FIN_DATA || window.ATLAS_DATA);
+  let SNAP = !!(window.ATLAS_FIN_DATA || window.ATLAS_DATA);
   const KEYS = { key: 'atlas-ai-key', model: 'atlas-ai-model', engine: 'atlas-ai-engine' };
   const MODELS = [['claude-sonnet-5', 'Claude Sonnet 5'], ['claude-haiku-4-5-20251001', 'Claude Haiku 4.5 (fastest)'], ['claude-opus-5-5', 'Claude Opus 5.5 (most capable)']];
   const store = { get(k, s) { try { return (s ? sessionStorage : localStorage).getItem(k); } catch (e) { return null; } }, set(k, v, s) { try { (s ? sessionStorage : localStorage).setItem(k, v); } catch (e) { /* blocked */ } }, del(k) { try { localStorage.removeItem(k); sessionStorage.removeItem(k); } catch (e) { /* blocked */ } } };
@@ -1376,13 +1496,14 @@ const CH = (() => {
   function build() {
     if (built) return; built = true;
     const root = document.getElementById('chatRoot') || document.body.appendChild(Object.assign(document.createElement('div'), { id: 'chatRoot' }));
-    root.innerHTML = `<button type="button" class="askfab" id="askFab" aria-label="Ask Atlas a question"><b aria-hidden="true">✦</b>Ask Atlas</button>
+    const title = A.title || 'Ask AI';
+    root.innerHTML = `<button type="button" class="askfab" id="askFab" aria-label="${esc(title)}: ask a question about this page"><b aria-hidden="true">✦</b>${esc(title)}</button>
       <aside class="chat" id="chat" hidden role="dialog" aria-modal="false" aria-labelledby="chatTitle">
-        <div class="chd"><div><div class="eng" id="chatEng"></div><h2 id="chatTitle">Ask Atlas</h2></div><div class="acts"><button type="button" data-chat="settings" aria-label="Chat settings" title="Settings">⚙</button><button type="button" data-chat="new" aria-label="New conversation" title="New conversation">⟲</button><button type="button" data-chat="close" aria-label="Close chat">×</button></div></div>
+        <div class="chd"><div><div class="eng" id="chatEng"></div><h2 id="chatTitle">${esc(title)}</h2></div><div class="acts"><button type="button" data-chat="settings" aria-label="Chat settings" title="Settings">⚙</button><button type="button" data-chat="new" aria-label="New conversation" title="New conversation">⟲</button><button type="button" data-chat="close" aria-label="Close chat">×</button></div></div>
         <div class="set" id="chatSet" hidden></div>
         <div class="msgs" id="chatMsgs" aria-live="polite"></div>
-        <form id="chatForm"><textarea id="chatIn" rows="1" placeholder="Ask about the data, models, forecasts or your own scenario…" aria-label="Your question"></textarea><button type="submit" id="chatSend">Ask</button></form>
-        <div class="foot">Answers come from this page's data and models. Educational, not investment advice.</div>
+        <form id="chatForm"><textarea id="chatIn" rows="1" placeholder="${esc(A.placeholder || 'Ask about the data, models, forecasts or your own scenario…')}" aria-label="Your question"></textarea><button type="submit" id="chatSend">Ask</button></form>
+        <div class="foot">${esc(A.footer || 'Answers come from this page\'s data and models. Educational, not investment advice.')}</div>
       </aside>`;
     document.getElementById('askFab').addEventListener('click', () => open(''));
     document.getElementById('chatForm').addEventListener('submit', ev => { ev.preventDefault(); if (busy) { if (ctl) ctl.abort(); return; } const t = document.getElementById('chatIn'); const q = t.value.trim(); if (q) { t.value = ''; grow(t); send(q); } });
@@ -1420,9 +1541,9 @@ const CH = (() => {
     if (ev.target.id === 'apiModel') store.set(KEYS.model, ev.target.value);
   }
   function onClick(ev) {
-    const b = ev.target.closest('[data-chat]'), q = ev.target.closest('[data-q]');
+    const b = ev.target.closest('[data-chat]'), q = ev.target.closest('[data-q]:not([data-game])');
     if (q) { send(q.dataset.q); return; }
-    if (!b) { const lnk = ev.target.closest('[data-goto],[data-asset],[data-anchor]'); if (lnk && window.matchMedia('(max-width:900px)').matches) close(); return; }
+    if (!b) { const lnk = ev.target.closest('[data-goto],[data-asset],[data-anchor],[data-game],[data-tabgo]'); if (lnk && window.matchMedia('(max-width:900px)').matches) close(); return; }
     const a = b.dataset.chat;
     if (a === 'close') close();
     if (a === 'new') { turns.length = 0; welcome(); }
@@ -1461,17 +1582,18 @@ const CH = (() => {
     let res;
     try { res = A.answer(q, ST); } catch (e) { console.error(e); res = { html: `<p class="err">Sorry, that question tripped up the built-in analyst (${esc(e.message)}).</p>`, follow: A.suggestions(ST).slice(0, 3) }; }
     const d = bubble('bot', `<div class="meta">Built-in analyst${note ? ' · ' + esc(note) : ''}</div>${res.html}${followHTML(res.follow)}`);
-    C.mount(d); C.gc(); scrollEnd();
+    mountCharts(d); scrollEnd();
   }
   function toolList(attach) { // the adapter's tools plus a chart tool that draws into the current answer
     const tools = A.tools(ST).slice();
-    tools.push({ name: 'show_chart', description: 'Draw a chart in the chat for the user. kind: "price" (a market over a range), "compare" (several markets rebased to 100), or a model chart name from list_charts. Returns a short confirmation.', inputSchema: { type: 'object', properties: { kind: { type: 'string' }, ids: { type: 'array', items: { type: 'string' } }, range: { type: 'string', enum: ['1M', '3M', '6M', 'YTD', '1Y', '3Y', '5Y', '10Y', 'MAX'] } }, required: ['kind'] }, execute: input => { const h = A.chart(input || {}); if (!h) throw new Error('Unknown chart. Use kind "price" or "compare" with ids, or a name from list_charts.'); attach(h); return 'Chart shown to the user.'; } });
+    if (A.chart) tools.push(A.chartTool || { name: 'show_chart', description: 'Draw a chart in the chat for the user. kind: "price" (a market over a range), "compare" (several markets rebased to 100), or a model chart name from list_charts. Returns a short confirmation.', inputSchema: { type: 'object', properties: { kind: { type: 'string' }, ids: { type: 'array', items: { type: 'string' } }, range: { type: 'string', enum: ['1M', '3M', '6M', 'YTD', '1Y', '3Y', '5Y', '10Y', 'MAX'] } }, required: ['kind'] } });
+    const ct = tools[tools.length - 1]; if (A.chart && !ct.execute) ct.execute = input => { const h = A.chart(input || {}); if (!h) throw new Error('Unknown chart. Use a kind or name from list_charts.'); attach(h); return 'Chart shown to the user.'; };
     return tools;
   }
   async function llm(q) {
     const d = bubble('bot', `<div class="meta">${esc(ENG[engine])}</div><div class="att"></div><div class="body"><span class="think"><i></i><i></i><i></i> Thinking…</span></div><div class="stat src"></div>`);
     const body = d.querySelector('.body'), att = d.querySelector('.att'), stat = d.querySelector('.stat');
-    const attach = h => { const w = document.createElement('div'); w.innerHTML = h; att.appendChild(w); C.mount(w); scrollEnd(); };
+    const attach = h => { const w = document.createElement('div'); w.innerHTML = h; att.appendChild(w); mountCharts(w); scrollEnd(); };
     const tools = toolList(attach), looked = [];
     const wrap = tools.map(t => Object.assign({}, t, { execute: async (inp, cx) => { looked.push(t.name.replace(/_/g, ' ')); stat.textContent = 'Looked up: ' + Array.from(new Set(looked)).join(', '); return t.execute(inp || {}, cx); } }));
     const system = A.system(ST);
@@ -1546,7 +1668,7 @@ const CH = (() => {
     retireAge(q) { const m = q.match(/retire (?:at|by)\s?(?:age\s)?(\d{2})/); return m ? +m[1] : null; }
   };
 
-  function init(adapter, state) { A = adapter; ST = state; initEngine(); build(); checkSample(); }
+  function init(adapter, state) { A = adapter; ST = state; if (A.snapshot != null) SNAP = !!A.snapshot; initEngine(); build(); checkSample(); }
   function context(state) { ST = state; }
   return { init, open, close, isOpen, context, send, md, NLU };
 })();
@@ -2639,7 +2761,7 @@ const FV = (() => {
       ${U.card('Last five years', s.log ? 'Log scale, with the 200-day moving average.' : 'Daily values.', chart)}
       ${yrs.length ? U.card('Calendar-year returns', 'Total return including dividends for funds; price change for indexes.', C.bars({ items: yrs, h: 180, yFmt: v => num(v, 0) + '%', valueLabels: yrs.length <= 8, tip: d => `<b>${esc(d.label)}</b>${K.tipRow(d.color, 'Return', esc(P(d.y)))}` })) : ''}
       ${kv ? U.card('Risk and return', '', kv) : ''}
-      <div class="pill-row"><button type="button" class="btn pri" data-goto="markets" data-focus="${esc(id)}">Chart it in Markets</button><button type="button" class="btn" data-ask="${esc('How is ' + F.short(id) + ' doing, and what are the risks?')}">Ask Atlas about ${esc(F.short(id))}</button><button type="button" class="btn" data-close>Close</button></div></div>`);
+      <div class="pill-row"><button type="button" class="btn pri" data-goto="markets" data-focus="${esc(id)}">Chart it in Markets</button><button type="button" class="btn" data-ask="${esc('How is ' + F.short(id) + ' doing, and what are the risks?')}">Ask AI about ${esc(F.short(id))}</button><button type="button" class="btn" data-close>Close</button></div></div>`);
     C.mount(document.getElementById('drawer'));
   }
 
@@ -3280,7 +3402,7 @@ const VRF = (() => {
     return `${U.sec('Recommendations', 'Evidence-based ideas ranked for your situation. Each card shows the data behind it, the expected effect and the trade-offs. Educational, not investment advice.')}
       <section class="card prof"><div class="profrow"><div class="ctrl"><label><span>When will you need the money?</span></label>${U.seg('rhorizon', PROF.horizon, p.horizon, 'Horizon')}</div><div class="ctrl"><label><span>How much decline can you sit through?</span></label>${U.seg('rrisk', PROF.risk, p.risk, 'Risk tolerance')}</div></div></section>
       <div class="grid g-5-7" style="margin-top:14px">
-        ${U.card('A starting mix for this profile', `Expected ${sgn(s.er, 1, '%')} a year, volatility ${num(s.vol, 1)}%, a bad year ${sgn(s.p5, 0, '%')}.`, `<div class="mixlist">${rows}</div>${mix.notes.length ? `<div class="callout" style="margin-top:10px"><b>Adjusted for today's conditions:</b><ul>${mix.notes.map(n => `<li>${esc(n)}</li>`).join('')}</ul></div>` : ''}<div class="pill-row" style="margin-top:10px"><button type="button" class="btn pri" data-labload="${esc(JSON.stringify(mix.w))}">Open in What-if lab</button><button type="button" class="btn" data-ask="Explain the suggested mix for my profile and the risks.">Ask Atlas why</button></div>`)}
+        ${U.card('A starting mix for this profile', `Expected ${sgn(s.er, 1, '%')} a year, volatility ${num(s.vol, 1)}%, a bad year ${sgn(s.p5, 0, '%')}.`, `<div class="mixlist">${rows}</div>${mix.notes.length ? `<div class="callout" style="margin-top:10px"><b>Adjusted for today's conditions:</b><ul>${mix.notes.map(n => `<li>${esc(n)}</li>`).join('')}</ul></div>` : ''}<div class="pill-row" style="margin-top:10px"><button type="button" class="btn pri" data-labload="${esc(JSON.stringify(mix.w))}">Open in What-if lab</button><button type="button" class="btn" data-ask="Explain the suggested mix for my profile and the risks.">Ask AI why</button></div>`)}
         <div>${R.list(list.slice(0, 3))}</div>
       </div>
       ${U.sec('More ideas', 'Ranked lower for this profile, but worth reading.')}
@@ -3393,7 +3515,7 @@ const VHF = (() => {
   return { view, how };
 })();
 
-/* Probable Atlas · Finance: the Ask Atlas adapter. A built-in analyst (intent matching over live data and models) plus
+/* Probable Atlas · Finance: the Ask AI adapter. A built-in analyst (intent matching over live data and models) plus
    the tool set Claude uses when it is available. */
 const FCHAT = (() => {
   const { esc, ok, num, pct, sgn } = K, N = CH.NLU;
@@ -3665,7 +3787,7 @@ const FCHAT = (() => {
     return { md: `**Data:** Yahoo Finance (61 funds, indexes, futures and crypto, daily since 1990; S&P 500 since 1928), FRED (34 rate, credit, FX and commodity series), Robert Shiller (since 1871) and Kenneth French (since 1926). Last refresh ${K.isoLab((ms.fetched_at || '').slice(0, 10))}; runs automatically several times each weekday.\n\n**Out-of-sample track records:**\n- Volatility/VaR: 99% VaR breached ${num(bt.rate1, 2)}% of days vs 1% target (passes Kupiec and Christoffersen tests). Strong.\n- Regimes: separate next-month volatility (${pct(rg.fwd[0].vol, 0)} calm vs ${pct(rg.fwd[2].vol, 0)} stress) but not returns. Useful for risk.\n- CAPE: R² ${num(cp.r2oos, 2)} for 10-year returns vs the running average. Useful for long horizons.\n- Correction risk: AUC ${num(ev.auc, 2)}, Brier skill ${sgn(ev.bss * 100, 1, '%')}. Modest.\n\nEvery forecast is scored on data it did not see when it was made.`, extra: link('Open How it works', 'how'), follow: ['Is a correction likely?', 'What is a Brier skill score?'] };
   });
 
-  intent('econ', ['gdp', 'unemployment', 'jobs report', 'economy', 'recession probability', 'payrolls', 'world economy'], () => ({ md: `Macro questions like growth, jobs and recession odds live in the **Economics** module, which has its own Ask Atlas with recession models and country data. From the markets side: the yield curve (10y minus 3m) is ${FV.pp(F.lastVal('DGS10') - F.lastVal('DGS3MO'))}, credit spreads are ${num(F.lastVal('BAA10Y'), 2)} pp, and the correction model reads ${pct(FM.risk('dd10').now.p * 100, 0)} for a 10% fall within six months.`, extra: `<a href="${esc(ECON_URL)}"${window.ATLAS_FIN_DATA ? ' target="_blank" rel="noopener"' : ''}>Open the Economics module →</a>`, follow: ['What does the yield curve say?', 'Is a correction likely?'] }));
+  intent('econ', ['gdp', 'unemployment', 'jobs report', 'economy', 'recession probability', 'payrolls', 'world economy'], () => ({ md: `Macro questions like growth, jobs and recession odds live in the **Economics** module, which has its own Ask AI with recession models and country data. From the markets side: the yield curve (10y minus 3m) is ${FV.pp(F.lastVal('DGS10') - F.lastVal('DGS3MO'))}, credit spreads are ${num(F.lastVal('BAA10Y'), 2)} pp, and the correction model reads ${pct(FM.risk('dd10').now.p * 100, 0)} for a 10% fall within six months.`, extra: `<a href="${esc(ECON_URL)}"${window.ATLAS_FIN_DATA ? ' target="_blank" rel="noopener"' : ''}>Open the Economics module →</a>`, follow: ['What does the yield curve say?', 'Is a correction likely?'] }));
 
   intent('asset', [], (q) => { const ids = findAssets(q); if (!ids.length) return null; return assetAnswer(ids[0]); }, { fallback: true });
 
@@ -3719,7 +3841,7 @@ const FCHAT = (() => {
     ];
     return lines.join('\n');
   }
-  const system = st => `You are Ask Atlas, the analyst built into "Probable Atlas · Finance", an educational markets dashboard made by Bruno Silva. You answer questions about the data, analytics, forecasts and recommendations on this page, and you run scenarios for the user's situation with the tools provided.
+  const system = st => `You are Ask AI, the analyst built into "Probable Atlas · Finance", an educational markets dashboard made by Bruno Silva. You answer questions about the data, analytics, forecasts and recommendations on this page, and you run scenarios for the user's situation with the tools provided.
 
 Rules:
 - Get numbers from the tools or the context below; never invent figures. Cite dates for market levels.
@@ -3787,6 +3909,177 @@ ${contextPack(st)}`;
   return { adapter, findAssets, parsePortfolio, parsePlan, parseShock, answer, contextPack };
 })();
 
+/* Probable kit: the pinned Insights bar shared by the Probable sites. It stays at the top while the page scrolls and
+   rotates through the site's key live insights; each one can jump to where it comes from or go to Ask AI.
+   Auto-rotation pauses on hover, on keyboard focus, with the pause button, and starts paused for reduced motion. */
+const INS = (() => {
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const reduce = () => !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+  let root = null, items = [], i = 0, timer = null, held = false, paused = false, O = {}, sig = '';
+  const ICON = { up: '▲', down: '▼', warn: '!', live: '●', info: '✦' };
+  function mount(opts) {
+    O = Object.assign({ interval: 7000 }, opts || {});
+    if (root) return;
+    root = document.createElement('div');
+    root.className = 'ins'; root.id = 'insBar';
+    root.setAttribute('role', 'region'); root.setAttribute('aria-roledescription', 'carousel'); root.setAttribute('aria-label', 'Insights');
+    root.innerHTML = `<div class="ins-in">
+      <span class="ins-stk" aria-hidden="true"><svg viewBox="0 0 16 16" width="13" height="13"><path d="M8 0l1.8 5.2L15 7l-5.2 1.8L8 14l-1.8-5.2L1 7l5.2-1.8z" fill="currentColor"/></svg>Insights</span>
+      <div class="ins-view" aria-live="off"></div>
+      <div class="ins-ctl">
+        <button type="button" class="ins-b" data-ins="prev" aria-label="Previous insight">‹</button>
+        <span class="ins-n" aria-hidden="true"></span>
+        <button type="button" class="ins-b" data-ins="next" aria-label="Next insight">›</button>
+        <button type="button" class="ins-b ins-p" data-ins="pause" aria-pressed="false" aria-label="Pause insights">❚❚</button>
+        <button type="button" class="ins-ask" data-ins="ask"><span aria-hidden="true">✦</span> Ask AI</button>
+      </div></div><i class="ins-prog" aria-hidden="true"></i>`;
+    (O.parent || document.body).insertBefore(root, (O.parent || document.body).firstChild);
+    paused = reduce() || O.paused === true;
+    root.addEventListener('click', onClick);
+    root.addEventListener('mouseenter', () => { held = true; sync(); });
+    root.addEventListener('mouseleave', () => { held = false; sync(); });
+    root.addEventListener('focusin', () => { held = true; sync(); });
+    root.addEventListener('focusout', e => { if (!root.contains(e.relatedTarget)) { held = false; sync(); } });
+    document.addEventListener('visibilitychange', sync);
+    paintPause();
+  }
+  function onClick(e) {
+    const b = e.target.closest('[data-ins]'); if (!b) return;
+    const a = b.dataset.ins, it = items[i];
+    if (a === 'prev' || a === 'next') { go(a === 'next' ? 1 : -1, true); return; }
+    if (a === 'pause') { paused = !paused; paintPause(); sync(); return; }
+    if (a === 'ask') { if (O.ask) O.ask(it && it.ask ? it.ask : ''); return; }
+    if (a === 'go' && it) { if (typeof it.go === 'function') it.go(); else if (O.go) O.go(it); }
+  }
+  function paintPause() {
+    const p = root && root.querySelector('.ins-p'); if (!p) return;
+    p.setAttribute('aria-pressed', String(paused)); p.setAttribute('aria-label', paused ? 'Play insights' : 'Pause insights'); p.textContent = paused ? '▶' : '❚❚';
+    root.classList.toggle('ins-paused', paused);
+  }
+  function set(list) {
+    const next = (list || []).filter(x => x && x.text);
+    const s = next.map(x => x.id + '|' + x.text + '|' + (x.val || '')).join('\n');
+    if (s === sig) return; sig = s;
+    const cur = items[i] && items[i].id;
+    items = next; const k = items.findIndex(x => x.id === cur); i = k >= 0 ? k : 0;
+    if (!root) return;
+    root.hidden = !items.length;
+    render(false); sync();
+  }
+  function render(announce) {
+    const v = root.querySelector('.ins-view'), it = items[i]; if (!it) { v.innerHTML = ''; return; }
+    v.setAttribute('aria-live', announce ? 'polite' : 'off');
+    const tone = it.tone || 'info';
+    v.innerHTML = `<button type="button" class="ins-item ins-${esc(tone)}" data-ins="go" title="${esc(it.text + (it.val ? ' ' + it.val : ''))}">${it.tag ? `<span class="ins-tag"><span aria-hidden="true">${ICON[tone] || ICON.info}</span>${esc(it.tag)}</span>` : ''}<span class="ins-txt">${esc(it.text)}</span>${it.val ? `<b class="ins-val">${esc(it.val)}</b>` : ''}</button>`;
+    root.querySelector('.ins-n').textContent = items.length > 1 ? (i + 1) + '/' + items.length : '';
+    root.querySelectorAll('[data-ins=prev],[data-ins=next],.ins-p,.ins-n').forEach(b => { b.hidden = items.length < 2; });
+    const prog = root.querySelector('.ins-prog'); prog.style.animation = 'none'; void prog.offsetWidth; prog.style.animation = '';
+    root.style.setProperty('--ins-dur', (O.interval / 1000) + 's');
+  }
+  function go(d, manual) { if (!items.length) return; i = (i + d + items.length) % items.length; render(!!manual); sync(); }
+  function sync() {
+    clearTimeout(timer);
+    const run = !paused && !held && !document.hidden && items.length > 1;
+    if (root) root.classList.toggle('ins-run', run);
+    if (run) timer = setTimeout(() => go(1, false), O.interval);
+  }
+  return { mount, set, go: d => go(d, true), get items() { return items; } };
+})();
+
+/* Probable kit: loader for the shared 3D bundle (Three.js r186, WebGPU with a WebGL 2 fallback). The bundle loads after
+   the page is interactive and only when the browser can draw it; if it can't, the page keeps its 2D design.
+   A "still" toggle stops the motion and is remembered per visitor. */
+const PX3D = (() => {
+  const URL_ = window.PROBABLE_3D_URL || '/assets/probable-3d/probable-3d.js?v=1';
+  const KEY = 'px3d-still';
+  const ls = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* blocked */ } } };
+  const reduce = () => !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+  const still = () => reduce() || ls.get(KEY) === '1';
+  let mod = null;
+  function can() {
+    try { if (navigator.gpu) return true; const c = document.createElement('canvas'); return !!(c.getContext('webgl2')); } catch (e) { return false; }
+  }
+  function load() { return mod || (mod = import(URL_)); }
+  const idle = fn => (window.requestIdleCallback ? requestIdleCallback(fn, { timeout: 1800 }) : setTimeout(fn, 350));
+  async function mount(el, kind, data, opts) {
+    if (!el || !can()) throw new Error('3D not available');
+    const m = await load();
+    const ctl = await m.mount(el, kind, data, Object.assign({ reducedMotion: still() }, opts || {}));
+    el.classList.add('px3d-on');
+    return ctl;
+  }
+  // a small "motion" switch inside a 3D panel
+  function motionToggle(host, ctl) {
+    if (!host || host.querySelector('.px3d-still')) return;
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'px3d-still';
+    const paint = () => { const s = ls.get(KEY) === '1' || reduce(); b.setAttribute('aria-pressed', String(s)); b.textContent = s ? '▶ Motion' : '❚❚ Still'; b.title = s ? 'Turn the 3D motion back on' : 'Stop the 3D motion'; };
+    b.addEventListener('click', () => { const s = !(ls.get(KEY) === '1'); ls.set(KEY, s ? '1' : '0'); if (ctl && ctl.setPaused) ctl.setPaused(s || reduce()); paint(); });
+    paint(); host.appendChild(b);
+  }
+  return { mount, can, load, idle, still, motionToggle };
+})();
+
+/* Probable Atlas · Finance 2.0: the pinned Insights bar (key readings from the live data and models) and the 3D
+   US Treasury yield-curve terrain in the masthead. */
+const FX = (() => {
+  const { esc } = K;
+  const ok = v => v != null && isFinite(v);
+  const sg = (v, d, u) => (v > 0 ? '+' : v < 0 ? '−' : '') + K.num(Math.abs(v), d) + (u || '');
+  function scrollToTitle(title) {
+    const h = [...document.querySelectorAll('#main h2, #main h3')].find(x => x.textContent.trim().toLowerCase().startsWith(title.toLowerCase()));
+    if (!h) return;
+    const off = (document.querySelector('.bar') || { offsetHeight: 0 }).offsetHeight + (document.getElementById('insBar') || { offsetHeight: 0 }).offsetHeight + 12;
+    scrollTo({ top: h.getBoundingClientRect().top + scrollY - off, behavior: 'smooth' });
+  }
+  const toCard = (tab, title) => () => { APP.go({ tab }); setTimeout(() => scrollToTitle(title), 90); };
+  function insights() {
+    const out = [], tryAdd = f => { try { const x = f(); if (x) out.push(x); } catch (e) { console.warn('insight', e); } };
+    tryAdd(() => {
+      const q = F.quote('^GSPC'), y = F.ytd('^GSPC'), dd = F.drawdown('^GSPC');
+      return { id: 'spx', tag: 'S&P 500', tone: q.pct >= 0 ? 'up' : 'down', text: `S&P 500 at ${K.num(q.last, 0)}: ${sg(q.pct, 2, '%')} on ${K.isoLab(q.date)}, ${sg(y, 1, '%')} this year${dd && dd.dd < -0.5 ? `, ${K.num(-dd.dd, 1)}% below its record` : ', at a record'}`, val: sg(q.pct, 2, '%'), go: () => FV.openAsset('^GSPC'), ask: 'How is the S&P 500 doing, and what are the risks?' };
+    });
+    tryAdd(() => { const rg = FM.regime(); const p = rg.now[rg.state]; return { id: 'regime', tag: 'Regime', tone: rg.state === 0 ? 'up' : rg.state === 2 ? 'down' : 'warn', text: `The regime model reads the market as ${rg.names[rg.state].toLowerCase()}, with probability`, val: K.num(p * 100, 0) + '%', go: toCard('models', 'Market regimes'), ask: 'What does the regime model say right now?' }; });
+    tryAdd(() => { const d = FM.dd10(); if (!d.now) return null; const hi = d.now.p > d.baseRate * 1.25; return { id: 'corr', tag: 'Correction risk', tone: hi ? 'warn' : 'info', text: `Chance of a 10% fall within six months, against a ${K.num(d.baseRate * 100, 0)}% base rate (modest skill)`, val: K.num(d.now.p * 100, 0) + '%', go: toCard('models', 'Correction and bear-market risk'), ask: 'Is a correction likely?' }; });
+    tryAdd(() => { const v = F.lastVal('^VIX'), vm = FM.volModel(); return { id: 'vol', tag: 'Volatility', tone: v >= 22 ? 'warn' : 'info', text: `VIX ${K.num(v, 1)}; the GARCH model expects daily S&P 500 swings of about`, val: '±' + K.num(vm.sdDay, 1) + '%', go: toCard('models', 'Volatility and value-at-risk'), ask: 'How volatile are markets right now?' }; });
+    tryAdd(() => { const s10 = F.lastVal('DGS10'), s3 = F.lastVal('DGS3MO'); if (!ok(s10) || !ok(s3)) return null; const d = s10 - s3; return { id: 'curve', tag: 'Yield curve', tone: d < 0 ? 'warn' : 'info', text: `10-year Treasury ${K.num(s10, 2)}% vs 3-month ${K.num(s3, 2)}%: the curve is ${d < 0 ? 'inverted' : 'upward sloping'}, spread`, val: sg(d, 2, ' pp'), go: () => { APP.go({ tab: 'markets' }); setTimeout(() => scrollToTitle('Yield curve'), 90); }, ask: 'What is the yield curve saying?' }; });
+    tryAdd(() => { const ap = FM.appetite(); if (!ok(ap.now)) return null; return { id: 'appetite', tag: 'Risk appetite', tone: ap.now < 30 ? 'down' : ap.now > 70 ? 'up' : 'info', text: `Risk appetite gauge (six market readings): ${ap.label.toLowerCase()}`, val: K.num(ap.now, 0) + '/100', go: toCard('models', 'Risk appetite gauge'), ask: 'What does the risk appetite gauge measure?' }; });
+    tryAdd(() => { const cp = FM.cape(); if (!cp) return null; return { id: 'cape', tag: 'Valuation', tone: cp.pctile > 90 ? 'warn' : 'info', text: `CAPE ${K.num(cp.last.cape, 1)}, ${K.ord(Math.round(cp.pctile))} percentile since 1881; history implies a 10-year real return near`, val: K.num(cp.fc, 1) + '%/yr', go: toCard('models', 'Long-run expected returns'), ask: 'Are stocks overvalued?' }; });
+    tryAdd(() => {   // biggest mover of the day among the tracked markets
+      const ids = F.GROUPS.flatMap(([g]) => F.assets(g)).filter(id => F.ser(id) && F.ser(id).log && F.ser(id).cls !== 'vol');
+      const mv = ids.map(id => ({ id, q: F.quote(id) })).filter(x => x.q && ok(x.q.pct)).sort((a, b) => Math.abs(b.q.pct) - Math.abs(a.q.pct))[0];
+      if (!mv || Math.abs(mv.q.pct) < 1) return null;
+      return { id: 'mover', tag: 'Biggest mover', tone: mv.q.pct >= 0 ? 'up' : 'down', text: `${F.short(mv.id)} moved the most of ${ids.length} markets on ${K.isoLab(mv.q.date)}`, val: sg(mv.q.pct, 1, '%'), go: () => FV.openAsset(mv.id), ask: `Why did ${F.short(mv.id)} move so much?` };
+    });
+    return out;
+  }
+  // monthly Treasury curve since 1990 for the 3D terrain
+  function surfaceData() {
+    const me = F.monthEnds(), ids = FV.MAT.map(m => m[0]), NM = { '1M': '1-month', '3M': '3-month', '6M': '6-month', '1Y': '1-year', '2Y': '2-year', '3Y': '3-year', '5Y': '5-year', '7Y': '7-year', '10Y': '10-year', '20Y': '20-year', '30Y': '30-year' };
+    const z = [];
+    me.ix.forEach(i => { for (const id of ids) { let v = NaN; for (let j = i; j >= Math.max(0, i - 25) && !ok(v); j--) v = F.at(id, j); z.push(ok(v) ? v : NaN); } });
+    return { dates: me.keys, mats: FV.MLAB.map(l => ({ label: l, name: NM[l] || l })), z };
+  }
+  let ctl = null;
+  async function mount3d() {
+    const host = document.getElementById('mast3d'); if (!host || ctl) return;
+    const mast = document.querySelector('.mast');
+    try {
+      const bg = getComputedStyle(mast).backgroundColor;
+      ctl = await PX3D.mount(host, 'surface', surfaceData(), { bg: toHex(bg), accent: getComputedStyle(document.documentElement).getPropertyValue('--band-accent').trim() || '#F2B33D' });
+      const b = document.createElement('span'); b.className = 'px3d-badge'; b.textContent = ctl.backend === 'WebGPU' ? 'WebGPU' : 'WebGL 2'; host.appendChild(b);
+      PX3D.motionToggle(host, ctl);
+      mast.classList.add('has3d-on');
+    } catch (e) { mast.classList.add('no3d'); }
+  }
+  function toHex(c) { const m = String(c).match(/\d+(\.\d+)?/g); if (!m) return '#0c1a22'; return '#' + m.slice(0, 3).map(x => (+x | 0).toString(16).padStart(2, '0')).join(''); }
+  function init() {
+    INS.mount({ ask: q => { if (HAS_CH()) CH.open(q); } });
+    INS.set(insights());
+    if (document.getElementById('mast3d')) PX3D.idle(mount3d);
+  }
+  return { init, insights, surfaceData };
+})();
+
 /* Probable Atlas · Finance: app shell (tabs, module nav, asset drawer, events, theme, chat hookup). */
 const TABS = [['live', 'Live now'], ['markets', 'Markets'], ['models', 'Models & forecasts'], ['whatif', 'What-if lab'], ['recs', 'Recommendations'], ['history', 'History'], ['how', 'How it works']];
 const ECON_URL = window.ATLAS_FIN_DATA ? 'https://bsilva87921.github.io/probable-atlas/' : '../';
@@ -3825,7 +4118,12 @@ const APP = (() => {
     STATE.save();
     if (HAS_CH()) CH.context(STATE);
   }
-  function go(patch, keepScroll) { Object.assign(STATE, patch); render(keepScroll); }
+  function go(patch, keepScroll) {
+    const tabChange = patch.tab && patch.tab !== STATE.tab;
+    Object.assign(STATE, patch);
+    // cross-fade between tabs where view transitions exist (skipped for reduced motion)
+    if (tabChange && document.startViewTransition && !(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) document.startViewTransition(() => render(keepScroll)); else render(keepScroll);
+  }
   function scrollToId(id) { const el = document.getElementById(id); if (!el) return; const bar = $('.bar').offsetHeight; scrollTo({ top: el.getBoundingClientRect().top + scrollY - bar - 10, behavior: 'smooth' }); }
   let playT = null;
   function curve() { const host = document.getElementById('curveHost'); if (!host) return; const card = host.closest('.card'); const tmp = document.createElement('div'); tmp.innerHTML = VMK.curveMachine(STATE); card.replaceWith(tmp.firstElementChild); C.mount($('#main')); C.gc(); }
@@ -3876,6 +4174,7 @@ const APP = (() => {
     try { await F.load(); } catch (e) { $('#main').innerHTML = `<div class="card empty">Could not load the market data (${esc(e.message)}). Please refresh in a minute.</div>`; return; }
     header(); hashRoute();
     if (HAS_CH()) CH.init(FCHAT.adapter(), STATE);
+    if (typeof FX !== 'undefined') { try { FX.init(STATE); } catch (e) { console.error(e); } }
     setTimeout(() => render(true), 0);
   }
   return { start, render, go };

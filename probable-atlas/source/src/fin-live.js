@@ -42,7 +42,7 @@ const FV = (() => {
       ${U.card('Last five years', s.log ? 'Log scale, with the 200-day moving average.' : 'Daily values.', chart)}
       ${yrs.length ? U.card('Calendar-year returns', 'Total return including dividends for funds; price change for indexes.', C.bars({ items: yrs, h: 180, yFmt: v => num(v, 0) + '%', valueLabels: yrs.length <= 8, tip: d => `<b>${esc(d.label)}</b>${K.tipRow(d.color, 'Return', esc(P(d.y)))}` })) : ''}
       ${kv ? U.card('Risk and return', '', kv) : ''}
-      <div class="pill-row"><button type="button" class="btn pri" data-goto="markets" data-focus="${esc(id)}">Chart it in Markets</button><button type="button" class="btn" data-ask="${esc('How is ' + F.short(id) + ' doing, and what are the risks?')}">Ask Atlas about ${esc(F.short(id))}</button><button type="button" class="btn" data-close>Close</button></div></div>`);
+      <div class="pill-row"><button type="button" class="btn pri" data-goto="markets" data-focus="${esc(id)}">Chart it in Markets</button><button type="button" class="btn" data-ask="${esc('How is ' + F.short(id) + ' doing, and what are the risks?')}">Ask AI about ${esc(F.short(id))}</button><button type="button" class="btn" data-close>Close</button></div></div>`);
     C.mount(document.getElementById('drawer'));
   }
 

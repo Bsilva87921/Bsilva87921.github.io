@@ -1,16 +1,24 @@
 #!/usr/bin/env python3
 """Build Probable Atlas · Finance: dist/fin-site/index.html (loads ../data/*.json) and dist/probable-atlas-finance.html (embedded snapshot)."""
 import json, os, sys
+def px3d_css():
+    """The shared 3D overlay styles: the working copy, or the repo layout (assets/probable-3d/source/src)."""
+    here = os.path.dirname(os.path.abspath(__file__))
+    for p in (os.path.join(here, '..', 'fx3d', 'src', 'px3d.css'), os.path.join(here, '..', '..', 'assets', 'probable-3d', 'source', 'src', 'px3d.css')):
+        if os.path.exists(p):
+            with open(p, encoding='utf-8') as f: return f.read()
+    return ''
+
 R = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(R, 'src')
 JS = ['kit-core.js', 'kit-stats.js', 'kit-charts.js', 'kit-table.js', 'kit-ui.js', 'kit-chat.js', 'fin-data.js', 'fin-models.js', 'fin-port.js',
-      'fin-live.js', 'fin-markets.js', 'fin-modview.js', 'fin-lab.js', 'fin-reco.js', 'fin-hist.js', 'fin-chat.js', 'fin-app.js']
+      'fin-live.js', 'fin-markets.js', 'fin-modview.js', 'fin-lab.js', 'fin-reco.js', 'fin-hist.js', 'fin-chat.js', 'kit-insights.js', 'kit-3d.js', 'fin-fx.js', 'fin-app.js']
 read = lambda f: open(os.path.join(SRC, f), encoding='utf-8').read()
 TITLE = 'Probable Atlas Finance'
 DESC = 'Live markets dashboard: 60 markets and 34 rates since 1990, tested forecasts, a portfolio lab, evidence-based recommendations and an AI analyst.'
 FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,500;0,600;1,400&display=swap">'
 BOOT = "<script>try{var t=localStorage.getItem('atlas-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>"
-css = read('style.css') + '\n' + read('fin.css'); body = read('fin-body.html'); js = '\n'.join(read(f) for f in JS)
+css = read('style.css') + '\n' + read('fin.css') + '\n' + read('kit-fx.css') + '\n' + px3d_css() + '\n' + read('atlas-fx.css'); body = read('fin-body.html'); js = '\n'.join(read(f) for f in JS)
 js = js.replace('</script', '<\\/script')
 
 def snapshot(d):
@@ -40,3 +48,4 @@ if __name__ == '__main__':
     for n in ('markets.json', 'markets-long.json', 'mstatus.json'):
         open(os.path.join(R, 'dist', 'data', n), 'w').write(open(os.path.join(d, n)).read())
     print('site', len(site), 'artifact', len(art))
+

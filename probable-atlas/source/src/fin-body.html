@@ -4,7 +4,7 @@
     <span class="r"><span class="fresh" id="fresh"><span><span class="dot"></span>Loading data…</span></span><button type="button" class="themebtn" id="themeBtn">☾ Dark mode</button></span>
   </div>
 </div>
-<header class="mast fin">
+<header class="mast fin has3d">
   <svg class="grat" id="grat" aria-hidden="true" preserveAspectRatio="none"></svg>
   <div class="wrap">
     <div class="brand">
@@ -13,6 +13,10 @@
       <span class="sub">Stocks, bonds, rates, commodities and crypto: 60 markets daily since 1990 and the S&amp;P 500 since 1928, with tested forecasts, a portfolio lab and recommendations that show their evidence.</span>
     </div>
     <nav class="modnav" id="modnav" aria-label="Atlas modules"></nav>
+    <figure class="mast-3d px3d" id="mast3d" aria-label="3D view: the US Treasury yield curve every month since 1990">
+      <figcaption class="m3-cap"><b>The yield curve since 1990</b><span>Every month's Treasury curve as one terrain · 3-month in front, 30-year at the back · drag to turn, hover to read · coral = inverted</span></figcaption>
+      <div class="px3d-fallback">Loading the 3D yield-curve terrain…</div>
+    </figure>
   </div>
 </header>
 <div class="bar">
@@ -20,7 +24,7 @@
     <div class="scope">
       <span class="lab">Find</span>
       <label class="picker"><span class="sr">Open a market</span><select id="assetSel" aria-label="Open a market"><option value="">Any market or rate…</option></select></label>
-      <button type="button" class="askbtn" data-ask="" aria-label="Ask Atlas a question"><span aria-hidden="true">✦</span> Ask Atlas</button>
+      <button type="button" class="askbtn" data-ask="" aria-label="Ask AI a question about this page"><span aria-hidden="true">✦</span> Ask AI</button>
     </div>
     <div class="tabs" role="tablist" id="tabs" aria-label="Sections"></div>
   </div>

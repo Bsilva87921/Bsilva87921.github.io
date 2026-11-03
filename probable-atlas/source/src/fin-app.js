@@ -36,7 +36,12 @@ const APP = (() => {
     STATE.save();
     if (HAS_CH()) CH.context(STATE);
   }
-  function go(patch, keepScroll) { Object.assign(STATE, patch); render(keepScroll); }
+  function go(patch, keepScroll) {
+    const tabChange = patch.tab && patch.tab !== STATE.tab;
+    Object.assign(STATE, patch);
+    // cross-fade between tabs where view transitions exist (skipped for reduced motion)
+    if (tabChange && document.startViewTransition && !(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) document.startViewTransition(() => render(keepScroll)); else render(keepScroll);
+  }
   function scrollToId(id) { const el = document.getElementById(id); if (!el) return; const bar = $('.bar').offsetHeight; scrollTo({ top: el.getBoundingClientRect().top + scrollY - bar - 10, behavior: 'smooth' }); }
   let playT = null;
   function curve() { const host = document.getElementById('curveHost'); if (!host) return; const card = host.closest('.card'); const tmp = document.createElement('div'); tmp.innerHTML = VMK.curveMachine(STATE); card.replaceWith(tmp.firstElementChild); C.mount($('#main')); C.gc(); }
@@ -87,6 +92,7 @@ const APP = (() => {
     try { await F.load(); } catch (e) { $('#main').innerHTML = `<div class="card empty">Could not load the market data (${esc(e.message)}). Please refresh in a minute.</div>`; return; }
     header(); hashRoute();
     if (HAS_CH()) CH.init(FCHAT.adapter(), STATE);
+    if (typeof FX !== 'undefined') { try { FX.init(STATE); } catch (e) { console.error(e); } }
     setTimeout(() => render(true), 0);
   }
   return { start, render, go };

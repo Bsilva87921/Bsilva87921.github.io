@@ -4,7 +4,7 @@
     <span class="r"><span class="fresh" id="fresh"><span><span class="dot"></span>Loading data…</span></span><button type="button" class="themebtn" id="themeBtn">☾ Dark mode</button></span>
   </div>
 </div>
-<header class="mast">
+<header class="mast has3d">
   <svg class="grat" id="grat" aria-hidden="true" preserveAspectRatio="xMidYMid slice"></svg>
   <div class="wrap">
     <div class="brand">
@@ -13,6 +13,10 @@
       <span class="sub">World Bank, IMF and Federal Reserve data for 190+ economies, with forecasts, a what-if lab and recommendations backed by evidence.</span>
     </div>
     <nav class="modnav" id="modnav" aria-label="Atlas modules"></nav>
+    <figure class="mast-3d px3d" id="mast3d" aria-label="3D globe: the selected indicator for every economy">
+      <figcaption class="m3-cap"><b>Real GDP growth, every economy</b><span>Drag to spin · tap a spike for the country</span></figcaption>
+      <div class="px3d-fallback">Loading the 3D globe…</div>
+    </figure>
   </div>
 </header>
 <div class="bar">
@@ -24,7 +28,7 @@
         <button type="button" data-scope="USA" aria-pressed="false">United States</button>
       </div>
       <label class="picker"><span class="sr">Choose a country</span><select id="countrySel" aria-label="Choose a country"><option value="">Any country…</option></select></label>
-      <button type="button" class="askbtn" data-ask="" aria-label="Ask Atlas a question"><span aria-hidden="true">✦</span> Ask Atlas</button>
+      <button type="button" class="askbtn" data-ask="" aria-label="Ask AI a question about this page"><span aria-hidden="true">✦</span> Ask AI</button>
     </div>
     <div class="tabs" role="tablist" id="tabs" aria-label="Sections"></div>
   </div>

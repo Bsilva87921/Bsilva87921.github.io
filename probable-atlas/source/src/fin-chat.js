@@ -1,4 +1,4 @@
-/* Probable Atlas · Finance: the Ask Atlas adapter. A built-in analyst (intent matching over live data and models) plus
+/* Probable Atlas · Finance: the Ask AI adapter. A built-in analyst (intent matching over live data and models) plus
    the tool set Claude uses when it is available. */
 const FCHAT = (() => {
   const { esc, ok, num, pct, sgn } = K, N = CH.NLU;
@@ -270,7 +270,7 @@ const FCHAT = (() => {
     return { md: `**Data:** Yahoo Finance (61 funds, indexes, futures and crypto, daily since 1990; S&P 500 since 1928), FRED (34 rate, credit, FX and commodity series), Robert Shiller (since 1871) and Kenneth French (since 1926). Last refresh ${K.isoLab((ms.fetched_at || '').slice(0, 10))}; runs automatically several times each weekday.\n\n**Out-of-sample track records:**\n- Volatility/VaR: 99% VaR breached ${num(bt.rate1, 2)}% of days vs 1% target (passes Kupiec and Christoffersen tests). Strong.\n- Regimes: separate next-month volatility (${pct(rg.fwd[0].vol, 0)} calm vs ${pct(rg.fwd[2].vol, 0)} stress) but not returns. Useful for risk.\n- CAPE: R² ${num(cp.r2oos, 2)} for 10-year returns vs the running average. Useful for long horizons.\n- Correction risk: AUC ${num(ev.auc, 2)}, Brier skill ${sgn(ev.bss * 100, 1, '%')}. Modest.\n\nEvery forecast is scored on data it did not see when it was made.`, extra: link('Open How it works', 'how'), follow: ['Is a correction likely?', 'What is a Brier skill score?'] };
   });
 
-  intent('econ', ['gdp', 'unemployment', 'jobs report', 'economy', 'recession probability', 'payrolls', 'world economy'], () => ({ md: `Macro questions like growth, jobs and recession odds live in the **Economics** module, which has its own Ask Atlas with recession models and country data. From the markets side: the yield curve (10y minus 3m) is ${FV.pp(F.lastVal('DGS10') - F.lastVal('DGS3MO'))}, credit spreads are ${num(F.lastVal('BAA10Y'), 2)} pp, and the correction model reads ${pct(FM.risk('dd10').now.p * 100, 0)} for a 10% fall within six months.`, extra: `<a href="${esc(ECON_URL)}"${window.ATLAS_FIN_DATA ? ' target="_blank" rel="noopener"' : ''}>Open the Economics module →</a>`, follow: ['What does the yield curve say?', 'Is a correction likely?'] }));
+  intent('econ', ['gdp', 'unemployment', 'jobs report', 'economy', 'recession probability', 'payrolls', 'world economy'], () => ({ md: `Macro questions like growth, jobs and recession odds live in the **Economics** module, which has its own Ask AI with recession models and country data. From the markets side: the yield curve (10y minus 3m) is ${FV.pp(F.lastVal('DGS10') - F.lastVal('DGS3MO'))}, credit spreads are ${num(F.lastVal('BAA10Y'), 2)} pp, and the correction model reads ${pct(FM.risk('dd10').now.p * 100, 0)} for a 10% fall within six months.`, extra: `<a href="${esc(ECON_URL)}"${window.ATLAS_FIN_DATA ? ' target="_blank" rel="noopener"' : ''}>Open the Economics module →</a>`, follow: ['What does the yield curve say?', 'Is a correction likely?'] }));
 
   intent('asset', [], (q) => { const ids = findAssets(q); if (!ids.length) return null; return assetAnswer(ids[0]); }, { fallback: true });
 
@@ -324,7 +324,7 @@ const FCHAT = (() => {
     ];
     return lines.join('\n');
   }
-  const system = st => `You are Ask Atlas, the analyst built into "Probable Atlas · Finance", an educational markets dashboard made by Bruno Silva. You answer questions about the data, analytics, forecasts and recommendations on this page, and you run scenarios for the user's situation with the tools provided.
+  const system = st => `You are Ask AI, the analyst built into "Probable Atlas · Finance", an educational markets dashboard made by Bruno Silva. You answer questions about the data, analytics, forecasts and recommendations on this page, and you run scenarios for the user's situation with the tools provided.
 
 Rules:
 - Get numbers from the tools or the context below; never invent figures. Cite dates for market levels.

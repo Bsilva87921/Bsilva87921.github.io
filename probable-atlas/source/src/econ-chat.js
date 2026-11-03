@@ -1,4 +1,4 @@
-/* Probable Atlas · Economics: the Ask Atlas adapter (built-in analyst over World Bank, IMF and FRED data and the module's models,
+/* Probable Atlas · Economics: the Ask AI adapter (built-in analyst over World Bank, IMF and FRED data and the module's models,
    plus the tool set Claude uses when it is available). */
 const ECHAT = (() => {
   const { esc, ok, num, pct, sgn } = K, N = CH.NLU;
@@ -135,7 +135,7 @@ const ECHAT = (() => {
     return { md: `**Data:** World Bank WDI and governance indicators, IMF World Economic Outlook (${E.VINT}), and ${Object.keys(E.U.series).length} FRED series for the US. Last refresh ${K.isoLab((st.fetched_at || '').slice(0, 10))}.\n\n**Out-of-sample records:**\n- Recession (yield curve): AUC ${num(rec.models.classic.score.auc, 2)} since 1985\n- Growth (AR toward 20-year median): RMSE ${num(g.score.rmse, 2)} pp vs ${num(g.score.naive, 2)} for "same as last year"\n${inf ? `- Inflation, 12 months: RMSE ${num(inf.score.rmse, 2)} vs ${num(inf.score.rw, 2)} for no change\n` : ''}${nc ? `- GDP nowcast: RMSE ${num(nc.score.rmse, 2)} pp vs ${num(nc.score.naive, 2)} naive` : ''}`, extra: link('Open How it works', 'how'), follow: ['Will the US go into recession?'] };
   });
 
-  intent('markets', ['stock', 'stocks', 'market', 's&p', 'bitcoin', 'portfolio', 'invest', 'bonds', 'gold'], () => ({ md: 'Markets, portfolios and investment questions live in the **Finance & markets** module, which has its own Ask Atlas with valuation, volatility, correction-risk and portfolio models.', extra: `<a href="finance/">Open Finance & markets →</a>`, follow: ['Will the US go into recession?', 'What is the inflation outlook?'] }));
+  intent('markets', ['stock', 'stocks', 'market', 's&p', 'bitcoin', 'portfolio', 'invest', 'bonds', 'gold'], () => ({ md: 'Markets, portfolios and investment questions live in the **Finance & markets** module, which has its own Ask AI with valuation, volatility, correction-risk and portfolio models.', extra: `<a href="finance/">Open Finance & markets →</a>`, follow: ['Will the US go into recession?', 'What is the inflation outlook?'] }));
 
   function worldOverview() {
     const g = world('g'), g1 = world('g1'), inf = world('inf'), top = Object.entries(E.column('g')).sort((a, b) => b[1] - a[1]).slice(0, 3), al = (V.worldAlerts ? V.worldAlerts() : []).slice(0, 3);
@@ -176,7 +176,7 @@ const ECHAT = (() => {
     const rec = M.recession(), inf = M.inflation(), nc = M.nowcast(), ty = M.taylor();
     return [`Data: IMF ${E.VINT}; FRED refreshed ${((E.ST || {}).fetched_at || '').slice(0, 16)} UTC. Current year ${E.CY}.`, `World growth ${num(world('g'), 1)}% (${E.CY}), ${num(world('g1'), 1)}% (${E.CY + 1}); world inflation ${num(world('inf'), 1)}%.`, `US: recession probability 12m ${Math.round(rec.models.classic.pNow * 100)}% (curve) / ${Math.round(rec.models.extended.pNow * 100)}% (extended); CPI ${inf ? num(inf.now, 1) : '–'}%, core ${inf ? num(inf.core, 1) : '–'}%; nowcast ${nc ? num(nc.est, 1) : '–'}%; fed funds ${num(lastRaw('DFF'), 2)}%, Taylor ${ty ? num(ty.classic, 1) : '–'}%; 10y ${num(lastRaw('DGS10'), 2)}%, unemployment ${num((mLastVal('UNRATE') || {}).v, 1)}%.`, `User scope: ${st && st.scope ? nameOf(st.scope) : 'World'}; tab: ${st && st.tab}.`].join('\n');
   }
-  const system = st => `You are Ask Atlas, the analyst built into "Probable Atlas · Economics", an educational dashboard by Bruno Silva covering 190+ economies (World Bank, IMF, FRED) with tested forecasting models. Answer questions about the data, models, forecasts and recommendations, and run US what-if scenarios with the tools.
+  const system = st => `You are Ask AI, the analyst built into "Probable Atlas · Economics", an educational dashboard by Bruno Silva covering 190+ economies (World Bank, IMF, FRED) with tested forecasting models. Answer questions about the data, models, forecasts and recommendations, and run US what-if scenarios with the tools.
 
 Rules:
 - Get numbers from the tools or the context below; never invent figures. Name the source and year.
