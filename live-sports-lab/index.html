@@ -819,6 +819,199 @@ table.tbl.sx{min-width:0}
 .px3d-split i{display:block;height:100%}
 .px3d-grabbing{cursor:grabbing!important}
 @media (prefers-reduced-motion:reduce){.px3d-label{transition:none}}
+/* market skyline */
+.px3d-sky-val{translate:-50% -100%;font:800 11px/1 var(--px3d-num,ui-monospace,monospace);letter-spacing:-.02em;padding:3px 5px;border-radius:7px;background:rgba(6,14,20,.72);border:1px solid rgba(255,255,255,.12);text-shadow:none;white-space:nowrap}
+.px3d-sky-val.up{color:#5ee6a1}.px3d-sky-val.dn{color:#ff8a84;translate:-50% 0}.px3d-sky-val.flat{color:#c6d0dd}
+.px3d-sky-name{font-size:10.5px;font-weight:600;color:rgba(214,228,238,.86)}
+.px3d-sky-grp{font:700 9px/1 var(--px3d-num,ui-monospace,monospace);letter-spacing:.14em;text-transform:uppercase;color:rgba(160,186,200,.62)}
+.px3d-big.up{color:#5ee6a1}.px3d-big.dn{color:#ff8a84}
+/* carousel arrows */
+.px3d-nav{position:absolute;top:50%;z-index:4;translate:0 -50%;appearance:none;width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(8,14,24,.55);color:#e9f0f8;font:700 20px/1 system-ui,sans-serif;display:grid;place-items:center;cursor:pointer;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.px3d-nav:hover{background:rgba(8,14,24,.82)}
+.px3d-nav:focus-visible{outline:2px solid var(--px3d-accent,#FFB547);outline-offset:2px}
+.px3d-nav.prev{left:10px}.px3d-nav.next{right:10px}
+.px3d-sky-name.above{translate:-50% -100%}
+
+/* ---------- Probable kit: favorites, alerts, search, stories, share cards, news, small touches ---------- */
+:root{--kx-up:#0f9b6c;--kx-down:#d4483b;--kx-r:14px}
+.kx-lock{overflow:hidden}
+.kx-sr{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.kx-btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--line-2,#c3cac1);background:var(--surface,#fff);color:var(--ink,#111);font:600 13.5px/1 var(--kx-font,inherit);cursor:pointer;text-decoration:none;white-space:nowrap}
+.kx-btn:hover{border-color:var(--accent,#0c6b66)}
+.kx-btn.pri{background:var(--accent,#0c6b66);border-color:var(--accent,#0c6b66);color:var(--on-accent,#fff)}
+.kx-btn.kx-ico{padding:0;width:36px}
+.kx-btn:focus-visible,.kx-chip:focus-visible,.fav-btn:focus-visible,.kx-n-btn:focus-visible,.kx-st-ring:focus-visible,.kx-s-btn:focus-visible{outline:2px solid var(--focus,var(--accent,#2a78d6));outline-offset:2px}
+kbd{font:600 11px/1 var(--kx-mono,ui-monospace,monospace);padding:2px 5px;border-radius:5px;border:1px solid var(--line-2,#c3cac1);border-bottom-width:2px;background:var(--surface,#fff);color:var(--ink-2,#333)}
+
+/* favorites */
+.fav-btn{appearance:none;display:inline-grid;place-items:center;width:30px;height:30px;flex:none;border-radius:50%;border:1px solid transparent;background:transparent;color:var(--muted,#667);cursor:pointer;transition:transform .18s cubic-bezier(.2,.8,.2,1),color .15s}
+.fav-btn svg path{fill:none;stroke:currentColor;stroke-width:1.7;stroke-linejoin:round}
+.fav-btn:hover{color:#f2a900;background:color-mix(in srgb,#f2a900 12%,transparent)}
+.fav-btn.on{color:#f2a900}.fav-btn.on svg path{fill:currentColor}
+.fav-btn.on{animation:kxPop .32s cubic-bezier(.2,.8,.2,1)}
+@keyframes kxPop{40%{transform:scale(1.35)}100%{transform:none}}
+
+/* toasts */
+.kx-toasts{position:fixed;left:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:96;display:flex;flex-direction:column;gap:8px;max-width:min(380px,calc(100vw - 32px));pointer-events:none}
+.kx-toast{pointer-events:auto;display:flex;align-items:flex-start;gap:10px;padding:11px 12px;border-radius:14px;background:color-mix(in srgb,var(--band,#0f1a1e) 94%,transparent);color:var(--band-ink,#eef3fb);border:1px solid rgba(255,255,255,.1);box-shadow:0 14px 40px -12px rgba(0,0,0,.55);font:13px/1.4 var(--kx-font,inherit);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transform:translateY(12px);opacity:0;transition:transform .26s cubic-bezier(.2,.8,.2,1),opacity .26s;cursor:default}
+.kx-toast.in{transform:none;opacity:1}
+.kx-toast-dot{flex:none;width:9px;height:9px;border-radius:50%;margin-top:5px;background:var(--band-accent,#FFB547)}
+.kx-up .kx-toast-dot{background:#36d399}.kx-down .kx-toast-dot{background:#ff7b72}.kx-warn .kx-toast-dot{background:#ffc145}
+.kx-toast-txt{display:flex;flex-direction:column;gap:2px;min-width:0}.kx-toast-txt span{color:rgba(230,238,248,.76)}
+.kx-toast-act{appearance:none;flex:none;align-self:center;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);color:inherit;border-radius:999px;padding:6px 11px;font:600 12px/1 var(--kx-font,inherit);cursor:pointer}
+.kx-toast-x{appearance:none;flex:none;border:0;background:none;color:rgba(230,238,248,.6);font-size:18px;line-height:1;cursor:pointer;padding:0 2px}
+
+/* search */
+.kx-s-btn{appearance:none;display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 10px 0 9px;border-radius:999px;border:1px solid color-mix(in srgb,currentColor 30%,transparent);background:color-mix(in srgb,currentColor 7%,transparent);color:inherit;font:600 12.5px/1 var(--kx-font,inherit);cursor:pointer;white-space:nowrap}
+.kx-s-btn kbd{background:transparent;color:inherit;border-color:color-mix(in srgb,currentColor 30%,transparent);opacity:.8}
+.kx-s-btn:hover{background:color-mix(in srgb,currentColor 14%,transparent)}
+@media (max-width:700px){.kx-s-btn kbd,.kx-s-btn .kx-s-lbl{display:none}.kx-s-btn{width:32px;padding:0;justify-content:center}}
+.kx-search{position:fixed;inset:0;z-index:98;display:grid;place-items:start center;padding:10vh 16px 16px}
+.kx-search[hidden]{display:none}
+.kx-s-scrim{position:absolute;inset:0;background:rgba(5,10,18,.5);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);animation:kxFade .16s}
+.kx-s-box{position:relative;width:min(640px,100%);max-height:min(560px,78vh);display:flex;flex-direction:column;border-radius:18px;background:var(--surface,#fff);color:var(--ink,#111);border:1px solid var(--line,#ddd);box-shadow:0 30px 80px -20px rgba(0,0,0,.55);overflow:hidden;animation:kxRise .2s cubic-bezier(.2,.8,.2,1);font-family:var(--kx-font,inherit)}
+.kx-s-in{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line,#ddd);color:var(--muted,#667)}
+.kx-s-in input{flex:1;min-width:0;border:0;outline:0;background:transparent;color:var(--ink,#111);font:500 17px/1.3 var(--kx-font,inherit)}
+.kx-s-in input::-webkit-search-cancel-button{display:none}
+.kx-s-esc{appearance:none;border:1px solid var(--line-2,#ccc);background:transparent;border-radius:7px;padding:4px 7px;font:600 11px/1 var(--kx-mono,ui-monospace,monospace);color:var(--muted,#667);cursor:pointer}
+.kx-s-list{list-style:none;margin:0;padding:6px;overflow-y:auto;overscroll-behavior:contain}
+.kx-s-grp{padding:10px 10px 4px;font:700 10.5px/1 var(--kx-mono,ui-monospace,monospace);letter-spacing:.12em;text-transform:uppercase;color:var(--muted,#667)}
+.kx-s-row{display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:11px;cursor:pointer}
+.kx-s-row.sel{background:var(--accent-wash,rgba(12,107,102,.1))}
+.kx-s-ico{flex:none;width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:var(--sunk,#eee);font-size:14px;overflow:hidden}
+.kx-s-ico .badge{min-width:30px;height:30px;font-size:11px;border-radius:9px}
+.kx-s-txt{display:flex;flex-direction:column;min-width:0;flex:1}
+.kx-s-txt b{font-weight:600;font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kx-s-txt small{color:var(--muted,#667);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kx-s-badge{flex:none;font:700 10.5px/1 var(--kx-mono,ui-monospace,monospace);padding:4px 6px;border-radius:6px;background:#ff5a5a22;color:#d93c3c}
+.kx-s-badge.up{background:color-mix(in srgb,var(--kx-up) 14%,transparent);color:var(--kx-up)}.kx-s-badge.down{background:color-mix(in srgb,var(--kx-down) 14%,transparent);color:var(--kx-down)}.kx-s-badge.flat{background:var(--sunk,#eee);color:var(--muted,#667)}
+.kx-s-kind{flex:none;font-size:11.5px;color:var(--muted,#667)}
+.kx-s-empty{padding:22px 12px;color:var(--muted,#667);text-align:center}
+.kx-s-foot{display:flex;gap:16px;flex-wrap:wrap;padding:9px 14px;border-top:1px solid var(--line,#ddd);font-size:12px;color:var(--muted,#667)}
+@media (max-width:640px){.kx-search{padding:0}.kx-s-box{width:100%;height:100%;max-height:none;border-radius:0;padding-top:env(safe-area-inset-top,0px)}.kx-s-foot{display:none}}
+@keyframes kxFade{from{opacity:0}}
+@keyframes kxRise{from{opacity:0;transform:translateY(10px) scale(.985)}}
+
+/* share preview, help */
+.kx-share,.kx-help{position:fixed;inset:0;z-index:99;display:grid;place-items:center;padding:16px;background:rgba(5,10,18,.62);animation:kxFade .16s}
+.kx-share-in,.kx-help-in{position:relative;width:min(460px,100%);max-height:calc(100vh - 32px);overflow:auto;padding:16px;border-radius:18px;background:var(--surface,#fff);color:var(--ink,#111);box-shadow:0 30px 80px -20px rgba(0,0,0,.6);display:flex;flex-direction:column;gap:12px;font-family:var(--kx-font,inherit)}
+.kx-share-in img{width:100%;height:auto;border-radius:12px;display:block}
+.kx-share-acts{display:flex;gap:8px;flex-wrap:wrap}
+.kx-share-note{margin:0;color:var(--muted,#667);font-size:12.5px}
+.kx-share-x{position:absolute;right:10px;top:8px;appearance:none;border:0;background:none;color:var(--muted,#667);font-size:22px;line-height:1;cursor:pointer;z-index:2}
+.kx-help-in b{font-size:16px}
+.kx-help-in dl{display:grid;grid-template-columns:auto 1fr;gap:8px 14px;margin:0;align-items:center}
+.kx-help-in dd{margin:0;color:var(--ink-2,#333);font-size:14px}
+
+/* stories */
+.kx-st-ring{appearance:none;display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 11px 0 3px;border-radius:999px;border:0;background:color-mix(in srgb,currentColor 8%,transparent);color:inherit;font:700 12.5px/1 var(--kx-font,inherit);cursor:pointer;white-space:nowrap}
+.kx-st-ring-av{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font:800 11px/1 var(--kx-font,inherit);color:#fff;background:var(--band,#0b1220);box-shadow:0 0 0 2px var(--band,#0b1220),0 0 0 4px transparent;background-clip:padding-box;position:relative}
+.kx-st-ring-av::before{content:"";position:absolute;inset:-3px;border-radius:50%;padding:2px;background:conic-gradient(#ffb547,#ff5a8a,#7a5cff,#36d399,#ffb547);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.kx-st-ring.seen .kx-st-ring-av::before{background:color-mix(in srgb,currentColor 35%,transparent)}
+.kx-st-ring:hover{background:color-mix(in srgb,currentColor 14%,transparent)}
+.kx-story{position:fixed;inset:0;z-index:97;display:grid;place-items:center;background:rgba(3,6,12,.86);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);animation:kxFade .2s;touch-action:none}
+.kx-story[hidden]{display:none}
+.kx-st-frame{position:relative;width:min(440px,100vw);height:min(780px,100dvh);display:flex;flex-direction:column;border-radius:22px;overflow:hidden;background:#0b1220;color:#f2f6fc;box-shadow:0 40px 120px -20px rgba(0,0,0,.8);font-family:var(--kx-font,inherit)}
+@media (max-width:520px){.kx-st-frame{border-radius:0;height:100dvh;padding-top:env(safe-area-inset-top,0px)}}
+.kx-st-bars{position:absolute;left:12px;right:12px;top:calc(10px + env(safe-area-inset-top,0px));z-index:3;display:flex;gap:4px}
+.kx-st-bars span{flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,.28);overflow:hidden}
+.kx-st-bars i{display:block;height:100%;background:#fff;width:0}
+.kx-st-head{position:absolute;left:12px;right:8px;top:calc(22px + env(safe-area-inset-top,0px));z-index:3;display:flex;align-items:center;gap:9px}
+.kx-st-av{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.14);font:800 13px/1 var(--kx-font,inherit)}
+.kx-st-name{display:flex;flex-direction:column;flex:1;min-width:0;line-height:1.2}.kx-st-name b{font-size:13.5px}.kx-st-name small{font-size:11.5px;color:rgba(242,246,252,.7)}
+.kx-st-btn{appearance:none;width:34px;height:34px;border-radius:50%;border:0;background:rgba(255,255,255,.1);color:#fff;font:600 14px/1 system-ui,sans-serif;cursor:pointer;display:grid;place-items:center}
+.kx-st-btn[data-st="close"]{font-size:22px}
+.kx-st-stage{position:relative;flex:1;display:flex}
+.kx-st-slide{flex:1;display:flex;flex-direction:column;justify-content:space-between;padding:96px 26px calc(22px + env(safe-area-inset-bottom,0px));background:radial-gradient(120% 80% at 80% 0%,color-mix(in srgb,var(--st-a) 85%,#fff 8%) 0%,var(--st-a) 38%,var(--st-b) 100%);animation:kxSlide .38s cubic-bezier(.2,.8,.2,1)}
+@keyframes kxSlide{from{opacity:.2;transform:scale(1.02)}}
+.kx-st-body{display:flex;flex-direction:column;gap:12px}
+.kx-st-kick{font:700 12px/1.2 var(--kx-mono,ui-monospace,monospace);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.78)}
+.kx-st-title{margin:0;font:800 clamp(26px,7vw,34px)/1.12 var(--kx-display,inherit);letter-spacing:-.01em;text-wrap:balance}
+.kx-st-val{font:900 clamp(64px,19vw,96px)/1 var(--kx-display,inherit);letter-spacing:-.02em;animation:kxRise .5s .08s both cubic-bezier(.2,.8,.2,1)}
+.kx-st-val.kx-up{color:#5ef0ad}.kx-st-val.kx-down{color:#ff9d96}.kx-st-val.kx-warn{color:#ffd166}
+.kx-st-sub{margin:0;font-size:16px;line-height:1.45;color:rgba(242,246,252,.84)}
+.kx-st-viz{color:#ffd28a;margin-top:6px}.kx-st-viz.kx-up{color:#5ef0ad}.kx-st-viz.kx-down{color:#ff9d96}
+.kx-st-chart{width:100%;height:auto;display:block}
+.kx-st-chart rect.up{fill:#5ef0ad}.kx-st-chart rect.dn{fill:#ff9d96}.kx-st-chart text{fill:rgba(242,246,252,.7);font:600 10px var(--kx-font,sans-serif)}
+.kx-st-clab{display:block;margin-top:4px;font-size:12px;color:rgba(242,246,252,.62)}
+.kx-st-split{display:flex;gap:3px;height:18px;border-radius:9px;overflow:hidden}.kx-st-split i{display:block}
+.kx-st-splab{display:flex;justify-content:space-between;gap:8px;margin-top:8px;color:#f2f6fc;font-size:15px}.kx-st-splab span{color:rgba(242,246,252,.7)}
+.kx-st-acts{position:relative;z-index:3;display:flex;gap:8px;flex-wrap:wrap}
+.kx-st-acts .kx-btn{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);color:#fff;min-height:42px}
+.kx-st-acts .kx-btn.pri{background:#fff;border-color:#fff;color:#0b1220}
+.kx-st-acts .kx-btn.kx-ico{width:42px}
+.kx-st-tap{position:absolute;top:80px;bottom:90px;z-index:2;appearance:none;border:0;background:transparent;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.kx-st-tap.prev{left:0;width:32%}.kx-st-tap.next{right:0;width:68%}
+.kx-st-tap:focus-visible{outline:2px solid #fff;outline-offset:-6px;border-radius:16px}
+
+/* news */
+.kx-news{display:flex;flex-direction:column;gap:14px}
+.kx-n-head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}
+.kx-n-title{margin:0;font:700 26px/1.15 var(--kx-display,inherit)}
+.kx-n-sub{margin:4px 0 0;color:var(--muted,#667);font-size:13.5px;max-width:72ch}
+.kx-n-search input{width:min(280px,80vw);height:38px;border:1px solid var(--line-2,#ccc);border-radius:999px;padding:0 14px;background:var(--surface,#fff);color:var(--ink,#111);font:14px var(--kx-font,inherit)}
+.kx-chips{display:flex;gap:6px;flex-wrap:wrap}
+.kx-chip{appearance:none;display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;border-radius:999px;border:1px solid var(--line,#ddd);background:var(--surface,#fff);color:var(--ink-2,#333);font:600 13px/1 var(--kx-font,inherit);cursor:pointer;white-space:nowrap}
+.kx-chip span{font:600 11px/1 var(--kx-mono,ui-monospace,monospace);color:var(--muted,#667)}
+.kx-chip.on{background:var(--ink,#111);border-color:var(--ink,#111);color:var(--bg,#fff)}.kx-chip.on span{color:inherit;opacity:.75}
+.kx-n-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+.kx-n-card{display:flex;flex-direction:column;border-radius:var(--kx-r);background:var(--surface,#fff);border:1px solid var(--line,#ddd);overflow:hidden;min-width:0;transition:transform .22s cubic-bezier(.2,.8,.2,1),box-shadow .22s,border-color .2s}
+.kx-n-card:hover{transform:translateY(-3px);box-shadow:0 16px 36px -24px rgba(0,0,0,.55);border-color:var(--line-2,#ccc)}
+.kx-n-card.lead{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)}
+.kx-n-card.lead .kx-n-media{aspect-ratio:auto;min-height:240px}
+.kx-n-card.lead .kx-n-h{font-size:24px}
+@media (max-width:760px){.kx-n-card.lead{grid-template-columns:1fr}.kx-n-card.lead .kx-n-media{min-height:180px}}
+.kx-n-card.noimg{border-top:3px solid color-mix(in srgb,var(--accent,#0c6b66) 75%,transparent)}
+.kx-n-card.noimg .kx-n-body{padding-top:14px}
+.kx-n-card.noimg .kx-n-x{-webkit-line-clamp:4}
+.kx-n-media{display:block;aspect-ratio:16/9;background:var(--sunk,#eee);position:relative;overflow:hidden}
+.kx-n-ph{position:absolute;inset:0;display:block;background:radial-gradient(120% 120% at 20% 0%,color-mix(in srgb,var(--accent,#0c6b66) 32%,var(--sunk,#eee)) 0%,var(--sunk,#eee) 70%)}
+.kx-n-ph::after{content:attr(data-ini);position:absolute;inset:0;display:grid;place-items:center;font:800 44px/1 var(--kx-display,inherit);color:color-mix(in srgb,var(--ink,#111) 22%,transparent)}
+.kx-n-ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.kx-n-card:hover .kx-n-ph img{transform:scale(1.04)}
+.kx-n-body{display:flex;flex-direction:column;gap:7px;padding:12px 14px 12px;flex:1}
+.kx-n-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:12px;color:var(--muted,#667)}
+.kx-n-src{font-weight:700;color:var(--ink-2,#333)}
+.kx-n-tag{margin-left:2px;padding:2px 7px;border-radius:999px;background:var(--accent-wash,rgba(12,107,102,.1));color:var(--accent-ink,#0a5753);font:600 10.5px/1.4 var(--kx-font,inherit)}
+.kx-n-h{margin:0;font:700 16.5px/1.3 var(--kx-display,inherit);text-wrap:pretty}
+.kx-n-h a{color:inherit;text-decoration:none}.kx-n-h a:hover{text-decoration:underline;text-underline-offset:3px}
+.kx-n-x{margin:0;color:var(--ink-2,#333);font-size:13.5px;line-height:1.45;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.kx-n-acts{display:flex;gap:6px;margin-top:auto;padding-top:4px}
+.kx-n-btn{appearance:none;display:inline-flex;align-items:center;gap:5px;height:30px;padding:0 11px;border-radius:999px;border:1px solid var(--line,#ddd);background:transparent;color:var(--ink-2,#333);font:600 12px/1 var(--kx-font,inherit);cursor:pointer}
+.kx-n-btn:hover{border-color:var(--accent,#0c6b66);color:var(--ink,#111)}
+.kx-n-btn.kx-ico{width:30px;padding:0;justify-content:center}
+.kx-n-more{align-self:center}
+.kx-n-empty{color:var(--muted,#667);padding:18px 0}.kx-n-empty.sm{padding:6px 0;font-size:13px}
+.kx-n-src-note{margin:0;color:var(--muted,#667);font-size:12px}
+.kx-n-skel{height:250px;border-radius:var(--kx-r);background:linear-gradient(90deg,var(--sunk,#eee) 0%,var(--line,#ddd) 50%,var(--sunk,#eee) 100%);background-size:200% 100%;animation:kxShimmer 1.3s linear infinite}
+@keyframes kxShimmer{to{background-position:-200% 0}}
+.kx-n-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.kx-n-list li a{display:flex;gap:10px;align-items:center;padding:8px 0;border-top:1px solid var(--line,#ddd);color:inherit;text-decoration:none}
+.kx-n-list li:first-child a{border-top:0}
+.kx-n-list.nopics li a{padding:9px 0 9px 12px;position:relative}.kx-n-list.nopics li a::before{content:"";position:absolute;left:0;top:13px;bottom:13px;width:3px;border-radius:2px;background:color-mix(in srgb,var(--accent,#0c6b66) 70%,transparent)}
+.kx-n-list li a:hover b{text-decoration:underline}
+.kx-n-thumb{position:relative;flex:none;width:64px;height:44px;border-radius:8px;overflow:hidden;display:block}
+.kx-n-thumb.kx-n-ph::after{font-size:16px}
+.kx-n-list span{display:flex;flex-direction:column;min-width:0;gap:2px}.kx-n-list b{font-weight:600;font-size:13.5px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.kx-n-list small{color:var(--muted,#667);font-size:11.5px}
+
+/* pull to refresh, confetti, pop-out */
+.kx-ptr{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 0px);z-index:95;transform:translate(-50%,-60px);display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:var(--surface,#fff);color:var(--ink,#111);border:1px solid var(--line,#ddd);box-shadow:0 10px 30px -12px rgba(0,0,0,.45);font:600 12.5px/1 var(--kx-font,inherit);transition:transform .2s;pointer-events:none}
+.kx-ptr-spin{width:14px;height:14px;border-radius:50%;border:2px solid var(--line-2,#ccc);border-top-color:var(--accent,#0c6b66)}
+.kx-ptr.ready .kx-ptr-spin{border-color:var(--accent,#0c6b66)}
+.kx-ptr.busy{transform:translate(-50%,10px)!important}.kx-ptr.busy .kx-ptr-spin{animation:kxSpin .7s linear infinite}
+@keyframes kxSpin{to{transform:rotate(1turn)}}
+.kx-confetti{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:100}
+body.kx-pip{margin:0;padding:10px;background:var(--bg,#0b1220);color:var(--ink,#eef3fb);font-family:var(--kx-font,system-ui,sans-serif)}
+@media (prefers-reduced-motion:reduce){.kx-toast,.kx-s-box,.kx-s-scrim,.kx-st-slide,.kx-st-val,.kx-share,.kx-help,.fav-btn.on,.kx-n-card,.kx-n-ph img{animation:none!important;transition:none!important}.kx-n-card:hover{transform:none}}
+@media print{.kx-toasts,.kx-search,.kx-story,.kx-share,.kx-help,.kx-ptr{display:none!important}}
+/* the briefing ring inside the Insights bar */
+.ins .kx-st-ring{height:28px;margin-right:2px;color:var(--ins-ink,#eaf1f9);background:rgba(255,255,255,.07)}
+.ins .kx-st-ring:hover{background:rgba(255,255,255,.13)}
+.ins .kx-st-ring-av{width:22px;height:22px;font-size:10px;background:var(--ins-bg,#0b1220);box-shadow:none}
+@media (max-width:640px){.ins .kx-st-ring{padding:0 2px;background:none}.ins .kx-st-ring-lbl{display:none}}
+
+/* phones: the Insights bar keeps its room for the headline */
+@media (max-width:520px){.ins .ins-sh{display:none!important}}
 
 /* ==========================================================================
    Probable Sports Lab 2.0 — Insights bar tokens, Live arena (3D), Ask AI,
@@ -949,6 +1142,43 @@ table.tbl.sx{min-width:0}
 }
 @keyframes riseIn{from{opacity:.35;transform:translateY(18px) scale(.985)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.card,.fcard{transition:none}.card:hover,.fcard:hover{transform:none}}
+.arena-stage.few .px3d-nav{display:none}
+
+/* ---------- Sports Lab extras: followed teams, game center buttons, kit tokens ---------- */
+:root{--kx-font:var(--f-body);--kx-display:var(--f-display);--kx-mono:var(--f-mono);--kx-up:var(--good);--kx-down:var(--bad)}
+.kx-n-title{font-family:var(--f-display);font-weight:800;text-transform:uppercase;letter-spacing:.03em}
+.kx-n-h{font-family:var(--f-body);font-weight:700}
+.fav-mark{color:#f2a900;font-size:13px;line-height:1}
+.dr-x{display:inline-flex;align-items:center;gap:6px;flex:none}
+.dr-head .fav-btn.sm{width:auto;height:32px;padding:0 10px 0 8px;gap:5px;border:1px solid var(--line);border-radius:999px;display:inline-flex;align-items:center}
+.dr-head .fav-btn.sm.on{border-color:color-mix(in srgb,#f2a900 55%,var(--line));background:color-mix(in srgb,#f2a900 10%,transparent)}
+.fav-ab{font:700 11.5px/1 var(--f-mono);color:var(--ink-2)}
+.dr-news .kx-n-list{margin-top:6px}
+.mast-actions .kx-s-btn{height:32px;border-color:rgba(255,255,255,.14);background:rgba(255,255,255,.05);color:#D7DFEA}
+.mast-actions .kx-s-btn:hover{background:rgba(255,255,255,.1);color:#fff}
+#view-news{padding-top:4px}
+@media (max-width:700px){.dr-x .fav-btn.sm{padding:0 8px 0 6px}.dr-x .icon-btn{padding:0 9px}}
+
+/* the game center opens above the pinned Insights bar (z 70); Ask AI (z 80) stays on top */
+.drawer{z-index:76}
+/* the league rail filters the board; the News tab has its own topic chips */
+html[data-view="news"] .railbar{display:none}
+html[data-view="news"] #view-news{padding-top:18px}
+/* phones: keep the masthead on one line now that it also carries search */
+@media (max-width:440px){
+  .brand .word{font-size:23px}
+  .mast-in{gap:6px}
+  .status{padding:4px 9px}
+  .status .st-ago{display:none}
+  .mast-actions{gap:4px}
+  .mast-actions .icon-btn,.mast-actions .kx-s-btn{padding:0 8px}
+}
+/* the game center header: title and Close on the first row, follow / share / pop out on the second */
+@media (max-width:600px){
+  .dr-head{flex-wrap:wrap;row-gap:8px}
+  .dr-x{order:3;flex-basis:100%;justify-content:flex-start}
+  .dr-head .ttl{flex:1 1 0}
+}
 </style>
 </head>
 <body>
@@ -968,6 +1198,7 @@ table.tbl.sx{min-width:0}
     <button type="button" class="tab" role="tab" data-tab="stats" aria-selected="false">Stats center</button>
     <button type="button" class="tab" role="tab" data-tab="lab" aria-selected="false">Hypothesis lab</button>
     <button type="button" class="tab" role="tab" data-tab="standings" aria-selected="false">Standings &amp; projections</button>
+    <button type="button" class="tab" role="tab" data-tab="news" aria-selected="false">News</button>
     <button type="button" class="tab" role="tab" data-tab="method" aria-selected="false">How it works</button>
   </nav>
 </header>
@@ -977,6 +1208,7 @@ table.tbl.sx{min-width:0}
   <section class="view" id="view-stats" aria-label="Stats center" hidden></section>
   <section class="view" id="view-lab" aria-label="Hypothesis lab" hidden></section>
   <section class="view" id="view-standings" aria-label="Standings and projections" hidden></section>
+  <section class="view" id="view-news" aria-label="News" hidden></section>
   <section class="view" id="view-method" aria-label="How it works" hidden></section>
 </main>
 <footer class="wrap foot">
@@ -5513,7 +5745,7 @@ SNAPSHOT.stats = {"asOf":"2026-09-26","st":{"nfl":{"2026":"BUF|2|0|0|77|62||AFC|
       const nxt = S.auto && S.nextAt ? Math.max(0, Math.round((S.nextAt - Date.now()) / 1000)) : null;
       const agoTxt = ago < 5 ? 'just now' : ago < 90 ? ago + 's ago' : Math.round(ago / 60) + ' min ago';
       el.className = 'status live';
-      el.innerHTML = `<span class="dot"></span><span class="st-long"><b>Live</b> · ESPN feed · updated ${agoTxt}${nxt != null ? ` · next in ${nxt}s` : ' · auto-refresh off'}</span><span class="st-short"><b>Live</b> · ${agoTxt}</span>`;
+      el.innerHTML = `<span class="dot"></span><span class="st-long"><b>Live</b> · ESPN feed · updated ${agoTxt}${nxt != null ? ` · next in ${nxt}s` : ' · auto-refresh off'}</span><span class="st-short"><b>Live</b><span class="st-ago"> · ${agoTxt}</span></span>`;
       return;
     }
     const cap = new Date(S.capturedAt);
@@ -5599,7 +5831,7 @@ SNAPSHOT.stats = {"asOf":"2026-09-26","st":{"nfl":{"2026":"BUF|2|0|0|77|62||AFC|
   function featScore(g) {
     const a = teamRank(g, 'home'), b = teamRank(g, 'away');
     const ra = a ? a.rank : 999, rb = b ? b.rank : 999;
-    return (1000 - Math.min(ra, rb)) * 1000 + (1000 - Math.max(ra, rb)) + (g.state === 'in' ? 0.5 : 0) + (PRIO[g.lg] || 3) * 0.01;
+    return (APP.favs && APP.favs.game(g) ? 2e6 : 0) + (1000 - Math.min(ra, rb)) * 1000 + (1000 - Math.max(ra, rb)) + (g.state === 'in' ? 0.5 : 0) + (PRIO[g.lg] || 3) * 0.01;   // followed teams first
   }
   function featuredList(games) {
     const ref = S.mode === 'snapshot' && S.capturedAt ? +new Date(S.capturedAt) : Date.now(), t = g => +new Date(g.start);
@@ -5661,7 +5893,7 @@ SNAPSHOT.stats = {"asOf":"2026-09-26","st":{"nfl":{"2026":"BUF|2|0|0|77|62||AFC|
     const lg = LG[g.lg];
     const c1 = APP.teamColor(g.lg, g[order[0]]), c2 = APP.teamColor(g.lg, g[order[1]]);
     return `<button type="button" class="card ${g.state === 'in' ? 'is-live' : ''}" style="--c1:${c1};--c2:${c2}" data-game="${esc(g.id)}" aria-label="${esc(g.away.name)} at ${esc(g.home.name)}: open game center">
-      <div class="card-top"><span class="lg-tag">${esc(lg.short || lg.name)}</span>${statusHTML(g)}<span class="line">${esc(lineShort(g))}</span></div>
+      <div class="card-top"><span class="lg-tag">${esc(lg.short || lg.name)}</span>${APP.favs && APP.favs.game(g) ? '<span class="fav-mark" title="A team you follow">★</span>' : ''}${statusHTML(g)}<span class="line">${esc(lineShort(g))}</span></div>
       <div class="teams">${rows}</div>${bar}
       <div class="card-foot">${foot}</div></button>`;
   }
@@ -6110,6 +6342,7 @@ SNAPSHOT.stats = {"asOf":"2026-09-26","st":{"nfl":{"2026":"BUF|2|0|0|77|62||AFC|
     el.querySelector('.drawer-panel').focus?.();
     setTimeout(() => { const b = el.querySelector('[data-close].icon-btn'); b && b.focus(); }, 30);
     if (S.mode === 'live') loadSummaryInto(g);
+    for (const f of APP.onDrawer || []) { try { f(g, el); } catch (e) { console.error(e); } }
   }
   function closeDrawer() { const el = $('#drawer'); el.hidden = true; el.innerHTML = ''; DR = null; if (APP.SX) APP.SX.card = null; document.body.style.overflow = ''; }
   function updateDrawer() {
@@ -6491,10 +6724,10 @@ SNAPSHOT.stats = {"asOf":"2026-09-26","st":{"nfl":{"2026":"BUF|2|0|0|77|62||AFC|
   /* ================= app shell ================= */
   function renderAll() {
     renderStatus(); renderRail();
-    const t = S.tab;
-    for (const v of ['board', 'stats', 'lab', 'standings', 'method']) { const el = $('#view-' + v); if (el) el.hidden = v !== t; }
+    const t = S.tab; document.documentElement.dataset.view = t;
+    for (const v of ['board', 'stats', 'lab', 'standings', 'method', 'news']) { const el = $('#view-' + v); if (el) el.hidden = v !== t; }
     document.querySelectorAll('.tab').forEach(b => b.setAttribute('aria-selected', String(b.getAttribute('data-tab') === t)));
-    if (t === 'board') renderBoard(); else if (t === 'stats') APP.renderStats(); else if (t === 'lab') renderLab(); else if (t === 'standings') renderStandings(); else renderMethod();
+    if (t === 'board') renderBoard(); else if (t === 'stats') APP.renderStats(); else if (t === 'lab') renderLab(); else if (t === 'standings') renderStandings(); else if (t === 'news') { if (APP.renderNews) APP.renderNews($('#view-news')); } else renderMethod();
     if (DR) updateDrawer();
     hooks('all');
   }
@@ -6502,7 +6735,7 @@ SNAPSHOT.stats = {"asOf":"2026-09-26","st":{"nfl":{"2026":"BUF|2|0|0|77|62||AFC|
   // extensions (3D arena, insights, Ask AI, track record) listen here after every render
   APP.onRender = APP.onRender || [];
   function hooks(kind) { for (const f of APP.onRender) { try { f(kind, S.tab); } catch (e) { console.error(e); } } }
-  function parseTab(h) { const m = String(h || '').match(/^stats-(teams|players|analytics|history)$/); if (m) { if (APP.SX) APP.SX.view = m[1]; return 'stats'; } return ['board', 'stats', 'lab', 'standings', 'method'].includes(h) ? h : null; }
+  function parseTab(h) { const m = String(h || '').match(/^stats-(teams|players|analytics|history)$/); if (m) { if (APP.SX) APP.SX.view = m[1]; return 'stats'; } return ['board', 'stats', 'lab', 'standings', 'method', 'news'].includes(h) ? h : null; }
   function setTab(t) {
     const p = parseTab(t) || 'board';
     const go = () => { S.tab = p; try { history.replaceState(null, '', '#' + (p === 'stats' && APP.SX && APP.SX.view !== 'teams' ? 'stats-' + APP.SX.view : p)); } catch (e) { /* ignore */ } renderAll(); window.scrollTo({ top: 0 }); };
@@ -7255,10 +7488,12 @@ const INS = (() => {
         <span class="ins-n" aria-hidden="true"></span>
         <button type="button" class="ins-b" data-ins="next" aria-label="Next insight">›</button>
         <button type="button" class="ins-b ins-p" data-ins="pause" aria-pressed="false" aria-label="Pause insights">❚❚</button>
+        <button type="button" class="ins-b ins-sh" data-ins="share" aria-label="Share this insight" title="Share" hidden><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M12 3v12M7.5 7.5 12 3l4.5 4.5M5 13v6h14v-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <button type="button" class="ins-ask" data-ins="ask"><span aria-hidden="true">✦</span> Ask AI</button>
       </div></div><i class="ins-prog" aria-hidden="true"></i>`;
     (O.parent || document.body).insertBefore(root, (O.parent || document.body).firstChild);
     paused = reduce() || O.paused === true;
+    if (O.share) root.querySelector('.ins-sh').hidden = false;
     root.addEventListener('click', onClick);
     root.addEventListener('mouseenter', () => { held = true; sync(); });
     root.addEventListener('mouseleave', () => { held = false; sync(); });
@@ -7273,6 +7508,7 @@ const INS = (() => {
     if (a === 'prev' || a === 'next') { go(a === 'next' ? 1 : -1, true); return; }
     if (a === 'pause') { paused = !paused; paintPause(); sync(); return; }
     if (a === 'ask') { if (O.ask) O.ask(it && it.ask ? it.ask : ''); return; }
+    if (a === 'share') { if (O.share && it) O.share(it); return; }
     if (a === 'go' && it) { if (typeof it.go === 'function') it.go(); else if (O.go) O.go(it); }
   }
   function paintPause() {
@@ -7307,7 +7543,7 @@ const INS = (() => {
     if (root) root.classList.toggle('ins-run', run);
     if (run) timer = setTimeout(() => go(1, false), O.interval);
   }
-  return { mount, set, go: d => go(d, true), get items() { return items; } };
+  return { mount, set, go: d => go(d, true), get items() { return items; }, get current() { return items[i] || null; }, get el() { return root; } };
 })();
 
 /* ==========================================================================
@@ -7330,24 +7566,24 @@ const INS = (() => {
     const open = id => () => APP.openGame(id);
     if (live.length) {
       const lgs = [...new Set(live.map(lgName))];
-      out.push({ id: 'live', tag: cap ? 'At capture' : 'Live', tone: 'live', text: `${live.length} game${live.length === 1 ? '' : 's'} ${cap ? 'were' : ''} in progress: ${lgs.slice(0, 4).join(', ')}${lgs.length > 4 ? '…' : ''}`, val: '', go: () => { APP.setTab('board'); setTimeout(() => { const h = [...document.querySelectorAll('#view-board .sec-h h2')].find(x => /live now|in progress/i.test(x.textContent)); if (h) h.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 60); }, ask: 'Which live games are closest right now?' });
+      out.push({ id: 'live', tag: cap ? 'At capture' : 'Live', tone: 'live', text: `${live.length} game${live.length === 1 ? '' : 's'} ${cap ? 'were' : ''} in progress: ${lgs.slice(0, 4).join(', ')}${lgs.length > 4 ? '…' : ''}`, val: '', story: { kicker: cap ? 'At capture' : 'Live now', title: `${live.length} game${live.length === 1 ? '' : 's'} ${cap ? 'were' : 'are'} in progress`, value: String(live.length), sub: lgs.slice(0, 6).join(' · ') }, go: () => { APP.setTab('board'); setTimeout(() => { const h = [...document.querySelectorAll('#view-board .sec-h h2')].find(x => /live now|in progress/i.test(x.textContent)); if (h) h.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 60); }, ask: 'Which live games are closest right now?' });
       const pr = live.map(g => ({ g, P: APP.predict(g) })).filter(x => x.P.src !== 'none' || x.g.state === 'in');
       const close = pr.slice().sort((a, b) => Math.abs(a.P.now.pH - (a.P.now.pA ?? 1 - a.P.now.pH)) - Math.abs(b.P.now.pH - (b.P.now.pA ?? 1 - b.P.now.pH)))[0];
-      if (close) { const f = fav(close.P.now, close.g); out.push({ id: 'close-' + close.g.id, tag: 'Closest', tone: 'live', text: `Closest live game: ${nm(close.g, 'away')} at ${nm(close.g, 'home')}, ${close.g.detail || ''} — ${nm(close.g, f.side)}`, val: pc(f.p), go: open(close.g.id), ask: `Who will win ${close.g.away.abbr} at ${close.g.home.abbr}?` }); }
+      if (close) { const f = fav(close.P.now, close.g); out.push({ id: 'close-' + close.g.id, tag: 'Closest', tone: 'live', text: `Closest live game: ${nm(close.g, 'away')} at ${nm(close.g, 'home')}, ${close.g.detail || ''} — ${nm(close.g, f.side)}`, val: pc(f.p), story: { kicker: `Closest live game · ${lgName(close.g)}`, title: `${nm(close.g, 'away')} at ${nm(close.g, 'home')}`, value: pc(f.p), sub: `${nm(close.g, f.side)} chance to win right now · ${close.g.away.abbr} ${close.g.away.score ?? 0}–${close.g.home.score ?? 0} ${close.g.home.abbr}${close.g.detail ? ' · ' + close.g.detail : ''}` }, go: open(close.g.id), ask: `Who will win ${close.g.away.abbr} at ${close.g.home.abbr}?` }); }
       const sw = pr.map(x => ({ ...x, d: x.P.now.pH - x.P.pre.pH })).filter(x => Math.abs(x.d) > 0.12).sort((a, b) => Math.abs(b.d) - Math.abs(a.d))[0];
-      if (sw) { const s = sw.d > 0 ? 'home' : 'away', from = s === 'home' ? sw.P.pre.pH : (sw.P.pre.pA ?? 1 - sw.P.pre.pH), to = s === 'home' ? sw.P.now.pH : (sw.P.now.pA ?? 1 - sw.P.now.pH); out.push({ id: 'swing-' + sw.g.id, tag: 'Swing', tone: sw.d > 0 ? 'up' : 'down', text: `Biggest swing: ${nm(sw.g, s)} went from ${pc(from)} before the game to`, val: pc(to), go: open(sw.g.id), ask: `Why did the odds in ${sw.g.away.abbr} at ${sw.g.home.abbr} swing so much?` }); }
+      if (sw) { const s = sw.d > 0 ? 'home' : 'away', from = s === 'home' ? sw.P.pre.pH : (sw.P.pre.pA ?? 1 - sw.P.pre.pH), to = s === 'home' ? sw.P.now.pH : (sw.P.now.pA ?? 1 - sw.P.now.pH); out.push({ id: 'swing-' + sw.g.id, tag: 'Swing', tone: sw.d > 0 ? 'up' : 'down', text: `Biggest swing: ${nm(sw.g, s)} went from ${pc(from)} before the game to`, val: pc(to), story: { kicker: `Biggest swing · ${lgName(sw.g)}`, title: `${nm(sw.g, s)}: ${pc(from)} before the game, ${pc(to)} now`, value: pc(to), sub: `Chance to win · ${sw.g.away.abbr} ${sw.g.away.score ?? 0}–${sw.g.home.score ?? 0} ${sw.g.home.abbr}${sw.g.detail ? ' · ' + sw.g.detail : ''}` }, go: open(sw.g.id), ask: `Why did the odds in ${sw.g.away.abbr} at ${sw.g.home.abbr} swing so much?` }); }
       const up = pr.filter(x => { const pre = x.P.pre, n = x.P.now; const dogH = pre.pH < 0.36, dogA = (pre.pA ?? 1 - pre.pH) < 0.36; return (dogH && n.pH > 0.5) || (dogA && (n.pA ?? 1 - n.pH) > 0.5); })[0];
-      if (up) { const s = up.P.pre.pH < 0.36 ? 'home' : 'away'; out.push({ id: 'upset-' + up.g.id, tag: 'Upset watch', tone: 'warn', text: `Upset watch: ${nm(up.g, s)} was ${pc(s === 'home' ? up.P.pre.pH : (up.P.pre.pA ?? 1 - up.P.pre.pH))} before kickoff and is now favored at`, val: pc(s === 'home' ? up.P.now.pH : (up.P.now.pA ?? 1 - up.P.now.pH)), go: open(up.g.id), ask: `Can ${up.g[s].name} hold on to win?` }); }
+      if (up) { const s = up.P.pre.pH < 0.36 ? 'home' : 'away'; out.push({ id: 'upset-' + up.g.id, tag: 'Upset watch', tone: 'warn', text: `Upset watch: ${nm(up.g, s)} was ${pc(s === 'home' ? up.P.pre.pH : (up.P.pre.pA ?? 1 - up.P.pre.pH))} before kickoff and is now favored at`, val: pc(s === 'home' ? up.P.now.pH : (up.P.now.pA ?? 1 - up.P.now.pH)), story: { kicker: `Upset watch · ${lgName(up.g)}`, title: `${nm(up.g, s)} started as the underdog and are now favored`, value: pc(s === 'home' ? up.P.now.pH : (up.P.now.pA ?? 1 - up.P.now.pH)), sub: `Chance to win: ${pc(s === 'home' ? up.P.pre.pH : (up.P.pre.pA ?? 1 - up.P.pre.pH))} before the game, ${pc(s === 'home' ? up.P.now.pH : (up.P.now.pA ?? 1 - up.P.now.pH))} now` }, go: open(up.g.id), ask: `Can ${up.g[s].name} hold on to win?` }); }
     }
     const pre = all.filter(g => g.state === 'pre' && +new Date(g.start) - now < 36 * 3600e3 && +new Date(g.start) > now - 3600e3);
     const feat = APP.featuredList ? APP.featuredList(pre)[0] : null;
-    if (feat) { const P = APP.predict(feat), f = fav(P.pre, feat); out.push({ id: 'next-' + feat.id, tag: 'Up next', tone: 'info', text: `Top matchup: ${nm(feat, 'away')} at ${nm(feat, 'home')}, ${APP.when(feat.start)} — ${nm(feat, f.side)}`, val: pc(f.p), go: open(feat.id), ask: `Who will win ${feat.away.abbr} at ${feat.home.abbr}, and why?` }); }
+    if (feat) { const P = APP.predict(feat), f = fav(P.pre, feat); out.push({ id: 'next-' + feat.id, tag: 'Up next', tone: 'info', text: `Top matchup: ${nm(feat, 'away')} at ${nm(feat, 'home')}, ${APP.when(feat.start)} — ${nm(feat, f.side)}`, val: pc(f.p), story: { kicker: `Up next · ${lgName(feat)}`, title: `${nm(feat, 'away')} at ${nm(feat, 'home')}`, value: pc(f.p), sub: `${nm(feat, f.side)} chance to win · ${APP.when(feat.start)}` }, go: open(feat.id), ask: `Who will win ${feat.away.abbr} at ${feat.home.abbr}, and why?` }); }
     const favs = pre.map(g => ({ g, P: APP.predict(g) })).filter(x => x.P.src !== 'none').map(x => ({ ...x, f: fav(x.P.pre, x.g) })).sort((a, b) => b.f.p - a.f.p);
-    if (favs[0] && favs[0].f.p > 0.7) { const x = favs[0]; out.push({ id: 'fav-' + x.g.id, tag: 'Favorite', tone: 'info', text: `Biggest favorite on the slate: ${nm(x.g, x.f.side)} (${lgName(x.g)}) vs ${nm(x.g, x.f.side === 'home' ? 'away' : 'home')}`, val: pc(x.f.p), go: open(x.g.id), ask: `How likely is an upset in ${x.g.away.abbr} at ${x.g.home.abbr}?` }); }
+    if (favs[0] && favs[0].f.p > 0.7) { const x = favs[0]; out.push({ id: 'fav-' + x.g.id, tag: 'Favorite', tone: 'info', text: `Biggest favorite on the slate: ${nm(x.g, x.f.side)} (${lgName(x.g)}) vs ${nm(x.g, x.f.side === 'home' ? 'away' : 'home')}`, val: pc(x.f.p), story: { kicker: `Biggest favorite · ${lgName(x.g)}`, title: `${nm(x.g, x.f.side)} vs ${nm(x.g, x.f.side === 'home' ? 'away' : 'home')}`, value: pc(x.f.p), sub: `${nm(x.g, x.f.side)} chance to win · ${APP.when(x.g.start)}` }, go: open(x.g.id), ask: `How likely is an upset in ${x.g.away.abbr} at ${x.g.home.abbr}?` }); }
     const gap = pre.concat(live).map(g => ({ g, P: APP.predict(g), L: APP.lineProbs(g) })).filter(x => x.L && x.P.src === 'blend').map(x => ({ ...x, d: x.P.pre.pH - x.L.pH })).sort((a, b) => Math.abs(b.d) - Math.abs(a.d))[0];
-    if (gap && Math.abs(gap.d) >= 0.06) { const s = gap.d > 0 ? 'home' : 'away'; out.push({ id: 'gap-' + gap.g.id, tag: 'Model vs line', tone: 'info', text: `Biggest gap with the betting line: the model gives ${nm(gap.g, s)} ${pc(s === 'home' ? gap.P.pre.pH : 1 - gap.P.pre.pH)} against the line's`, val: pc(s === 'home' ? gap.L.pH : 1 - gap.L.pH), go: open(gap.g.id), ask: `Why does the model disagree with the betting line on ${gap.g.away.abbr} at ${gap.g.home.abbr}?` }); }
+    if (gap && Math.abs(gap.d) >= 0.06) { const s = gap.d > 0 ? 'home' : 'away'; out.push({ id: 'gap-' + gap.g.id, tag: 'Model vs line', tone: 'info', text: `Biggest gap with the betting line: the model gives ${nm(gap.g, s)} ${pc(s === 'home' ? gap.P.pre.pH : 1 - gap.P.pre.pH)} against the line's`, val: pc(s === 'home' ? gap.L.pH : 1 - gap.L.pH), story: { kicker: `Model vs betting line · ${lgName(gap.g)}`, title: `${nm(gap.g, 'away')} at ${nm(gap.g, 'home')}`, value: pc(s === 'home' ? gap.P.pre.pH : 1 - gap.P.pre.pH), sub: `The model gives ${nm(gap.g, s)} ${pc(s === 'home' ? gap.P.pre.pH : 1 - gap.P.pre.pH)}; the betting line says ${pc(s === 'home' ? gap.L.pH : 1 - gap.L.pH)}` }, go: open(gap.g.id), ask: `Why does the model disagree with the betting line on ${gap.g.away.abbr} at ${gap.g.home.abbr}?` }); }
     const fin = all.filter(g => g.state === 'post' && now - +new Date(g.start) < 48 * 3600e3).map(g => { const P = APP.predict(g); const w = g.home.winner ? 'home' : g.away.winner ? 'away' : null; return w && P.src !== 'none' ? { g, w, p: w === 'home' ? P.pre.pH : (P.pre.pA ?? 1 - P.pre.pH) } : null; }).filter(Boolean).sort((a, b) => a.p - b.p)[0];
-    if (fin && fin.p < 0.35) out.push({ id: 'upset-' + fin.g.id, tag: 'Upset', tone: 'down', text: `Biggest recent upset: ${nm(fin.g, fin.w)} won ${fin.g.away.score}–${fin.g.home.score} with a pregame chance of`, val: pc(fin.p), go: open(fin.g.id), ask: `How big an upset was ${fin.g.away.abbr} at ${fin.g.home.abbr}?` });
+    if (fin && fin.p < 0.35) out.push({ id: 'upset-' + fin.g.id, tag: 'Upset', tone: 'down', text: `Biggest recent upset: ${nm(fin.g, fin.w)} won ${fin.g.away.score}–${fin.g.home.score} with a pregame chance of`, val: pc(fin.p), story: { kicker: `Upset · ${lgName(fin.g)}`, title: `${nm(fin.g, fin.w)} won ${fin.g.away.abbr} ${fin.g.away.score}–${fin.g.home.score} ${fin.g.home.abbr}`, value: pc(fin.p), sub: 'Their chance to win before the game' }, go: open(fin.g.id), ask: `How big an upset was ${fin.g.away.abbr} at ${fin.g.home.abbr}?` });
     const T = APP.track && APP.track.summary && APP.track.summary();
     if (T) out.push({ id: 'track', tag: 'Track record', tone: 'info', text: T.text, val: T.val, go: () => APP.track.open(), ask: 'How accurate are the Sports Lab predictions?' });
     return out.slice(0, 8);
@@ -7366,7 +7602,7 @@ const INS = (() => {
    the page is interactive and only when the browser can draw it; if it can't, the page keeps its 2D design.
    A "still" toggle stops the motion and is remembered per visitor. */
 const PX3D = (() => {
-  const URL_ = window.PROBABLE_3D_URL || '/assets/probable-3d/probable-3d.js?v=2';
+  const URL_ = window.PROBABLE_3D_URL || '/assets/probable-3d/probable-3d.js?v=3';
   const KEY = 'px3d-still';
   const ls = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* blocked */ } } };
   const reduce = () => !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
@@ -7451,90 +7687,765 @@ const PAPP = (() => {
 
 window.CH = CH; window.INS = INS; window.PX3D = PX3D; window.PAPP = PAPP;
 
+/* Probable kit: favorites (star teams, markets or countries), alerts for them (an in-page toast, plus a system
+   notification when the visitor turns alerts on), haptic taps in the apps, and the installed app's icon badge.
+   Favorites live in this browser only. */
+// a Capacitor plugin in the installed apps: from Capacitor.Plugins, or registered by name through the native bridge
+const KXP = n => {
+  const C = window.Capacitor; if (!C || !(C.isNativePlatform && C.isNativePlatform())) return null;
+  if (C.Plugins && C.Plugins[n]) return C.Plugins[n];
+  try { if (C.registerPlugin && (!C.isPluginAvailable || C.isPluginAvailable(n))) return (C.Plugins = C.Plugins || {})[n] = C.registerPlugin(n); } catch (e) { /* not installed */ }
+  return null;
+};
+const HAPTIC = (() => {
+  const P = () => KXP('Haptics');
+  const vib = ms => { try { if (navigator.vibrate) navigator.vibrate(ms); } catch (e) { /* ignore */ } };
+  return {
+    tap() { const h = P(); if (h) { try { h.impact({ style: 'LIGHT' }); } catch (e) { /* ignore */ } } else vib(8); },
+    tick() { const h = P(); if (h) { try { h.selectionChanged ? h.selectionChanged() : h.impact({ style: 'LIGHT' }); } catch (e) { /* ignore */ } } else vib(4); },
+    success() { const h = P(); if (h) { try { h.notification({ type: 'SUCCESS' }); } catch (e) { /* ignore */ } } else vib([10, 40, 18]); }
+  };
+})();
+
+const ALERT = (() => {
+  let O = { app: 'Probable', key: 'probable' }, box = null;
+  const ls = (k, v) => { try { if (v === undefined) return localStorage.getItem(k); if (v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) { return null; } };
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const native = () => KXP('LocalNotifications');
+  function init(o) { O = Object.assign(O, o || {}); }
+  function seen(id) {
+    let m = {}; try { m = JSON.parse(ls(O.key + '-alerts-seen') || '{}'); } catch (e) { m = {}; }
+    const now = Date.now(); for (const k in m) if (now - m[k] > 3 * 864e5) delete m[k];
+    const was = !!m[id]; m[id] = now; ls(O.key + '-alerts-seen', JSON.stringify(m)); return was;
+  }
+  function status() {
+    if (native()) return ls(O.key + '-alerts') === 'on' ? 'on' : 'off';
+    if (!('Notification' in window)) return 'unsupported';
+    if (Notification.permission === 'denied') return 'blocked';
+    return Notification.permission === 'granted' && ls(O.key + '-alerts') === 'on' ? 'on' : 'off';
+  }
+  async function enable() {
+    try {
+      const n = native();
+      if (n) { const r = await n.requestPermissions(); if (r && r.display === 'granted') { ls(O.key + '-alerts', 'on'); toast({ title: 'Alerts are on', body: 'You will hear about the teams and markets you follow.', tone: 'up' }); return 'on'; } return 'off'; }
+      if (!('Notification' in window)) { toast({ title: 'Alerts stay in the page', body: 'This browser does not offer notifications, so alerts show here while the page is open.' }); return 'unsupported'; }
+      const p = await Notification.requestPermission();
+      if (p === 'granted') { ls(O.key + '-alerts', 'on'); toast({ title: 'Alerts are on', body: 'You will be notified about what you follow while this page or app is open.', tone: 'up' }); }
+      return status();
+    } catch (e) { return status(); }
+  }
+  function disable() { ls(O.key + '-alerts', 'off'); }
+  async function system(a) {
+    try {
+      const n = native();
+      if (n) { await n.schedule({ notifications: [{ id: Math.floor(Math.random() * 2e9), title: a.title, body: a.body || '', schedule: { at: new Date(Date.now() + 250) } }] }); return; }
+      if (status() !== 'on') return;
+      const reg = navigator.serviceWorker && await navigator.serviceWorker.getRegistration();
+      if (reg && reg.showNotification) await reg.showNotification(a.title, { body: a.body || '', tag: a.id, icon: O.icon, badge: O.icon });
+      else new Notification(a.title, { body: a.body || '', tag: a.id, icon: O.icon });
+    } catch (e) { /* notifications are best effort */ }
+  }
+  function toast(a) {
+    if (!box) { box = document.createElement('div'); box.className = 'kx-toasts'; box.setAttribute('aria-live', 'polite'); document.body.appendChild(box); }
+    const t = document.createElement('div'); t.className = 'kx-toast kx-' + (a.tone || 'info');
+    t.innerHTML = `<span class="kx-toast-dot" aria-hidden="true"></span><div class="kx-toast-txt"><b>${esc(a.title)}</b>${a.body ? `<span>${esc(a.body)}</span>` : ''}</div>${a.action ? `<button type="button" class="kx-toast-act">${esc(a.action)}</button>` : ''}<button type="button" class="kx-toast-x" aria-label="Dismiss">×</button>`;
+    box.appendChild(t); requestAnimationFrame(() => t.classList.add('in'));
+    const close = () => { t.classList.remove('in'); setTimeout(() => t.remove(), 260); };
+    t.addEventListener('click', ev => {
+      if (ev.target.closest('.kx-toast-x')) return close();
+      if (ev.target.closest('.kx-toast-act') && a.onAction) { a.onAction(); return close(); }
+      if (a.go) { a.go(); close(); }
+    });
+    setTimeout(close, a.ms || 7000);
+    while (box.children.length > 3) box.firstChild.remove();
+    return t;
+  }
+  // an alert = a toast now, plus a system notification when alerts are on and the page is in the background
+  function notify(a) {
+    if (!a || !a.id || seen(a.id)) return false;
+    toast(a); HAPTIC.tap();
+    if (document.hidden || native() || (window.PAPP && PAPP.standalone && PAPP.standalone())) system(a);
+    return true;
+  }
+  return { init, notify, toast, enable, disable, status };
+})();
+
+const BADGE = {
+  set(n) { try { if (navigator.setAppBadge) { if (n > 0) navigator.setAppBadge(n); else navigator.clearAppBadge(); } } catch (e) { /* not installed or not supported */ } }
+};
+
+const FAV = (() => {
+  let KEY = 'probable-favs', data = {}, subs = [], O = {};
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const load = () => { try { data = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { data = {}; } };
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(data)); } catch (e) { /* storage unavailable */ } };
+  const STAR = '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 3.2l2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 17l-5.4 2.9 1.1-6.1-4.5-4.2 6.1-.8z" fill="currentColor"/></svg>';
+  function init(o) {
+    O = o || {}; KEY = O.key || KEY; load();
+    document.addEventListener('click', ev => {
+      const b = ev.target.closest && ev.target.closest('[data-fav]'); if (!b) return;
+      ev.preventDefault(); ev.stopPropagation();
+      toggle(b.dataset.fav, b.dataset.favLabel || b.getAttribute('aria-label') || '', b.dataset.favMeta ? JSON.parse(b.dataset.favMeta) : null);
+    }, true);
+  }
+  const has = k => !!data[k];
+  function toggle(k, label, meta) {
+    const on = !data[k];
+    if (on) data[k] = { label, meta: meta || null, t: Date.now() }; else delete data[k];
+    save(); paint(k); HAPTIC.tick();
+    if (on) {
+      const st = ALERT.status();
+      ALERT.toast({ title: `Following ${label}`, body: O.followNote || 'It moves to the top, and you get alerts about it.', tone: 'up', action: st === 'off' ? 'Turn on alerts' : null, onAction: () => ALERT.enable() });
+    }
+    subs.forEach(f => { try { f(k, on); } catch (e) { console.warn(e); } });
+  }
+  function paint(k) {
+    document.querySelectorAll('[data-fav]').forEach(b => { if (k && b.dataset.fav !== k) return; const on = has(b.dataset.fav); b.setAttribute('aria-pressed', String(on)); b.classList.toggle('on', on); const l = b.dataset.favLabel || ''; b.setAttribute('aria-label', (on ? 'Unfollow ' : 'Follow ') + l); b.title = on ? 'Following · tap to unfollow' : 'Follow'; });
+  }
+  function btn(k, label, cls, meta) {
+    const on = has(k);
+    return `<button type="button" class="fav-btn ${cls || ''}${on ? ' on' : ''}" data-fav="${esc(k)}" data-fav-label="${esc(label)}"${meta ? ` data-fav-meta='${esc(JSON.stringify(meta))}'` : ''} aria-pressed="${on}" aria-label="${on ? 'Unfollow' : 'Follow'} ${esc(label)}" title="${on ? 'Following · tap to unfollow' : 'Follow'}">${STAR}</button>`;
+  }
+  function list(prefix) { return Object.entries(data).filter(([k]) => !prefix || k.startsWith(prefix)).map(([k, v]) => Object.assign({ key: k }, v)).sort((a, b) => a.t - b.t); }
+  return { init, has, toggle, btn, list, paint, on: f => subs.push(f), count: p => list(p).length };
+})();
+
+Object.assign(window, { KXP, HAPTIC, ALERT, BADGE, FAV });
+
+/* Probable kit: search everything. ⌘K / Ctrl+K or "/" opens a palette over the page; results come from the
+   site's own index (teams, games, countries, markets, sections, news, actions), ranked by how well the words
+   match, with recent picks and suggestions when the box is empty and "Ask AI" as the last option. */
+const SRCH = (() => {
+  let O = {}, root = null, inp = null, ul = null, rows = [], sel = 0, last = null;
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const norm = s => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9%&+.\- ]+/g, ' ').replace(/\s+/g, ' ').trim();
+  const isMac = /mac|iphone|ipad/i.test(navigator.platform || navigator.userAgent || '');
+  const RK = () => (O.key || 'probable') + '-search-recent';
+  const recents = () => { try { return JSON.parse(localStorage.getItem(RK()) || '[]'); } catch (e) { return []; } };
+  const remember = it => { try { const r = recents().filter(x => x !== it.id); r.unshift(it.id); localStorage.setItem(RK(), JSON.stringify(r.slice(0, 8))); } catch (e) { /* ignore */ } };
+
+  function score(it, q, toks) {
+    const t = it._t || (it._t = norm(it.title)), all = it._a || (it._a = norm([it.title, it.sub, it.kw].join(' ')));
+    let s = 0;
+    if (t === q) s = 100; else if (t.startsWith(q)) s = 82; else if ((' ' + t).includes(' ' + q)) s = 64;
+    else if (toks.every(w => all.includes(w))) s = 40 + (toks.every(w => t.includes(w)) ? 12 : 0);
+    else { // loose match: the letters in order, close together ("sp5" finds "S&P 500", but "gold" does not match "Chicago Fed financial conditions")
+      const qq = q.replace(/ /g, ''); let i = 0, first = -1;
+      for (const c of qq) { i = t.indexOf(c, i); if (i < 0) { s = 0; break; } if (first < 0) first = i; i++; s = 14; }
+      if (s && i - first > qq.length * 2 + 2) s = 0;
+    }
+    return s ? s + (it.boost || 0) : 0;
+  }
+  function results(q) {
+    const items = O.source ? O.source() : [];
+    const nq = norm(q);
+    if (!nq) {
+      const byId = new Map(items.map(i => [i.id, i]));
+      const rec = recents().map(id => byId.get(id)).filter(Boolean).map(i => Object.assign({}, i, { group: 'Recent' }));
+      const sug = (O.suggest ? O.suggest() : []).filter(i => !rec.some(r => r.id === i.id)).map(i => Object.assign({}, i, { group: i.group || 'Suggested' }));
+      return rec.concat(sug).slice(0, 14);
+    }
+    const toks = nq.split(' ');
+    const hit = items.map(i => ({ i, s: score(i, nq, toks) })).filter(x => x.s > 0).sort((a, b) => b.s - a.s).slice(0, 40).map(x => x.i);
+    const order = O.groups || [], gi = k => { const n = order.indexOf(k); return n < 0 ? 99 : n; };
+    // keep the best match first, then group the rest by kind
+    const top = hit.slice(0, 1).map(i => Object.assign({}, i, { group: 'Top result' }));
+    const rest = hit.slice(1).sort((a, b) => gi(a.kind) - gi(b.kind)).slice(0, 24).map(i => Object.assign({}, i, { group: i.kind }));
+    const out = top.concat(rest);
+    if (O.ask) out.push({ id: 'ask:' + q, kind: 'Ask AI', group: 'Ask AI', icon: '✦', title: `Ask AI: “${q}”`, sub: 'Answers from this page’s data and models', go: () => O.ask(q) });
+    return out;
+  }
+  function render() {
+    const q = inp.value; rows = results(q); sel = Math.min(sel, Math.max(0, rows.length - 1));
+    let g = null, h = '';
+    rows.forEach((r, i) => {
+      if (r.group !== g) { g = r.group; h += `<li class="kx-s-grp" role="presentation">${esc(g)}</li>`; }
+      h += `<li id="kxs-${i}" class="kx-s-row${i === sel ? ' sel' : ''}" role="option" aria-selected="${i === sel}" data-i="${i}"><span class="kx-s-ico" aria-hidden="true">${r.iconHTML || esc(r.icon || '•')}</span><span class="kx-s-txt"><b>${esc(r.title)}</b>${r.sub ? `<small>${esc(r.sub)}</small>` : ''}</span>${r.badge ? `<span class="kx-s-badge${r.badgeTone ? ' ' + esc(r.badgeTone) : ''}">${esc(r.badge)}</span>` : ''}<span class="kx-s-kind">${esc(r.kind || '')}</span></li>`;
+    });
+    if (!rows.length) h = `<li class="kx-s-empty" role="presentation">No matches. Try a team, a market, a country or a section.</li>`;
+    ul.innerHTML = h; inp.setAttribute('aria-activedescendant', rows.length ? 'kxs-' + sel : '');
+    const s = ul.querySelector('.sel'); if (s) s.scrollIntoView({ block: 'nearest' });
+  }
+  function choose(i) { const r = rows[i]; if (!r) return; if (!String(r.id).startsWith('ask:')) remember(r); close(); if (window.HAPTIC) HAPTIC.tap(); setTimeout(() => r.go && r.go(), 30); }
+  function build() {
+    root = document.createElement('div'); root.className = 'kx-search'; root.hidden = true;
+    root.innerHTML = `<div class="kx-s-scrim" data-close></div><div class="kx-s-box" role="dialog" aria-modal="true" aria-label="Search">
+      <div class="kx-s-in"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <input type="search" role="combobox" aria-expanded="true" aria-controls="kxsList" aria-autocomplete="list" autocomplete="off" spellcheck="false" placeholder="${esc(O.placeholder || 'Search')}"><button type="button" class="kx-s-esc" data-close aria-label="Close search">Esc</button></div>
+      <ul class="kx-s-list" id="kxsList" role="listbox" aria-label="Results"></ul>
+      <div class="kx-s-foot"><span><kbd>↑</kbd><kbd>↓</kbd> to move</span><span><kbd>Enter</kbd> to open</span><span><kbd>${isMac ? '⌘' : 'Ctrl'}</kbd><kbd>K</kbd> anywhere</span></div></div>`;
+    document.body.appendChild(root);
+    inp = root.querySelector('input'); ul = root.querySelector('ul');
+    inp.addEventListener('input', () => { sel = 0; render(); });
+    inp.addEventListener('keydown', ev => {
+      if (ev.key === 'ArrowDown') { ev.preventDefault(); sel = Math.min(rows.length - 1, sel + 1); render(); }
+      else if (ev.key === 'ArrowUp') { ev.preventDefault(); sel = Math.max(0, sel - 1); render(); }
+      else if (ev.key === 'Enter') { ev.preventDefault(); choose(sel); }
+      else if (ev.key === 'Escape') { ev.preventDefault(); close(); }
+    });
+    ul.addEventListener('mousemove', ev => { const r = ev.target.closest('.kx-s-row'); if (r && +r.dataset.i !== sel) { sel = +r.dataset.i; ul.querySelectorAll('.kx-s-row').forEach(x => { const on = +x.dataset.i === sel; x.classList.toggle('sel', on); x.setAttribute('aria-selected', String(on)); }); } });
+    ul.addEventListener('click', ev => { const r = ev.target.closest('.kx-s-row'); if (r) choose(+r.dataset.i); });
+    root.addEventListener('click', ev => { if (ev.target.closest('[data-close]')) close(); });
+  }
+  function openP(q) {
+    if (!root) build();
+    last = document.activeElement; root.hidden = false; document.documentElement.classList.add('kx-lock');
+    inp.value = q || ''; sel = 0; render(); requestAnimationFrame(() => { inp.focus(); inp.select(); });
+  }
+  function close() { if (!root || root.hidden) return; root.hidden = true; document.documentElement.classList.remove('kx-lock'); if (last && last.focus) try { last.focus(); } catch (e) { /* ignore */ } }
+  function mount(o) {
+    O = o || {};
+    document.addEventListener('keydown', ev => {
+      const t = ev.target, typing = t && (t.isContentEditable || /^(input|textarea|select)$/i.test(t.tagName));
+      if ((ev.key === 'k' || ev.key === 'K') && (ev.metaKey || ev.ctrlKey)) { ev.preventDefault(); root && !root.hidden ? close() : openP(); }
+      else if (ev.key === '/' && !typing && !ev.metaKey && !ev.ctrlKey && !ev.altKey) { ev.preventDefault(); openP(); }
+    });
+    const host = typeof O.host === 'string' ? document.querySelector(O.host) : O.host;
+    if (host) {
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'kx-s-btn'; b.setAttribute('aria-label', 'Search (' + (isMac ? '⌘' : 'Ctrl') + ' K)');
+      b.innerHTML = `<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M20 20l-4-4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg><span class="kx-s-lbl">Search</span><kbd>${isMac ? '⌘' : 'Ctrl'} K</kbd>`;
+      b.addEventListener('click', () => openP());
+      if (O.before && host.contains(O.before)) host.insertBefore(b, O.before); else if (O.prepend) host.prepend(b); else host.appendChild(b);
+    }
+    return { open: openP, close };
+  }
+  return { mount, open: q => openP(q), close, norm };
+})();
+
+window.SRCH = SRCH;
+
+/* Probable kit: share cards. Turns a game, a chart or an insight into a polished 1080×1080 image (drawn on a
+   canvas with the site's fonts and colors) and hands it to the phone's share sheet, the app's share sheet, or a
+   preview with download and copy buttons. */
+const SHARE = (() => {
+  const B = { name: 'Probable', url: location.origin + location.pathname, accent: '#FFB547', bg: ['#0b1220', '#16284a'], ink: '#eef3fb', muted: '#9fb0c8', up: '#36d399', down: '#ff7b72', fd: 'system-ui', fb: 'system-ui', fm: 'ui-monospace' };
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  function brand(o) { Object.assign(B, o || {}); }
+  function wrap(ctx, text, max, lines) {
+    const words = String(text || '').split(/\s+/), out = []; let cur = '';
+    for (const w of words) { const t = cur ? cur + ' ' + w : w; if (ctx.measureText(t).width > max && cur) { out.push(cur); cur = w; } else cur = t; }
+    if (cur) out.push(cur);
+    if (out.length > lines) { const keep = out.slice(0, lines); let l = keep[lines - 1]; while (l && ctx.measureText(l + '…').width > max) l = l.slice(0, -1); keep[lines - 1] = l.replace(/[ ,;:.]+$/, '') + '…'; return keep; }
+    return out;
+  }
+  function rr(ctx, x, y, w, h, r) { ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); }
+  async function fonts() { try { if (document.fonts) { await Promise.race([Promise.all([`800 120px ${B.fd}`, `600 40px ${B.fb}`, `600 28px ${B.fm}`].map(f => document.fonts.load(f))), new Promise(r => setTimeout(r, 1200))]); } } catch (e) { /* use fallbacks */ } }
+  // an inline SVG chart → image, with its computed styles copied in so it renders the same outside the page
+  function svgImage(svg) {
+    return new Promise((res, rej) => {
+      const clone = svg.cloneNode(true), src = svg.querySelectorAll('*'), dst = clone.querySelectorAll('*');
+      const P = ['fill', 'stroke', 'stroke-width', 'stroke-dasharray', 'stroke-linecap', 'stroke-linejoin', 'opacity', 'fill-opacity', 'stroke-opacity', 'font-size', 'font-weight', 'font-family', 'text-anchor', 'dominant-baseline', 'letter-spacing', 'display', 'visibility'];
+      src.forEach((n, i) => { const cs = getComputedStyle(n), d = dst[i]; if (!d) return; d.setAttribute('style', P.map(p => `${p}:${cs.getPropertyValue(p)}`).join(';')); });
+      const r = svg.getBoundingClientRect(); clone.setAttribute('width', Math.round(r.width)); clone.setAttribute('height', Math.round(r.height));
+      if (!clone.getAttribute('xmlns')) clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+      const url = URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(clone)], { type: 'image/svg+xml' }));
+      const img = new Image(); img.onload = () => { URL.revokeObjectURL(url); res(img); }; img.onerror = e => { URL.revokeObjectURL(url); rej(e); }; img.src = url;
+    });
+  }
+  function chart(ctx, c, x, y, w, h) {
+    if (!c) return;
+    if (c.type === 'spark' && c.data && c.data.length > 1) {
+      const d = c.data.filter(v => v != null && isFinite(v)); if (d.length < 2) return;
+      const lo = Math.min(...d), hi = Math.max(...d), sx = w / (d.length - 1), sy = v => y + h - (hi > lo ? (v - lo) / (hi - lo) : 0.5) * h;
+      const col = c.color || B.accent;
+      ctx.beginPath(); d.forEach((v, i) => i ? ctx.lineTo(x + i * sx, sy(v)) : ctx.moveTo(x, sy(v)));
+      const g = ctx.createLinearGradient(0, y, 0, y + h); g.addColorStop(0, col + '55'); g.addColorStop(1, col + '00');
+      ctx.save(); ctx.lineTo(x + w, y + h); ctx.lineTo(x, y + h); ctx.closePath(); ctx.fillStyle = g; ctx.fill(); ctx.restore();
+      ctx.beginPath(); d.forEach((v, i) => i ? ctx.lineTo(x + i * sx, sy(v)) : ctx.moveTo(x, sy(v)));
+      ctx.lineWidth = 7; ctx.lineJoin = 'round'; ctx.lineCap = 'round'; ctx.strokeStyle = col; ctx.stroke();
+      ctx.beginPath(); ctx.arc(x + w, sy(d[d.length - 1]), 13, 0, 7); ctx.fillStyle = col; ctx.fill();
+      if (c.label) { ctx.font = `600 26px ${B.fm}`; ctx.fillStyle = B.muted; ctx.textAlign = 'left'; ctx.fillText(c.label, x, y - 18); }
+    } else if (c.type === 'split') {
+      const parts = [c.a, c.d, c.h].filter(p => p && p.p > 0.001), tot = parts.reduce((s, p) => s + p.p, 0) || 1;
+      ctx.save(); rr(ctx, x, y + h / 2 - 34, w, 68, 34); ctx.clip(); let xx = x;
+      parts.forEach(p => { const ww = w * p.p / tot; ctx.fillStyle = p.color || '#8b98ad'; ctx.fillRect(xx, y, ww, h); xx += ww; }); ctx.restore();
+      ctx.font = `800 40px ${B.fb}`; ctx.fillStyle = B.ink; ctx.textAlign = 'left'; ctx.fillText(`${c.a.label} ${Math.round(c.a.p * 100)}%`, x, y + h / 2 + 90);
+      ctx.textAlign = 'right'; ctx.fillText(`${Math.round(c.h.p * 100)}% ${c.h.label}`, x + w, y + h / 2 + 90);
+      if (c.d && c.d.p > 0.001) { ctx.textAlign = 'center'; ctx.font = `600 32px ${B.fb}`; ctx.fillStyle = B.muted; ctx.fillText(`Draw ${Math.round(c.d.p * 100)}%`, x + w / 2, y + h / 2 + 90); }
+    } else if (c.type === 'bars' && c.data && c.data.length) {
+      const n = c.data.length, mx = Math.max(...c.data.map(b => Math.abs(b.v))) || 1, bw = w / n * 0.62, mid = y + h / 2;
+      c.data.forEach((b, i) => { const bh = Math.abs(b.v) / mx * (h / 2 - 30), bx = x + (i + 0.19) * w / n; ctx.fillStyle = b.v >= 0 ? B.up : B.down; rr(ctx, bx, b.v >= 0 ? mid - bh : mid, bw, Math.max(6, bh), 8); ctx.fill(); ctx.font = `600 22px ${B.fb}`; ctx.fillStyle = B.muted; ctx.textAlign = 'center'; ctx.fillText(b.label, bx + bw / 2, y + h + 4); });
+      ctx.fillStyle = 'rgba(255,255,255,.18)'; ctx.fillRect(x, mid - 1, w, 2);
+    } else if (c.type === 'image' && c.img) {
+      const k = Math.min(w / c.img.width, h / c.img.height), iw = c.img.width * k, ih = c.img.height * k;
+      ctx.save(); rr(ctx, x - 16, y - 16, w + 32, h + 32, 26); ctx.fillStyle = 'rgba(255,255,255,.92)'; ctx.fill(); ctx.restore();
+      ctx.drawImage(c.img, x + (w - iw) / 2, y + (h - ih) / 2, iw, ih);
+    }
+  }
+  async function card(c) {
+    await fonts();
+    if (c.chart && c.chart.type === 'svg' && c.chart.el) { try { c.chart = { type: 'image', img: await svgImage(c.chart.el) }; } catch (e) { c.chart = null; } }
+    const S = 1080, cv = document.createElement('canvas'); cv.width = S; cv.height = S; const ctx = cv.getContext('2d');
+    const g = ctx.createLinearGradient(0, 0, S * 0.4, S); g.addColorStop(0, B.bg[1]); g.addColorStop(1, B.bg[0]); ctx.fillStyle = g; ctx.fillRect(0, 0, S, S);
+    const rg = ctx.createRadialGradient(S * 0.86, S * 0.08, 10, S * 0.86, S * 0.08, S * 0.7); rg.addColorStop(0, B.accent + '40'); rg.addColorStop(1, B.accent + '00'); ctx.fillStyle = rg; ctx.fillRect(0, 0, S, S);
+    ctx.fillStyle = 'rgba(255,255,255,.035)'; for (let yy = 18; yy < S; yy += 26) for (let xx = 18; xx < S; xx += 26) ctx.fillRect(xx, yy, 2, 2);
+    const X = 84, W = S - 2 * X; ctx.textBaseline = 'alphabetic';
+    // brand row
+    ctx.fillStyle = B.accent; ctx.beginPath(); ctx.arc(X + 9, 100, 9, 0, 7); ctx.fill();
+    ctx.font = `700 28px ${B.fm}`; ctx.fillStyle = B.ink; ctx.textAlign = 'left'; ctx.fillText(String(B.name).toUpperCase(), X + 34, 110);
+    ctx.textAlign = 'right'; ctx.fillStyle = B.muted; ctx.fillText(c.date || new Date().toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' }), S - X, 110);
+    let y = 210;
+    if (c.kicker) { ctx.textAlign = 'left'; ctx.font = `700 30px ${B.fm}`; ctx.fillStyle = B.accent; ctx.fillText(String(c.kicker).toUpperCase().slice(0, 48), X, y); y += 70; }
+    ctx.textAlign = 'left'; ctx.font = `800 68px ${B.fd}`; ctx.fillStyle = B.ink;
+    for (const l of wrap(ctx, c.title, W, c.value ? 3 : 5)) { ctx.fillText(l, X, y); y += 76; }
+    if (c.value != null && c.value !== '') { y += 150; ctx.font = `900 196px ${B.fd}`; ctx.fillStyle = c.tone === 'up' ? B.up : c.tone === 'down' ? B.down : c.tone === 'warn' ? '#ffc145' : B.ink; ctx.fillText(String(c.value).slice(0, 12), X - 6, y); y += 24; }
+    if (c.sub) { y += 52; ctx.font = `500 36px ${B.fb}`; ctx.fillStyle = B.muted; for (const l of wrap(ctx, c.sub, W, 3)) { ctx.fillText(l, X, y); y += 48; } }
+    const cy = Math.max(y + 40, 720), ch = S - 150 - cy;
+    if (c.chart && ch > 90) chart(ctx, c.chart, X, cy, W, ch);
+    ctx.fillStyle = 'rgba(255,255,255,.14)'; ctx.fillRect(X, S - 110, W, 2);
+    // footer: the link on the left, shrunk (then trimmed) so it never runs into the note on the right
+    const foot = c.foot || 'Educational analytics';
+    ctx.font = `600 27px ${B.fm}`; const room = S - 2 * X - ctx.measureText(foot).width - 40;
+    let u = String(c.url || B.url).replace(/^https?:\/\//, '').replace(/\/$/, ''), fs = 27;
+    while (fs > 19 && ctx.measureText(u).width > room) { fs -= 1; ctx.font = `600 ${fs}px ${B.fm}`; }
+    if (ctx.measureText(u).width > room) { while (u.length > 8 && ctx.measureText(u + '…').width > room) u = u.slice(0, -1); u += '…'; }
+    ctx.fillStyle = B.muted; ctx.textAlign = 'left'; ctx.fillText(u, X, S - 62);
+    ctx.font = `600 27px ${B.fm}`; ctx.textAlign = 'right'; ctx.fillStyle = B.ink; ctx.fillText(foot, S - X, S - 62);
+    return await new Promise(r => cv.toBlob(r, 'image/png'));
+  }
+  const toB64 = blob => new Promise(r => { const fr = new FileReader(); fr.onload = () => r(String(fr.result).split(',')[1]); fr.readAsDataURL(blob); });
+  async function deliver(blob, o) {
+    const name = (o.file || 'probable-card') + '.png', file = new File([blob], name, { type: 'image/png' });
+    const P = n => (window.KXP ? window.KXP(n) : null), SH = P('Share'), FS = P('Filesystem');
+    try {
+      if (SH && FS) {
+        const w = await FS.writeFile({ path: name, data: await toB64(blob), directory: 'CACHE' });
+        await SH.share({ title: o.title, text: o.text, url: o.url, files: [w.uri] }); return 'shared';
+      }
+      if (navigator.canShare && navigator.canShare({ files: [file] })) { await navigator.share({ files: [file], title: o.title, text: o.text }); return 'shared'; }
+    } catch (e) { if (e && e.name === 'AbortError') return 'cancelled'; }
+    preview(blob, o); return 'preview';
+  }
+  function preview(blob, o) {
+    const url = URL.createObjectURL(blob), m = document.createElement('div'); m.className = 'kx-share'; m.setAttribute('role', 'dialog'); m.setAttribute('aria-modal', 'true'); m.setAttribute('aria-label', 'Share card');
+    m.innerHTML = `<div class="kx-share-in"><button type="button" class="kx-share-x" aria-label="Close">×</button><img src="${url}" alt="${esc(o.title || 'Share card')}"><div class="kx-share-acts"><a class="kx-btn pri" href="${url}" download="${esc((o.file || 'probable-card') + '.png')}">Download image</a><button type="button" class="kx-btn" data-copyimg>Copy image</button>${o.url ? '<button type="button" class="kx-btn" data-copylink>Copy link</button>' : ''}</div><p class="kx-share-note">On a phone, press and hold the image to save or share it.</p></div>`;
+    document.body.appendChild(m); document.documentElement.classList.add('kx-lock');
+    const close = () => { m.remove(); URL.revokeObjectURL(url); document.documentElement.classList.remove('kx-lock'); };
+    m.addEventListener('click', async ev => {
+      if (ev.target === m || ev.target.closest('.kx-share-x')) return close();
+      if (ev.target.closest('[data-copyimg]')) { try { await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]); ev.target.textContent = 'Copied'; } catch (e) { ev.target.textContent = 'Copy not allowed here'; } }
+      if (ev.target.closest('[data-copylink]')) { try { await navigator.clipboard.writeText(o.url); ev.target.textContent = 'Link copied'; } catch (e) { ev.target.textContent = o.url; } }
+    });
+    m.addEventListener('keydown', ev => { if (ev.key === 'Escape') close(); });
+    m.querySelector('.kx-share-x').focus();
+  }
+  async function share(c, o) {
+    o = o || {};
+    if (window.HAPTIC) HAPTIC.tap();
+    const t = window.ALERT ? ALERT.toast({ title: 'Making your share card…', ms: 1800 }) : null;
+    try { const blob = await card(c); if (t) t.remove(); return await deliver(blob, Object.assign({ title: c.title, text: c.text || c.title, url: c.url || B.url, file: o.file }, o)); }
+    catch (e) { console.warn('share', e); if (window.ALERT) ALERT.toast({ title: 'Could not make the card', body: 'Try again in a moment.', tone: 'down' }); }
+  }
+  async function link(o) { try { const SH = window.KXP ? window.KXP('Share') : null; if (SH) { await SH.share({ title: o.title, text: o.text, url: o.url }); return; } } catch (e) { return; } try { if (navigator.share) { await navigator.share(o); return; } } catch (e) { if (e && e.name === 'AbortError') return; } try { await navigator.clipboard.writeText(o.url); if (window.ALERT) ALERT.toast({ title: 'Link copied', body: o.url }); } catch (e) { /* ignore */ } }
+  const ICON = '<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M12 3v12M7.5 7.5 12 3l4.5 4.5M5 13v6h14v-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  return { brand, card, share, link, deliver, ICON };
+})();
+
+window.SHARE = SHARE;
+
+/* Probable kit: the daily briefing as swipeable stories. A ring button opens five or so full-screen slides,
+   each one thing that matters today with a big number and a small chart. Tap the right side (or →) for the
+   next slide, the left side for the previous one, hold to pause, swipe down or Esc to close. Slides advance
+   on their own unless the visitor prefers reduced motion. "Listen" reads the briefing aloud. */
+const STORY = (() => {
+  let O = {}, root = null, slides = [], i = 0, raf = 0, t0 = 0, held = 0, paused = false, ringBtn = null, last = null;
+  const DUR = 7500;
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const reduced = () => !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+  const today = () => new Date().toISOString().slice(0, 10);
+  const SK = () => (O.key || 'probable') + '-story-seen';
+  const seenToday = () => { try { return localStorage.getItem(SK()) === today(); } catch (e) { return false; } };
+  function svgChart(c) {
+    if (!c) return '';
+    const W = 320, H = 110;
+    if (c.type === 'spark' && c.data && c.data.length > 1) {
+      const d = c.data.filter(v => v != null && isFinite(v)); if (d.length < 2) return '';
+      const lo = Math.min(...d), hi = Math.max(...d), sx = W / (d.length - 1), sy = v => H - 8 - (hi > lo ? (v - lo) / (hi - lo) : 0.5) * (H - 16);
+      const pts = d.map((v, k) => `${(k * sx).toFixed(1)},${sy(v).toFixed(1)}`).join(' ');
+      return `<svg class="kx-st-chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(c.label || 'Trend')}"><defs><linearGradient id="kxg" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="currentColor" stop-opacity=".35"/><stop offset="1" stop-color="currentColor" stop-opacity="0"/></linearGradient></defs><polygon points="0,${H} ${pts} ${W},${H}" fill="url(#kxg)"/><polyline points="${pts}" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/><circle cx="${W}" cy="${sy(d[d.length - 1]).toFixed(1)}" r="6" fill="currentColor"/></svg>${c.label ? `<span class="kx-st-clab">${esc(c.label)}</span>` : ''}`;
+    }
+    if (c.type === 'split') {
+      const parts = [c.a, c.d, c.h].filter(p => p && p.p > 0.001), tot = parts.reduce((s, p) => s + p.p, 0) || 1;
+      return `<div class="kx-st-split" role="img" aria-label="${esc(`${c.a.label} ${Math.round(c.a.p * 100)}%, ${c.h.label} ${Math.round(c.h.p * 100)}%`)}">${parts.map(p => `<i style="flex:${(p.p / tot).toFixed(3)};background:${esc(p.color || '#8b98ad')}"></i>`).join('')}</div><div class="kx-st-splab"><b>${esc(c.a.label)} ${Math.round(c.a.p * 100)}%</b>${c.d && c.d.p > 0.001 ? `<span>Draw ${Math.round(c.d.p * 100)}%</span>` : ''}<b>${Math.round(c.h.p * 100)}% ${esc(c.h.label)}</b></div>`;
+    }
+    if (c.type === 'bars' && c.data && c.data.length) {
+      const mx = Math.max(...c.data.map(b => Math.abs(b.v))) || 1, n = c.data.length, bw = W / n;
+      return `<svg class="kx-st-chart" viewBox="0 0 ${W} ${H + 22}" role="img" aria-label="${esc(c.label || 'Bars')}"><line x1="0" x2="${W}" y1="${H / 2}" y2="${H / 2}" stroke="currentColor" stroke-opacity=".25"/>${c.data.map((b, k) => { const h = Math.max(3, Math.abs(b.v) / mx * (H / 2 - 6)); return `<rect x="${(k * bw + bw * 0.2).toFixed(1)}" y="${(b.v >= 0 ? H / 2 - h : H / 2).toFixed(1)}" width="${(bw * 0.6).toFixed(1)}" height="${h.toFixed(1)}" rx="3" class="${b.v >= 0 ? 'up' : 'dn'}"/><text x="${(k * bw + bw / 2).toFixed(1)}" y="${H + 16}" text-anchor="middle">${esc(b.label)}</text>`; }).join('')}</svg>`;
+    }
+    return '';
+  }
+  function slideHTML(s, k) {
+    const bg = s.bg || O.bg || ['#13223d', '#0a1120'];
+    return `<article class="kx-st-slide${k === i ? ' on' : ''}" data-k="${k}" style="--st-a:${esc(bg[0])};--st-b:${esc(bg[1])}" aria-hidden="${k !== i}">
+      <div class="kx-st-body">${s.kicker ? `<span class="kx-st-kick">${esc(s.icon || '')} ${esc(s.kicker)}</span>` : ''}
+      <h3 class="kx-st-title">${esc(s.title)}</h3>
+      ${s.value != null && s.value !== '' ? `<div class="kx-st-val kx-${esc(s.tone || 'info')}">${esc(s.value)}</div>` : ''}
+      ${s.sub ? `<p class="kx-st-sub">${esc(s.sub)}</p>` : ''}
+      <div class="kx-st-viz kx-${esc(s.tone || 'info')}">${svgChart(s.chart)}</div></div>
+      <div class="kx-st-acts">${s.cta ? `<button type="button" class="kx-btn pri" data-st="go">${esc(s.cta.label)} →</button>` : ''}${s.ask && O.ask ? `<button type="button" class="kx-btn" data-st="ask">✦ Ask AI</button>` : ''}${window.SHARE ? `<button type="button" class="kx-btn kx-ico" data-st="share" aria-label="Share this slide">${SHARE.ICON}</button>` : ''}</div>
+    </article>`;
+  }
+  function build() {
+    root = document.createElement('div'); root.className = 'kx-story'; root.hidden = true; root.setAttribute('role', 'dialog'); root.setAttribute('aria-modal', 'true'); root.setAttribute('aria-label', O.title || "Today's briefing");
+    root.innerHTML = `<div class="kx-st-frame"><div class="kx-st-bars"></div><div class="kx-st-head"><span class="kx-st-av" aria-hidden="true">${esc(O.mark || 'P')}</span><span class="kx-st-name"><b>${esc(O.title || "Today's briefing")}</b><small></small></span><button type="button" class="kx-st-btn" data-st="listen" aria-label="Listen to the briefing" title="Listen">🔊</button><button type="button" class="kx-st-btn" data-st="pause" aria-label="Pause" title="Pause">❚❚</button><button type="button" class="kx-st-btn" data-st="close" aria-label="Close the briefing">×</button></div><div class="kx-st-stage" aria-live="polite"></div><button type="button" class="kx-st-tap prev" data-st="prev" aria-label="Previous"></button><button type="button" class="kx-st-tap next" data-st="next" aria-label="Next"></button></div>`;
+    document.body.appendChild(root);
+    root.addEventListener('click', ev => {
+      if (root._skip) { root._skip = false; return; }              // the click that ends a hold or a swipe
+      const b = ev.target.closest('[data-st]'); if (!b) { if (ev.target === root) close(); return; }
+      const a = b.dataset.st;
+      if (a === 'close') close(); else if (a === 'next') go(i + 1); else if (a === 'prev') go(i - 1);
+      else if (a === 'pause') setPause(!paused);
+      else if (a === 'listen') listen();
+      else if (a === 'go') { const s = slides[i]; close(); if (s.cta && s.cta.go) setTimeout(s.cta.go, 60); }
+      else if (a === 'ask') { const s = slides[i]; close(); setTimeout(() => O.ask(s.ask), 60); }
+      else if (a === 'share') { const s = slides[i]; setPause(true); SHARE.share({ kicker: s.kicker, title: s.title, value: s.value, tone: s.tone, sub: s.sub, chart: s.chart }, { file: 'probable-briefing' }); }
+    });
+    // hold to pause; swipe down to close
+    let y0 = null, down = 0;
+    root.addEventListener('pointerdown', ev => { if (ev.target.closest('.kx-st-acts,.kx-st-head')) return; down = performance.now(); y0 = ev.clientY; held = setTimeout(() => setPause(true, true), 240); });
+    root.addEventListener('pointerup', ev => { clearTimeout(held); if (paused && root.dataset.hold) { setPause(false); delete root.dataset.hold; root._skip = true; } if (y0 != null && ev.clientY - y0 > 90) { root._skip = true; close(); } y0 = null; });
+    root.addEventListener('keydown', ev => { if (ev.key === 'Escape') close(); else if (ev.key === 'ArrowRight' || ev.key === ' ') { ev.preventDefault(); go(i + 1); } else if (ev.key === 'ArrowLeft') go(i - 1); });
+  }
+  function setPause(p, hold) { paused = p; if (hold) root.dataset.hold = '1'; const b = root.querySelector('[data-st="pause"]'); b.textContent = p ? '▶' : '❚❚'; b.setAttribute('aria-label', p ? 'Play' : 'Pause'); if (!p) t0 = performance.now() - (root._prog || 0) * DUR; }
+  function paint() {
+    root.querySelector('.kx-st-bars').innerHTML = slides.map((s, k) => `<span><i style="width:${k < i ? 100 : 0}%"></i></span>`).join('');
+    root.querySelector('.kx-st-stage').innerHTML = slideHTML(slides[i], i);
+    root.querySelector('.kx-st-name small').textContent = `${i + 1} of ${slides.length}${O.sub ? ' · ' + O.sub : ''}`;
+    root._prog = 0; t0 = performance.now();
+  }
+  function go(k) {
+    if (k < 0) k = 0;
+    if (k >= slides.length) { markSeen(); close(); return; }
+    i = k; paint(); if (window.HAPTIC) HAPTIC.tick();
+  }
+  function tick() {
+    raf = requestAnimationFrame(tick);
+    if (!root || root.hidden) return;
+    const bar = root.querySelector('.kx-st-bars span:nth-child(' + (i + 1) + ') i'); if (!bar) return;
+    if (reduced()) { bar.style.width = '100%'; return; }
+    if (paused) return;
+    const p = Math.min(1, (performance.now() - t0) / DUR); root._prog = p; bar.style.width = (p * 100).toFixed(1) + '%';
+    if (p >= 1) go(i + 1);
+  }
+  function listen() {
+    if (!('speechSynthesis' in window)) { if (window.ALERT) ALERT.toast({ title: 'Reading aloud is not available in this browser' }); return; }
+    speechSynthesis.cancel(); setPause(true);
+    slides.slice(i).forEach(s => { const u = new SpeechSynthesisUtterance([s.kicker, s.title, s.value, s.sub].filter(Boolean).join('. ')); u.rate = 1.02; speechSynthesis.speak(u); });
+  }
+  function markSeen() { try { localStorage.setItem(SK(), today()); } catch (e) { /* ignore */ } if (ringBtn) ringBtn.classList.add('seen'); }
+  function open(list) {
+    slides = (list || (O.slides ? O.slides() : [])).filter(Boolean); if (!slides.length) return;
+    if (!root) build();
+    last = document.activeElement; i = 0; paused = false; root.hidden = false; document.documentElement.classList.add('kx-lock'); paint();
+    cancelAnimationFrame(raf); raf = requestAnimationFrame(tick);
+    setTimeout(() => { const c = root.querySelector('[data-st="close"]'); if (c) c.focus(); }, 30);
+  }
+  function close() {
+    if (!root || root.hidden) return; root.hidden = true; cancelAnimationFrame(raf); document.documentElement.classList.remove('kx-lock');
+    try { speechSynthesis.cancel(); } catch (e) { /* ignore */ }
+    if (i >= slides.length - 1) markSeen();
+    if (last && last.focus) try { last.focus(); } catch (e) { /* ignore */ }
+  }
+  function mount(o) {
+    O = o || {};
+    const host = typeof O.host === 'string' ? document.querySelector(O.host) : O.host;
+    if (host) {
+      ringBtn = document.createElement('button'); ringBtn.type = 'button'; ringBtn.className = 'kx-st-ring' + (seenToday() ? ' seen' : '');
+      ringBtn.setAttribute('aria-label', (O.title || "Today's briefing") + ': open the stories');
+      ringBtn.innerHTML = `<span class="kx-st-ring-av" aria-hidden="true">${esc(O.mark || 'P')}</span><span class="kx-st-ring-lbl">${esc(O.label || 'Today')}</span>`;
+      ringBtn.addEventListener('click', () => open());
+      if (O.prepend) host.prepend(ringBtn); else host.appendChild(ringBtn);
+    }
+    return { open };
+  }
+  return { mount, open, close };
+})();
+
+window.STORY = STORY;
+
+/* Probable kit: the News section. Headlines come from the site's news file (refreshed by a scheduled job from
+   public feeds: league news from ESPN for sports; official releases and major outlets for economics and
+   markets) and, where a site offers it, a live refresh in the browser. Each story shows its source, time and
+   summary and links to the original; filters by topic, a search box, related headlines for any team, country
+   or market, and "What it means" hands the headline to Ask AI. */
+const NEWS = (() => {
+  let O = {}, items = [], asOf = null, sources = [], loaded = null, filt = 'all', query = '', shown = 24, liveAt = 0;
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const norm = s => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+  function ago(iso) {
+    const t = +new Date(iso); if (!t) return '';
+    const m = Math.round((Date.now() - t) / 60000);
+    if (m < 2) return 'just now'; if (m < 60) return m + ' min ago'; if (m < 24 * 60) return Math.round(m / 60) + ' h ago';
+    if (m < 48 * 60) return 'Yesterday';
+    return new Date(t).toLocaleDateString([], { month: 'short', day: 'numeric' });
+  }
+  const host = u => { try { return new URL(u).hostname.replace(/^www\./, ''); } catch (e) { return ''; } };
+  function merge(list) {
+    const seen = new Set(), out = [];
+    for (const it of list) {
+      if (!it || !it.t || !it.u) continue;
+      const k = norm(it.t).replace(/[^a-z0-9]+/g, '').slice(0, 80);
+      if (seen.has(it.u) || seen.has(k)) continue; seen.add(it.u); seen.add(k); out.push(it);
+    }
+    return out.sort((a, b) => (+new Date(b.d) || 0) - (+new Date(a.d) || 0));
+  }
+  async function load() {
+    if (loaded) return loaded;
+    loaded = (async () => {
+      let j = O.embed ? window[O.embed] : null;
+      if (!j && O.url) {
+        for (const u of [].concat(O.url)) { try { const r = await fetch(u, { cache: 'no-cache' }); if (r.ok) { j = await r.json(); break; } } catch (e) { /* try the next */ } }
+      }
+      if (j) { items = merge((j.items || []).map(O.mapItem || (x => x))); asOf = j.asOf || null; sources = j.sources || []; }
+      return items;
+    })();
+    return loaded;
+  }
+  async function refreshLive() {
+    if (!O.live || Date.now() - liveAt < 5 * 60e3) return false;
+    liveAt = Date.now();
+    try { const fresh = await O.live(); if (fresh && fresh.length) { items = merge(fresh.concat(items)); asOf = new Date().toISOString(); return true; } } catch (e) { /* keep the file */ }
+    return false;
+  }
+  const topics = () => O.topics ? O.topics() : [];
+  function match(it) {
+    if (filt !== 'all') { const T = topics().find(t => t.id === filt); if (T && !T.test(it)) return false; }
+    if (query) { const q = norm(query); if (!norm(it.t + ' ' + (it.x || '') + ' ' + (it.s || '')).includes(q)) return false; }
+    return true;
+  }
+  function img(it, cls) {
+    const ini = esc((it.s || '?').trim().charAt(0).toUpperCase());
+    return it.img ? `<span class="${cls} kx-n-ph" data-ini="${ini}"><img src="${esc(it.img)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()"></span>` : `<span class="${cls} kx-n-ph" data-ini="${ini}" aria-hidden="true"></span>`;
+  }
+  function tags(it) { return (O.tagOf ? O.tagOf(it) : []).slice(0, 2).map(t => `<span class="kx-n-tag">${esc(t)}</span>`).join(''); }
+  function cardHTML(it, k, lead) {
+    // stories without a picture get a compact text card with an accent edge instead of an empty frame
+    return `<article class="kx-n-card${lead ? ' lead' : ''}${it.img ? '' : ' noimg'}" data-n="${k}">
+      ${it.img ? `<a class="kx-n-media" href="${esc(it.u)}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">${img(it, 'kx-n-img')}</a>` : ''}
+      <div class="kx-n-body"><div class="kx-n-meta"><span class="kx-n-src">${esc(it.s || host(it.u))}</span><span class="kx-n-dot" aria-hidden="true">·</span><time datetime="${esc(it.d || '')}">${esc(ago(it.d))}</time>${tags(it)}</div>
+      <h3 class="kx-n-h"><a href="${esc(it.u)}" target="_blank" rel="noopener">${esc(it.t)}</a></h3>
+      ${it.x ? `<p class="kx-n-x">${esc(it.x)}</p>` : ''}
+      <div class="kx-n-acts">${O.ask ? `<button type="button" class="kx-n-btn" data-nask="${k}">✦ What it means</button>` : ''}<button type="button" class="kx-n-btn kx-ico" data-nshare="${k}" aria-label="Share this story">${window.SHARE ? SHARE.ICON : '↗'}</button></div></div>
+    </article>`;
+  }
+  let view = [], target = null;
+  function paint() {
+    if (!target) return;
+    view = items.filter(match);
+    const T = topics(), counts = {}; T.forEach(t => { counts[t.id] = items.filter(t.test).length; });
+    const chips = `<button type="button" class="kx-chip${filt === 'all' ? ' on' : ''}" data-nf="all">All <span>${items.length}</span></button>` + T.filter(t => counts[t.id] || t.always).map(t => `<button type="button" class="kx-chip${filt === t.id ? ' on' : ''}" data-nf="${esc(t.id)}">${esc(t.label)} <span>${counts[t.id] || 0}</span></button>`).join('');
+    const src = sources.filter(s => s.ok !== false && s.n).map(s => s.name).filter((v, k, a) => a.indexOf(v) === k);
+    const lead = view.findIndex(it => it.img);
+    const order = lead > 0 ? [view[lead], ...view.slice(0, lead), ...view.slice(lead + 1)] : view;
+    view = order;
+    target.innerHTML = `<div class="kx-n-head"><div><h2 class="kx-n-title">${esc(O.title || 'News')}</h2><p class="kx-n-sub">${esc(O.lede || '')}${asOf ? ` Updated ${esc(ago(asOf))}.` : ''}</p></div>
+      <label class="kx-n-search"><span class="sr kx-sr">Search the news</span><input type="search" placeholder="Search headlines" value="${esc(query)}" data-nq></label></div>
+      <div class="kx-chips" role="group" aria-label="Filter the news">${chips}</div>
+      ${view.length ? `<div class="kx-n-grid">${view.slice(0, shown).map((it, k) => cardHTML(it, k, k === 0 && !!it.img && !query && filt === 'all')).join('')}</div>${view.length > shown ? `<button type="button" class="kx-btn kx-n-more" data-nmore>Show more (${view.length - shown})</button>` : ''}` : `<p class="kx-n-empty">${items.length ? 'No headlines match. Try another filter or search.' : esc(O.empty || 'Headlines are on their way: the news job refreshes several times an hour.')}</p>`}
+      <p class="kx-n-src-note">${src.length ? `Headlines and summaries from ${esc(src.slice(0, 10).join(', '))}${src.length > 10 ? ' and more' : ''}. ` : ''}Each story links to its publisher.</p>`;
+  }
+  function bind(el) {
+    el.addEventListener('click', ev => {
+      const f = ev.target.closest('[data-nf]'); if (f) { filt = f.dataset.nf; shown = 24; paint(); if (window.HAPTIC) HAPTIC.tick(); return; }
+      if (ev.target.closest('[data-nmore]')) { shown += 24; paint(); return; }
+      const a = ev.target.closest('[data-nask]'); if (a) { const it = view[+a.dataset.nask]; if (it && O.ask) O.ask(O.askText ? O.askText(it) : `What does this news mean: "${it.t}"?`, it); return; }
+      const s = ev.target.closest('[data-nshare]'); if (s) { const it = view[+s.dataset.nshare]; if (!it) return; if (window.SHARE) SHARE.link({ title: it.t, text: `${it.t} (${it.s})`, url: it.u }); }
+    });
+    el.addEventListener('input', ev => { if (ev.target.matches('[data-nq]')) { query = ev.target.value; shown = 24; const pos = ev.target.selectionStart; paint(); const i2 = target.querySelector('[data-nq]'); if (i2) { i2.focus(); try { i2.setSelectionRange(pos, pos); } catch (e) { /* ignore */ } } } });
+  }
+  async function render(el) {
+    target = el; if (!el._kxn) { bind(el); el._kxn = 1; }
+    if (!items.length) el.innerHTML = `<div class="kx-n-head"><h2 class="kx-n-title">${esc(O.title || 'News')}</h2></div><div class="kx-n-grid">${'<div class="kx-n-skel"></div>'.repeat(6)}</div>`;
+    await load(); paint();
+    if (await refreshLive()) paint();
+  }
+  // a compact list for side panels and drawers: the newest stories matching a test
+  function listHTML(test, n, opts) {
+    const L = items.filter(test || (() => true)).slice(0, n || 5);
+    if (!L.length) return opts && opts.empty ? `<p class="kx-n-empty sm">${esc(opts.empty)}</p>` : '';
+    const pics = L.some(it => it.img);   // thumbnails only when the list has pictures, so the rows stay aligned
+    return `<ul class="kx-n-list${pics ? '' : ' nopics'}">${L.map(it => `<li><a href="${esc(it.u)}" target="_blank" rel="noopener">${pics ? img(it, 'kx-n-thumb') : ''}<span><b>${esc(it.t)}</b><small>${esc(it.s || host(it.u))} · ${esc(ago(it.d))}</small></span></a></li>`).join('')}</ul>`;
+  }
+  function init(o) { O = o || {}; return { load, render }; }
+  return { init, load, render, listHTML, ago, get items() { return items; }, get asOf() { return asOf; }, refresh: refreshLive, repaint: paint };
+})();
+
+window.NEWS = NEWS;
+
+/* Probable kit: small touches. Keyboard shortcuts with a "?" help sheet, pull to refresh on phones, numbers
+   that count up when they come into view, a confetti burst, and a pop-out window (Document Picture-in-Picture)
+   that floats a live view above other windows where the browser supports it. All respect reduced motion. */
+const UX = (() => {
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const reduced = () => !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+  const typing = t => t && (t.isContentEditable || /^(input|textarea|select)$/i.test(t.tagName));
+  const keys = []; let helpEl = null, bound = false;
+  function key(k, label, run) {
+    keys.push({ k, label, run });
+    if (bound) return; bound = true;
+    document.addEventListener('keydown', ev => {
+      if (ev.metaKey || ev.ctrlKey || ev.altKey || typing(ev.target) || document.documentElement.classList.contains('kx-lock')) return;
+      if (ev.key === '?') { ev.preventDefault(); help(); return; }
+      const hit = keys.find(x => x.k === ev.key); if (hit) { ev.preventDefault(); hit.run(); }
+    });
+  }
+  function help() {
+    if (helpEl) { helpEl.remove(); helpEl = null; return; }
+    helpEl = document.createElement('div'); helpEl.className = 'kx-help'; helpEl.setAttribute('role', 'dialog'); helpEl.setAttribute('aria-label', 'Keyboard shortcuts');
+    const mac = /mac|iphone|ipad/i.test(navigator.platform || '');
+    const rows = [[mac ? '⌘ K' : 'Ctrl K', 'Search everything'], ['/', 'Search everything'], ...keys.map(x => [x.k, x.label]), ['?', 'Show or hide this list'], ['Esc', 'Close a panel']];
+    helpEl.innerHTML = `<div class="kx-help-in"><button type="button" class="kx-share-x" aria-label="Close">×</button><b>Keyboard shortcuts</b><dl>${rows.map(([k, l]) => `<dt><kbd>${esc(k)}</kbd></dt><dd>${esc(l)}</dd>`).join('')}</dl></div>`;
+    document.body.appendChild(helpEl);
+    helpEl.addEventListener('click', ev => { if (ev.target === helpEl || ev.target.closest('.kx-share-x')) { helpEl.remove(); helpEl = null; } });
+    document.addEventListener('keydown', function esc2(ev) { if (ev.key === 'Escape' && helpEl) { helpEl.remove(); helpEl = null; document.removeEventListener('keydown', esc2); } });
+  }
+  // pull to refresh (touch screens, at the top of the page)
+  function ptr(o) {
+    if (!('ontouchstart' in window)) return;
+    const ind = document.createElement('div'); ind.className = 'kx-ptr'; ind.innerHTML = '<span class="kx-ptr-spin" aria-hidden="true"></span><span class="kx-ptr-t">Pull to refresh</span>'; document.body.appendChild(ind);
+    let y0 = null, dy = 0, busy = false;
+    addEventListener('touchstart', e => { if (busy || scrollY > 2 || document.documentElement.classList.contains('kx-lock')) { y0 = null; return; } y0 = e.touches[0].clientY; dy = 0; }, { passive: true });
+    addEventListener('touchmove', e => { if (y0 == null) return; dy = Math.max(0, e.touches[0].clientY - y0); if (dy > 8 && scrollY <= 0) { const p = Math.min(1, dy / 90); ind.style.transform = `translate(-50%, ${Math.round(p * 64 - 56)}px)`; ind.classList.toggle('ready', p >= 1); ind.querySelector('.kx-ptr-t').textContent = p >= 1 ? 'Release to refresh' : 'Pull to refresh'; } }, { passive: true });
+    addEventListener('touchend', async () => {
+      if (y0 == null) return; y0 = null;
+      if (dy >= 90 && !busy) {
+        busy = true; ind.classList.add('busy'); ind.querySelector('.kx-ptr-t').textContent = 'Refreshing…'; if (window.HAPTIC) HAPTIC.tap();
+        try { await o.onRefresh(); } catch (e) { /* ignore */ }
+        if (window.HAPTIC) HAPTIC.success(); busy = false; ind.classList.remove('busy', 'ready');
+      }
+      ind.style.transform = ''; dy = 0;
+    });
+  }
+  // numbers count up once when they first scroll into view: <b data-count>1,234</b>
+  const counted = new WeakSet();
+  const io = 'IntersectionObserver' in window ? new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { io.unobserve(e.target); run(e.target); } }), { threshold: 0.4 }) : null;
+  function run(el) {
+    const txt = el.textContent, m = txt.match(/-?[\d,]*\.?\d+/); if (!m) return;
+    const end = parseFloat(m[0].replace(/,/g, '')), dec = (m[0].split('.')[1] || '').length, pre = txt.slice(0, m.index), post = txt.slice(m.index + m[0].length);
+    if (!isFinite(end) || Math.abs(end) < 2) return;
+    const t0 = performance.now(), D = 650, fmt = v => pre + v.toLocaleString(undefined, { minimumFractionDigits: dec, maximumFractionDigits: dec }) + post;
+    const step = now => { const k = Math.min(1, (now - t0) / D), e = 1 - Math.pow(1 - k, 3); el.textContent = fmt(end * e); if (k < 1) requestAnimationFrame(step); else el.textContent = txt; };
+    requestAnimationFrame(step);
+  }
+  function countUp(root) { if (reduced() || !io) return; (root || document).querySelectorAll('[data-count]').forEach(el => { if (counted.has(el)) return; counted.add(el); io.observe(el); }); }
+  // confetti in the given colors
+  function confetti(colors) {
+    if (reduced()) return;
+    const cv = document.createElement('canvas'); cv.className = 'kx-confetti'; cv.width = innerWidth * devicePixelRatio; cv.height = innerHeight * devicePixelRatio; document.body.appendChild(cv);
+    const ctx = cv.getContext('2d'), N = 140, P = [], cs = (colors && colors.length ? colors : ['#FFB547', '#36d399', '#5ea0f0', '#ff7b72']);
+    for (let k = 0; k < N; k++) P.push({ x: cv.width / 2 + (Math.random() - 0.5) * cv.width * 0.3, y: cv.height * 0.35, vx: (Math.random() - 0.5) * 18 * devicePixelRatio, vy: (-Math.random() * 16 - 6) * devicePixelRatio, r: (4 + Math.random() * 6) * devicePixelRatio, c: cs[k % cs.length], a: Math.random() * 6, va: (Math.random() - 0.5) * 0.4 });
+    const t0 = performance.now();
+    (function f(now) {
+      ctx.clearRect(0, 0, cv.width, cv.height);
+      for (const p of P) { p.vy += 0.5 * devicePixelRatio; p.vx *= 0.99; p.x += p.vx; p.y += p.vy; p.a += p.va; ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.a); ctx.fillStyle = p.c; ctx.fillRect(-p.r, -p.r / 2, p.r * 2, p.r); ctx.restore(); }
+      if (now - t0 < 2600) requestAnimationFrame(f); else cv.remove();
+    })(t0);
+  }
+  // pop a small live view into an always-on-top window (Chrome and Edge on desktop)
+  const pipOK = () => 'documentPictureInPicture' in window;
+  async function pip(o) {
+    if (!pipOK()) return null;
+    const w = await window.documentPictureInPicture.requestWindow({ width: o.width || 360, height: o.height || 220 });
+    [...document.styleSheets].forEach(ss => { try { const st = w.document.createElement('style'); st.textContent = [...ss.cssRules].map(r => r.cssText).join('\n'); w.document.head.appendChild(st); } catch (e) { if (ss.href) { const l = w.document.createElement('link'); l.rel = 'stylesheet'; l.href = ss.href; w.document.head.appendChild(l); } } });
+    w.document.documentElement.dataset.theme = document.documentElement.dataset.theme || '';
+    w.document.body.className = 'kx-pip'; w.document.title = o.title || 'Live';
+    const paint = () => { try { w.document.body.innerHTML = o.render(); } catch (e) { /* ignore */ } };
+    paint(); const iv = setInterval(paint, o.every || 5000);
+    w.addEventListener('pagehide', () => clearInterval(iv));
+    if (o.onClick) w.document.addEventListener('click', ev => o.onClick(ev, w));
+    return { win: w, update: paint, close: () => w.close() };
+  }
+  return { key, help, ptr, countUp, confetti, pip, pipOK, reduced };
+})();
+
+window.UX = UX;
+
 /* ==========================================================================
-   Probable — Live arena (3D hero on the Live board). Every game in a 40-hour
-   window on one timeline: lanes by sport, a glowing NOW line, one orb per
-   game split by each team's win probability. Uses the shared Probable 3D
-   bundle (WebGPU with a WebGL 2 fallback) and keeps a 2D summary when the
-   browser can't draw it.
+   Probable — Live scoreboard (3D hero on the Live board). A ring of game
+   cards that turns one card at a time: league, clock, both teams with their
+   scores, and a win-chance bar in team colors. Live games glow and come
+   first. Uses the shared Probable 3D bundle (WebGPU with a WebGL 2 fallback)
+   and keeps a 2D summary when the browser can't draw it.
    ========================================================================== */
 (function () {
   'use strict';
   const APP = window.APP, S = APP.S, LG = APP.LG, esc = APP.esc;
-  const LANES = [['fb', 'Football'], ['bk', 'Basketball'], ['bb', 'Baseball'], ['hk', 'Hockey'], ['sc', 'Soccer']];
   const WIN = [-10, 30];                                   // hours around now
   let el = null, ctl = null, mounting = false, lastSig = '', failed = false;
 
   function build() {
     if (el) return el;
     el = document.createElement('section');
-    el.className = 'arena'; el.id = 'arena'; el.setAttribute('aria-label', 'Live arena: every game on one 3D timeline');
+    el.className = 'arena'; el.id = 'arena'; el.setAttribute('aria-label', 'Live scoreboard: every game as a 3D card');
     el.innerHTML = `<div class="wrap arena-in">
       <div class="arena-copy">
-        <span class="arena-eyebrow"><i class="arena-dot" aria-hidden="true"></i>Live arena · 3D</span>
-        <h2 class="arena-h">Every game, one timeline</h2>
-        <p class="arena-lede">Each orb is a game, split between the two teams' colors by each side's chance to win. Live games glow on a beam of light; the line marks now. Drag to look around and tap an orb to open the game.</p>
+        <span class="arena-eyebrow"><i class="arena-dot" aria-hidden="true"></i>Live scoreboard · 3D</span>
+        <h2 class="arena-h">Every game at a glance</h2>
+        <p class="arena-lede">Each card is one game: the score, the clock and each team's chance to win right now. Live games glow and come first. Swipe or use the arrows to turn the board, and tap a card to open the game.</p>
         <div class="arena-stats" id="arenaStats"></div>
-        <div class="arena-legend" aria-hidden="true"><span><i class="lg-live"></i>Live</span><span><i class="lg-pre"></i>Upcoming</span><span><i class="lg-post"></i>Final</span><span class="lg-split"><i></i>Color share = win chance</span></div>
+        <div class="arena-legend" aria-hidden="true"><span><i class="lg-live"></i>Live</span><span><i class="lg-pre"></i>Upcoming</span><span><i class="lg-post"></i>Final</span><span class="lg-split"><i></i>Bar = chance to win</span></div>
       </div>
-      <div class="arena-stage px3d" id="arenaStage"><div class="px3d-fallback" id="arenaFb">Loading the 3D arena…</div></div>
+      <div class="arena-stage px3d" id="arenaStage"><div class="px3d-fallback" id="arenaFb">Loading the 3D scoreboard…</div></div>
     </div>`;
     const mast = document.querySelector('.mast');
     mast.parentNode.insertBefore(el, mast.nextSibling);
     return el;
   }
 
-  const laneOf = g => APP.kindOf(g.lg);
   // the snapshot copy is drawn around the moment it was captured, the live board around now
   const nowRef = () => S.mode === 'snapshot' && S.capturedAt ? +new Date(S.capturedAt) : Date.now();
   function games() {
     const now = nowRef(), w0 = now + WIN[0] * 3600e3, w1 = now + WIN[1] * 3600e3;
     return APP.allGames().filter(g => !g.void && g.start && +new Date(g.start) >= w0 - 3 * 3600e3 && +new Date(g.start) <= w1);
   }
+  function card(g) {
+    const P = APP.predict(g), live = g.state === 'in', R = live ? P.now : P.pre;
+    const pD = R.pD || 0, pH = R.pH, pA = R.pA != null ? R.pA : 1 - pH - pD;
+    const side = t => ({ abbr: t.abbr, name: t.name, sub: t.record || '', color: APP.teamColor(g.lg, t), score: t.score, winner: !!t.winner });
+    const note = g.state === 'post' ? ((/(OT|SO|AET|Pen)/i.exec(g.detail || '') || [])[1] || '') : '';
+    return {
+      id: g.id, lg: g.lg, league: LG[g.lg].short || LG[g.lg].name, state: g.state, t: +new Date(g.start),
+      status: live ? (g.detail || 'Live') : g.state === 'pre' ? APP.when(g.start) : 'Final', statusNote: note,
+      away: side(g.away), home: side(g.home), pH, pA, pD,
+      fav: APP.favs ? APP.favs.game(g) : false
+    };
+  }
   function data() {
     const now = nowRef();
-    const gs = games(), used = new Set(gs.map(laneOf));
-    const out = gs.map(g => {
-      const P = APP.predict(g), live = g.state === 'in', R = live ? P.now : P.pre;
-      const pD = R.pD || 0, pH = R.pH, pA = R.pA != null ? R.pA : 1 - pH - pD;
-      const sc = APP.kindOf(g.lg) === 'sc';
-      const rh = APP.teamRank ? APP.teamRank(g, 'home') : null, ra = APP.teamRank ? APP.teamRank(g, 'away') : null;
-      const rk = Math.min(rh ? rh.rank : 99, ra ? ra.rank : 99);
-      const score = g.state === 'pre' ? '' : ` · ${g.away.abbr} ${g.away.score ?? 0}–${g.home.score ?? 0} ${g.home.abbr}`;
-      return {
-        id: g.id, lane: laneOf(g), t: +new Date(g.start), state: g.state, pH, pA, pD,
-        cH: APP.teamColor(g.lg, g.home), cA: APP.teamColor(g.lg, g.away), hAbbr: g.home.abbr, aAbbr: g.away.abbr,
-        title: sc ? `${g.home.name} vs ${g.away.name}` : `${g.away.name} at ${g.home.name}`,
-        sub: `${LG[g.lg].short || LG[g.lg].name} · ${g.state === 'pre' ? APP.when(g.start) : g.detail || ''}${score}${g.state === 'post' ? ' · pregame odds' : ''}`,
-        rank: g.state === 'in' ? 0 : rk
-      };
-    });
-    return { now, games: out, lanes: LANES.filter(([k]) => used.has(k)).map(([id, label]) => ({ id, label })), window: [now + WIN[0] * 3600e3, now + WIN[1] * 3600e3] };
+    const all = games().map(card);
+    const live = all.filter(c => c.state === 'in').sort((a, b) => (b.fav - a.fav) || Math.abs(a.pH - a.pA) - Math.abs(b.pH - b.pA));
+    const pre = all.filter(c => c.state === 'pre').sort((a, b) => (b.fav - a.fav) || a.t - b.t);
+    const post = all.filter(c => c.state === 'post').sort((a, b) => (b.fav - a.fav) || b.t - a.t);
+    const pick = [...live, ...pre.slice(0, Math.max(4, 12 - live.length)), ...post.slice(0, 4)].slice(0, 16);
+    return { now, games: pick, all };
   }
   function stats(d) {
-    const live = d.games.filter(g => g.state === 'in').length, up = d.games.filter(g => g.state === 'pre' && g.t - d.now < 24 * 3600e3).length;
-    const fin = d.games.filter(g => g.state === 'post').length;
-    const close = d.games.filter(g => g.state === 'in').sort((a, b) => Math.abs(a.pH - a.pA) - Math.abs(b.pH - b.pA))[0];
+    const live = d.all.filter(g => g.state === 'in').length, up = d.all.filter(g => g.state === 'pre' && g.t - d.now < 24 * 3600e3).length;
+    const fin = d.all.filter(g => g.state === 'post').length;
+    const close = d.all.filter(g => g.state === 'in').sort((a, b) => Math.abs(a.pH - a.pA) - Math.abs(b.pH - b.pA))[0];
     const cap = S.mode === 'snapshot';
-    return `<div class="astat"><b>${live}</b><span>${cap ? 'live at capture' : 'live now'}</span></div><div class="astat"><b>${up}</b><span>in the next 24 h</span></div><div class="astat"><b>${fin}</b><span>final, last 10 h</span></div>` +
-      (close ? `<button type="button" class="astat astat-btn" data-game="${esc(close.id)}"><b>${Math.round(Math.max(close.pH, close.pA) * 100)}%</b><span>closest live: ${esc(close.aAbbr)}–${esc(close.hAbbr)}</span></button>` : '');
+    return `<div class="astat"><b data-count>${live}</b><span>${cap ? 'live at capture' : 'live now'}</span></div><div class="astat"><b data-count>${up}</b><span>in the next 24 h</span></div><div class="astat"><b data-count>${fin}</b><span>final, last 10 h</span></div>` +
+      (close ? `<button type="button" class="astat astat-btn" data-game="${esc(close.id)}"><b>${Math.round(Math.max(close.pH, close.pA) * 100)}%</b><span>closest live: ${esc(close.away.abbr)}–${esc(close.home.abbr)}</span></button>` : '');
   }
   async function mount(d) {
     if (ctl || mounting || failed) return;
     mounting = true;
     const stage = document.getElementById('arenaStage'), fb = document.getElementById('arenaFb');
     try {
-      ctl = await window.PX3D.mount(stage, 'arena', d, {
+      ctl = await window.PX3D.mount(stage, 'carousel', d, {
         bg: getComputedStyle(document.documentElement).getPropertyValue('--arena-bg').trim() || '#0a1120',
         accent: '#FFB547',
-        onPick: g => { if (g && g.id) APP.openGame(g.id); },
+        onPick: g => { if (g && g.id) { if (window.HAPTIC) HAPTIC.tap(); APP.openGame(g.id); } },
         onFail: () => { failed = true; }
       });
       const badge = document.createElement('span'); badge.className = 'px3d-badge'; badge.textContent = ctl.backend === 'WebGPU' ? 'WebGPU' : 'WebGL 2'; stage.appendChild(badge);
+      const nav = (cls, k, label, txt) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'px3d-nav ' + cls; b.setAttribute('aria-label', label); b.textContent = txt; b.addEventListener('click', () => { ctl.step(k); if (window.HAPTIC) HAPTIC.tick(); }); stage.appendChild(b); return b; };
+      nav('prev', -1, 'Previous game', '‹'); nav('next', 1, 'Next game', '›');
+      stage.classList.toggle('few', d.games.length <= 4);
       window.PX3D.motionToggle(stage, ctl);
     } catch (e) {
       failed = true;
-      if (fb) fb.textContent = 'This browser can’t draw the 3D arena, so the board below has everything.';
+      if (fb) fb.textContent = 'This browser can’t draw the 3D scoreboard, so the board below has everything.';
       el.classList.add('arena-2d');
     } finally { mounting = false; }
   }
@@ -7545,14 +8456,15 @@ window.CH = CH; window.INS = INS; window.PX3D = PX3D; window.PAPP = PAPP;
     el.hidden = !show;
     if (!show) return;
     const d = data();
-    const sig = d.games.map(g => g.id + g.state + Math.round(g.pH * 100)).join(',') + '|' + Math.round(d.now / 600e3);
+    const sig = d.games.map(g => [g.id, g.state, g.status, g.away.score, g.home.score, Math.round(g.pH * 100), g.fav ? 1 : 0].join(':')).join(',');
     document.getElementById('arenaStats').innerHTML = stats(d);
     if (sig === lastSig && ctl) return; lastSig = sig;
+    const stage = document.getElementById('arenaStage'); if (stage) stage.classList.toggle('few', d.games.length <= 4);
     if (ctl) ctl.update(d);
     else if (window.PX3D) window.PX3D.idle(() => mount(d));
   }
   APP.onRender.push(refresh);
-  APP.arena = { data, get ctl() { return ctl; } };
+  APP.arena = { data, get ctl() { return ctl; }, refresh: () => { lastSig = ''; refresh('board', S.tab); } };
 })();
 
 /* ==========================================================================
@@ -7567,6 +8479,211 @@ window.CH = CH; window.INS = INS; window.PX3D = PX3D; window.PAPP = PAPP;
     window.PAPP.init({ sw: 'sw.js', scope: '/live-sports-lab/', host: '.site-strip .wrap > span', name: 'Probable Sports Lab' });
     window.PAPP.ask(q => { if (window.CH) window.CH.open(q); });
   });
+})();
+
+/* ==========================================================================
+   Probable — Sports Lab extras: the News tab, followed teams with alerts,
+   search everything, the daily briefing stories, share cards, a pop-out
+   live score window, pull to refresh, keyboard shortcuts and the app badge.
+   Built on the shared Probable kit (kit-favs, kit-search, kit-story,
+   kit-share, kit-news, kit-ux).
+   ========================================================================== */
+(function () {
+  'use strict';
+  const APP = window.APP, S = APP.S, LG = APP.LG, esc = APP.esc;
+  const pc = p => Math.round(p * 100) + '%';
+  const SNAP = () => S.mode === 'snapshot';
+  const nowRef = () => SNAP() && S.capturedAt ? +new Date(S.capturedAt) : Date.now();
+  const lgName = lg => (LG[lg] && (LG[lg].short || LG[lg].name)) || lg;
+  const ask = q => { if (window.CH) window.CH.open(q); };
+
+  /* ---------- kit setup ---------- */
+  ALERT.init({ app: 'Probable Sports Lab', key: 'probable-sports', icon: 'icons/sports-192.png' });
+  FAV.init({ key: 'probable-sports-favs', followNote: 'Their games lead the board, and you get alerts when they start, go down to the wire and finish.' });
+  SHARE.brand({ name: 'Probable · Sports Lab', url: 'https://bsilva87921.github.io/live-sports-lab/', accent: '#FFB547', bg: ['#060b15', '#16284a'], fd: '"Big Shoulders Display","Arial Narrow",system-ui,sans-serif', fb: '"Barlow",system-ui,sans-serif', fm: '"JetBrains Mono",ui-monospace,monospace' });
+  const tkey = (lg, t) => 'team:' + lg + ':' + (t && t.abbr);
+  APP.favs = { game: g => !!g && (FAV.has(tkey(g.lg, g.home)) || FAV.has(tkey(g.lg, g.away))), team: (lg, t) => FAV.has(tkey(lg, t)), key: tkey };
+  FAV.on(() => { APP.renderAll(); if (APP.arena) APP.arena.refresh(); });
+
+  /* ---------- helpers ---------- */
+  function split(g) {
+    const P = APP.predict(g), R = g.state === 'in' ? P.now : P.pre;
+    const pD = R.pD || 0, pH = R.pH, pA = R.pA != null ? R.pA : 1 - pH - pD;
+    return { type: 'split', a: { label: g.away.abbr, p: pA, color: APP.teamColor(g.lg, g.away) }, d: pD > 0.001 ? { label: 'Draw', p: pD, color: '#7d8798' } : null, h: { label: g.home.abbr, p: pH, color: APP.teamColor(g.lg, g.home) } };
+  }
+  function lead(g) { const c = split(g); const top = c.h.p >= c.a.p ? c.h : c.a; return { abbr: top.label, p: top.p }; }
+  const status = g => g.state === 'in' ? (SNAP() ? 'At capture · ' : '') + (g.detail || 'Live') : g.state === 'pre' ? APP.when(g.start) : 'Final';
+  const score = g => g.state === 'pre' ? '' : `${g.away.abbr} ${g.away.score ?? 0}–${g.home.score ?? 0} ${g.home.abbr}`;
+  function teamList() {
+    const m = new Map();
+    const add = (lg, t) => { if (!t || !t.abbr) return; const k = lg + '|' + t.abbr, o = m.get(k) || { lg, abbr: t.abbr, name: t.name || t.abbr, color: t.color, record: t.record || '' }; if (t.name && t.name.length > o.name.length) o.name = t.name; if (t.color && !o.color) o.color = t.color; if (t.record) o.record = t.record; m.set(k, o); };
+    for (const l of APP.LEAGUES) { const D = S.data[l.id]; if (!D) continue; for (const r of D.standings || []) add(l.id, { abbr: r.abbr || r.key, name: r.name, color: r.color }); for (const g of D.games || []) { add(l.id, g.home); add(l.id, g.away); } }
+    return [...m.values()];
+  }
+  function gameFor(lg, abbr) {
+    const gs = ((S.data[lg] || {}).games || []).filter(g => !g.void && (g.home.abbr === abbr || g.away.abbr === abbr)), t = g => +new Date(g.start);
+    return gs.find(g => g.state === 'in') || gs.filter(g => g.state === 'pre').sort((a, b) => t(a) - t(b))[0] || gs.filter(g => g.state === 'post').sort((a, b) => t(b) - t(a))[0] || null;
+  }
+  function gameCard(g) {
+    const L = lead(g);
+    return { kicker: `${lgName(g.lg)} · ${status(g)}`, title: `${g.away.name} at ${g.home.name}`, value: pc(L.p), tone: g.state === 'in' ? 'warn' : 'info', sub: (score(g) ? score(g) + ' · ' : '') + `${L.abbr} chance to win${g.state === 'post' ? ' before the game' : g.state === 'in' ? ' right now' : ''}`, chart: split(g) };
+  }
+
+  /* ---------- news ---------- */
+  const NEWS_URL = window.SPORTS_NEWS_URL || 'data/news.json';
+  async function liveNews() {
+    if (SNAP() || !navigator.onLine) return [];
+    const L = APP.LEAGUES.map(l => [l.id, l.path, l.short || l.name]).concat([['tennis', 'tennis/atp', 'Tennis'], ['golf', 'golf/pga', 'Golf'], ['ufc', 'mma/ufc', 'UFC']]);
+    const res = await Promise.allSettled(L.map(async ([lg, path, label]) => {
+      const r = await fetch(`https://site.api.espn.com/apis/site/v2/sports/${path}/news?limit=12`); if (!r.ok) return [];
+      const j = await r.json();
+      return (j.articles || []).map(a => {
+        const u = ((a.links || {}).web || {}).href, ims = (a.images || []).filter(i => i && i.url);
+        return u && a.headline ? { id: u, t: a.headline, u, s: 'ESPN', d: a.published || a.lastModified, x: a.description || '', img: (ims.find(i => (i.width || 0) >= 400) || ims[0] || {}).url || null, lg, lgName: label, tm: (a.categories || []).filter(c => c.type === 'team' && c.description).map(c => c.description).slice(0, 4), tp: [lg] } : null;
+      }).filter(Boolean);
+    }));
+    return res.flatMap(r => r.status === 'fulfilled' ? r.value : []);
+  }
+  const followedNames = () => FAV.list('team:').map(f => (f.label || '').toLowerCase()).filter(Boolean);
+  const aboutFollowed = it => { const ns = followedNames(); if (!ns.length) return false; const tx = ((it.tm || []).join(' ') + ' ' + it.t).toLowerCase(); return ns.some(n => tx.includes(n) || tx.includes(n.split(' ').pop())); };
+  NEWS.init({
+    url: [NEWS_URL], embed: 'SPORTS_NEWS', title: 'Sports news', lede: 'The latest from every league on the board, newest first.', live: liveNews,
+    empty: SNAP() ? 'This saved copy has no news feed. The live site shows the latest headlines from every league.' : undefined,
+    topics: () => { const lgs = [...new Set(NEWS.items.map(i => i.lg))]; const T = []; if (FAV.count('team:')) T.push({ id: 'mine', label: '★ My teams', test: aboutFollowed, always: true }); return T.concat(lgs.map(lg => ({ id: lg, label: (NEWS.items.find(i => i.lg === lg) || {}).lgName || lgName(lg), test: it => it.lg === lg }))); },
+    tagOf: it => [it.lgName || lgName(it.lg)].filter(Boolean),
+    ask: q => ask(q), askText: it => `What does this mean for ${(it.tm && it.tm[0]) || it.lgName || 'the team'}? "${it.t}"`
+  });
+  APP.renderNews = el => { el.classList.add('kx-news'); NEWS.render(el); };
+  NEWS.load();
+
+  /* ---------- the game center: follow, share, pop out, related headlines ---------- */
+  let pipCtl = null;
+  function miniHTML(id) {
+    const g = APP.findGame(id); if (!g) return '<p>Game not found.</p>';
+    const c = split(g), row = (t, p) => `<div style="display:flex;align-items:center;gap:10px;margin:6px 0"><span style="min-width:46px;height:28px;border-radius:7px;display:inline-grid;place-items:center;background:${esc(APP.teamColor(g.lg, t))};color:${esc(APP.textOn(APP.teamColor(g.lg, t)))};font:800 14px/1 var(--f-display)">${esc(t.abbr)}</span><b style="flex:1;font:600 15px var(--f-body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(t.name)}</b><b style="font:900 30px/1 var(--f-display)">${g.state === 'pre' ? '' : esc(t.score ?? 0)}</b><span style="min-width:44px;text-align:right;font:700 13px var(--f-mono);color:var(--muted)">${pc(p)}</span></div>`;
+    return `<div style="font:700 11px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent-ink)">${esc(lgName(g.lg))} · ${esc(status(g))}</div>${row(g.away, c.a.p)}${row(g.home, c.h.p)}<div style="display:flex;height:8px;border-radius:4px;overflow:hidden;margin-top:6px"><i style="flex:${c.a.p};background:${esc(c.a.color)}"></i>${c.d ? `<i style="flex:${c.d.p};background:#7d8798"></i>` : ''}<i style="flex:${c.h.p};background:${esc(c.h.color)}"></i></div>`;
+  }
+  APP.onDrawer = APP.onDrawer || [];
+  APP.onDrawer.push((g, el) => {
+    const head = el.querySelector('.dr-head'); if (!head) return;
+    const box = document.createElement('span'); box.className = 'dr-x';
+    box.innerHTML = FAV.btn(tkey(g.lg, g.away), g.away.name, 'sm', null).replace('</button>', `<span class="fav-ab">${esc(g.away.abbr)}</span></button>`) + FAV.btn(tkey(g.lg, g.home), g.home.name, 'sm', null).replace('</button>', `<span class="fav-ab">${esc(g.home.abbr)}</span></button>`) +
+      `<button type="button" class="icon-btn" data-dshare aria-label="Share this game">${SHARE.ICON}<span class="lbl">Share</span></button>` + (UX.pipOK() && g.state !== 'post' && !SNAP() ? `<button type="button" class="icon-btn" data-dpip aria-label="Pop out a live score window">⧉<span class="lbl">Pop out</span></button>` : '');
+    head.insertBefore(box, head.querySelector('[data-close]'));
+    box.addEventListener('click', async ev => {
+      if (ev.target.closest('[data-dshare]')) SHARE.share(gameCard(APP.findGame(g.id) || g), { file: 'probable-' + g.away.abbr + '-' + g.home.abbr });
+      if (ev.target.closest('[data-dpip]')) { try { if (pipCtl) pipCtl.close(); pipCtl = await UX.pip({ title: `${g.away.abbr} at ${g.home.abbr}`, width: 360, height: 170, render: () => miniHTML(g.id), every: 4000 }); } catch (e) { ALERT.toast({ title: 'Pop-out is not available here' }); } }
+    });
+    // related headlines for the two teams, under the board
+    const names = [g.home.name, g.away.name].map(n => (n || '').toLowerCase()), short = names.map(n => n.split(' ').pop());
+    const rel = it => it.lg === g.lg && ((it.tm || []).some(t => names.includes(t.toLowerCase())) || short.some(s => s.length > 3 && (it.t || '').toLowerCase().includes(s)));
+    NEWS.load().then(() => {
+      const html = NEWS.listHTML(rel, 4); if (!html) return;
+      const host = el.querySelector('.dr-body'); if (!host || host.querySelector('.dr-news')) return;
+      const sec = document.createElement('div'); sec.className = 'panel panel-pad dr-news'; sec.innerHTML = `<span class="eyebrow">In the news</span>${html}`;
+      const after = host.querySelector('#dr-probs'); if (after && after.nextSibling) host.insertBefore(sec, after.nextSibling); else host.appendChild(sec);
+    });
+  });
+
+  /* ---------- search everything ---------- */
+  const TABS = [['board', 'Live board', '▦'], ['stats', 'Stats center', '▤'], ['lab', 'Hypothesis lab', '⚗'], ['standings', 'Standings & projections', '☰'], ['news', 'News', '✉'], ['method', 'How it works and track record', '?']];
+  function index() {
+    const out = [], now = nowRef();
+    for (const t of teamList()) {
+      const g = gameFor(t.lg, t.abbr), live = g && g.state === 'in', fav = FAV.has(tkey(t.lg, t));
+      out.push({ id: 'team:' + t.lg + ':' + t.abbr, kind: 'Team', title: t.name, sub: `${lgName(t.lg)}${t.record ? ' · ' + t.record : ''}${g ? ' · ' + (g.state === 'in' ? 'playing now' : g.state === 'pre' ? 'next: ' + APP.when(g.start) : 'last: ' + score(g)) : ''}${fav ? ' · ★ following' : ''}`, kw: t.abbr + ' ' + lgName(t.lg), iconHTML: APP.badge(t.lg, t), badge: live ? 'LIVE' : '', boost: (fav ? 14 : 0) + (live ? 6 : 0), go: () => { if (g) APP.openGame(g.id); else { S.league = t.lg; APP.setTab('standings'); } } });
+    }
+    for (const g of APP.allGames().filter(x => !x.void && Math.abs(+new Date(x.start) - now) < 36 * 3600e3)) {
+      out.push({ id: 'game:' + g.id, kind: 'Game', title: `${g.away.name} at ${g.home.name}`, sub: `${lgName(g.lg)} · ${status(g)}${score(g) ? ' · ' + score(g) : ''}`, kw: g.away.abbr + ' ' + g.home.abbr + ' vs', icon: g.state === 'in' ? '●' : '◷', badge: g.state === 'in' ? 'LIVE' : '', boost: g.state === 'in' ? 4 : 0, go: () => APP.openGame(g.id) });
+    }
+    for (const l of APP.LEAGUES) out.push({ id: 'lg:' + l.id, kind: 'League', title: l.long || l.name, sub: 'Show only this league on the board', kw: l.short || '', icon: '◎', go: () => { S.league = l.id; APP.setTab('board'); } });
+    for (const [id, title, icon] of TABS) out.push({ id: 'tab:' + id, kind: 'Section', title, sub: 'Open the ' + title.toLowerCase(), icon, go: () => APP.setTab(id) });
+    NEWS.items.slice(0, 60).forEach(it => out.push({ id: 'news:' + it.u, kind: 'News', title: it.t, sub: `${it.s} · ${it.lgName || ''} · ${NEWS.ago(it.d)}`, icon: '✉', kw: (it.tm || []).join(' '), go: () => window.open(it.u, '_blank', 'noopener') }));
+    out.push({ id: 'act:brief', kind: 'Action', title: "Open today's briefing", sub: 'Five stories in under a minute', icon: '◉', go: () => STORY.open() });
+    out.push({ id: 'act:alerts', kind: 'Action', title: ALERT.status() === 'on' ? 'Alerts are on' : 'Turn on alerts for your teams', sub: 'Starts, nail-biters and finals', icon: '🔔', go: () => ALERT.enable() });
+    out.push({ id: 'act:theme', kind: 'Action', title: 'Switch light or dark theme', icon: '◐', go: () => { const b = document.getElementById('btn-theme'); if (b) b.click(); } });
+    if (!SNAP()) out.push({ id: 'act:refresh', kind: 'Action', title: 'Refresh the scores now', icon: '↻', go: () => { const b = document.getElementById('btn-refresh'); if (b) b.click(); } });
+    out.push({ id: 'act:keys', kind: 'Action', title: 'Keyboard shortcuts', icon: '⌨', go: () => UX.help() });
+    return out;
+  }
+  function suggest() {
+    const live = APP.allGames().filter(g => g.state === 'in').slice(0, 4).map(g => ({ id: 'game:' + g.id, kind: 'Game', group: 'Live now', title: `${g.away.name} at ${g.home.name}`, sub: `${lgName(g.lg)} · ${status(g)} · ${score(g)}`, icon: '●', badge: 'LIVE', go: () => APP.openGame(g.id) }));
+    const mine = FAV.list('team:').slice(0, 5).map(f => { const [, lg, abbr] = f.key.split(':'), g = gameFor(lg, abbr); return { id: f.key, kind: 'Team', group: 'Your teams', title: f.label, sub: g ? `${lgName(lg)} · ${g.state === 'in' ? 'playing now' : g.state === 'pre' ? 'next: ' + APP.when(g.start) : 'last: ' + score(g)}` : lgName(lg), icon: '★', go: () => { if (g) APP.openGame(g.id); } }; });
+    return mine.concat(live).concat([{ id: 'act:brief', kind: 'Action', group: 'Try', title: "Open today's briefing", icon: '◉', go: () => STORY.open() }, { id: 'tab:news', kind: 'Section', group: 'Try', title: 'Sports news', icon: '✉', go: () => APP.setTab('news') }]);
+  }
+
+  /* ---------- the daily briefing ---------- */
+  function slides() {
+    const out = [], ins = (APP.insights && APP.insights.list()) || [];
+    const gid = it => { const m = /^(close|next|fav|upset|gap|swing)-(.+)$/.exec(it.id || ''); return m ? APP.findGame(m[2]) : null; };
+    const mine = FAV.list('team:').map(f => { const [, lg, abbr] = f.key.split(':'); return gameFor(lg, abbr); }).filter(Boolean);
+    const seen = new Set();
+    mine.slice(0, 2).forEach(g => { if (seen.has(g.id)) return; seen.add(g.id); const c = gameCard(g); out.push(Object.assign(c, { kicker: '★ Your team · ' + c.kicker, cta: { label: 'Open the game', go: () => APP.openGame(g.id) }, ask: `How is ${g.away.name} at ${g.home.name} going?`, bg: ['#2a1d06', '#0b1220'] })); });
+    for (const it of ins) {
+      if (out.length >= 7) break;
+      const g = gid(it); if (g && seen.has(g.id)) continue; if (g) seen.add(g.id);
+      const st = it.story || {};
+      out.push({ kicker: st.kicker || it.tag, title: st.title || it.text.replace(/\s+—\s+/g, ' · '), value: st.value != null ? st.value : (it.val || (g ? pc(lead(g).p) : '')), tone: it.tone === 'live' ? 'warn' : it.tone === 'down' ? 'down' : it.tone === 'up' ? 'up' : 'info', sub: st.sub || (g ? [score(g), status(g)].filter(Boolean).join(' · ') : ''), chart: g ? split(g) : null, cta: it.go ? { label: g ? 'Open the game' : 'See it', go: it.go } : null, ask: it.ask, bg: it.tone === 'live' ? ['#3a0f17', '#0b1220'] : it.tone === 'warn' ? ['#3a2a06', '#0b1220'] : ['#13223d', '#0a1120'] });
+    }
+    const top = NEWS.items[0];
+    if (top) out.push({ kicker: 'In the news · ' + (top.lgName || top.s), title: top.t, sub: `${top.s} · ${NEWS.ago(top.d)}`, cta: { label: 'Read the story', go: () => window.open(top.u, '_blank', 'noopener') }, ask: `What does this mean? "${top.t}"`, bg: ['#1b1036', '#0a1120'] });
+    return out.slice(0, 8);
+  }
+
+  /* ---------- alerts for followed teams ---------- */
+  const prev = new Map();
+  function watch() {
+    if (S.mode === 'loading') return;
+    let liveMine = 0;
+    for (const g of APP.allGames()) {
+      if (!APP.favs.game(g) || g.void) continue;
+      const mine = FAV.has(tkey(g.lg, g.home)) ? 'home' : 'away', them = mine === 'home' ? 'away' : 'home';
+      const P = APP.predict(g), R = g.state === 'in' ? P.now : P.pre, pMine = mine === 'home' ? R.pH : (R.pA != null ? R.pA : 1 - R.pH - (R.pD || 0));
+      const was = prev.get(g.id), t = g[mine], o = g[them];
+      const go = () => APP.openGame(g.id), title0 = `${g.away.abbr} at ${g.home.abbr}`;
+      if (g.state === 'in') liveMine++;
+      if (SNAP()) { prev.set(g.id, { state: g.state }); continue; }
+      if (g.state === 'in' && (!was || was.state === 'pre')) ALERT.notify({ id: `sp:${g.id}:start`, title: `${t.name} are on now`, body: `${title0} · ${g.detail || 'Live'} · ${pc(pMine)} to win`, go, tone: 'live' });
+      if (g.state === 'in') {
+        const late = (g.period || 0) >= ({ fb: 4, bk: 4, hk: 3, bb: 8, sc: 2 }[APP.kindOf(g.lg)] || 4);
+        if (late && pMine > 0.3 && pMine < 0.7) ALERT.notify({ id: `sp:${g.id}:close`, title: `Down to the wire: ${score(g)}`, body: `${g.detail || ''} · ${t.abbr} ${pc(pMine)} to win`, go, tone: 'warn' });
+        const leader = (t.score ?? 0) > (o.score ?? 0) ? 'us' : (t.score ?? 0) < (o.score ?? 0) ? 'them' : 'tie';
+        if (was && was.leader && was.leader !== leader && leader !== 'tie' && late) ALERT.notify({ id: `sp:${g.id}:lead:${leader}:${g.period}`, title: leader === 'us' ? `${t.abbr} take the lead` : `${o.abbr} go ahead`, body: `${score(g)} · ${g.detail || ''}`, go, tone: leader === 'us' ? 'up' : 'down' });
+        prev.set(g.id, { state: g.state, leader });
+      } else {
+        if (g.state === 'post' && (was ? was.state === 'in' : nowRef() - +new Date(g.start) < 6 * 3600e3)) {
+          const won = !!t.winner, tie = !t.winner && !o.winner;
+          if (ALERT.notify({ id: `sp:${g.id}:final`, title: tie ? `Final: ${score(g)}` : won ? `${t.name} win! ${score(g)}` : `Final: ${t.abbr} lose ${score(g)}`, body: `${lgName(g.lg)} · pregame chance ${pc(pMine)}`, go, tone: won ? 'up' : tie ? 'info' : 'down' }) && won && !document.hidden) UX.confetti([APP.teamColor(g.lg, t), '#FFB547', '#ffffff']);
+        }
+        prev.set(g.id, { state: g.state });
+      }
+    }
+    BADGE.set(liveMine);
+  }
+
+  /* ---------- wire it up after the first render ---------- */
+  let ready = false;
+  function setup() {
+    if (ready) return; ready = true;
+    SRCH.mount({ key: 'probable-sports', placeholder: 'Search teams, games, leagues, news…', source: index, suggest, groups: ['Team', 'Game', 'League', 'Section', 'News', 'Action'], ask, host: '.mast-actions', prepend: true });
+    const insIn = document.querySelector('#insBar .ins-in');
+    STORY.mount({ key: 'probable-sports', title: "Today's sports briefing", mark: 'P.', label: 'Today', slides, ask, host: insIn, prepend: true, bg: ['#13223d', '#0a1120'] });
+    UX.key('b', "Open today's briefing", () => STORY.open());
+    UX.key('n', 'Open the news', () => APP.setTab('news'));
+    UX.key('a', 'Ask AI', () => ask(''));
+    UX.key('t', 'Switch light or dark theme', () => { const b = document.getElementById('btn-theme'); if (b) b.click(); });
+    UX.key('r', 'Refresh the scores', () => { const b = document.getElementById('btn-refresh'); if (b) b.click(); });
+    TABS.forEach(([id, title], k) => UX.key(String(k + 1), 'Open ' + title.toLowerCase(), () => APP.setTab(id)));
+    if (!SNAP()) UX.ptr({ onRefresh: async () => { await APP.refreshLive(false); APP.renderAll(); } });
+  }
+  APP.onRender.push(kind => {
+    if (S.mode === 'loading') return;
+    setup(); watch();
+    UX.countUp(document.getElementById('arena'));
+  });
+  // the Insights bar can share its current insight as a card
+  const insMount = INS.mount;
+  INS.mount = o => insMount(Object.assign({}, o, { share: it => { const m = /^(close|next|fav|upset|gap|swing)-(.+)$/.exec(it.id || ''), g = m ? APP.findGame(m[2]) : null; SHARE.share(g ? Object.assign(gameCard(g), { kicker: it.tag + ' · ' + lgName(g.lg) }) : { kicker: it.tag, title: it.text, value: it.val, tone: it.tone === 'down' ? 'down' : it.tone === 'up' ? 'up' : 'info' }, { file: 'probable-insight' }); } }));
 })();
 </script>
 </body>

@@ -127,3 +127,40 @@
 }
 @keyframes riseIn{from{opacity:.35;transform:translateY(18px) scale(.985)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.card,.fcard{transition:none}.card:hover,.fcard:hover{transform:none}}
+.arena-stage.few .px3d-nav{display:none}
+
+/* ---------- Sports Lab extras: followed teams, game center buttons, kit tokens ---------- */
+:root{--kx-font:var(--f-body);--kx-display:var(--f-display);--kx-mono:var(--f-mono);--kx-up:var(--good);--kx-down:var(--bad)}
+.kx-n-title{font-family:var(--f-display);font-weight:800;text-transform:uppercase;letter-spacing:.03em}
+.kx-n-h{font-family:var(--f-body);font-weight:700}
+.fav-mark{color:#f2a900;font-size:13px;line-height:1}
+.dr-x{display:inline-flex;align-items:center;gap:6px;flex:none}
+.dr-head .fav-btn.sm{width:auto;height:32px;padding:0 10px 0 8px;gap:5px;border:1px solid var(--line);border-radius:999px;display:inline-flex;align-items:center}
+.dr-head .fav-btn.sm.on{border-color:color-mix(in srgb,#f2a900 55%,var(--line));background:color-mix(in srgb,#f2a900 10%,transparent)}
+.fav-ab{font:700 11.5px/1 var(--f-mono);color:var(--ink-2)}
+.dr-news .kx-n-list{margin-top:6px}
+.mast-actions .kx-s-btn{height:32px;border-color:rgba(255,255,255,.14);background:rgba(255,255,255,.05);color:#D7DFEA}
+.mast-actions .kx-s-btn:hover{background:rgba(255,255,255,.1);color:#fff}
+#view-news{padding-top:4px}
+@media (max-width:700px){.dr-x .fav-btn.sm{padding:0 8px 0 6px}.dr-x .icon-btn{padding:0 9px}}
+
+/* the game center opens above the pinned Insights bar (z 70); Ask AI (z 80) stays on top */
+.drawer{z-index:76}
+/* the league rail filters the board; the News tab has its own topic chips */
+html[data-view="news"] .railbar{display:none}
+html[data-view="news"] #view-news{padding-top:18px}
+/* phones: keep the masthead on one line now that it also carries search */
+@media (max-width:440px){
+  .brand .word{font-size:23px}
+  .mast-in{gap:6px}
+  .status{padding:4px 9px}
+  .status .st-ago{display:none}
+  .mast-actions{gap:4px}
+  .mast-actions .icon-btn,.mast-actions .kx-s-btn{padding:0 8px}
+}
+/* the game center header: title and Close on the first row, follow / share / pop out on the second */
+@media (max-width:600px){
+  .dr-head{flex-wrap:wrap;row-gap:8px}
+  .dr-x{order:3;flex-basis:100%;justify-content:flex-start}
+  .dr-head .ttl{flex:1 1 0}
+}

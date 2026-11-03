@@ -22,7 +22,7 @@
       const nxt = S.auto && S.nextAt ? Math.max(0, Math.round((S.nextAt - Date.now()) / 1000)) : null;
       const agoTxt = ago < 5 ? 'just now' : ago < 90 ? ago + 's ago' : Math.round(ago / 60) + ' min ago';
       el.className = 'status live';
-      el.innerHTML = `<span class="dot"></span><span class="st-long"><b>Live</b> · ESPN feed · updated ${agoTxt}${nxt != null ? ` · next in ${nxt}s` : ' · auto-refresh off'}</span><span class="st-short"><b>Live</b> · ${agoTxt}</span>`;
+      el.innerHTML = `<span class="dot"></span><span class="st-long"><b>Live</b> · ESPN feed · updated ${agoTxt}${nxt != null ? ` · next in ${nxt}s` : ' · auto-refresh off'}</span><span class="st-short"><b>Live</b><span class="st-ago"> · ${agoTxt}</span></span>`;
       return;
     }
     const cap = new Date(S.capturedAt);
@@ -108,7 +108,7 @@
   function featScore(g) {
     const a = teamRank(g, 'home'), b = teamRank(g, 'away');
     const ra = a ? a.rank : 999, rb = b ? b.rank : 999;
-    return (1000 - Math.min(ra, rb)) * 1000 + (1000 - Math.max(ra, rb)) + (g.state === 'in' ? 0.5 : 0) + (PRIO[g.lg] || 3) * 0.01;
+    return (APP.favs && APP.favs.game(g) ? 2e6 : 0) + (1000 - Math.min(ra, rb)) * 1000 + (1000 - Math.max(ra, rb)) + (g.state === 'in' ? 0.5 : 0) + (PRIO[g.lg] || 3) * 0.01;   // followed teams first
   }
   function featuredList(games) {
     const ref = S.mode === 'snapshot' && S.capturedAt ? +new Date(S.capturedAt) : Date.now(), t = g => +new Date(g.start);
@@ -170,7 +170,7 @@
     const lg = LG[g.lg];
     const c1 = APP.teamColor(g.lg, g[order[0]]), c2 = APP.teamColor(g.lg, g[order[1]]);
     return `<button type="button" class="card ${g.state === 'in' ? 'is-live' : ''}" style="--c1:${c1};--c2:${c2}" data-game="${esc(g.id)}" aria-label="${esc(g.away.name)} at ${esc(g.home.name)}: open game center">
-      <div class="card-top"><span class="lg-tag">${esc(lg.short || lg.name)}</span>${statusHTML(g)}<span class="line">${esc(lineShort(g))}</span></div>
+      <div class="card-top"><span class="lg-tag">${esc(lg.short || lg.name)}</span>${APP.favs && APP.favs.game(g) ? '<span class="fav-mark" title="A team you follow">★</span>' : ''}${statusHTML(g)}<span class="line">${esc(lineShort(g))}</span></div>
       <div class="teams">${rows}</div>${bar}
       <div class="card-foot">${foot}</div></button>`;
   }
@@ -619,6 +619,7 @@
     el.querySelector('.drawer-panel').focus?.();
     setTimeout(() => { const b = el.querySelector('[data-close].icon-btn'); b && b.focus(); }, 30);
     if (S.mode === 'live') loadSummaryInto(g);
+    for (const f of APP.onDrawer || []) { try { f(g, el); } catch (e) { console.error(e); } }
   }
   function closeDrawer() { const el = $('#drawer'); el.hidden = true; el.innerHTML = ''; DR = null; if (APP.SX) APP.SX.card = null; document.body.style.overflow = ''; }
   function updateDrawer() {
@@ -1000,10 +1001,10 @@
   /* ================= app shell ================= */
   function renderAll() {
     renderStatus(); renderRail();
-    const t = S.tab;
-    for (const v of ['board', 'stats', 'lab', 'standings', 'method']) { const el = $('#view-' + v); if (el) el.hidden = v !== t; }
+    const t = S.tab; document.documentElement.dataset.view = t;
+    for (const v of ['board', 'stats', 'lab', 'standings', 'method', 'news']) { const el = $('#view-' + v); if (el) el.hidden = v !== t; }
     document.querySelectorAll('.tab').forEach(b => b.setAttribute('aria-selected', String(b.getAttribute('data-tab') === t)));
-    if (t === 'board') renderBoard(); else if (t === 'stats') APP.renderStats(); else if (t === 'lab') renderLab(); else if (t === 'standings') renderStandings(); else renderMethod();
+    if (t === 'board') renderBoard(); else if (t === 'stats') APP.renderStats(); else if (t === 'lab') renderLab(); else if (t === 'standings') renderStandings(); else if (t === 'news') { if (APP.renderNews) APP.renderNews($('#view-news')); } else renderMethod();
     if (DR) updateDrawer();
     hooks('all');
   }
@@ -1011,7 +1012,7 @@
   // extensions (3D arena, insights, Ask AI, track record) listen here after every render
   APP.onRender = APP.onRender || [];
   function hooks(kind) { for (const f of APP.onRender) { try { f(kind, S.tab); } catch (e) { console.error(e); } } }
-  function parseTab(h) { const m = String(h || '').match(/^stats-(teams|players|analytics|history)$/); if (m) { if (APP.SX) APP.SX.view = m[1]; return 'stats'; } return ['board', 'stats', 'lab', 'standings', 'method'].includes(h) ? h : null; }
+  function parseTab(h) { const m = String(h || '').match(/^stats-(teams|players|analytics|history)$/); if (m) { if (APP.SX) APP.SX.view = m[1]; return 'stats'; } return ['board', 'stats', 'lab', 'standings', 'method', 'news'].includes(h) ? h : null; }
   function setTab(t) {
     const p = parseTab(t) || 'board';
     const go = () => { S.tab = p; try { history.replaceState(null, '', '#' + (p === 'stats' && APP.SX && APP.SX.view !== 'teams' ? 'stats-' + APP.SX.view : p)); } catch (e) { /* ignore */ } renderAll(); window.scrollTo({ top: 0 }); };
