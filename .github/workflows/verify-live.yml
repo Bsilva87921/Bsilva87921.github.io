@@ -4,7 +4,7 @@ on:
   push:
     branches: ["verify-live"]
 permissions:
-  contents: read
+  contents: write
 jobs:
   check:
     strategy:
@@ -27,9 +27,9 @@ jobs:
           if [ "${{ matrix.name }}" = "linux" ]; then npx playwright install --with-deps chromium; fi
       - name: Check the live sites
         run: node verify/check.mjs ${{ matrix.name }}
-      - uses: actions/upload-artifact@v4
+      - name: Keep the results on this branch
         if: always()
-        with:
-          name: verify-${{ matrix.name }}
-          path: verify/out-${{ matrix.name }}
-          retention-days: 3
+        run: |
+          git config user.name "github-actions[bot]"; git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f verify/out-${{ matrix.name }} && git commit -qm "Live check results (${{ matrix.name }})" || exit 0
+          for i in 1 2 3 4 5; do git pull -q --rebase origin verify-live && git push -q origin HEAD:verify-live && break; sleep 5; done

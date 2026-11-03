@@ -144,5 +144,6 @@ if (OS !== 'mac') {
 }
 
 fs.writeFileSync(`${OUT}/report.json`, JSON.stringify(report, null, 2));
+log('REPORT ' + JSON.stringify(report));
 await b.close();
 log('done');
