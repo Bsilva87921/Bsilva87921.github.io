@@ -77,7 +77,7 @@ const FINX = (() => {
     const box = document.createElement('div'); box.className = 'dh-x';
     box.innerHTML = FAV.btn(mk(id), F.short(id), 'sm') + `<button type="button" class="dh-b" data-xshare aria-label="Share ${esc(F.short(id))}" title="Share">${SHARE.ICON}</button>`;
     dh.insertBefore(box, dh.querySelector('.x'));
-    box.addEventListener('click', ev => { if (ev.target.closest('[data-xshare]')) SHARE.share(marketCard(id), { file: 'probable-' + (F.tick(id) || 'market').toLowerCase() }); });
+    box.addEventListener('click', ev => { if (ev.target.closest('[data-xshare]')) SHARE.share(marketCard(id), { file: 'probable-' + (F.tick(id) || F.short(id)).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') }); });
     NEWS.load().then(() => {
       const html = NEWS.listHTML(it => about(it, id), 4); if (!html || d.hidden) return;
       const db = d.querySelector('.db'); if (!db || db.querySelector('.dr-news')) return;

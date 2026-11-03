@@ -245,7 +245,7 @@ def sports():
                 athletes = [c.get('description') for c in (a.get('categories') or []) if c.get('type') == 'athlete' and c.get('description')][:4]
                 d = when(a.get('published') or a.get('lastModified'))
                 items.append({'id': iid(u, t), 't': clean(t, 200), 'u': u, 's': 'ESPN', 'src': 'espn-' + lg, 'k': 'outlet', 'd': (d or NOW).isoformat(timespec='seconds'),
-                              'x': clean(a.get('description') or ''), 'img': im, 'lg': lg, 'lgName': label, 'tm': teams[:4], 'pl': athletes, 'tp': [lg]})
+                              'x': '' if clean(a.get('description') or '').lower() == clean(t, 200).lower() else clean(a.get('description') or ''), 'img': im, 'lg': lg, 'lgName': label, 'tm': teams[:4], 'pl': athletes, 'tp': [lg]})
                 n += 1
             sources.append({'id': 'espn-' + lg, 'name': 'ESPN', 'kind': 'outlet', 'n': n, 'ok': True})
             print(f'  espn {lg:7s} {n:3d} items')

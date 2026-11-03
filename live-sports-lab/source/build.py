@@ -2,7 +2,8 @@
 """Build the Probable Sports Lab page from its source files.
 
   python3 build.py                 -> dist/index.html (GitHub Pages: loads data/track.json and the shared AI config)
-  python3 build.py --artifact T    -> dist/sports-lab-artifact.html with the track record T (a track.json) embedded,
+  python3 build.py --artifact T [--news N] -> dist/sports-lab-artifact.html with the track record T (a track.json)
+                                      and optionally the headlines N (a news.json) embedded,
                                       for the Claude-hosted copy (no network: snapshot data, Claude through the app)
   python3 build.py --orig          -> rebuild the original modules only (used to check the split is exact)
 """
@@ -33,7 +34,7 @@ def read(name):
         return f.read()
 
 
-def build(orig=False, track=None, artifact=False):
+def build(orig=False, track=None, artifact=False, news=None):
     shell = read('shell.html')
     css = read('style.css')
     js = '\n'.join(read(n) for n in ORIG_JS)
@@ -46,6 +47,8 @@ def build(orig=False, track=None, artifact=False):
         for n in NEW_JS:
             parts.append(read(n))
             if n == 'atlas:kit-app.js': parts.append(BRIDGE)
+        if news is not None:   # a headlines snapshot for the saved copy, which cannot fetch the live file
+            boot += 'window.SPORTS_NEWS = ' + json.dumps(news, separators=(',', ':'), ensure_ascii=False).replace('</', '<\\/') + ';\n'
         if artifact: boot += 'window.SPORTS_ARTIFACT = true;\n'
         js += '\n' + boot + '\n'.join(parts)
     html = shell.replace('/*STYLE*/', css, 1).replace('/*SCRIPT*/', js, 1)
@@ -70,8 +73,12 @@ def main():
         tpath = args[args.index('--artifact') + 1]
         with open(tpath, encoding='utf-8') as f:
             track = json.load(f)
+        news = None
+        if '--news' in args:
+            with open(args[args.index('--news') + 1], encoding='utf-8') as f:
+                news = json.load(f)
         out = os.path.join(HERE, 'dist', 'sports-lab-artifact.html')
-        html = build(track=track, artifact=True)
+        html = build(track=track, artifact=True, news=news)
     else:
         out = os.path.join(HERE, 'dist', 'index.html')
         html = build()

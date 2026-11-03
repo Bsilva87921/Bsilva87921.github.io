@@ -873,11 +873,22 @@ const SHARE = (() => {
   }
   function preview(blob, o) {
     const url = URL.createObjectURL(blob), m = document.createElement('div'); m.className = 'kx-share'; m.setAttribute('role', 'dialog'); m.setAttribute('aria-modal', 'true'); m.setAttribute('aria-label', 'Share card');
-    m.innerHTML = `<div class="kx-share-in"><button type="button" class="kx-share-x" aria-label="Close">×</button><img src="${url}" alt="${esc(o.title || 'Share card')}"><div class="kx-share-acts"><a class="kx-btn pri" href="${url}" download="${esc((o.file || 'probable-card') + '.png')}">Download image</a><button type="button" class="kx-btn" data-copyimg>Copy image</button>${o.url ? '<button type="button" class="kx-btn" data-copylink>Copy link</button>' : ''}</div><p class="kx-share-note">On a phone, press and hold the image to save or share it.</p></div>`;
+    m.innerHTML = `<div class="kx-share-in"><button type="button" class="kx-share-x" aria-label="Close">×</button><img src="${url}" alt="${esc(o.title || 'Share card')}"><div class="kx-share-acts"><button type="button" class="kx-btn pri" data-dl>Download image</button><button type="button" class="kx-btn" data-copyimg>Copy image</button>${o.url ? '<button type="button" class="kx-btn" data-copylink>Copy link</button>' : ''}</div><p class="kx-share-note">On a phone, press and hold the image to save or share it.</p></div>`;
     document.body.appendChild(m); document.documentElement.classList.add('kx-lock');
     const close = () => { m.remove(); URL.revokeObjectURL(url); document.documentElement.classList.remove('kx-lock'); };
     m.addEventListener('click', async ev => {
       if (ev.target === m || ev.target.closest('.kx-share-x')) return close();
+      if (ev.target.closest('[data-dl]')) {   // a hosted copy asks the viewer through its downloads capability; a site saves directly
+        const b = ev.target.closest('[data-dl]'), name = (o.file || 'probable-card') + '.png';
+        const C = window.claude && typeof window.claude.use === 'function' ? window.claude : null;
+        if (C) {
+          const dl = await C.use('downloads').catch(() => null);
+          if (!dl) { b.textContent = 'Press and hold the image to save it'; b.disabled = true; return; }
+          try { await dl.save({ filename: name, data: blob }); b.textContent = 'Saved'; } catch (e) { if (!e || e.code !== 'declined') b.textContent = 'Saving is not available here'; }
+          return;
+        }
+        const a = document.createElement('a'); a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove(); return;
+      }
       if (ev.target.closest('[data-copyimg]')) { try { await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]); ev.target.textContent = 'Copied'; } catch (e) { ev.target.textContent = 'Copy not allowed here'; } }
       if (ev.target.closest('[data-copylink]')) { try { await navigator.clipboard.writeText(o.url); ev.target.textContent = 'Link copied'; } catch (e) { ev.target.textContent = o.url; } }
     });
@@ -1079,7 +1090,7 @@ const NEWS = (() => {
       ${it.img ? `<a class="kx-n-media" href="${esc(it.u)}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">${img(it, 'kx-n-img')}</a>` : ''}
       <div class="kx-n-body"><div class="kx-n-meta"><span class="kx-n-src">${esc(it.s || host(it.u))}</span><span class="kx-n-dot" aria-hidden="true">·</span><time datetime="${esc(it.d || '')}">${esc(ago(it.d))}</time>${tags(it)}</div>
       <h3 class="kx-n-h"><a href="${esc(it.u)}" target="_blank" rel="noopener">${esc(it.t)}</a></h3>
-      ${it.x ? `<p class="kx-n-x">${esc(it.x)}</p>` : ''}
+      ${it.x && norm(it.x) !== norm(it.t) ? `<p class="kx-n-x">${esc(it.x)}</p>` : ''}
       <div class="kx-n-acts">${O.ask ? `<button type="button" class="kx-n-btn" data-nask="${k}">✦ What it means</button>` : ''}<button type="button" class="kx-n-btn kx-ico" data-nshare="${k}" aria-label="Share this story">${window.SHARE ? SHARE.ICON : '↗'}</button></div></div>
     </article>`;
   }

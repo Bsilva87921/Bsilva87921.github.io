@@ -59,7 +59,7 @@ const NEWS = (() => {
       ${it.img ? `<a class="kx-n-media" href="${esc(it.u)}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">${img(it, 'kx-n-img')}</a>` : ''}
       <div class="kx-n-body"><div class="kx-n-meta"><span class="kx-n-src">${esc(it.s || host(it.u))}</span><span class="kx-n-dot" aria-hidden="true">·</span><time datetime="${esc(it.d || '')}">${esc(ago(it.d))}</time>${tags(it)}</div>
       <h3 class="kx-n-h"><a href="${esc(it.u)}" target="_blank" rel="noopener">${esc(it.t)}</a></h3>
-      ${it.x ? `<p class="kx-n-x">${esc(it.x)}</p>` : ''}
+      ${it.x && norm(it.x) !== norm(it.t) ? `<p class="kx-n-x">${esc(it.x)}</p>` : ''}
       <div class="kx-n-acts">${O.ask ? `<button type="button" class="kx-n-btn" data-nask="${k}">✦ What it means</button>` : ''}<button type="button" class="kx-n-btn kx-ico" data-nshare="${k}" aria-label="Share this story">${window.SHARE ? SHARE.ICON : '↗'}</button></div></div>
     </article>`;
   }
