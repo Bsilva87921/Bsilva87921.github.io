@@ -11,7 +11,7 @@ const F = (() => {
     if (window.ATLAS_FIN_DATA) ({ panel: P, long: L, status: ST } = window.ATLAS_FIN_DATA);
     else {
       const get = async n => {
-        for (const base of ['../data/', 'data/', 'snapshot/']) {
+        for (const base of [window.ATLAS_DATA_BASE || '../data/', 'data/', 'snapshot/']) {
           try { const r = await fetch(base + n, { cache: 'no-cache' }); if (r.ok) return await r.json(); } catch (e) { /* try next */ }
         }
         throw new Error('Could not load ' + n);

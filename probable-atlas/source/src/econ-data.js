@@ -16,7 +16,7 @@ const E = (() => {
   async function load() {
     if (window.ATLAS_DATA) ({ world: W, us: U, status: ST } = window.ATLAS_DATA);
     else {
-      const get = async n => { for (const base of ['data/', 'snapshot/']) { try { const r = await fetch(base + n, { cache: 'no-cache' }); if (r.ok) return await r.json(); } catch (e) { /* try next */ } } throw new Error('Could not load ' + n); };
+      const get = async n => { for (const base of [window.ATLAS_DATA_BASE || 'data/', 'snapshot/']) { try { const r = await fetch(base + n, { cache: 'no-cache' }); if (r.ok) return await r.json(); } catch (e) { /* try next */ } } throw new Error('Could not load ' + n); };
       [W, U, ST] = await Promise.all([get('world.json'), get('us.json'), get('status.json').catch(() => ({}))]);
     }
     prep();

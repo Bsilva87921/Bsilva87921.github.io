@@ -1,0 +1,88 @@
+# Native app builds for Probable Sports Lab and Probable Atlas (Capacitor). Produces a test Android APK and an Xcode
+# project (checked by a simulator build) for each app. Publishing to the stores needs Bruno's developer accounts.
+name: Native app builds
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+    paths: ["apps/**", ".github/workflows/apps-build.yml"]
+
+permissions:
+  contents: read
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        app: [sports-lab, atlas]
+    defaults:
+      run:
+        working-directory: apps/${{ matrix.app }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+      - name: Install Capacitor
+        run: npm install --no-audit --no-fund && npx cap --version
+      - name: Assemble the web files
+        run: npm run build:web
+      - name: Create the Android project
+        run: npx cap add android
+      - name: Icons and splash screens
+        run: npm run assets -- --android || echo "asset generation skipped"
+      - name: Sync
+        run: npx cap sync android
+      - name: Build a test APK
+        working-directory: apps/${{ matrix.app }}/android
+        run: ./gradlew assembleDebug --no-daemon -q
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.app }}-android-test-apk
+          path: apps/${{ matrix.app }}/android/app/build/outputs/apk/debug/*.apk
+          retention-days: 90
+
+  ios:
+    runs-on: macos-latest
+    timeout-minutes: 50
+    strategy:
+      fail-fast: false
+      matrix:
+        app: [sports-lab, atlas]
+    defaults:
+      run:
+        working-directory: apps/${{ matrix.app }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install Capacitor
+        run: npm install --no-audit --no-fund && npx cap --version
+      - name: Assemble the web files
+        run: npm run build:web
+      - name: Create the iOS project
+        run: npx cap add ios
+      - name: Icons and splash screens
+        run: npm run assets -- --ios || echo "asset generation skipped"
+      - name: Sync
+        run: npx cap sync ios
+      - name: Check it builds (iOS simulator, unsigned)
+        run: |
+          if [ -d ios/App/App.xcworkspace ]; then T="-workspace ios/App/App.xcworkspace"; else T="-project ios/App/App.xcodeproj"; fi
+          xcodebuild $T -scheme App -configuration Debug -sdk iphonesimulator -derivedDataPath build CODE_SIGNING_ALLOWED=NO build | tail -25
+      - name: Package the Xcode project
+        run: rm -rf build && zip -qry ../${{ matrix.app }}-ios-xcode-project.zip ios capacitor.config.json package.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.app }}-ios-xcode-project
+          path: apps/${{ matrix.app }}-ios-xcode-project.zip
+          retention-days: 90

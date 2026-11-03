@@ -1,0 +1,26 @@
+{
+  "name": "probable-sports-lab-app",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Probable Sports Lab for iOS and Android (Capacitor), built from the live site's files.",
+  "type": "module",
+  "scripts": {
+    "build:web": "node scripts/build-web.mjs",
+    "assets": "npx @capacitor/assets generate --iconBackgroundColor '#0B1220' --iconBackgroundColorDark '#0B1220' --splashBackgroundColor '#0B1220' --splashBackgroundColorDark '#0B1220'",
+    "sync": "npm run build:web && npx cap sync",
+    "android": "npm run sync && npx cap open android",
+    "ios": "npm run sync && npx cap open ios"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.0.0",
+    "@capacitor/app": "^7.0.0",
+    "@capacitor/core": "^7.0.0",
+    "@capacitor/ios": "^7.0.0",
+    "@capacitor/splash-screen": "^7.0.0",
+    "@capacitor/status-bar": "^7.0.0"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
+    "@capacitor/cli": "^7.0.0"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "appId": "io.github.bsilva87921.atlas",
+  "appName": "Probable Atlas",
+  "webDir": "www",
+  "server": { "androidScheme": "https" },
+  "backgroundColor": "#0C1A22",
+  "ios": { "contentInset": "never", "backgroundColor": "#0C1A22" },
+  "android": { "backgroundColor": "#0C1A22" },
+  "plugins": {
+    "SplashScreen": { "launchShowDuration": 900, "launchAutoHide": true, "backgroundColor": "#0C1A22", "showSpinner": false },
+    "StatusBar": { "style": "DARK", "backgroundColor": "#0C1A22", "overlaysWebView": false }
+  }
+}

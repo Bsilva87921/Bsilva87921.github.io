@@ -1,0 +1,26 @@
+{
+  "name": "probable-atlas-app",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Probable Atlas for iOS and Android (Capacitor), built from the live site's files.",
+  "type": "module",
+  "scripts": {
+    "build:web": "node scripts/build-web.mjs",
+    "assets": "npx @capacitor/assets generate --iconBackgroundColor '#0C1A22' --iconBackgroundColorDark '#0C1A22' --splashBackgroundColor '#0C1A22' --splashBackgroundColorDark '#0C1A22'",
+    "sync": "npm run build:web && npx cap sync",
+    "android": "npm run sync && npx cap open android",
+    "ios": "npm run sync && npx cap open ios"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.0.0",
+    "@capacitor/app": "^7.0.0",
+    "@capacitor/core": "^7.0.0",
+    "@capacitor/ios": "^7.0.0",
+    "@capacitor/splash-screen": "^7.0.0",
+    "@capacitor/status-bar": "^7.0.0"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
+    "@capacitor/cli": "^7.0.0"
+  }
+}

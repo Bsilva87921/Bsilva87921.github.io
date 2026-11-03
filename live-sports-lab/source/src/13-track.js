@@ -14,7 +14,7 @@
   const ORDER = ['nfl', 'nba', 'wnba', 'mlb', 'nhl', 'epl', 'laliga', 'seriea', 'bund', 'ligue1', 'mls'];
   async function load() {
     if (T || tried) return; tried = true;
-    try { const r = await fetch('data/track.json', { cache: 'no-cache' }); if (r.ok) { T = await r.json(); refresh(); } } catch (e) { /* offline or not built yet */ }
+    try { const r = await fetch(window.SPORTS_TRACK_URL || 'data/track.json', { cache: 'no-cache' }); if (r.ok) { T = await r.json(); refresh(); } } catch (e) { /* offline or not built yet */ }
   }
   const all = () => T && T.all;
   function summary() {

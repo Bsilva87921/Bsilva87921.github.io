@@ -4,7 +4,14 @@
 const PAPP = (() => {
   const mm = q => !!(window.matchMedia && matchMedia(q).matches);
   const standalone = () => mm('(display-mode: standalone)') || mm('(display-mode: window-controls-overlay)') || mm('(display-mode: fullscreen)') || navigator.standalone === true;
-  const embedded = () => !!(window.Capacitor || window.ATLAS_FIN_DATA || window.ATLAS_DATA || window.SPORTS_ARTIFACT);
+  const embedded = () => !!(window.Capacitor || window.PROBABLE_NATIVE || window.ATLAS_FIN_DATA || window.ATLAS_DATA || window.SPORTS_ARTIFACT);
+  // in the native apps, folder links (…/finance/) open the folder's index.html, and other sites open in the browser
+  if (window.PROBABLE_NATIVE) document.addEventListener('click', e => {
+    const a = e.target.closest && e.target.closest('a[href]'); if (!a || e.defaultPrevented) return;
+    const u = new URL(a.getAttribute('href'), location.href);
+    if (u.origin !== location.origin) { if (!a.target) a.target = '_blank'; return; }
+    if (u.pathname.endsWith('/')) { e.preventDefault(); location.href = u.pathname + 'index.html' + u.search + u.hash; }
+  }, true);
   let deferred = null, btn = null, help = null, O = {};
   const ua = navigator.userAgent || '';
   const ios = /iphone|ipad|ipod/i.test(ua) || (/macintosh/i.test(ua) && navigator.maxTouchPoints > 1);
