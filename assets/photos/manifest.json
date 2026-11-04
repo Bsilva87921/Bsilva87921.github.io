@@ -180,37 +180,18 @@
    ]
   },
   {
-   "id": "basketball-court",
-   "try": true,
-   "src": {
-    "unsplash": "photo-1559369064-c4d65141e408"
-   },
-   "alt": "A basketball court",
-   "credit": "Patrick Schöpflin",
-   "link": "https://unsplash.com/photos/hEQpoeUuJXA",
-   "license": "Unsplash License"
-  },
-  {
-   "id": "bball-hoop-a",
-   "try": true,
+   "id": "basketball-hoop",
    "src": {
     "unsplash": "photo-1659194726492-2f66a13ed3ea"
    },
-   "alt": "A basketball hoop with a basketball",
+   "alt": "A basketball hoop with a chain net, seen from below",
    "credit": "Isabela Kronemberger",
    "link": "https://unsplash.com/photos/mtGf2k3vNUM",
-   "license": "Unsplash License"
-  },
-  {
-   "id": "bball-hoop-b",
-   "try": true,
-   "src": {
-    "unsplash": "photo-1664891748039-5f170532f49b"
-   },
-   "alt": "A basketball hoop with a net",
-   "credit": "Hemang Patel",
-   "link": "https://unsplash.com/photos/wNEHXa6NrHg",
-   "license": "Unsplash License"
+   "license": "Unsplash License",
+   "sizes": [
+    480,
+    960
+   ]
   }
  ]
 }

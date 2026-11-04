@@ -77,8 +77,9 @@ for (const p of M.photos) {
 }
 // remove files of photos that left the manifest
 const ids = new Set(M.photos.map(p => p.id));
-for (const d of [DIR, TRY]) if (fs.existsSync(d)) for (const f of fs.readdirSync(d)) {
-  const m = f.match(/^(.+)-\d+\.(avif|webp)$/); if (m && !ids.has(m[1])) fs.unlinkSync(path.join(d, f));
+const tryIds = new Set(M.photos.filter(p => p.try).map(p => p.id)), finIds = new Set(M.photos.filter(p => !p.try).map(p => p.id));
+for (const [d, keep] of [[DIR, finIds], [TRY, tryIds]]) if (fs.existsSync(d)) for (const f of fs.readdirSync(d)) {
+  const m = f.match(/^(.+)-\d+\.(avif|webp)$/); if (m && !keep.has(m[1])) fs.unlinkSync(path.join(d, f));
 }
 fs.writeFileSync(OUTF, JSON.stringify(out, null, 1) + '\n');
 // credits, for the README and the pages' How it works sections
