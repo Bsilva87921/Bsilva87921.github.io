@@ -38,4 +38,9 @@ jobs:
           git add assets/photos
           if git diff --cached --quiet; then echo "nothing new"; exit 0; fi
           git commit -qm "Photos: optimized sizes from the manifest"
-          for i in 1 2 3 4 5; do git pull -q --rebase origin main && git push -q origin HEAD:main && break; sleep 6; done
+          # photos.json is generated from the manifest at this commit, so on a clash this run's copy wins
+          for i in 1 2 3 4 5; do
+            if git pull -q --rebase -X theirs origin main && git push -q origin HEAD:main; then exit 0; fi
+            git rebase --abort 2>/dev/null || true; sleep 6
+          done
+          echo "could not push the photos"; exit 1
