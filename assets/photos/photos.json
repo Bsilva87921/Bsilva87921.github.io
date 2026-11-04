@@ -157,49 +157,19 @@
   "link": "https://unsplash.com/photos/lUK16p_JtCM",
   "license": "Unsplash License"
  },
- "basketball-court": {
-  "v": "0f687dc0b2",
-  "w": 960,
-  "h": 640,
-  "sizes": [
-   960
-  ],
-  "lqip": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAADwAwCdASoYABAAPvVorE6qpiQiMAgBUB6JZQAAVPcWRAzOcjg6LHGAAP7xeLUuUxI42ddz3YgP130ywcS+jxfxYTbZTJtcE8vguxDl1SYQ4oIFLeoAAA==",
-  "color": "#080808",
-  "alt": "A basketball court",
-  "credit": "Patrick Schöpflin",
-  "link": "https://unsplash.com/photos/hEQpoeUuJXA",
-  "license": "Unsplash License",
-  "try": true
- },
- "bball-hoop-a": {
-  "v": "17c4775989",
+ "basketball-hoop": {
+  "v": "82058e5389",
   "w": 960,
   "h": 1440,
   "sizes": [
+   480,
    960
   ],
   "lqip": "data:image/webp;base64,UklGRpAAAABXRUJQVlA4IIQAAAAwBQCdASoYACQAPvVurlAqpqQiqqoBUB6JZwDOOBQ2y2k5hgMtOwa5aH52JHqaRLSXQAD+mfKcRHfS2YPiXaGmkHDia7noB9ThcnimGjIK9s7Cyz8VZg7akwGdhqocwhcF1ebYFwF6vK4ELLc4LDxzf5K+Frex6FzioLB6OVjSQY5gkAA=",
   "color": "#d8e8e8",
-  "alt": "A basketball hoop with a basketball",
+  "alt": "A basketball hoop with a chain net, seen from below",
   "credit": "Isabela Kronemberger",
   "link": "https://unsplash.com/photos/mtGf2k3vNUM",
-  "license": "Unsplash License",
-  "try": true
- },
- "bball-hoop-b": {
-  "v": "674bbd990e",
-  "w": 960,
-  "h": 1440,
-  "sizes": [
-   960
-  ],
-  "lqip": "data:image/webp;base64,UklGRoAAAABXRUJQVlA4IHQAAACQBACdASoYACQAPvVmqk6qv6OiNVQIA/AeiWUAxNhIBgMYdhgzcpIBza73tcAA/sd99Pq8RFI7VEX2gDxf4NRwWG6oe/g1/gqk+cevZQO+vQXvTqz7OX24zJ0UmZSJWBV8geN5suvtwXpGYIZ0v62o5OoAAA==",
-  "color": "#989898",
-  "alt": "A basketball hoop with a net",
-  "credit": "Hemang Patel",
-  "link": "https://unsplash.com/photos/wNEHXa6NrHg",
-  "license": "Unsplash License",
-  "try": true
+  "license": "Unsplash License"
  }
 }
