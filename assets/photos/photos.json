@@ -1,6 +1,6 @@
 {
  "earth-night-americas": {
-  "v": "2c20f65c23",
+  "v": "740319dac7",
   "w": 2560,
   "h": 853,
   "sizes": [
@@ -17,7 +17,7 @@
   "license": "Public domain (NASA)"
  },
  "earth-night-eurasia": {
-  "v": "12cc1998cc",
+  "v": "8e48f59718",
   "w": 2560,
   "h": 1056,
   "sizes": [
@@ -34,7 +34,7 @@
   "license": "Public domain (NASA)"
  },
  "nyc-night-a": {
-  "v": "c30d06778d",
+  "v": "e8a657d989",
   "w": 960,
   "h": 640,
   "sizes": [
@@ -49,7 +49,7 @@
   "try": true
  },
  "nyc-night-b": {
-  "v": "1d32f4acc2",
+  "v": "9935cfca12",
   "w": 960,
   "h": 602,
   "sizes": [
@@ -64,7 +64,7 @@
   "try": true
  },
  "nyc-night-c": {
-  "v": "aad6c7d83a",
+  "v": "e634ad50ac",
   "w": 960,
   "h": 720,
   "sizes": [
@@ -79,7 +79,7 @@
   "try": true
  },
  "stadium-night": {
-  "v": "f1ceeac8a9",
+  "v": "910925e5c0",
   "w": 960,
   "h": 1200,
   "sizes": [
@@ -94,7 +94,7 @@
   "try": true
  },
  "football-lights": {
-  "v": "6fc8aee80c",
+  "v": "d8c16975de",
   "w": 960,
   "h": 720,
   "sizes": [
@@ -109,7 +109,7 @@
   "try": true
  },
  "baseball-night": {
-  "v": "f6ce31eeae",
+  "v": "4eecf2be10",
   "w": 960,
   "h": 640,
   "sizes": [
@@ -124,7 +124,7 @@
   "try": true
  },
  "basketball-court": {
-  "v": "cb4e19feb8",
+  "v": "0f687dc0b2",
   "w": 960,
   "h": 640,
   "sizes": [
@@ -139,7 +139,7 @@
   "try": true
  },
  "hockey-rink": {
-  "v": "81e92c2830",
+  "v": "691273ddc7",
   "w": 960,
   "h": 640,
   "sizes": [
@@ -154,7 +154,7 @@
   "try": true
  },
  "hockey-play": {
-  "v": "9013a7f377",
+  "v": "c29dba59c9",
   "w": 960,
   "h": 640,
   "sizes": [
@@ -169,7 +169,7 @@
   "try": true
  },
  "soccer-goal": {
-  "v": "2bbb128bdc",
+  "v": "3a6eaf144a",
   "w": 960,
   "h": 640,
   "sizes": [
@@ -184,7 +184,7 @@
   "try": true
  },
  "soccer-ball": {
-  "v": "24c285b5f8",
+  "v": "7167614b79",
   "w": 960,
   "h": 640,
   "sizes": [
@@ -199,7 +199,7 @@
   "try": true
  },
  "tennis-aerial": {
-  "v": "b0d39a7e7c",
+  "v": "1724a2b4bd",
   "w": 960,
   "h": 1280,
   "sizes": [
@@ -214,7 +214,7 @@
   "try": true
  },
  "golf-flag": {
-  "v": "620c43d452",
+  "v": "10bac61636",
   "w": 960,
   "h": 640,
   "sizes": [
@@ -229,7 +229,7 @@
   "try": true
  },
  "golf-aerial": {
-  "v": "995118e89e",
+  "v": "96c22a4716",
   "w": 960,
   "h": 540,
   "sizes": [
@@ -244,7 +244,7 @@
   "try": true
  },
  "fight-ring": {
-  "v": "437fd609ca",
+  "v": "def2e83d64",
   "w": 960,
   "h": 640,
   "sizes": [
