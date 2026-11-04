@@ -17,7 +17,7 @@ const out = {};
 const cache = new Map();
 sharp.cache(false);
 
-const key = p => crypto.createHash('sha1').update(JSON.stringify([p.src, p.crop || null, p.sizes || null, !!p.try])).digest('hex').slice(0, 10);
+const key = p => crypto.createHash('sha1').update(JSON.stringify([p.src, p.crop || null, p.sizes || null, !!p.try, p.tone || null])).digest('hex').slice(0, 10);
 const srcUrl = s => s.unsplash ? `https://images.unsplash.com/${s.unsplash}?q=92&w=${s.w || 3200}&fm=jpg&fit=max` : s.url;
 async function get(url) {
   if (cache.has(url)) return cache.get(url);
@@ -54,6 +54,8 @@ for (const p of M.photos) {
       img = sharp(await img.extract(box).toBuffer(), { limitInputPixels: false });
       W = box.width; H = box.height;
     }
+    // optional tone: a linear brighten (a*x + b) and a saturation boost, e.g. for the dim NASA night-lights maps
+    if (p.tone) img = sharp(await img.linear(p.tone.a ?? 1, p.tone.b ?? 0).modulate({ saturation: p.tone.sat ?? 1 }).toBuffer(), { limitInputPixels: false });
     const maxW = Math.max(...sizes);
     const master = await img.resize({ width: Math.min(W, maxW), withoutEnlargement: true }).toBuffer();
     const mm = await sharp(master).metadata();
