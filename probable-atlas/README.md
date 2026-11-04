@@ -11,6 +11,13 @@ A series of world-domain analytics dashboards by Bruno Silva, built on the appro
 ## What's on every page (Atlas 2.0)
 - **3D masthead.** Economics: a data globe of 11,000 land points with a spike per country for GDP growth, inflation, unemployment or debt (tap a country to open its profile). Finance: a market skyline, one tower per major market (S&P 500, Nasdaq, Russell 2000, Dow, Europe, Japan, the 10-year yield, the dollar, gold, oil, bitcoin and the VIX) that rises in green for a gain and sinks in red for a loss, sized by the day's move and labeled with it; tap a tower for that market's chart. Phones show the six that matter most. Built with three.js `WebGPURenderer` (WebGPU, falling back to WebGL2 automatically, and to the plain masthead when neither is available); it sleeps off screen and has a **Still** switch. Reduced-motion settings are respected.
 - **Insights bar.** A pinned bar at the top that rotates through the readings that matter now (recession odds, nowcast, inflation path, Fed vs the Taylor rule, regime, correction risk, volatility, the curve, valuation, biggest mover). Click one to jump to it, or ask about it. It pauses on hover and can be stepped through by keyboard.
+- **Photography, 3D renders and SVG icons.** A NASA night-lights photograph behind the Economics masthead and the home
+  screen, Manhattan at dusk behind Finance, a pre-rendered 3D object for each of the twelve modules, and a line-icon set
+  (SVG) on the module bar. Photos are served as AVIF with a WebP fallback in several widths, with a blurred placeholder
+  painted first so nothing shifts while they load ([`assets/photos`](../assets/photos/), credits in How it works).
+- **Home screen as a bento grid.** The two live modules as large tiles with their 3D render and latest readings, the
+  briefing, Ask AI, readings and the top story, then the ten modules on the way; frosted-glass tiles over a soft
+  aurora, in light and dark. The apps open in dark mode until you switch.
 - **Ask AI.** See below.
 - **News.** A News tab per module with the latest headlines from official sources (the Federal Reserve, the ECB and BEA) and major outlets (CNBC, MarketWatch, the Financial Times, Investing.com, the BBC, the Guardian, Seeking Alpha, CoinDesk), filtered by topic (markets, Fed and rates, earnings, commodities, crypto, currencies, the economy, official releases; in Economics also growth, inflation, jobs, trade and the country in view) or by source, with search, "What it means" (asks Ask AI) and share. Tapping a story opens it in a reader on the page with its picture, the publisher's summary, related stories and Ask AI; releases from the Federal Reserve Board, BEA and the ECB, which may be reproduced, show in full. The full article is one tap away (inside the app, in an in-app browser). Live now shows the latest five; each market or country profile lists recent headlines about it. Refreshed twice an hour by `.github/workflows/news.yml` (`pipeline/fetch_news.py`).
 - **Follow markets and countries.** Star any market or country in its profile: it shows under *Your markets* or *Your countries* on Live now, leads the search, gets a News filter and triggers alerts (Finance: big daily moves and 52-week highs or lows; Economics: new IMF forecasts and fresh headlines). Alerts show in the page and, once turned on, as notifications.
@@ -35,7 +42,10 @@ A series of world-domain analytics dashboards by Bruno Silva, built on the appro
 
 ## Ask AI
 - **Built-in analyst (everyone, free):** intent matching over the live data and models; it parses scenarios such as "I'm 35 with $50k saving $500 a month, can I reach $1M by 65?" or "What if rates rise 1%?" and runs them.
-- **Claude:** in the Claude-hosted copy, through the viewer's own Claude account; on this site and in the apps, through the optional proxy in [`ai-proxy/`](ai-proxy/) (set its URL in `ai-config.js`) or a visitor's own API key. Claude gets the page's data and models as tools (snapshot, asset stats, model outputs, portfolio analysis, Monte Carlo, scenarios, history, recommendations, charts, navigation).
+- **Claude (default once the proxy is on):** on this site and in the apps, every question goes to Claude through the proxy in
+  [`ai-proxy/`](ai-proxy/), in the background: no key or setting for the visitor, the answer streams in, and the built-in
+  analyst answers quietly whenever Claude is unavailable. One workflow run turns it on (see the proxy README). In the
+  Claude-hosted copy, Claude answers through the viewer's own Claude account; a visitor can also use their own API key. Claude gets the page's data and models as tools (snapshot, asset stats, model outputs, portfolio analysis, Monte Carlo, scenarios, history, recommendations, charts, navigation).
 - Any page opens the chat with a question from a link: `?ask=Is%20a%20correction%20likely%3F`.
 
 ## How it's built

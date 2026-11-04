@@ -12,18 +12,61 @@
   ];
   const saved = k => { try { const x = JSON.parse(localStorage.getItem('atlas-ins-' + k) || 'null'); return x && x.items && x.items.length ? x : null; } catch (e) { return null; } };
   const ago = t => { const m = Math.round((Date.now() - t) / 60000); return m < 60 ? m + ' min ago' : m < 1440 ? Math.round(m / 60) + ' h ago' : Math.round(m / 1440) + ' d ago'; };
-  function grid() {
-    document.getElementById('hmGrid').innerHTML = MODS.map(m => m.on
-      ? `<article class="hm-card on"><a class="hm-card-main" href="${m.href}"><span class="hm-ico" aria-hidden="true">${m.icon}</span><span class="hm-name">${esc(m.name)}</span><span class="hm-blurb">${esc(m.blurb)}</span></a><nav class="hm-links" aria-label="${esc(m.name)} sections">${m.links.map(([l, h]) => `<a href="${h}">${esc(l)}</a>`).join('')}</nav></article>`
-      : `<article class="hm-card soon" aria-disabled="true"><span class="hm-ico" aria-hidden="true">${m.icon}</span><span class="hm-name">${esc(m.name)}</span><span class="hm-soon">Coming soon</span>${m.blurb ? `<span class="hm-blurb">${esc(m.blurb)}</span>` : ''}</article>`).join('');
+  /* ---------- the bento grid: live modules large, then the briefing, Ask AI, readings, the top story, and the
+     ten modules on the way, each with its 3D render ---------- */
+  const ic = k => window.MEDIA ? MEDIA.icon(k) : '';
+  const art = (k, sizes, eager) => window.MEDIA ? MEDIA.art(k, { sizes, eager }) : '';
+  const toneOf = t => t === 'up' || t === 'down' || t === 'warn' ? t : '';
+  function bento(items) {
+    const box = document.getElementById('hmBento'); if (!box) return;
+    const big = (m, i) => {
+      const r = items.filter(it => it.mod === (m.k === 'econ' ? 'Economics' : 'Finance')).slice(0, 2);
+      return `<article class="b b-mod b-2x2 b-${m.k}">
+        <a class="b-main" href="${m.href}">${art(m.k, '(max-width: 560px) 58vw, 250px', true)}
+          <span class="b-kick">${ic(m.k)} Module ${i + 1} · Live</span>
+          <span class="b-name">${esc(m.name)}</span>
+          <span class="b-blurb">${esc(m.blurb)}</span></a>
+        ${r.length ? `<ul class="b-reads" aria-label="Latest from ${esc(m.name)}">${r.map(it => `<li class="${toneOf(it.tone)}"><span>${esc((it.story && it.story.kicker) || it.tag || '')}</span><b>${esc(it.val || '—')}</b></li>`).join('')}</ul>` : ''}
+        <nav class="b-links" aria-label="${esc(m.name)} sections">${m.links.map(([l, h]) => `<a href="${h}">${esc(l)}</a>`).join('')}</nav>
+      </article>`;
+    };
+    const n = Math.min(7, items.length) + 1;
+    const tiles = MODS.filter(m => m.on).map(big).join('')
+      + `<button type="button" class="b b-brief" id="hmBriefTile"><span class="b-kick">${ic('spark')} Today's briefing</span><span><span class="b-big">${n}</span> <span class="b-small">${n === 1 ? 'story' : 'stories'}, one tap each</span></span><span class="b-play">Play the briefing ${ic('arrow')}</span></button>`
+      + `<div class="b b-ask"><span class="b-kick">${ic('spark')} Ask the analyst</span><span class="b-small">Answers from the live data and the models, with the numbers behind them.</span><div class="b-qs"><a href="../?ask=${encodeURIComponent('How is the world economy doing?')}">How is the world economy doing?</a><a href="../finance/?ask=${encodeURIComponent('Is a correction likely?')}">Is a correction likely?</a></div></div>`
+      + `<section class="b b-2x1 b-readtile" aria-label="Latest readings"><span class="b-kick">${ic('pulse')} Latest readings</span><div class="hm-read" id="hmRead"></div></section>`
+      + `<article class="b b-2x1 b-story noimg" id="hmStory" aria-live="polite"><span class="b-kick">${ic('news')} Top story</span><span class="b-hl">Loading the latest headlines…</span><span class="b-src"></span></article>`
+      + MODS.filter(m => !m.on).map(m => `<article class="b b-soon" aria-label="${esc(m.name)}: coming soon"${m.blurb ? ` title="${esc(m.blurb)}"` : ''}>${art(m.k, '(max-width: 560px) 78px, 96px')}<span class="b-name">${esc(m.name)}</span><span class="b-when">${ic(m.k)} Coming soon</span></article>`).join('');
+    box.innerHTML = tiles;
+    const bt = document.getElementById('hmBriefTile'); if (bt) bt.addEventListener('click', () => { if (window.STORY) STORY.open(); });
   }
-  function readings() {
+  function topStory(list) {
+    const el = document.getElementById('hmStory'); if (!el) return;
+    const it = (list || []).find(x => x.img && x.img !== 'None') || (list || [])[0];
+    if (!it) { el.querySelector('.b-hl').textContent = 'Headlines appear here when you are online.'; return; }
+    const img = it.img && it.img !== 'None' ? it.img : '';
+    el.classList.add('noimg');
+    el.setAttribute('role', 'button'); el.tabIndex = 0; el.setAttribute('aria-label', 'Top story: ' + it.t);
+    el.innerHTML = `<span class="b-kick">${ic('news')} Top story · ${esc(it.s)}</span><span class="b-hl">${esc(it.t)}</span><span class="b-src">${esc(window.NEWS ? NEWS.ago(it.d) : '')}</span>`;
+    // the publisher's photo goes in behind the headline only once it has loaded
+    if (img) { const im = new Image(); im.decoding = 'async'; im.onload = () => { const ph = document.createElement('span'); ph.className = 'b-photo'; ph.style.backgroundImage = `url("${img.replace(/"/g, '%22')}")`; el.prepend(ph); el.classList.remove('noimg'); }; im.src = img; }
+    el.onclick = () => NEWS.open(it);
+    el.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); NEWS.open(it); } };
+  }
+  function heroPhoto() {
+    const el = document.getElementById('hmHeroPhoto');
+    if (el && window.MEDIA) el.innerHTML = MEDIA.photo('earth-night-eurasia', { alt: '', eager: true, sizes: '100vw', pos: '62% 50%' });
+  }
+  function collect() {
     const e = saved('econ'), f = saved('fin'), items = [];
     const push = (src, mod, href) => { if (!src) return; for (const it of src.items.slice(0, 5)) items.push(Object.assign({}, it, { mod, href, t: src.t })); };
     push(e, 'Economics', '../'); push(f, 'Finance', '../finance/');
-    const box = document.getElementById('hmRead');
+    return items;
+  }
+  function readings(items) {
+    const box = document.getElementById('hmRead'); if (!box) return items;
     if (!items.length) { box.innerHTML = `<p class="hm-empty">Open <a href="../">Economics</a> or <a href="../finance/">Finance &amp; markets</a> once and their latest readings will appear here, even offline.</p>`; return []; }
-    box.innerHTML = items.map(it => `<a class="hm-r hm-${esc(it.tone || 'info')}" href="${it.href}${it.ask ? '?ask=' + encodeURIComponent(it.ask) : ''}"><span class="hm-r-top"><span class="hm-r-mod">${esc(it.mod)} · ${esc(it.tag || '')}</span><span class="hm-r-t">${esc(ago(it.t))}</span></span><span class="hm-r-txt">${esc(it.text)}</span>${it.val ? `<b class="hm-r-val">${esc(it.val)}</b>` : ''}</a>`).join('');
+    box.innerHTML = items.slice(0, 4).map(it => `<a class="hm-r hm-${esc(it.tone || 'info')}" href="${it.href}${it.ask ? '?ask=' + encodeURIComponent(it.ask) : ''}"><span class="hm-r-top"><span class="hm-r-mod">${esc(it.mod)} · ${esc(it.tag || '')}</span><span class="hm-r-t">${esc(ago(it.t))}</span></span><span class="hm-r-txt">${esc(it.text)}</span>${it.val ? `<b class="hm-r-val">${esc(it.val)}</b>` : ''}</a>`).join('');
     return items;
   }
   function globe() {
@@ -64,6 +107,7 @@
       ask: q => { location.href = '../?ask=' + encodeURIComponent(q); }
     });
     NEWS.render(document.getElementById('hmNews'));
+    NEWS.load().then(topStory).catch(() => topStory([]));
   }
   function search(items) {
     if (!window.SRCH) return;
@@ -86,8 +130,9 @@
     STORY.mount({ key: 'atlas-home', title: "Today's Atlas briefing", mark: 'A', label: 'Today', slides, ask: q => { location.href = '../?ask=' + encodeURIComponent(q); }, host: document.querySelector('#insBar .ins-in'), prepend: true, bg: ['#102a33', '#0a1215'] });
   }
   function init() {
-    grid(); theme();
-    const items = readings();
+    theme(); heroPhoto();
+    const items = collect();
+    bento(items); readings(items);
     if (window.INS) { INS.mount({ ask: q => { location.href = '../' + (q ? '?ask=' + encodeURIComponent(q) : ''); } }); INS.set(items.length ? items.map(it => ({ id: it.mod + it.id, tag: it.mod === 'Economics' ? 'Econ · ' + it.tag : 'Markets · ' + it.tag, tone: it.tone, text: it.text, val: it.val, ask: it.ask, go: () => { location.href = it.href; } })) : [{ id: 'hello', tag: 'Atlas', tone: 'info', text: 'Open a module to see its live readings here', val: '', go: () => { location.href = '../'; } }]); }
     if (window.FAV) FAV.init({ key: 'atlas-favs' });
     following(); news(); search(items); briefing(items);

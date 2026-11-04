@@ -33,7 +33,8 @@
   function liveCount(id) { return (S.data[id]?.games || []).filter(g => g.state === 'in').length; }
   function renderRail() {
     const el = $('#rail'); if (!el) return;
-    const chip = (id, name, n) => `<button type="button" class="chip" data-lg="${id}" aria-pressed="${S.league === id}">${esc(name)}${n ? `<span class="n" title="${n} live">${n}</span>` : ''}</button>`;
+    const ic = id => window.MEDIA && APP.sportOf ? MEDIA.icon(id === 'all' ? 'spark' : APP.sportOf(id), 'chip-ic') : '';
+    const chip = (id, name, n) => `<button type="button" class="chip" data-lg="${id}" aria-pressed="${S.league === id}">${ic(id)}${esc(name)}${n ? `<span class="n" title="${n} live">${n}</span>` : ''}</button>`;
     const total = LEAGUES.reduce((a, l) => a + liveCount(l.id), 0);
     let h = chip('all', 'All sports', total);
     for (const l of LEAGUES) h += chip(l.id, l.short || l.name, liveCount(l.id));
@@ -963,6 +964,7 @@
       <p>Probable is a live, multi-sport analytics lab: it reads real scoreboards, turns every game state into a win probability, and lets you change any part of that state to test a hypothesis. Nothing is scripted — every number on the page is computed in your browser from the data it just loaded.</p>
       <h3>Data</h3>
       <p>The live version polls ESPN's public scoreboard, standings and game-summary feeds every 30 seconds while games are in progress (every 2 minutes otherwise), and loads season stats, leaderboards, schedules and archives on demand. When those feeds can't be reached, the page falls back to a real-data snapshot: scores, schedules, pregame probabilities and box scores from Sportradar, plus ESPN standings (four seasons per league) and season leaderboards, labeled with their capture time.</p>
+      ${window.MEDIA ? `<h3>Photography</h3><p>Photos are free to use under their licences, resized and converted to AVIF and WebP for fast loading.</p><ul class="photo-credits">${MEDIA.credits(['stadium-lights', 'basketball-hoop', 'baseball-night', 'hockey-play', 'soccer-ball', 'tennis-aerial', 'golf-flag', 'fight-ring'])}</ul>` : ''}
       <h3>Featured games</h3>
       <p>The featured game and the rail under it are ordered by team rank, strictly: the game with the best-ranked team leads (every #1 team's game before any #2 team's), the opponent's rank breaks ties, then live games, then the bigger league. Rank is a team's place in its league's power ratings (below), the AP / CFP Top 25 in college football, and each club's domestic-league rank in the Champions League. Before a season's first games, NBA and NHL ranks come from last season's ratings, and the rank chip says so. The same order drives the board when “Top-ranked first” is on; “By start time” switches it back to the clock.</p>
       <h3>Team ratings</h3>
@@ -1083,7 +1085,8 @@
 
   async function init(retry) {
     if (!retry) {
-      const saved = APP.lsGet('probable-theme'); if (saved === 'dark' || saved === 'light') applyTheme(saved);
+      // a saved choice wins; the native app opens in dark mode until the visitor picks light
+      const saved = APP.lsGet('probable-theme'); if (saved === 'dark' || saved === 'light') applyTheme(saved); else if (window.PROBABLE_NATIVE) applyTheme('dark');
       bind();
       const h = location.hash.replace('#', ''); if (h) S.tab = parseTab(h) || 'board';
       if (window.claude && typeof window.claude.use === 'function') window.claude.use('sample').then(s => { if (s) { S.sample = s; LAB.studio && LAB.studio.refreshAsk(); DR && DR.studio && DR.studio.refreshAsk(); } }).catch(() => { });

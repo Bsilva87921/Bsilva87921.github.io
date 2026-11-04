@@ -1,0 +1,101 @@
+# Turns on Claude for Ask AI on every Probable page and in both apps. Deploys the small Cloudflare Worker in
+# probable-atlas/ai-proxy, stores the Anthropic key in it, points the sites at it and redeploys them.
+# It needs three repository secrets (Settings > Secrets and variables > Actions); until they exist it does nothing:
+#   ANTHROPIC_API_KEY      an Anthropic API key (set a monthly spend limit in the Anthropic Console)
+#   CLOUDFLARE_API_TOKEN   a Cloudflare API token from the "Edit Cloudflare Workers" template
+#   CLOUDFLARE_ACCOUNT_ID  the Cloudflare account ID
+# Optional repository variable AI_MODEL picks another model (for example claude-haiku-5-5 or claude-sonnet-5-5).
+name: Ask AI proxy
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+    paths:
+      - "probable-atlas/ai-proxy/**"
+      - ".github/workflows/ai-proxy.yml"
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: ai-proxy
+  cancel-in-progress: false
+
+jobs:
+  worker:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    outputs:
+      changed: ${{ steps.config.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check the secrets
+        id: have
+        env:
+          A: ${{ secrets.ANTHROPIC_API_KEY }}
+          T: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          C: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          if [ -n "$A" ] && [ -n "$T" ] && [ -n "$C" ]; then echo "ok=1" >> "$GITHUB_OUTPUT"
+          else echo "::notice::Claude is off: add ANTHROPIC_API_KEY, CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID as repository secrets, then run this workflow (see probable-atlas/ai-proxy/README.md)."; fi
+      - uses: actions/setup-node@v4
+        if: steps.have.outputs.ok == '1'
+        with:
+          node-version: "22"
+      - name: Deploy the Worker
+        if: steps.have.outputs.ok == '1'
+        working-directory: probable-atlas/ai-proxy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          AI_MODEL: ${{ vars.AI_MODEL }}
+        run: |
+          set -o pipefail
+          npx --yes wrangler@4 deploy ${AI_MODEL:+--var MODEL:$AI_MODEL} 2>&1 | tee deploy.log
+          url=$(grep -oE 'https://[a-zA-Z0-9.-]+\.workers\.dev' deploy.log | head -1)
+          if [ -z "$url" ]; then echo "::error::No workers.dev address in the deploy output. Open Workers & Pages in the Cloudflare dashboard once to pick a workers.dev subdomain, then run this again."; exit 1; fi
+          echo "URL=$url" >> "$GITHUB_ENV"
+      - name: Store the Anthropic key in the Worker
+        if: steps.have.outputs.ok == '1'
+        working-directory: probable-atlas/ai-proxy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: printf '%s' "$ANTHROPIC_API_KEY" | npx --yes wrangler@4 secret put ANTHROPIC_API_KEY
+      - name: Check that Claude answers
+        if: steps.have.outputs.ok == '1'
+        run: |
+          for i in 1 2 3 4 5 6; do
+            h=$(curl -fsS -H 'Origin: https://bsilva87921.github.io' "$URL/health" || true)
+            echo "health: $h"
+            case "$h" in *'"ok":true'*) break;; esac
+            sleep 10
+          done
+          r=$(curl -sS -X POST "$URL" -H 'Origin: https://bsilva87921.github.io' -H 'content-type: application/json' \
+            -d '{"system":"Reply with the single word ready.","messages":[{"role":"user","content":"Are you there?"}]}')
+          echo "reply: ${r:0:300}"
+          case "$r" in *'"type":"message"'*) echo "Claude answered.";; *) echo "::error::The Worker is up but Claude did not answer: check the Anthropic key and its credit."; exit 1;; esac
+      - name: Point the sites and apps at the Worker
+        id: config
+        if: steps.have.outputs.ok == '1'
+        run: |
+          node -e '
+            const fs = require("fs"), url = process.env.URL;
+            const js = `// Probable · Ask AI configuration (Economics, Finance, Sports Lab and both apps). Written by the Ask AI proxy workflow.\n// Claude answers through this Worker; the pages fall back to the built-in analyst whenever it is unavailable.\nwindow.ATLAS_AI = { endpoint: ${JSON.stringify(url)} };\n`;
+            fs.writeFileSync("probable-atlas/ai-config.js", js);
+            fs.writeFileSync("probable-atlas/ai-config.json", JSON.stringify({ endpoint: url }) + "\n");'
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add probable-atlas/ai-config.js probable-atlas/ai-config.json
+          if git diff --cached --quiet; then echo "changed=0" >> "$GITHUB_OUTPUT"; exit 0; fi
+          git commit -qm "Ask AI: Claude on through the site's proxy"
+          for i in 1 2 3 4 5; do git pull -q --rebase origin main && git push -q origin HEAD:main && break; sleep 6; done
+          echo "changed=1" >> "$GITHUB_OUTPUT"
+  pages:
+    needs: worker
+    if: needs.worker.outputs.changed == '1'
+    uses: ./.github/workflows/deploy-site.yml

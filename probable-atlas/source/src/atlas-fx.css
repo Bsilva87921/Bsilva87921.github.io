@@ -66,3 +66,15 @@
 .fx-news-mini .kx-n-list{margin-top:4px}
 .dr-news .kx-n-list{margin-top:6px}
 #newsHost{padding-block:6px 10px;display:flex;flex-direction:column;gap:14px}
+
+/* ---------- 3.2: photography behind the masthead, a frosted 3D panel, module icons ---------- */
+.mast .mast-photo::after{background:linear-gradient(90deg,color-mix(in srgb,var(--band) 96%,transparent) 0%,color-mix(in srgb,var(--band) 84%,transparent) 38%,color-mix(in srgb,var(--band) 42%,transparent) 72%,color-mix(in srgb,var(--band) 58%,transparent) 100%),linear-gradient(0deg,var(--band) 0%,transparent 34%)}
+.mast .grat{z-index:1}
+.mast .wrap{z-index:2}
+.mast.has3d .grat{opacity:.07}
+.mast-3d{background:color-mix(in srgb,var(--band) 42%,transparent);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);border-color:color-mix(in srgb,#ffffff 13%,var(--band-line))}
+.modnav .mx-ic{font-size:14px;opacity:.82}
+.modnav button[aria-current="true"] .mx-ic{opacity:1}
+@media (max-width:900px){.mast .mast-photo::after{background:linear-gradient(180deg,color-mix(in srgb,var(--band) 84%,transparent) 0%,color-mix(in srgb,var(--band) 66%,transparent) 50%,var(--band) 100%)}}
+@media (prefers-reduced-transparency:reduce){.mast-3d{-webkit-backdrop-filter:none;backdrop-filter:none;background:color-mix(in srgb,var(--band) 70%,#000)}}
+.photo-credits{margin:4px 0 0;padding-left:18px;font-size:12.5px;color:var(--muted)}

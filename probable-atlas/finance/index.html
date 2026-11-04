@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta property="og:title" content="Probable Atlas · Finance"><meta property="og:description" content="Live markets dashboard: 60 markets and 34 rates since 1990, tested forecasts, a portfolio lab, evidence-based recommendations and an AI analyst."><meta property="og:type" content="website"><meta property="og:image" content="https://bsilva87921.github.io/probable-atlas/finance/preview.jpg"><meta name="theme-color" content="#0F1A1E"><link rel="manifest" href="../manifest.webmanifest"><link rel="apple-touch-icon" href="../icons/atlas-apple-180.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Atlas"><meta name="theme-color" content="#0c1a22"><title>Probable Atlas Finance</title><meta name="description" content="Live markets dashboard: 60 markets and 34 rates since 1990, tested forecasts, a portfolio lab, evidence-based recommendations and an AI analyst."><script>try{var t=localStorage.getItem('atlas-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,500;0,600;1,400&display=swap"><style>:root{
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta property="og:title" content="Probable Atlas · Finance"><meta property="og:description" content="Live markets dashboard: 60 markets and 34 rates since 1990, tested forecasts, a portfolio lab, evidence-based recommendations and an AI analyst."><meta property="og:type" content="website"><meta property="og:image" content="https://bsilva87921.github.io/probable-atlas/finance/preview.jpg"><meta name="theme-color" content="#0F1A1E"><link rel="manifest" href="../manifest.webmanifest"><link rel="apple-touch-icon" href="../icons/atlas-apple-180.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Atlas"><meta name="theme-color" content="#0c1a22"><title>Probable Atlas Finance</title><meta name="description" content="Live markets dashboard: 60 markets and 34 rates since 1990, tested forecasts, a portfolio lab, evidence-based recommendations and an AI analyst."><script>try{var t=localStorage.getItem('atlas-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t;else if(window.PROBABLE_NATIVE)document.documentElement.dataset.theme='dark'}catch(e){if(window.PROBABLE_NATIVE)document.documentElement.dataset.theme='dark'}</script><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,500;0,600;1,400&display=swap"><style>:root{
   color-scheme: light;
   --bg:#F2F4F1; --surface:#FFFFFF; --raised:#FFFFFF; --sunk:#E9ECE7; --line:#D8DDD6; --line-2:#C3CAC1;
   --ink:#121A1F; --ink-2:#3B4650; --muted:#65707A;
@@ -821,6 +821,25 @@ body.kx-pip{margin:0;padding:10px;background:var(--bg,#0b1220);color:var(--ink,#
 /* phones: the Insights bar keeps its room for the headline */
 @media (max-width:520px){.ins .ins-sh{display:none!important}}
 
+/* ---------- media: photography, 3D renders, SVG icons, frosted glass ---------- */
+.mx-ic{width:1em;height:1em;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:-.14em}
+.mx-pic{display:block;position:relative;overflow:hidden}
+.mx-pic img{display:block;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .55s ease}
+.mx-pic img.mx-in{opacity:1}
+.mx-art{display:block}
+.mx-art img{display:block;width:100%;height:auto;opacity:0;transform:translateY(8px) scale(.97);transition:opacity .5s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+.mx-art img.mx-in{opacity:1;transform:none}
+.mx-backdrop{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.mx-backdrop .mx-pic{position:absolute;inset:0}
+.mx-backdrop::after{content:"";position:absolute;inset:0}
+.mx-glass{--glass-tint:#0b1320;background:color-mix(in srgb,var(--glass-tint) 55%,transparent);-webkit-backdrop-filter:blur(16px) saturate(1.6);backdrop-filter:blur(16px) saturate(1.6);border:1px solid rgba(255,255,255,.14);box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.mx-glass{background:color-mix(in srgb,var(--glass-tint) 88%,transparent)}}
+@media (prefers-reduced-transparency:reduce){.mx-glass{-webkit-backdrop-filter:none;backdrop-filter:none;background:var(--glass-tint)}}
+@media (prefers-reduced-motion:reduce){.mx-pic img,.mx-art img{transition:none;transform:none}}
+/* side panels (game center, Ask AI, the news reader) get a frosted finish over the dimmed page */
+.kx-r-panel{background:color-mix(in srgb,var(--surface,#fff) 90%,transparent);-webkit-backdrop-filter:blur(26px) saturate(1.5);backdrop-filter:blur(26px) saturate(1.5)}
+@media (prefers-reduced-transparency:reduce){.kx-r-panel{background:var(--surface,#fff);-webkit-backdrop-filter:none;backdrop-filter:none}}
+
 /* ---------- Probable Atlas 2.0: Insights bar tokens, 3D masthead, refreshed surface ---------- */
 :root{--ins-h:40px}
 @media (max-width:640px){:root{--ins-h:38px}}
@@ -889,6 +908,18 @@ body.kx-pip{margin:0;padding:10px;background:var(--bg,#0b1220);color:var(--ink,#
 .fx-news-mini .kx-n-list{margin-top:4px}
 .dr-news .kx-n-list{margin-top:6px}
 #newsHost{padding-block:6px 10px;display:flex;flex-direction:column;gap:14px}
+
+/* ---------- 3.2: photography behind the masthead, a frosted 3D panel, module icons ---------- */
+.mast .mast-photo::after{background:linear-gradient(90deg,color-mix(in srgb,var(--band) 96%,transparent) 0%,color-mix(in srgb,var(--band) 84%,transparent) 38%,color-mix(in srgb,var(--band) 42%,transparent) 72%,color-mix(in srgb,var(--band) 58%,transparent) 100%),linear-gradient(0deg,var(--band) 0%,transparent 34%)}
+.mast .grat{z-index:1}
+.mast .wrap{z-index:2}
+.mast.has3d .grat{opacity:.07}
+.mast-3d{background:color-mix(in srgb,var(--band) 42%,transparent);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);border-color:color-mix(in srgb,#ffffff 13%,var(--band-line))}
+.modnav .mx-ic{font-size:14px;opacity:.82}
+.modnav button[aria-current="true"] .mx-ic{opacity:1}
+@media (max-width:900px){.mast .mast-photo::after{background:linear-gradient(180deg,color-mix(in srgb,var(--band) 84%,transparent) 0%,color-mix(in srgb,var(--band) 66%,transparent) 50%,var(--band) 100%)}}
+@media (prefers-reduced-transparency:reduce){.mast-3d{-webkit-backdrop-filter:none;backdrop-filter:none;background:color-mix(in srgb,var(--band) 70%,#000)}}
+.photo-credits{margin:4px 0 0;padding-left:18px;font-size:12.5px;color:var(--muted)}
 </style><script src="../ai-config.js"></script></head><body>
 <div class="strip">
   <div class="wrap">
@@ -897,6 +928,7 @@ body.kx-pip{margin:0;padding:10px;background:var(--bg,#0b1220);color:var(--ink,#
   </div>
 </div>
 <header class="mast fin has3d">
+  <div class="mx-backdrop mast-photo" id="mastPhoto" aria-hidden="true"></div>
   <svg class="grat" id="grat" aria-hidden="true" preserveAspectRatio="none"></svg>
   <div class="wrap">
     <div class="brand">
@@ -1736,7 +1768,12 @@ const CH = (() => {
   const MODELS = [['claude-sonnet-5', 'Claude Sonnet 5'], ['claude-haiku-4-5-20251001', 'Claude Haiku 4.5 (fastest)'], ['claude-opus-5-5', 'Claude Opus 5.5 (most capable)']];
   const store = { get(k, s) { try { return (s ? sessionStorage : localStorage).getItem(k); } catch (e) { return null; } }, set(k, v, s) { try { (s ? sessionStorage : localStorage).setItem(k, v); } catch (e) { /* blocked */ } }, del(k) { try { localStorage.removeItem(k); sessionStorage.removeItem(k); } catch (e) { /* blocked */ } } };
   const apiKey = () => store.get(KEYS.key, true) || store.get(KEYS.key);
-  const ENG = { analyst: 'Built-in analyst', claude: 'Claude · your Claude account', endpoint: 'Claude · site service', key: 'Claude · your API key' };
+  const ENG = { analyst: 'Built-in analyst', claude: 'Claude · your Claude account', endpoint: 'Claude', key: 'Claude · your API key' };
+  // the site's Claude service: checked quietly in the background so a question never waits on a service that is down
+  const EP = { up: null, at: 0, model: '' };
+  const LIVE_CFG = 'https://bsilva87921.github.io/probable-atlas/ai-config.json';
+  const base = () => String(cfg.endpoint || '').replace(/\/+$/, '');
+  const withTimeout = ms => { const c = new AbortController(); setTimeout(() => c.abort(), ms); return c.signal; };
 
   /* ---------------- tiny safe markdown ---------------- */
   function md(src) {
@@ -1793,7 +1830,7 @@ const CH = (() => {
   function open(q) {
     build(); opened = true;
     document.getElementById('chat').hidden = false; document.getElementById('askFab').hidden = true;
-    checkSample();
+    checkSample(); probe();
     if (q) send(q); else setTimeout(() => document.getElementById('chatIn').focus(), 30);
   }
   function close() { if (!built) return; opened = false; document.getElementById('chat').hidden = true; document.getElementById('askFab').hidden = false; if (ctl) ctl.abort(); }
@@ -1839,6 +1876,20 @@ const CH = (() => {
     if (saved === 'key' && apiKey() && !SNAP) engine = 'key';
     else if (cfg.endpoint && !SNAP && saved !== 'analyst') engine = 'endpoint';
     else engine = 'analyst';
+    liveConfig().then(() => probe());
+  }
+  // the apps read the current setting from the website, so turning Claude on needs no app update
+  function liveConfig() {
+    if (cfg.endpoint || SNAP || !window.PROBABLE_NATIVE) return Promise.resolve();
+    return fetch(LIVE_CFG, { cache: 'no-cache', signal: withTimeout(6000) }).then(r => r.ok ? r.json() : null).then(j => {
+      if (j && /^https:\/\//.test(j.endpoint || '')) { cfg.endpoint = j.endpoint; if (engine === 'analyst' && store.get(KEYS.engine) !== 'analyst') engine = 'endpoint'; paintEng(); }
+    }).catch(() => {});
+  }
+  function probe(force) {
+    if (!cfg.endpoint || SNAP || (!force && Date.now() - EP.at < 4 * 60e3)) return Promise.resolve(EP.up);
+    EP.at = Date.now();
+    try { if (!document.querySelector('link[data-ai-pre]')) { const l = document.createElement('link'); l.rel = 'preconnect'; l.href = new URL(base()).origin; l.crossOrigin = 'anonymous'; l.dataset.aiPre = '1'; document.head.appendChild(l); } } catch (e) { /* bad URL */ }
+    return fetch(base() + '/health', { cache: 'no-store', signal: withTimeout(6000) }).then(r => r.ok ? r.json() : { ok: false }).then(j => { EP.up = !!(j && j.ok); EP.model = (j && j.model) || ''; return EP.up; }).catch(() => { EP.up = false; return false; });
   }
   const followHTML = list => list && list.length ? `<div class="sugg">${list.map(q => `<button type="button" data-q="${esc(q)}">${esc(q)}</button>`).join('')}</div>` : '';
   function send(q) {
@@ -1846,6 +1897,7 @@ const CH = (() => {
     if (!opened) { opened = true; document.getElementById('chat').hidden = false; document.getElementById('askFab').hidden = true; }
     bubble('user', esc(q));
     if (engine === 'analyst') return analyst(q);
+    if (engine === 'endpoint' && EP.up === false) { probe(); return analyst(q, 'Claude is unavailable right now'); }
     return llm(q);
   }
   function analyst(q, note) {
@@ -1872,7 +1924,8 @@ const CH = (() => {
     if (turns[0].role !== 'user') turns.shift();
     setBusy(true); ctl = new AbortController();
     let text = '';
-    const show = t => { text = t; body.innerHTML = md(t); scrollEnd(); };
+    let raf = 0;
+    const show = t => { text = t; if (raf) return; raf = requestAnimationFrame(() => { raf = 0; body.innerHTML = md(text); scrollEnd(); }); };
     try {
       if (engine === 'claude') {
         if (!sample) throw { code: 'not_available' };
@@ -1884,11 +1937,13 @@ const CH = (() => {
         const send = engine === 'key' ? payload => fetch('https://api.anthropic.com/v1/messages', { method: 'POST', signal: ctl.signal, headers: { 'content-type': 'application/json', 'x-api-key': apiKey(), 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' }, body: JSON.stringify(payload) })
           : payload => fetch(cfg.endpoint, { method: 'POST', signal: ctl.signal, headers: { 'content-type': 'application/json' }, body: JSON.stringify(payload) });
         const model = engine === 'key' ? (store.get(KEYS.model) || MODELS[0][0]) : (cfg.model || undefined);
-        show(await messagesLoop(send, model, system, turns, wrap, show));
+        show(await messagesLoop(send, model, system, turns, wrap, show, true));
+        if (!text) throw { code: 'empty' };
       }
       turns.push({ role: 'assistant', content: text || '(no answer)' });
       d.insertAdjacentHTML('beforeend', followHTML(A.suggestions(ST).slice(0, 3)));
     } catch (e) {
+      if (raf) { cancelAnimationFrame(raf); raf = 0; }
       turns.pop();
       const code = e && e.code, msg = e && (e.message || e.code) || String(e);
       if (code === 'cancelled' || (e && e.name === 'AbortError')) { body.innerHTML = text ? md(text) + '<p class="muted">(stopped)</p>' : '<p class="muted">Stopped.</p>'; }
@@ -1896,17 +1951,70 @@ const CH = (() => {
         d.remove();
         const why = code === 'not_granted' ? 'Claude was not allowed for this page' : code === 'rate_limited' ? 'Claude is busy or your usage limit was reached' : code === 'sampling_disabled' ? 'Claude is not available for this account' : /401|invalid x-api-key|authentication/i.test(msg) ? 'the API key was rejected' : 'Claude could not be reached (' + String(msg).slice(0, 80) + ')';
         if (code === 'not_granted' || code === 'sampling_disabled') { engine = 'analyst'; paintEng(); }
-        analyst(q, 'used because ' + why);
+        if (engine === 'endpoint') { EP.up = null; probe(true); analyst(q, code === 'rate_limited' || (e && e.status === 429) ? 'Claude is busy, try again in a minute' : 'Claude was busy, so the built-in analyst answered'); }
+        else analyst(q, 'used because ' + why);
       }
     } finally { setBusy(false); ctl = null; }
   }
-  async function messagesLoop(send, model, system, hist, tools, show) {
+  const TRANSIENT = new Set([500, 502, 503, 504, 529]);
+  async function sendRetry(send, payload) {
+    try { const r = await send(payload); if (!TRANSIENT.has(r.status)) return r; } catch (e) { if (e && e.name === 'AbortError') throw e; }
+    await new Promise(res => setTimeout(res, 900));
+    return send(payload);
+  }
+  // reads an Anthropic Messages stream (server-sent events) into a message: text, tool calls and thinking blocks,
+  // calling onText with the answer so far
+  async function readStream(r, onText) {
+    const rd = r.body.getReader(), dec = new TextDecoder(), blocks = [];
+    let buf = '', stop = null, err = null;
+    const textNow = () => blocks.filter(b => b && b.type === 'text').map(b => b.text).join('\n').trim();
+    const take = ev => {
+      if (ev.type === 'content_block_start') {
+        const b = Object.assign({}, ev.content_block);
+        if (b.type === 'text') b.text = b.text || '';
+        if (b.type === 'tool_use' || b.type === 'server_tool_use') b._j = '';
+        if (b.type === 'thinking') { b.thinking = b.thinking || ''; b.signature = b.signature || ''; }
+        blocks[ev.index] = b;
+      } else if (ev.type === 'content_block_delta') {
+        const b = blocks[ev.index], d = ev.delta || {}; if (!b) return;
+        if (d.type === 'text_delta') { b.text += d.text || ''; onText(textNow()); }
+        else if (d.type === 'input_json_delta') b._j += d.partial_json || '';
+        else if (d.type === 'thinking_delta') b.thinking += d.thinking || '';
+        else if (d.type === 'signature_delta') b.signature = (b.signature || '') + (d.signature || '');
+        else if (d.type === 'citations_delta') (b.citations = b.citations || []).push(d.citation);
+      } else if (ev.type === 'content_block_stop') {
+        const b = blocks[ev.index]; if (b && '_j' in b) { try { b.input = b._j ? JSON.parse(b._j) : {}; } catch (e) { b.input = {}; } delete b._j; }
+      } else if (ev.type === 'message_delta') { if (ev.delta && ev.delta.stop_reason) stop = ev.delta.stop_reason; }
+      else if (ev.type === 'error') err = ev.error || { message: 'The answer stopped' };
+    };
+    for (;;) {
+      const { value, done } = await rd.read();
+      if (value) buf += dec.decode(value, { stream: true });
+      let m;
+      while ((m = /\r?\n\r?\n/.exec(buf))) {
+        const raw = buf.slice(0, m.index); buf = buf.slice(m.index + m[0].length);
+        const data = raw.split(/\r?\n/).filter(l => l.startsWith('data:')).map(l => l.slice(5).replace(/^ /, '')).join('\n');
+        if (data && data !== '[DONE]') { try { take(JSON.parse(data)); } catch (e) { /* skip a malformed event */ } }
+      }
+      if (done) break;
+    }
+    if (err) { const e = new Error(err.message || 'The answer stopped'); e.code = err.type; throw e; }
+    return { content: blocks.filter(Boolean), stop_reason: stop };
+  }
+  async function messagesLoop(send, model, system, hist, tools, show, stream) {
     const msgs = hist.map(t => ({ role: t.role, content: t.content })); let text = '';
     const toolDefs = tools.map(t => ({ name: t.name, description: t.description, input_schema: t.inputSchema || { type: 'object', properties: {} } }));
     for (let round = 0; round < 6; round++) {
-      const payload = { max_tokens: 1400, system, messages: msgs, tools: toolDefs }; if (model) payload.model = model;
-      const r = await send(payload); let j = null; try { j = await r.json(); } catch (e) { /* not json */ }
-      if (!r.ok || !j || !j.content) throw new Error((j && j.error && j.error.message) || ('HTTP ' + r.status));
+      const payload = { max_tokens: 1400, system, messages: msgs, tools: toolDefs }; if (model) payload.model = model; if (stream) payload.stream = true;
+      const r = await sendRetry(send, payload);
+      let j = null;
+      if (r.ok && /event-stream/i.test(r.headers.get('content-type') || '')) {
+        const pre = text;
+        j = await readStream(r, t => show(pre + (pre && t ? '\n\n' : '') + t));
+      } else {
+        try { j = await r.json(); } catch (e) { /* not json */ }
+        if (!r.ok || !j || !j.content) { const err = new Error((j && j.error && j.error.message) || ('HTTP ' + r.status)); err.status = r.status; err.code = j && j.error && j.error.type; throw err; }
+      }
       msgs.push({ role: 'assistant', content: j.content });
       const tx = j.content.filter(c => c.type === 'text').map(c => c.text).join('\n').trim();
       if (tx) { text += (text ? '\n\n' : '') + tx; show(text); }
@@ -1914,6 +2022,7 @@ const CH = (() => {
       const results = [];
       for (const u of j.content.filter(c => c.type === 'tool_use')) {
         const t = tools.find(x => x.name === u.name);
+        if (!t) { results.push({ type: 'tool_result', tool_use_id: u.id, content: 'Error: unknown tool', is_error: true }); continue; }
         try { const out = await t.execute(u.input || {}); results.push({ type: 'tool_result', tool_use_id: u.id, content: typeof out === 'string' ? out : JSON.stringify(out).slice(0, 30000) }); }
         catch (e) { results.push({ type: 'tool_result', tool_use_id: u.id, content: 'Error: ' + (e.message || e), is_error: true }); }
       }
@@ -3766,6 +3875,7 @@ const VHF = (() => {
     return `${U.sec('How it works', 'Sources, methods, validation and limits. Everything on this page is computed in your browser from the data files listed here.')}
       <div class="grid g2">
         ${U.card('Data', `Refreshed automatically by a scheduled GitHub Actions job: weekday mornings, evenings, and several times during US trading hours (GitHub runs schedules on a best-effort basis, so refreshes can be late). Last refresh ${esc(K.isoLab((ms.fetched_at || '').slice(0, 10)))} (${esc(K.ago(ms.fetched_at || ''))}).`, `<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Source</th><th>Status</th></tr></thead><tbody>${srcRows}</tbody></table></div><div class="prose sm" style="margin-top:10px"><ul><li><b>Yahoo Finance</b> (via the open-source yfinance library): daily history for 61 funds, indexes, futures and crypto since 1990 (S&P 500 since 1928). Fund prices are dividend-adjusted, so returns are total returns.</li><li><b>FRED</b>, Federal Reserve Bank of St. Louis: Treasury yields, TIPS, breakevens, policy rates, credit spreads, dollar, FX, oil, gas, financial-conditions indexes, CPI, recessions (NBER) and the Fed's Z.1 equity values.</li><li><b>Robert Shiller</b> (Yale): S&P 500 prices, dividends, earnings, CPI and CAPE monthly since 1871.</li><li><b>Kenneth French</b> data library (Dartmouth): US market and factor returns monthly since 1926.</li></ul></div>`)}
+        ${window.MEDIA ? U.card('Photography', 'The photograph behind the masthead.', `<ul class="photo-credits">${MEDIA.credits(['nyc-dusk'])}</ul>`) : ''}
         ${U.card('Validation at a glance', 'Every forecast is scored on data it did not see when it was made.', `<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Model</th><th>Out-of-sample result</th><th>Verdict</th></tr></thead><tbody>${val}</tbody></table></div>`)}
       </div>
       <div class="grid g2" style="margin-top:14px">
@@ -4259,6 +4369,81 @@ const INS = (() => {
   }
   return { mount, set, go: d => go(d, true), get items() { return items; }, get current() { return items[i] || null; }, get el() { return root; } };
 })();
+
+/* Generated by tools/photo_meta.py from assets/photos/photos.json: sizes, blur placeholders and credits. */
+const PHOTO_META = {"earth-night-americas":{"w":2560,"h":853,"sizes":[640,1280,1920,2560],"lqip":"data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAACQAwCdASoYAAgAPvVoq06qpiOiMAgBUB6JZQAAW+zsCAvEEVgAAP7r9NiEnMQYjWSDnmCqg1uIFKS0/SExvFwA","color":"#080818","alt":"The Americas, the Atlantic and Europe at night, lit by cities","credit":"NASA Earth Observatory (Joshua Stevens; Suomi NPP VIIRS data, Miguel Román, NASA GSFC)","link":"https://science.nasa.gov/earth/earth-observatory/earth-at-night/maps","license":"Public domain (NASA)"},"earth-night-eurasia":{"w":2560,"h":1056,"sizes":[640,1280,1920,2560],"lqip":"data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAACwAwCdASoYAAoAPvVmq04qpaQiMAgBUB6JYwAAW+GlpYdn8KZwAAD+72EupoUlkg8jTZ9vddV9UBdjlrs8HIKmpgQAAA==","color":"#080818","alt":"Europe, Africa and Asia at night, lit by cities","credit":"NASA Earth Observatory (Joshua Stevens; Suomi NPP VIIRS data, Miguel Román, NASA GSFC)","link":"https://science.nasa.gov/earth/earth-observatory/earth-at-night/maps","license":"Public domain (NASA)"},"nyc-dusk":{"w":2560,"h":1920,"sizes":[640,1280,1920,2560],"lqip":"data:image/webp;base64,UklGRnYAAABXRUJQVlA4IGoAAAAQBQCdASoYABIAPvViq04qpSQiMBgMAVAeiWMAw21AAF0yA0N1wUFwYFvMaZ1tLujAAP0PtZsexa1KnqVvrjvKhD2JB28ruO1UBPrGvY1KYiKljaEXWRoDz2kGylOKacQ0YyyOm959BQAA","color":"#181828","alt":"Manhattan at dusk, seen from above","credit":"Suzi Kim","link":"https://unsplash.com/photos/qBhhrtIQk5E","license":"Unsplash License"},"stadium-lights":{"w":2560,"h":1920,"sizes":[640,1280,1920,2560],"lqip":"data:image/webp;base64,UklGRpAAAABXRUJQVlA4IIQAAACQBACdASoYABIAPvVwsFKqpiSiqAgBUB6JZAAALnPylsdrHgIA+0/AkwHRaaAA/vKf6OsfCCCaLMMYuUWOWdlUZ1hnD99GOf7wJFgzdWS2YImAXE73/UEV1pZenV5VpUkb+N6Hs155pctquow2klLuBDNBJtb8CxSfCtp8ueYpjl+oAAA=","color":"#080808","alt":"A packed football stadium under the lights at night","credit":"Alex Korolkoff","link":"https://unsplash.com/photos/b_y4wUk6WhE","license":"Unsplash License"},"baseball-night":{"w":960,"h":640,"sizes":[480,960],"lqip":"data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAAAQBACdASoYABAAPvVmrE4qpaQiMAgBUB6JYwC2yCHfiQXhl/9kcgHYgAD+6Mm94RMEYL9EG3QaM9pB48qAF7fx3ryg7/j6i2zWNJUtVy2oX7KLDBRMqpoeVq4AAA==","color":"#182828","alt":"A baseball game at night","credit":"Nick Jio","link":"https://unsplash.com/photos/bYvo2ol_img","license":"Unsplash License"},"hockey-play":{"w":960,"h":640,"sizes":[480,960],"lqip":"data:image/webp;base64,UklGRpgAAABXRUJQVlA4IIwAAADQAwCdASoYABAAPvVkqk4qpaQiMAgBUB6JaQAAUqJWEXAqBW+auAAA/DlUgH9r0SUFk1vdlO1ivm61JiMbOasHtrB39yJXXuY96RK8ZeNKu1949PHD95nOPEyDivzbq3xs95rHCOz5ZaG8l4SZ//+P7uuD+QE6XpL7aLaJ1JhvkAU/M5cdhoN1BwAAAA==","color":"#f8f8f8","alt":"Ice hockey players on the rink","credit":"Markus Spiske","link":"https://unsplash.com/photos/W2Hr3CQU8DI","license":"Unsplash License"},"soccer-ball":{"w":960,"h":640,"sizes":[480,960],"lqip":"data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAAAwBACdASoYABAAPvVmq04qpaQiMAgBUB6JZADE2B6W96z4sDnuO32OPAAA/uxDuUXITkkHB+I+zYeAt3TYqQeW561mT6quQ8raQAAA","color":"#384808","alt":"A soccer ball on green grass","credit":"Wuilmar Matias-Morales","link":"https://unsplash.com/photos/adcyN9XhzwY","license":"Unsplash License"},"tennis-aerial":{"w":960,"h":1280,"sizes":[480,960],"lqip":"data:image/webp;base64,UklGRpwAAABXRUJQVlA4IJAAAADQBACdASoYACAAPvVmrVAqpSQisBgIAVAeiUAZQAYqDkrFGXbW9Mc4xZJjKR3ZAAD+7xYBQfNUkRswg6xUqxyhQqWwYENsqHWo7i+eG+l3I82UgIIXL8I6CFv0f6Fkh102eB+rpvs8bFtf4GC3qej1DCUKhDXpeTKCbG5x5ScBKf93zouJmtJm90/rl+mAAAA=","color":"#080808","alt":"A tennis court among trees, seen from above","credit":"Yente Van Eynde","link":"https://unsplash.com/photos/LqusW4i447A","license":"Unsplash License"},"golf-flag":{"w":960,"h":640,"sizes":[480,960],"lqip":"data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAADQAwCdASoYABAAPvVmrE4qpaQiMAgBUB6JaACdMoADYGl4VoPf30AA3le7osYPGuA2ol6tCX/EXIQmJ88f3Gxiw4Gb1RixJ6RrtIf4V9twAA==","color":"#887818","alt":"A flag on a golf green at St Andrews","credit":"Ryan Caven","link":"https://unsplash.com/photos/YflWkIZqRfM","license":"Unsplash License"},"fight-ring":{"w":960,"h":640,"sizes":[480,960],"lqip":"data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAADwAwCdASoYABAAPvVork8qpiSiMAgBUB6JZQCdACHfTW8UrrFhCkEAAP7wy0EEJzCQgo23TTVL3X+CBaLXGT8KgAA=","color":"#080818","alt":"Two boxers in a ring in a crowded arena","credit":"Joel Muniz","link":"https://unsplash.com/photos/lUK16p_JtCM","license":"Unsplash License"},"basketball-hoop":{"w":960,"h":1440,"sizes":[480,960],"lqip":"data:image/webp;base64,UklGRpAAAABXRUJQVlA4IIQAAAAwBQCdASoYACQAPvVurlAqpqQiqqoBUB6JZwDOOBQ2y2k5hgMtOwa5aH52JHqaRLSXQAD+mfKcRHfS2YPiXaGmkHDia7noB9ThcnimGjIK9s7Cyz8VZg7akwGdhqocwhcF1ebYFwF6vK4ELLc4LDxzf5K+Frex6FzioLB6OVjSQY5gkAA=","color":"#d8e8e8","alt":"A basketball hoop with a chain net, seen from below","credit":"Isabela Kronemberger","link":"https://unsplash.com/photos/mtGf2k3vNUM","license":"Unsplash License"}};
+
+/* Probable · media kit, shared by Probable Atlas and the Sports Lab on the web and in the apps.
+   - MEDIA.photo(id): responsive photography (AVIF with a WebP fallback, several widths) with a blurred placeholder
+     painted at once, so nothing shifts or flashes while the full image loads.
+   - MEDIA.art(name): pre-rendered 3D objects (transparent AVIF/WebP), one per Atlas module.
+   - MEDIA.icon(name): a lightweight inline SVG icon set (modules and sports), drawn with currentColor.
+   Photo sizes, colours, alt text and credits come from PHOTO_META, generated from assets/photos/photos.json. */
+const MEDIA = (() => {
+  const META = typeof PHOTO_META !== 'undefined' ? PHOTO_META : {};
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const pbase = () => window.PROBABLE_PHOTOS_URL || '/assets/photos/';
+  const rbase = () => window.PROBABLE_RENDERS_URL || '/assets/renders/';
+  const avif = () => (window.PROBABLE_MEDIA_FORMATS || ['avif', 'webp']).includes('avif');
+
+  /* a <picture> for photo `id`. o: cls, sizes (CSS sizes), alt ('' = decorative), eager (the page's main image),
+     pos (object-position), widths (subset of the available widths) */
+  function photo(id, o = {}) {
+    const m = META[id]; if (!m) return '';
+    // widths: the sizes up to the largest one asked for, plus the next size up so sharp screens stay sharp
+    const cap = o.widths ? Math.max(...o.widths) : Infinity, ws = m.sizes.filter(w => w <= cap), up = m.sizes.find(w => w > cap);
+    if (up && ws.length < 2) ws.push(up);
+    if (!ws.length) ws.push(m.sizes[0]);
+    const set = f => ws.map(w => `${pbase()}${id}-${w}.${f} ${Math.min(w, m.w)}w`).join(', ');
+    const sizes = o.sizes || '100vw', pos = o.pos || '50% 50%', alt = o.alt != null ? o.alt : (m.alt || '');
+    const fb = `${pbase()}${id}-${ws[Math.min(1, ws.length - 1)]}.webp`;
+    // the blurred placeholder sits on the <picture>, so the photo can fade in over it
+    const ph = `background:${m.color || '#111'} url(${m.lqip}) ${pos}/cover no-repeat`;
+    return `<picture class="mx-pic ${o.cls || ''}" style="${ph}"${o.alt === '' ? ' aria-hidden="true"' : ''}>${avif() ? `<source type="image/avif" srcset="${set('avif')}" sizes="${sizes}">` : ''}`
+      + `<img src="${fb}" srcset="${set('webp')}" sizes="${sizes}" width="${m.w}" height="${m.h}" alt="${esc(alt)}" decoding="async" ${o.eager ? 'fetchpriority="high"' : 'loading="lazy"'} style="object-position:${pos}" onload="this.classList.add('mx-in')"></picture>`;
+  }
+  /* a pre-rendered 3D object (512 and 256 px) */
+  function art(name, o = {}) {
+    const set = f => `${rbase()}${name}-256.${f} 256w, ${rbase()}${name}-512.${f} 512w`, sizes = o.sizes || '180px';
+    return `<picture class="mx-art ${o.cls || ''}" aria-hidden="true">${avif() ? `<source type="image/avif" srcset="${set('avif')}" sizes="${sizes}">` : ''}`
+      + `<img src="${rbase()}${name}-256.webp" srcset="${set('webp')}" sizes="${sizes}" width="512" height="512" alt="" decoding="async" ${o.eager ? '' : 'loading="lazy"'} onload="this.classList.add('mx-in')"></picture>`;
+  }
+
+  /* 24px line icons */
+  const I = {
+    econ: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.6 2.6 3.9 5.6 3.9 9s-1.3 6.4-3.9 9c-2.6-2.6-3.9-5.6-3.9-9S9.4 5.6 12 3z"/>',
+    fin: '<path d="M4 20.5h16"/><rect x="5" y="13" width="3" height="5" rx="1"/><rect x="10.5" y="9" width="3" height="9" rx="1"/><rect x="16" y="5" width="3" height="13" rx="1"/>',
+    comm: '<path d="M7 4h10l4 5-9 11L3 9z"/><path d="M3 9h18M10 4l2 5 2-5M8.5 9 12 20l3.5-11"/>',
+    wx: '<path d="M8 19h9a4 4 0 0 0 .6-7.95A6 6 0 0 0 6.3 12.3 3.4 3.4 0 0 0 8 19z"/><path d="M15.5 3.5v1.4M20 5.6l-1 1M21.5 10h-1.4"/>',
+    ag: '<path d="M12 21v-8"/><path d="M12 13c0-4.4 2.9-7.5 8-7.5 0 4.4-2.9 7.5-8 7.5z"/><path d="M12 15.5c0-3.6-2.4-6-6.5-6 0 3.6 2.4 6 6.5 6z"/><path d="M8 21h8"/>',
+    hunger: '<path d="M3.5 11.5h17a8.5 8.5 0 0 1-17 0z"/><path d="M8 3.5c-.8.9-.8 2.1 0 3M12 3.5c-.8.9-.8 2.1 0 3M16 3.5c-.8.9-.8 2.1 0 3"/>',
+    wealth: '<ellipse cx="9" cy="6.5" rx="5.5" ry="2.5"/><path d="M3.5 6.5v4c0 1.4 2.5 2.5 5.5 2.5s5.5-1.1 5.5-2.5v-4"/><path d="M3.5 10.5v4c0 1.4 2.5 2.5 5.5 2.5"/><ellipse cx="15.5" cy="14" rx="5" ry="2.3"/><path d="M10.5 14v3.8c0 1.3 2.2 2.3 5 2.3s5-1 5-2.3V14"/>',
+    tech: '<rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/><path d="M9 3v3M12 3v3M15 3v3M9 18v3M12 18v3M15 18v3M3 9h3M3 12h3M3 15h3M18 9h3M18 12h3M18 15h3"/>',
+    conflict: '<path d="M12 3l7.5 3v5.6c0 4.5-3.1 8.2-7.5 9.4-4.4-1.2-7.5-4.9-7.5-9.4V6z"/><path d="M12 8.2l1.2 2.4 2.6.4-1.9 1.8.5 2.6-2.4-1.3-2.4 1.3.5-2.6-1.9-1.8 2.6-.4z"/>',
+    pol: '<path d="M4 11.5h16v8.5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><path d="M7.5 11.5V4a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v7.5"/><path d="M10 7.5l1.5 1.5 3-3"/><path d="M4 15.5h16"/>',
+    health: '<rect x="3.5" y="3.5" width="17" height="17" rx="5"/><path d="M12 8v8M8 12h8"/>',
+    pulse: '<circle cx="12" cy="12" r="9"/><path d="M5 12h3.2l1.6-3.6 2.8 7.2 1.6-3.6H19"/>',
+    football: '<ellipse cx="12" cy="12" rx="9.6" ry="5.6" transform="rotate(-38 12 12)"/><path d="M9.2 14.8l5.6-5.6M10.1 12.3l1.6 1.6M11.2 11.2l1.6 1.6M12.3 10.1l1.6 1.6"/>',
+    basketball: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3v18"/><path d="M5.7 5.6a12.5 12.5 0 0 1 0 12.8M18.3 5.6a12.5 12.5 0 0 0 0 12.8"/>',
+    baseball: '<circle cx="12" cy="12" r="9"/><path d="M6.3 5a11 11 0 0 1 0 14M17.7 5a11 11 0 0 0 0 14"/><path d="M7.4 8.3l1.4-.4M7.9 11.3h1.5M7.4 14.3l1.4.4M16.6 8.3l-1.4-.4M16.1 11.3h-1.5M16.6 14.3l-1.4.4"/>',
+    hockey: '<path d="M14.5 3l-4.2 12.4a2 2 0 0 1-1.9 1.4H4.5v2.7h5.1a3 3 0 0 0 2.8-2L17 3"/><ellipse cx="17.5" cy="18" rx="3.5" ry="1.5"/><path d="M14 18v1.2c0 .8 1.6 1.5 3.5 1.5s3.5-.7 3.5-1.5V18"/>',
+    soccer: '<circle cx="12" cy="12" r="9"/><path d="M12 7.6l3.6 2.6-1.4 4.3H9.8l-1.4-4.3z"/><path d="M12 3v4.6M15.6 10.2l4.3-1.4M14.2 14.5l2.7 3.7M9.8 14.5l-2.7 3.7M8.4 10.2L4.1 8.8"/>',
+    tennis: '<circle cx="12" cy="12" r="9"/><path d="M5.6 5.6a9 9 0 0 1 0 12.8M18.4 5.6a9 9 0 0 0 0 12.8"/>',
+    golf: '<path d="M7 21V3.5"/><path d="M7 4l9 3.5L7 11"/><path d="M3.5 21h8"/><circle cx="17.5" cy="18" r="2.5"/>',
+    mma: '<path d="M8 12V7.5A4.5 4.5 0 0 1 12.5 3h1A4.5 4.5 0 0 1 18 7.5V13a4.5 4.5 0 0 1-4.5 4.5H11"/><path d="M8 10.5a2.6 2.6 0 0 0 0 5.2h3"/><path d="M8 17.5h9v3.5H8z"/>',
+    spark: '<path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/>',
+    news: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/>',
+    star: '<path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.8l-5.2 2.8 1-5.8-4.3-4.1 5.9-.9z"/>',
+    bolt: '<path d="M13 3L5 13.5h6L10 21l8-10.5h-6z"/>',
+    arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>'
+  };
+  const icon = (name, cls) => I[name] ? `<svg class="mx-ic ${cls || ''}" viewBox="0 0 24 24" aria-hidden="true" focusable="false">${I[name]}</svg>` : '';
+
+  /* photo credits, for the How it works sections */
+  const credits = ids => ids.filter(id => META[id]).map(id => { const m = META[id]; return `<li>${esc(m.alt)}: <a href="${esc(m.link)}" target="_blank" rel="noopener">${esc(m.credit)}</a> (${esc(m.license)})</li>`; }).join('');
+  return { photo, art, icon, credits, meta: META, has: id => !!META[id] };
+})();
+window.MEDIA = MEDIA;
 
 /* Probable kit: loader for the shared 3D bundle (Three.js r186, WebGPU with a WebGL 2 fallback). The bundle loads after
    the page is interactive and only when the browser can draw it; if it can't, the page keeps its 2D design.
@@ -5477,7 +5662,10 @@ const APP = (() => {
     g.innerHTML = `<path d="${d}L1000 300L0 300Z" style="fill:var(--band-accent);opacity:.18"/><path d="${d}" style="fill:none;stroke:var(--band-accent);stroke-width:1.6;vector-effect:non-scaling-stroke"/>`;
   }
   function header() {
-    $('#modnav').innerHTML = MODULES.map(([k, lab, on, href]) => on ? `<button type="button" aria-current="true">${esc(lab)}</button>` : href ? `<a class="modlink" href="${esc(href)}"${window.ATLAS_FIN_DATA ? ' target="_blank" rel="noopener"' : ''}>${esc(lab)}</a>` : `<button type="button" disabled title="Coming next in the Atlas build plan">${esc(lab)} <span class="soon">soon</span></button>`).join('');
+    const ic = k => window.MEDIA ? MEDIA.icon(k) : '';
+    $('#modnav').innerHTML = MODULES.map(([k, lab, on, href]) => on ? `<button type="button" aria-current="true">${ic(k)}${esc(lab)}</button>` : href ? `<a class="modlink" href="${esc(href)}"${window.ATLAS_FIN_DATA ? ' target="_blank" rel="noopener"' : ''}>${ic(k)}${esc(lab)}</a>` : `<button type="button" disabled title="Coming next in the Atlas build plan">${ic(k)}${esc(lab)} <span class="soon">soon</span></button>`).join('');
+    // a photograph behind the masthead (blurred placeholder first, darkened for contrast)
+    if (window.MEDIA && $('#mastPhoto')) $('#mastPhoto').innerHTML = MEDIA.photo('nyc-dusk', { alt: '', eager: true, sizes: '100vw', pos: '50% 58%' });
     mastArt();
     $('#tabs').innerHTML = TABS.map(([k, l]) => `<button type="button" role="tab" id="tab-${k}" data-tab="${k}" aria-selected="${STATE.tab === k}" aria-controls="main">${esc(l)}</button>`).join('');
     $('#assetSel').innerHTML = `<option value="">Any market or rate…</option>` + VMK.assetOptions().map(o => `<optgroup label="${esc(o.group)}">${o.items.map(([v, l]) => `<option value="${esc(v)}">${esc(l)}</option>`).join('')}</optgroup>`).join('');

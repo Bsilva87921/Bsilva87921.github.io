@@ -19,7 +19,8 @@ Probable Sports Lab turns every live game into a win probability you can questio
 • What-if lab with 260 scenarios: a touchdown, a red card, a star sitting out, snow, a 4th-down decision — the model re-runs instantly.
 • Standings and projections from 1,600 simulated seasons.
 • A published track record: the model's past predictions graded without hindsight, with calibration.
-• Ask AI: ask who's favored, what happens if…, or how the models work.
+• Ask AI, powered by Claude: ask who's favored, what happens if…, or how the models work.
+• Today by sport: photo tiles for every sport on the board, frosted-glass panels and a dark look by default.
 • Stats center with advanced metrics (Pythagorean, SRS, Elo, wRC+, strokes gained) and championship histories.
 
 Probabilities are model estimates for analysis and learning, not betting advice. Not affiliated with any league or data provider.

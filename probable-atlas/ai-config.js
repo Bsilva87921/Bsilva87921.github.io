@@ -1,4 +1,4 @@
 // Probable · Ask AI configuration (Economics, Finance, Sports Lab and both apps).
-// Leave endpoint empty to use the free built-in analyst. To give every visitor Claude, deploy ai-proxy/worker.js
-// (see ai-proxy/README.md) and paste its URL here, e.g. 'https://atlas-ai.example.workers.dev'.
+// Claude answers through the site's proxy once it is set up: the "Ask AI proxy" workflow writes its address here
+// (see ai-proxy/README.md). With no address, the free built-in analyst answers.
 window.ATLAS_AI = { endpoint: '' };

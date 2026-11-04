@@ -20,8 +20,8 @@ def first(*paths):
 # shared Probable kit (chat, insights, 3D loader) and the 3D overlay styles: working copy, or the repo layout
 ATLAS = first(os.path.join(HERE, '..', 'atlas', 'src'), os.path.join(HERE, '..', '..', 'probable-atlas', 'source', 'src'))
 FX3D = first(os.path.join(HERE, '..', 'fx3d', 'src'), os.path.join(HERE, '..', '..', 'assets', 'probable-3d', 'source', 'src'))
-NEW_JS = ['13-track.js', 'atlas:kit-chat.js', '15-chat-sports.js', 'atlas:kit-insights.js', '17-insights.js', 'atlas:kit-3d.js', 'atlas:kit-app.js',
-          'atlas:kit-favs.js', 'atlas:kit-search.js', 'atlas:kit-share.js', 'atlas:kit-story.js', 'atlas:kit-news.js', 'atlas:kit-ux.js', '16-arena.js', '18-app.js', '19-extras.js']
+NEW_JS = ['atlas:photo-meta.js', 'atlas:kit-media.js', '13-track.js', 'atlas:kit-chat.js', '15-chat-sports.js', 'atlas:kit-insights.js', '17-insights.js', 'atlas:kit-3d.js', 'atlas:kit-app.js',
+          'atlas:kit-favs.js', 'atlas:kit-search.js', 'atlas:kit-share.js', 'atlas:kit-story.js', 'atlas:kit-news.js', 'atlas:kit-ux.js', '16-arena.js', '18-app.js', '19-extras.js', '20-bento.js']
 NEW_CSS = ['atlas:kit-fx.css', 'fx3d:px3d.css', 'atlas:kit-x.css', 'fx.css']
 BRIDGE = 'window.CH = CH; window.INS = INS; window.PX3D = PX3D; window.PAPP = PAPP;\n'
 

@@ -12,5 +12,9 @@ html = html.replace(/<link rel="manifest"[^>]*>/, '');
 fs.writeFileSync(path.join(WWW, 'index.html'), html);
 fs.copyFileSync(path.join(SITE, 'probable-atlas/ai-config.js'), path.join(WWW, 'ai-config.js'));
 fs.copyFileSync(path.join(SITE, 'assets/probable-3d/probable-3d.js'), path.join(WWW, 'assets/probable-3d/probable-3d.js'));
+// photography (AVIF/WebP sizes, no candidates or tools) and the 3D renders, at the same paths as on the website
+const media = (dir, keep) => { const src = path.join(SITE, dir), dst = path.join(WWW, dir); fs.mkdirSync(dst, { recursive: true });
+  for (const f of fs.readdirSync(src)) if (keep.test(f)) fs.copyFileSync(path.join(src, f), path.join(dst, f)); };
+media('assets/photos', /\.(avif|webp)$/); media('assets/renders', /\.(avif|webp)$/);
 fs.cpSync(path.join(SITE, 'live-sports-lab/icons'), path.join(WWW, 'icons'), { recursive: true });
 console.log('www ready:', fs.readdirSync(WWW).join(', '));

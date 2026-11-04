@@ -7,7 +7,10 @@ const STATE = K.store('atlas-econ-v1', { scope: 'WLD', tab: 'live', mapInd: 'g',
 const APP = (() => {
   const { $, $$, esc, ok, num, pct, sgn } = K;
   function header() {
-    $('#modnav').innerHTML = MODULES.map(([k, lab, on, href]) => on ? `<button type="button" aria-current="true">${esc(lab)}</button>` : href ? `<a class="modlink" href="${esc(href)}"${window.ATLAS_DATA ? ' target="_blank" rel="noopener"' : ''}>${esc(lab)}</a>` : `<button type="button" disabled title="Coming next in the Atlas build plan">${esc(lab)} <span class="soon">soon</span></button>`).join('');
+    const ic = k => window.MEDIA ? MEDIA.icon(k) : '';
+    $('#modnav').innerHTML = MODULES.map(([k, lab, on, href]) => on ? `<button type="button" aria-current="true">${ic(k)}${esc(lab)}</button>` : href ? `<a class="modlink" href="${esc(href)}"${window.ATLAS_DATA ? ' target="_blank" rel="noopener"' : ''}>${ic(k)}${esc(lab)}</a>` : `<button type="button" disabled title="Coming next in the Atlas build plan">${ic(k)}${esc(lab)} <span class="soon">soon</span></button>`).join('');
+    // a photograph behind the masthead (blurred placeholder first, darkened for contrast)
+    if (window.MEDIA && $('#mastPhoto')) $('#mastPhoto').innerHTML = MEDIA.photo('earth-night-americas', { alt: '', eager: true, sizes: '100vw', pos: '38% 50%' });
     // faint world map behind the masthead
     const g = $('#grat'); g.setAttribute('viewBox', `0 0 ${MAP.w} ${MAP.h}`);
     g.innerHTML = `<path d="${MAP.outline}" style="fill:none;stroke:#5FD3C8;stroke-width:1"/>` + Object.values(MAP.p).map(d => `<path d="${d}" style="fill:#5FD3C8;opacity:.35"/>`).join('');

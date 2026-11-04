@@ -15,7 +15,12 @@ NHL, the Premier League, LaLiga, Serie A, Bundesliga, Ligue 1, MLS and the Champ
 - **Insights bar.** A pinned bar at the top that rotates through what is worth knowing right now: games in progress,
   the closest game, the biggest swing, upset watch, the top matchup, the biggest favorite, where the model and the
   betting line disagree most, a recent upset, and the track record. Each one opens its game or section, or asks about it.
-- **Ask AI.** A built-in analyst answers for free from the live board and the models: explain a game's number, run a
+- **Today by sport.** A bento grid of photo tiles under the scoreboard: the busiest sport gets the big tile, each tile
+  shows the games in play today, a sport icon (SVG) and its leagues, and tapping one filters the board. Photos are
+  free-licence (credits in How it works), served as AVIF/WebP with blurred placeholders; a stadium under the lights
+  sits behind the 3D scoreboard, and the game center, Ask AI and the reader open as frosted-glass panels.
+- **Ask AI.** With the shared proxy on, Claude answers by default, streamed, and the built-in analyst steps in quietly
+  if Claude is unavailable. The built-in analyst answers for free from the live board and the models: explain a game's number, run a
   what-if ("what if the QB is out?"), weigh a coaching decision, compare teams, list upsets or the schedule. With the
   optional proxy (shared with Probable Atlas, see [`../probable-atlas/ai-proxy`](../probable-atlas/ai-proxy/)), Claude
   answers using 11 of the lab's functions as tools: the board, any game, scenarios, what-ifs, coaching decisions,

@@ -13,7 +13,12 @@ const CH = (() => {
   const MODELS = [['claude-sonnet-5', 'Claude Sonnet 5'], ['claude-haiku-4-5-20251001', 'Claude Haiku 4.5 (fastest)'], ['claude-opus-5-5', 'Claude Opus 5.5 (most capable)']];
   const store = { get(k, s) { try { return (s ? sessionStorage : localStorage).getItem(k); } catch (e) { return null; } }, set(k, v, s) { try { (s ? sessionStorage : localStorage).setItem(k, v); } catch (e) { /* blocked */ } }, del(k) { try { localStorage.removeItem(k); sessionStorage.removeItem(k); } catch (e) { /* blocked */ } } };
   const apiKey = () => store.get(KEYS.key, true) || store.get(KEYS.key);
-  const ENG = { analyst: 'Built-in analyst', claude: 'Claude · your Claude account', endpoint: 'Claude · site service', key: 'Claude · your API key' };
+  const ENG = { analyst: 'Built-in analyst', claude: 'Claude · your Claude account', endpoint: 'Claude', key: 'Claude · your API key' };
+  // the site's Claude service: checked quietly in the background so a question never waits on a service that is down
+  const EP = { up: null, at: 0, model: '' };
+  const LIVE_CFG = 'https://bsilva87921.github.io/probable-atlas/ai-config.json';
+  const base = () => String(cfg.endpoint || '').replace(/\/+$/, '');
+  const withTimeout = ms => { const c = new AbortController(); setTimeout(() => c.abort(), ms); return c.signal; };
 
   /* ---------------- tiny safe markdown ---------------- */
   function md(src) {
@@ -70,7 +75,7 @@ const CH = (() => {
   function open(q) {
     build(); opened = true;
     document.getElementById('chat').hidden = false; document.getElementById('askFab').hidden = true;
-    checkSample();
+    checkSample(); probe();
     if (q) send(q); else setTimeout(() => document.getElementById('chatIn').focus(), 30);
   }
   function close() { if (!built) return; opened = false; document.getElementById('chat').hidden = true; document.getElementById('askFab').hidden = false; if (ctl) ctl.abort(); }
@@ -116,6 +121,20 @@ const CH = (() => {
     if (saved === 'key' && apiKey() && !SNAP) engine = 'key';
     else if (cfg.endpoint && !SNAP && saved !== 'analyst') engine = 'endpoint';
     else engine = 'analyst';
+    liveConfig().then(() => probe());
+  }
+  // the apps read the current setting from the website, so turning Claude on needs no app update
+  function liveConfig() {
+    if (cfg.endpoint || SNAP || !window.PROBABLE_NATIVE) return Promise.resolve();
+    return fetch(LIVE_CFG, { cache: 'no-cache', signal: withTimeout(6000) }).then(r => r.ok ? r.json() : null).then(j => {
+      if (j && /^https:\/\//.test(j.endpoint || '')) { cfg.endpoint = j.endpoint; if (engine === 'analyst' && store.get(KEYS.engine) !== 'analyst') engine = 'endpoint'; paintEng(); }
+    }).catch(() => {});
+  }
+  function probe(force) {
+    if (!cfg.endpoint || SNAP || (!force && Date.now() - EP.at < 4 * 60e3)) return Promise.resolve(EP.up);
+    EP.at = Date.now();
+    try { if (!document.querySelector('link[data-ai-pre]')) { const l = document.createElement('link'); l.rel = 'preconnect'; l.href = new URL(base()).origin; l.crossOrigin = 'anonymous'; l.dataset.aiPre = '1'; document.head.appendChild(l); } } catch (e) { /* bad URL */ }
+    return fetch(base() + '/health', { cache: 'no-store', signal: withTimeout(6000) }).then(r => r.ok ? r.json() : { ok: false }).then(j => { EP.up = !!(j && j.ok); EP.model = (j && j.model) || ''; return EP.up; }).catch(() => { EP.up = false; return false; });
   }
   const followHTML = list => list && list.length ? `<div class="sugg">${list.map(q => `<button type="button" data-q="${esc(q)}">${esc(q)}</button>`).join('')}</div>` : '';
   function send(q) {
@@ -123,6 +142,7 @@ const CH = (() => {
     if (!opened) { opened = true; document.getElementById('chat').hidden = false; document.getElementById('askFab').hidden = true; }
     bubble('user', esc(q));
     if (engine === 'analyst') return analyst(q);
+    if (engine === 'endpoint' && EP.up === false) { probe(); return analyst(q, 'Claude is unavailable right now'); }
     return llm(q);
   }
   function analyst(q, note) {
@@ -149,7 +169,8 @@ const CH = (() => {
     if (turns[0].role !== 'user') turns.shift();
     setBusy(true); ctl = new AbortController();
     let text = '';
-    const show = t => { text = t; body.innerHTML = md(t); scrollEnd(); };
+    let raf = 0;
+    const show = t => { text = t; if (raf) return; raf = requestAnimationFrame(() => { raf = 0; body.innerHTML = md(text); scrollEnd(); }); };
     try {
       if (engine === 'claude') {
         if (!sample) throw { code: 'not_available' };
@@ -161,11 +182,13 @@ const CH = (() => {
         const send = engine === 'key' ? payload => fetch('https://api.anthropic.com/v1/messages', { method: 'POST', signal: ctl.signal, headers: { 'content-type': 'application/json', 'x-api-key': apiKey(), 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' }, body: JSON.stringify(payload) })
           : payload => fetch(cfg.endpoint, { method: 'POST', signal: ctl.signal, headers: { 'content-type': 'application/json' }, body: JSON.stringify(payload) });
         const model = engine === 'key' ? (store.get(KEYS.model) || MODELS[0][0]) : (cfg.model || undefined);
-        show(await messagesLoop(send, model, system, turns, wrap, show));
+        show(await messagesLoop(send, model, system, turns, wrap, show, true));
+        if (!text) throw { code: 'empty' };
       }
       turns.push({ role: 'assistant', content: text || '(no answer)' });
       d.insertAdjacentHTML('beforeend', followHTML(A.suggestions(ST).slice(0, 3)));
     } catch (e) {
+      if (raf) { cancelAnimationFrame(raf); raf = 0; }
       turns.pop();
       const code = e && e.code, msg = e && (e.message || e.code) || String(e);
       if (code === 'cancelled' || (e && e.name === 'AbortError')) { body.innerHTML = text ? md(text) + '<p class="muted">(stopped)</p>' : '<p class="muted">Stopped.</p>'; }
@@ -173,17 +196,70 @@ const CH = (() => {
         d.remove();
         const why = code === 'not_granted' ? 'Claude was not allowed for this page' : code === 'rate_limited' ? 'Claude is busy or your usage limit was reached' : code === 'sampling_disabled' ? 'Claude is not available for this account' : /401|invalid x-api-key|authentication/i.test(msg) ? 'the API key was rejected' : 'Claude could not be reached (' + String(msg).slice(0, 80) + ')';
         if (code === 'not_granted' || code === 'sampling_disabled') { engine = 'analyst'; paintEng(); }
-        analyst(q, 'used because ' + why);
+        if (engine === 'endpoint') { EP.up = null; probe(true); analyst(q, code === 'rate_limited' || (e && e.status === 429) ? 'Claude is busy, try again in a minute' : 'Claude was busy, so the built-in analyst answered'); }
+        else analyst(q, 'used because ' + why);
       }
     } finally { setBusy(false); ctl = null; }
   }
-  async function messagesLoop(send, model, system, hist, tools, show) {
+  const TRANSIENT = new Set([500, 502, 503, 504, 529]);
+  async function sendRetry(send, payload) {
+    try { const r = await send(payload); if (!TRANSIENT.has(r.status)) return r; } catch (e) { if (e && e.name === 'AbortError') throw e; }
+    await new Promise(res => setTimeout(res, 900));
+    return send(payload);
+  }
+  // reads an Anthropic Messages stream (server-sent events) into a message: text, tool calls and thinking blocks,
+  // calling onText with the answer so far
+  async function readStream(r, onText) {
+    const rd = r.body.getReader(), dec = new TextDecoder(), blocks = [];
+    let buf = '', stop = null, err = null;
+    const textNow = () => blocks.filter(b => b && b.type === 'text').map(b => b.text).join('\n').trim();
+    const take = ev => {
+      if (ev.type === 'content_block_start') {
+        const b = Object.assign({}, ev.content_block);
+        if (b.type === 'text') b.text = b.text || '';
+        if (b.type === 'tool_use' || b.type === 'server_tool_use') b._j = '';
+        if (b.type === 'thinking') { b.thinking = b.thinking || ''; b.signature = b.signature || ''; }
+        blocks[ev.index] = b;
+      } else if (ev.type === 'content_block_delta') {
+        const b = blocks[ev.index], d = ev.delta || {}; if (!b) return;
+        if (d.type === 'text_delta') { b.text += d.text || ''; onText(textNow()); }
+        else if (d.type === 'input_json_delta') b._j += d.partial_json || '';
+        else if (d.type === 'thinking_delta') b.thinking += d.thinking || '';
+        else if (d.type === 'signature_delta') b.signature = (b.signature || '') + (d.signature || '');
+        else if (d.type === 'citations_delta') (b.citations = b.citations || []).push(d.citation);
+      } else if (ev.type === 'content_block_stop') {
+        const b = blocks[ev.index]; if (b && '_j' in b) { try { b.input = b._j ? JSON.parse(b._j) : {}; } catch (e) { b.input = {}; } delete b._j; }
+      } else if (ev.type === 'message_delta') { if (ev.delta && ev.delta.stop_reason) stop = ev.delta.stop_reason; }
+      else if (ev.type === 'error') err = ev.error || { message: 'The answer stopped' };
+    };
+    for (;;) {
+      const { value, done } = await rd.read();
+      if (value) buf += dec.decode(value, { stream: true });
+      let m;
+      while ((m = /\r?\n\r?\n/.exec(buf))) {
+        const raw = buf.slice(0, m.index); buf = buf.slice(m.index + m[0].length);
+        const data = raw.split(/\r?\n/).filter(l => l.startsWith('data:')).map(l => l.slice(5).replace(/^ /, '')).join('\n');
+        if (data && data !== '[DONE]') { try { take(JSON.parse(data)); } catch (e) { /* skip a malformed event */ } }
+      }
+      if (done) break;
+    }
+    if (err) { const e = new Error(err.message || 'The answer stopped'); e.code = err.type; throw e; }
+    return { content: blocks.filter(Boolean), stop_reason: stop };
+  }
+  async function messagesLoop(send, model, system, hist, tools, show, stream) {
     const msgs = hist.map(t => ({ role: t.role, content: t.content })); let text = '';
     const toolDefs = tools.map(t => ({ name: t.name, description: t.description, input_schema: t.inputSchema || { type: 'object', properties: {} } }));
     for (let round = 0; round < 6; round++) {
-      const payload = { max_tokens: 1400, system, messages: msgs, tools: toolDefs }; if (model) payload.model = model;
-      const r = await send(payload); let j = null; try { j = await r.json(); } catch (e) { /* not json */ }
-      if (!r.ok || !j || !j.content) throw new Error((j && j.error && j.error.message) || ('HTTP ' + r.status));
+      const payload = { max_tokens: 1400, system, messages: msgs, tools: toolDefs }; if (model) payload.model = model; if (stream) payload.stream = true;
+      const r = await sendRetry(send, payload);
+      let j = null;
+      if (r.ok && /event-stream/i.test(r.headers.get('content-type') || '')) {
+        const pre = text;
+        j = await readStream(r, t => show(pre + (pre && t ? '\n\n' : '') + t));
+      } else {
+        try { j = await r.json(); } catch (e) { /* not json */ }
+        if (!r.ok || !j || !j.content) { const err = new Error((j && j.error && j.error.message) || ('HTTP ' + r.status)); err.status = r.status; err.code = j && j.error && j.error.type; throw err; }
+      }
       msgs.push({ role: 'assistant', content: j.content });
       const tx = j.content.filter(c => c.type === 'text').map(c => c.text).join('\n').trim();
       if (tx) { text += (text ? '\n\n' : '') + tx; show(text); }
@@ -191,6 +267,7 @@ const CH = (() => {
       const results = [];
       for (const u of j.content.filter(c => c.type === 'tool_use')) {
         const t = tools.find(x => x.name === u.name);
+        if (!t) { results.push({ type: 'tool_result', tool_use_id: u.id, content: 'Error: unknown tool', is_error: true }); continue; }
         try { const out = await t.execute(u.input || {}); results.push({ type: 'tool_result', tool_use_id: u.id, content: typeof out === 'string' ? out : JSON.stringify(out).slice(0, 30000) }); }
         catch (e) { results.push({ type: 'tool_result', tool_use_id: u.id, content: 'Error: ' + (e.message || e), is_error: true }); }
       }

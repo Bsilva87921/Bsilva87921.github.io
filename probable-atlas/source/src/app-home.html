@@ -12,33 +12,33 @@
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Atlas">
 <meta property="og:title" content="Probable Atlas"><meta property="og:description" content="World and US economics and markets in one app: live data, tested forecasts, 3D views and an AI analyst."><meta property="og:image" content="https://bsilva87921.github.io/probable-atlas/preview.jpg">
-<script>try{var t=localStorage.getItem('atlas-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
+<script>try{var t=localStorage.getItem('atlas-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t;else if(window.PROBABLE_NATIVE)document.documentElement.dataset.theme='dark'}catch(e){if(window.PROBABLE_NATIVE)document.documentElement.dataset.theme='dark'}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,500;0,600;1,400&display=swap">
 <style>/*CSS*/</style>
 </head>
 <body>
 <header class="hm-top"><div class="hm-wrap hm-top-in"><a class="hm-back" href="https://bsilva87921.github.io/">← Bruno Silva · Portfolio</a><span class="hm-acts" id="hmActs"><button type="button" class="hm-theme" id="themeBtn">◐ Theme</button></span></div></header>
 <section class="hm-hero">
+  <div class="mx-backdrop hm-hero-photo" id="hmHeroPhoto" aria-hidden="true"></div>
   <div class="hm-wrap hm-hero-in">
     <div class="hm-copy">
       <span class="hm-eyebrow">The world, in numbers</span>
       <h1>Probable <em>Atlas</em></h1>
       <p class="hm-lede">Twelve modules on how the world works, each with live data, forecasts that show their track record, a what-if lab, recommendations backed by evidence and an AI analyst. Two are live.</p>
       <div class="hm-cta"><a class="hm-btn pri" href="../">Open Economics</a><a class="hm-btn" href="../finance/">Open Finance &amp; markets</a></div>
+      <div class="hm-stats mx-glass" aria-label="Atlas at a glance"><span><b>2</b> live modules</span><span><b>10</b> on the way</span><span><b>214</b> economies</span><span><b>95</b> markets and rates</span></div>
       <p class="hm-note" id="hmNote"></p>
     </div>
     <figure class="hm-globe px3d" id="hmGlobe" aria-label="A slowly turning globe"><div class="px3d-fallback"></div></figure>
   </div>
 </section>
-<main class="hm-wrap">
+<main class="hm-wrap hm-main">
   <section class="hm-follow" id="hmFollow" hidden></section>
-  <h2 class="hm-h2">Modules</h2>
-  <div class="hm-grid" id="hmGrid"></div>
-  <h2 class="hm-h2">Latest readings</h2>
-  <div class="hm-read" id="hmRead"></div>
+  <div class="hm-sec"><h2 class="hm-h2">Today</h2><p class="hm-sub">The two live modules with their latest readings, today's briefing and the ten modules on the way.</p></div>
+  <div class="hm-bento" id="hmBento"></div>
   <section class="hm-news kx-news" id="hmNews" aria-label="News"></section>
 </main>
-<footer class="hm-wrap hm-foot"><span>Probable Atlas by Bruno Silva. Data: IMF, World Bank, FRED, Yahoo Finance, Robert Shiller, Kenneth French. Educational analytics, not investment or policy advice.</span><span id="hmMode"></span></footer>
+<footer class="hm-wrap hm-foot"><span>Probable Atlas by Bruno Silva. Data: IMF, World Bank, FRED, Yahoo Finance, Robert Shiller, Kenneth French. Photograph: NASA Earth Observatory (public domain). Educational analytics, not investment or policy advice.</span><span id="hmMode"></span></footer>
 <script>/*JS*/</script>
 </body>
 </html>

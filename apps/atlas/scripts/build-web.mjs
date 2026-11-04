@@ -18,5 +18,9 @@ page('probable-atlas/finance/index.html', 'probable-atlas/finance/index.html');
 fs.copyFileSync(path.join(SITE, 'probable-atlas/ai-config.js'), path.join(PA, 'ai-config.js'));
 fs.cpSync(path.join(SITE, 'probable-atlas/icons'), path.join(PA, 'icons'), { recursive: true });
 fs.copyFileSync(path.join(SITE, 'assets/probable-3d/probable-3d.js'), path.join(WWW, 'assets/probable-3d/probable-3d.js'));
+// photography (AVIF/WebP sizes, no candidates or tools) and the 3D renders, at the same paths as on the website
+const media = (dir, keep) => { const src = path.join(SITE, dir), dst = path.join(WWW, dir); fs.mkdirSync(dst, { recursive: true });
+  for (const f of fs.readdirSync(src)) if (keep.test(f)) fs.copyFileSync(path.join(src, f), path.join(dst, f)); };
+media('assets/photos', /\.(avif|webp)$/); media('assets/renders', /\.(avif|webp)$/);
 fs.writeFileSync(path.join(WWW, 'index.html'), '<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0;url=probable-atlas/app/index.html"><script>location.replace("probable-atlas/app/index.html")</script>');
 console.log('www ready');

@@ -15,7 +15,9 @@
     if (el) return el;
     el = document.createElement('section');
     el.className = 'arena'; el.id = 'arena'; el.setAttribute('aria-label', 'Live scoreboard: every game as a 3D card');
-    el.innerHTML = `<div class="wrap arena-in">
+    // a stadium under the lights behind the scoreboard (photo with a blurred placeholder, darkened for contrast)
+    const photo = window.MEDIA ? `<div class="mx-backdrop arena-photo" aria-hidden="true">${MEDIA.photo('stadium-lights', { alt: '', eager: true, sizes: '100vw', pos: '50% 58%' })}</div>` : '';
+    el.innerHTML = `${photo}<div class="wrap arena-in">
       <div class="arena-copy">
         <span class="arena-eyebrow"><i class="arena-dot" aria-hidden="true"></i>Live scoreboard · 3D</span>
         <h2 class="arena-h">Every game at a glance</h2>

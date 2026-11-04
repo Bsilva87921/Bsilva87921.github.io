@@ -18,7 +18,8 @@ Probable Atlas explains how the world economy and financial markets are doing �
 • Recommendations backed by evidence, each with its trade-offs.
 • News from the Federal Reserve, the ECB, BEA and major outlets, filtered by topic and read right in the app; official releases in full.
 • Follow markets and countries for alerts on big moves, 52-week highs or lows and new forecasts; a daily briefing in story form; search everything; share cards.
-• Ask AI: ask about the data, the forecasts or your own scenario.
+• Ask AI, powered by Claude: ask about the data, the forecasts or your own scenario.
+• A home screen built as a bento grid, frosted-glass panels and a dark look by default.
 • Works offline with the last data on your device.
 
 Educational analytics, not investment or policy advice.

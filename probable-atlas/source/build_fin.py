@@ -12,13 +12,13 @@ def px3d_css():
 R = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(R, 'src')
 JS = ['kit-core.js', 'kit-stats.js', 'kit-charts.js', 'kit-table.js', 'kit-ui.js', 'kit-chat.js', 'fin-data.js', 'fin-models.js', 'fin-port.js',
-      'fin-live.js', 'fin-markets.js', 'fin-modview.js', 'fin-lab.js', 'fin-reco.js', 'fin-hist.js', 'fin-chat.js', 'kit-insights.js', 'kit-3d.js', 'kit-app.js', 'kit-favs.js', 'kit-search.js', 'kit-share.js', 'kit-story.js', 'kit-news.js', 'kit-ux.js', 'fin-fx.js', 'fin-x.js', 'fin-app.js']
+      'fin-live.js', 'fin-markets.js', 'fin-modview.js', 'fin-lab.js', 'fin-reco.js', 'fin-hist.js', 'fin-chat.js', 'kit-insights.js', 'photo-meta.js', 'kit-media.js', 'kit-3d.js', 'kit-app.js', 'kit-favs.js', 'kit-search.js', 'kit-share.js', 'kit-story.js', 'kit-news.js', 'kit-ux.js', 'fin-fx.js', 'fin-x.js', 'fin-app.js']
 read = lambda f: open(os.path.join(SRC, f), encoding='utf-8').read()
 TITLE = 'Probable Atlas Finance'
 DESC = 'Live markets dashboard: 60 markets and 34 rates since 1990, tested forecasts, a portfolio lab, evidence-based recommendations and an AI analyst.'
 PWA = '<link rel="manifest" href="../manifest.webmanifest"><link rel="apple-touch-icon" href="../icons/atlas-apple-180.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Atlas"><meta name="theme-color" content="#0c1a22">'
 FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,500;0,600;1,400&display=swap">'
-BOOT = "<script>try{var t=localStorage.getItem('atlas-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>"
+BOOT = "<script>try{var t=localStorage.getItem('atlas-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t;else if(window.PROBABLE_NATIVE)document.documentElement.dataset.theme='dark'}catch(e){if(window.PROBABLE_NATIVE)document.documentElement.dataset.theme='dark'}</script>"
 css = read('style.css') + '\n' + read('fin.css') + '\n' + read('kit-fx.css') + '\n' + px3d_css() + '\n' + read('kit-x.css') + '\n' + read('atlas-fx.css'); body = read('fin-body.html'); js = '\n'.join(read(f) for f in JS)
 js = js.replace('</script', '<\\/script')
 

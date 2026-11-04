@@ -1,0 +1,19 @@
+# Probable · Ask AI proxy (Cloudflare Worker). Deployed by .github/workflows/ai-proxy.yml; see README.md.
+name = "probable-ai"
+main = "worker.js"
+compatibility_date = "2025-09-01"
+workers_dev = true
+
+[vars]
+# the model every visitor's question goes to (the deploy workflow can override it with the AI_MODEL repository variable)
+MODEL = "claude-haiku-4-5-20251001"
+MAX_TOKENS = "2000"
+
+# about one question every five seconds per visitor at most
+[[ratelimits]]
+name = "LIMITER"
+namespace_id = "4207"
+
+  [ratelimits.simple]
+  limit = 12
+  period = 60

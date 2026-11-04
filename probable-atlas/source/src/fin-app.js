@@ -14,7 +14,10 @@ const APP = (() => {
     g.innerHTML = `<path d="${d}L1000 300L0 300Z" style="fill:var(--band-accent);opacity:.18"/><path d="${d}" style="fill:none;stroke:var(--band-accent);stroke-width:1.6;vector-effect:non-scaling-stroke"/>`;
   }
   function header() {
-    $('#modnav').innerHTML = MODULES.map(([k, lab, on, href]) => on ? `<button type="button" aria-current="true">${esc(lab)}</button>` : href ? `<a class="modlink" href="${esc(href)}"${window.ATLAS_FIN_DATA ? ' target="_blank" rel="noopener"' : ''}>${esc(lab)}</a>` : `<button type="button" disabled title="Coming next in the Atlas build plan">${esc(lab)} <span class="soon">soon</span></button>`).join('');
+    const ic = k => window.MEDIA ? MEDIA.icon(k) : '';
+    $('#modnav').innerHTML = MODULES.map(([k, lab, on, href]) => on ? `<button type="button" aria-current="true">${ic(k)}${esc(lab)}</button>` : href ? `<a class="modlink" href="${esc(href)}"${window.ATLAS_FIN_DATA ? ' target="_blank" rel="noopener"' : ''}>${ic(k)}${esc(lab)}</a>` : `<button type="button" disabled title="Coming next in the Atlas build plan">${ic(k)}${esc(lab)} <span class="soon">soon</span></button>`).join('');
+    // a photograph behind the masthead (blurred placeholder first, darkened for contrast)
+    if (window.MEDIA && $('#mastPhoto')) $('#mastPhoto').innerHTML = MEDIA.photo('nyc-dusk', { alt: '', eager: true, sizes: '100vw', pos: '50% 58%' });
     mastArt();
     $('#tabs').innerHTML = TABS.map(([k, l]) => `<button type="button" role="tab" id="tab-${k}" data-tab="${k}" aria-selected="${STATE.tab === k}" aria-controls="main">${esc(l)}</button>`).join('');
     $('#assetSel').innerHTML = `<option value="">Any market or rate…</option>` + VMK.assetOptions().map(o => `<optgroup label="${esc(o.group)}">${o.items.map(([v, l]) => `<option value="${esc(v)}">${esc(l)}</option>`).join('')}</optgroup>`).join('');
