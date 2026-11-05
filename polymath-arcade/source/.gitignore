@@ -1,0 +1,4 @@
+dist/
+app/
+test/logic.js
+__pycache__/

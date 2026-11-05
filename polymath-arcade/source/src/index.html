@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Polymath Arcade, a Probable app by Bruno Silva: 3D brain games for math, English, physics, coding, finance, economics, business, science and real-world skills.">
+<meta name="author" content="Bruno Silva">
+<meta name="application-name" content="Polymath Arcade">
+<!--__APP_HEAD__-->
+<title>Polymath Arcade · Probable</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/*__CSS__*/
+</style>
+</head>
+<body>
+<div class="nebula" aria-hidden="true"></div>
+<canvas id="bg3d" aria-hidden="true"></canvas>
+<div class="grain" aria-hidden="true"></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#22d3ee"/><stop offset=".5" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/>
+    </linearGradient>
+  </defs>
+</svg>
+<div id="app">
+  <header class="topbar">
+    <button class="brand" id="brandBtn" type="button" aria-label="Polymath Arcade, a Probable app. Go to games">
+      <span class="cube-wrap" aria-hidden="true"><span class="cube"><i>Pm</i><i>Ar</i><i>Ec</i><i>Rc</i><i>Ms</i><i>Lx</i></span></span>
+      <span class="brand-text"><em class="suite"><svg class="pb-mark" viewBox="0 0 32 16" aria-hidden="true"><path d="M1.5 14.5C8 14.5 10 2 16 2s8 12.5 14.5 12.5" fill="none" stroke="url(#ringGrad)" stroke-width="2.6" stroke-linecap="round"/><path d="M16 3.5v11" stroke="url(#ringGrad)" stroke-width="1.4" stroke-dasharray="1.6 2"/></svg>Probable</em><strong>Polymath<span class="bt-2"> Arcade</span></strong></span>
+    </button>
+    <div class="top-actions">
+      <button class="icon-btn install-btn" id="installBtn" type="button" hidden aria-label="Install the app"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v11M7.5 10L12 14.5 16.5 10"/><rect x="4" y="16" width="16" height="5" rx="2"/></svg><span>Install</span></button>
+      <button class="icon-btn tour-btn" id="tourBtn" type="button" aria-label="Take the tour"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15.6 8.4l-2.1 5.1-5.1 2.1 2.1-5.1z" fill="currentColor" fill-opacity=".25"/></svg><span>Tour</span></button>
+      <span class="pill streak-pill" id="streakPill" title="Day streak"></span>
+      <button class="icon-btn" id="soundBtn" type="button" aria-label="Turn sound off"></button>
+      <button class="icon-btn theme-btn" type="button" aria-label="Switch to dark theme"></button>
+    </div>
+  </header>
+  <main id="view" tabindex="-1"></main>
+  <nav class="tabbar" aria-label="Sections">
+    <span class="tab-ind" aria-hidden="true"></span>
+    <button type="button" data-view="home"><span class="tab-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg></span><span>Games</span></button>
+    <button type="button" data-view="daily"><span class="tab-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></span><span>Daily</span></button>
+    <button type="button" data-view="profile"><span class="tab-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="8.5" r="4"/><path d="M4.5 20.5c1.2-4 4.2-6 7.5-6s6.3 2 7.5 6"/></svg></span><span>Profile</span></button>
+  </nav>
+</div>
+
+<section id="game" class="game" hidden aria-label="Game">
+  <div class="game-top">
+    <button class="icon-btn" id="gameBack" type="button" aria-label="Leave game"></button>
+    <div class="game-title">
+      <span class="mini-tile" id="gTile" aria-hidden="true"></span>
+      <div class="gt-text"><strong id="gName"></strong><small id="gSub"></small></div>
+    </div>
+    <div class="hud" id="hud"></div>
+    <button class="icon-btn theme-btn" type="button" aria-label="Switch to dark theme"></button>
+    <div class="game-timebar" id="gTimebar" hidden><i></i></div>
+  </div>
+  <div class="game-body" id="gbody"></div>
+</section>
+
+<div id="modal" class="modal" hidden></div>
+<canvas id="fx" aria-hidden="true"></canvas>
+<div id="toast" role="status" aria-live="polite"></div>
+<script>
+/*__JS__*/
+</script>
+</body>
+</html>
