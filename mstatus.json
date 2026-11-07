@@ -1,0 +1,1 @@
+{"fetched_at":"2026-11-07T03:17:39Z","yfinance":true,"sources":{"Yahoo Finance":"61/61","FRED daily":"34/34","FRED monthly":"3/3","FRED quarterly":"2/2","Shiller":"ok 2026-10","Kenneth French":"ok 1926-07"},"errors":[],"fallback":{},"seconds":22,"log":["prices 61/61 15s","fred done 19s","markets.json 2160915 bytes; 9281 days; 95 series","markets-long.json 207472 bytes"]}
