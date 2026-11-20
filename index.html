@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bruno Silva — Contact Center Operations Leader & Senior Business Analyst</title>
 <meta name="description" content="Bruno Silva: contact center operations leader and Senior Business Analyst. 14 years at JPMorgan Chase, 50+ associate omnichannel contact center, $20M saved through root-cause analysis, KPI governance for 30,000 employees.">
-<meta name="theme-color" content="#0b0c0f">
+<meta name="theme-color" content="#0a0f18">
 
 <!-- Open Graph / LinkedIn, Facebook, Slack link previews -->
 <meta property="og:type" content="website">
@@ -29,22 +29,27 @@
 <style>
 /* ============================== TOKENS ============================== */
 :root {
-  --bg: #f6f6f3;
-  --bg-2: #eeeeea;
-  --surface: rgba(255, 255, 255, 0.78);
+  /* Palette drawn from the portrait: navy blazer, burgundy gingham, warm studio gray */
+  --bg: #f5f4f1;
+  --bg-2: #ecebe7;
+  --surface: rgba(255, 255, 255, 0.8);
   --surface-solid: #ffffff;
-  --border: rgba(20, 22, 26, 0.09);
-  --border-strong: rgba(20, 22, 26, 0.17);
-  --text: #15171b;
-  --text-2: #464a52;
-  --text-3: #74787f;
-  --c1: #1f3a5f;  /* navy */
-  --c2: #3b5272;  /* steel */
-  --c3: #687a90;  /* slate */
-  --glow: rgba(31, 58, 95, 0.12);
-  --shadow: 0 1px 2px rgba(20, 22, 26, .04), 0 12px 32px -14px rgba(20, 22, 26, .16);
-  --shadow-lg: 0 30px 80px -34px rgba(20, 22, 26, .30);
-  --grad: linear-gradient(120deg, var(--c1), var(--c2) 60%, var(--c3));
+  --border: rgba(16, 24, 40, 0.09);
+  --border-strong: rgba(16, 24, 40, 0.17);
+  --text: #121826;
+  --text-2: #454c59;
+  --text-3: #757b86;
+  --c1: #1f3354;  /* blazer navy */
+  --c2: #3d5578;  /* steel */
+  --c3: #7a3341;  /* shirt burgundy */
+  --accent2: #7a3341;
+  --glow: rgba(31, 51, 84, 0.12);
+  --disc-bg: radial-gradient(circle at 50% 30%, #ffffff 0%, #eceef1 52%, #d8dde4 100%);
+  --disc-border: rgba(16, 24, 40, 0.08);
+  --disc-ring: rgba(31, 51, 84, 0.16);
+  --shadow: 0 1px 2px rgba(16, 24, 40, .04), 0 12px 32px -14px rgba(16, 24, 40, .16);
+  --shadow-lg: 0 30px 80px -34px rgba(16, 24, 40, .32);
+  --grad: linear-gradient(120deg, var(--c1), var(--c2));
   --radius: 18px;
   --maxw: 1180px;
   --nav-h: 68px;
@@ -52,24 +57,32 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0b0c0f; --bg-2: #111318;
-    --surface: rgba(26, 28, 33, 0.62); --surface-solid: #16181d;
-    --border: rgba(220, 224, 232, 0.09); --border-strong: rgba(220, 224, 232, 0.17);
-    --text: #ececea; --text-2: #b2b5bb; --text-3: #82868d;
-    --c1: #c8d1dc; --c2: #9aa8ba; --c3: #7c8a9c;
-    --glow: rgba(200, 209, 220, 0.12);
+    --bg: #0a0f18; --bg-2: #0f1622;
+    --surface: rgba(20, 29, 44, 0.62); --surface-solid: #121a28;
+    --border: rgba(200, 212, 230, 0.09); --border-strong: rgba(200, 212, 230, 0.17);
+    --text: #eef1f5; --text-2: #b4bccb; --text-3: #848d9c;
+    --c1: #d3dceb; --c2: #9aaecb; --c3: #c58f9a;
+    --accent2: #c58f9a;
+    --glow: rgba(211, 220, 235, 0.12);
+    --disc-bg: radial-gradient(circle at 50% 30%, #4a5f82 0%, #2b3b58 50%, #18233a 100%);
+    --disc-border: rgba(211, 220, 235, 0.16);
+    --disc-ring: rgba(211, 220, 235, 0.12);
     --shadow: 0 1px 2px rgba(0,0,0,.3), 0 16px 40px -18px rgba(0,0,0,.65);
     --shadow-lg: 0 40px 100px -34px rgba(0,0,0,.8);
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #0b0c0f; --bg-2: #111318;
-    --surface: rgba(26, 28, 33, 0.62); --surface-solid: #16181d;
-    --border: rgba(220, 224, 232, 0.09); --border-strong: rgba(220, 224, 232, 0.17);
-    --text: #ececea; --text-2: #b2b5bb; --text-3: #82868d;
-    --c1: #c8d1dc; --c2: #9aa8ba; --c3: #7c8a9c;
-    --glow: rgba(200, 209, 220, 0.12);
+  --bg: #0a0f18; --bg-2: #0f1622;
+    --surface: rgba(20, 29, 44, 0.62); --surface-solid: #121a28;
+    --border: rgba(200, 212, 230, 0.09); --border-strong: rgba(200, 212, 230, 0.17);
+    --text: #eef1f5; --text-2: #b4bccb; --text-3: #848d9c;
+    --c1: #d3dceb; --c2: #9aaecb; --c3: #c58f9a;
+    --accent2: #c58f9a;
+    --glow: rgba(211, 220, 235, 0.12);
+    --disc-bg: radial-gradient(circle at 50% 30%, #4a5f82 0%, #2b3b58 50%, #18233a 100%);
+    --disc-border: rgba(211, 220, 235, 0.16);
+    --disc-ring: rgba(211, 220, 235, 0.12);
     --shadow: 0 1px 2px rgba(0,0,0,.3), 0 16px 40px -18px rgba(0,0,0,.65);
     --shadow-lg: 0 40px 100px -34px rgba(0,0,0,.8);
     color-scheme: dark;
@@ -150,7 +163,7 @@ p { margin: 0; }
 .eyebrow {
   display: inline-flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--text-3);
 }
-.eyebrow::before { content: ""; width: 26px; height: 2px; border-radius: 2px; background: var(--c2); }
+.eyebrow::before { content: ""; width: 26px; height: 2px; border-radius: 2px; background: var(--accent2); }
 
 /* ============================== HERO ============================== */
 .hero { position: relative; min-height: 100vh; min-height: 100svh; display: flex; align-items: center; padding: calc(var(--nav-h) + 40px) 0 80px; overflow: hidden; }
@@ -162,7 +175,7 @@ p { margin: 0; }
   background: radial-gradient(circle at 72% 45%, color-mix(in srgb, var(--c1) 12%, transparent), transparent 40%),
               radial-gradient(circle at 80% 60%, color-mix(in srgb, var(--c3) 8%, transparent), transparent 45%); }
 .hero .wrap { position: relative; z-index: 2; width: 100%; }
-.hero-copy { max-width: 640px; }
+.hero-copy { max-width: 640px; position: relative; z-index: 2; }
 .status {
   display: inline-flex; align-items: center; gap: 10px; padding: 7px 14px 7px 10px; border-radius: 999px; font-size: 13.5px; font-weight: 600; color: var(--text-2);
   background: var(--surface); border: 1px solid var(--border); backdrop-filter: blur(12px); margin-bottom: 26px;
@@ -174,6 +187,28 @@ p { margin: 0; }
 .hero-role { margin-top: 22px; font-size: clamp(18px, 2.1vw, 23px); font-weight: 600; color: var(--text); letter-spacing: -0.01em; min-height: 1.5em; }
 .hero-intro { margin-top: 16px; font-size: clamp(16px, 1.45vw, 18.5px); color: var(--text-2); max-width: 580px; }
 .hero-cta { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* Portrait + halo */
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr); align-items: center; gap: 32px; }
+.hero-visual { --pw: clamp(300px, 29vw, 410px); position: relative; display: flex; justify-content: center; align-items: center; min-height: calc(var(--pw) * 1.3); }
+.portrait { position: relative; width: var(--pw); aspect-ratio: 4 / 5; margin: 0; transform: perspective(1400px) rotateX(var(--prx, 0deg)) rotateY(var(--pry, 0deg)); transition: transform .5s cubic-bezier(.2,.8,.2,1); }
+.portrait .disc { position: absolute; left: 0; right: 0; bottom: 0; aspect-ratio: 1; border-radius: 50%; background: var(--disc-bg); border: 1px solid var(--disc-border); box-shadow: var(--shadow-lg); }
+.portrait .disc::after { content: ""; position: absolute; inset: -16px; border-radius: 50%; border: 1px solid var(--disc-ring); }
+.portrait .clip { position: absolute; inset: 0; overflow: hidden; border-bottom-left-radius: 50% 40%; border-bottom-right-radius: 50% 40%; }
+.portrait img { position: absolute; left: 0; bottom: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; filter: drop-shadow(0 18px 28px rgba(8, 12, 22, .28)); }
+.badge { position: absolute; z-index: 3; transform: translate3d(var(--bx, 0px), var(--by, 0px), 0); transition: transform .6s cubic-bezier(.2,.8,.2,1); }
+.badge-in { display: flex; align-items: center; gap: 11px; padding: 10px 16px 10px 10px; border-radius: 16px; background: var(--surface); border: 1px solid var(--border); backdrop-filter: blur(16px) saturate(150%); -webkit-backdrop-filter: blur(16px) saturate(150%); box-shadow: var(--shadow-lg); animation: floaty 7s ease-in-out infinite; white-space: nowrap; }
+.badge:nth-of-type(2) .badge-in { animation-delay: -2.3s; } .badge:nth-of-type(3) .badge-in { animation-delay: -4.6s; }
+.badge .bi { flex: none; width: 36px; height: 36px; border-radius: 11px; display: grid; place-items: center; background: var(--text); color: var(--bg); }
+.badge .bi svg { width: 18px; height: 18px; }
+.badge strong { display: block; font-size: 16px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.15; color: var(--text); }
+.badge span { display: block; font-size: 12.5px; color: var(--text-3); line-height: 1.3; }
+.badge.b1 { top: 12%; right: calc(50% + var(--pw) * .3); }
+.badge.b2 { top: 60%; left: calc(50% + var(--pw) * .26); }
+.badge.b3 { bottom: 6%; right: calc(50% + var(--pw) * .14); }
+@media (max-width: 1100px) { .badge { display: none; } }
+@media (max-height: 820px), (max-width: 1200px) { .hero .scroll-hint { display: none; } }
+@keyframes floaty { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
 
 /* Lens switcher */
 .lens { margin-top: 34px; }
@@ -273,7 +308,7 @@ section.block { padding: 120px 0 20px; position: relative; }
 .job .badge { display: inline-block; margin-left: 8px; padding: 2px 9px; border-radius: 999px; font-size: 11.5px; font-weight: 700; vertical-align: middle; color: #16a34a; background: rgba(34,197,94,.12); }
 .job ul { margin: 16px 0 0; padding: 0; list-style: none; display: grid; gap: 9px; }
 .job li { position: relative; padding-left: 20px; color: var(--text-2); font-size: 15.5px; }
-.job li::before { content: ""; position: absolute; left: 2px; top: 10px; width: 7px; height: 7px; border-radius: 2px; background: var(--c2); transform: rotate(45deg); }
+.job li::before { content: ""; position: absolute; left: 2px; top: 10px; width: 7px; height: 7px; border-radius: 2px; background: var(--accent2); transform: rotate(45deg); }
 .job li strong { color: var(--text); font-weight: 700; }
 .job .tags { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 6px; }
 .job.compact { padding: 22px 30px; }
@@ -327,7 +362,7 @@ section.block { padding: 120px 0 20px; position: relative; }
 .skills-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
 .skill-card { padding: 26px; }
 .skill-card h3 { font-size: 16px; font-weight: 750; display: flex; align-items: center; gap: 10px; }
-.skill-card h3 .bar { width: 22px; height: 4px; border-radius: 4px; background: var(--c2); }
+.skill-card h3 .bar { width: 22px; height: 4px; border-radius: 4px; background: var(--accent2); }
 .skill-card ul { list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 7px; }
 .skill-card li { padding: 6px 11px; border-radius: 10px; font-size: 13.5px; font-weight: 600; color: var(--text-2); background: color-mix(in srgb, var(--surface-solid) 70%, transparent); border: 1px solid var(--border); transition: transform .2s, color .2s, border-color .2s; }
 .skill-card li:hover { transform: translateY(-2px); color: var(--text); border-color: var(--c1); }
@@ -358,7 +393,7 @@ footer a:hover { color: var(--text); }
 
 .toast { position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 30px); opacity: 0; z-index: 100; padding: 12px 18px; border-radius: 14px; background: var(--text); color: var(--bg); font-weight: 650; font-size: 14.5px; box-shadow: var(--shadow-lg); transition: all .35s cubic-bezier(.2,.8,.2,1); pointer-events: none; }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
-.progress { position: fixed; top: 0; left: 0; height: 2px; width: 100%; transform-origin: 0 50%; transform: scaleX(0); background: var(--c2); z-index: 60; }
+.progress { position: fixed; top: 0; left: 0; height: 2px; width: 100%; transform-origin: 0 50%; transform: scaleX(0); background: var(--accent2); z-index: 60; }
 
 /* ============================== RESPONSIVE ============================== */
 @media (max-width: 1080px) {
@@ -367,6 +402,12 @@ footer a:hover { color: var(--text); }
   .metric:nth-child(n+4) { border-top: 1px solid var(--border); }
   .skills-grid { grid-template-columns: repeat(2, 1fr); }
   .project, .project.feature { grid-column: span 6; }
+}
+@media (max-width: 900px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 8px; }
+  .hero-visual { --pw: 228px; order: -1; min-height: 0; margin: 0 auto 6px; }
+  .badge { display: none; }
+  .hero { padding-top: calc(var(--nav-h) + 18px); align-items: flex-start; }
 }
 @media (max-width: 880px) {
   .nav-links { position: fixed; top: var(--nav-h); left: 12px; right: 12px; flex-direction: column; padding: 10px; border-radius: 18px; background: var(--surface-solid); border: 1px solid var(--border); box-shadow: var(--shadow-lg); transform: translateY(-10px); opacity: 0; pointer-events: none; transition: all .25s ease; }
@@ -439,7 +480,7 @@ footer a:hover { color: var(--text); }
 <section class="hero" aria-label="Introduction">
   <div class="hero-fallback" aria-hidden="true"></div>
   <canvas id="scene" aria-hidden="true"></canvas>
-  <div class="wrap">
+  <div class="wrap hero-grid">
     <div class="hero-copy">
       <div class="status reveal"><span class="dot"></span>Senior Business Analyst at Axiom Bank · Orlando, FL</div>
       <h1 class="reveal d1"><span class="line">Bruno</span><span class="line grad-text">Silva.</span></h1>
@@ -467,6 +508,20 @@ footer a:hover { color: var(--text); }
           <button role="tab" data-lens="ba" aria-selected="false">Business &amp; data analyst</button>
         </div>
       </div>
+    </div>
+    <div class="hero-visual reveal d2">
+      <figure class="portrait" id="portrait">
+        <div class="disc" id="portraitDisc"></div>
+        <div class="clip">
+          <picture>
+            <source type="image/webp" srcset="assets/photos/bruno-portrait-392.webp 392w, assets/photos/bruno-portrait-784.webp 784w" sizes="(max-width: 900px) 240px, 410px">
+            <img src="assets/photos/bruno-portrait-392.png" alt="Portrait of Bruno Silva" width="784" height="980" fetchpriority="high" decoding="async">
+          </picture>
+        </div>
+      </figure>
+      <div class="badge b1" data-depth="18"><div class="badge-in"><div class="bi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div><strong>$20M saved</strong><span>AHT root-cause analysis</span></div></div></div>
+      <div class="badge b2" data-depth="28"><div class="badge-in"><div class="bi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg></div><div><strong>50+ associates</strong><span>Multi-site &amp; remote teams</span></div></div></div>
+      <div class="badge b3" data-depth="12"><div class="badge-in"><div class="bi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg></div><div><strong>4.5/5 CSAT</strong><span>90% team retention</span></div></div></div>
     </div>
   </div>
   <div class="scroll-hint" aria-hidden="true"><div class="mouse"></div>Scroll</div>
@@ -790,7 +845,7 @@ footer a:hover { color: var(--text); }
     if (t === "light" || t === "dark") root.setAttribute("data-theme", t); else root.removeAttribute("data-theme");
     document.querySelectorAll("[data-theme-set]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-theme-set") === (t || "auto"))); });
     var dark = t === "dark" || (t !== "light" && window.matchMedia("(prefers-color-scheme: dark)").matches);
-    document.querySelector('meta[name="theme-color"]').setAttribute("content", dark ? "#0b0c0f" : "#f6f6f3");
+    document.querySelector('meta[name="theme-color"]').setAttribute("content", dark ? "#0a0f18" : "#f5f4f1");
     window.dispatchEvent(new CustomEvent("themechange"));
   }
   var saved = null; try { saved = localStorage.getItem(KEY); } catch (e) {}
@@ -877,6 +932,21 @@ footer a:hover { color: var(--text); }
         card.style.setProperty("--rx", "0deg"); card.style.setProperty("--ry", "0deg");
       });
     });
+  }
+
+  /* ---------- Portrait: gentle 3D tilt and floating badges that follow the mouse ---------- */
+  var portrait = document.getElementById("portrait"), badges = document.querySelectorAll(".badge[data-depth]");
+  if (portrait && finePointer && !reduce) {
+    var praf = 0;
+    window.addEventListener("pointermove", function (e) {
+      var x = e.clientX / innerWidth - 0.5, y = e.clientY / innerHeight - 0.5;
+      cancelAnimationFrame(praf);
+      praf = requestAnimationFrame(function () {
+        portrait.style.setProperty("--pry", (x * 8).toFixed(2) + "deg");
+        portrait.style.setProperty("--prx", (-y * 6).toFixed(2) + "deg");
+        badges.forEach(function (b) { var d = +b.getAttribute("data-depth"); b.style.setProperty("--bx", (-x * d).toFixed(1) + "px"); b.style.setProperty("--by", (-y * d).toFixed(1) + "px"); });
+      });
+    }, { passive: true });
   }
 
   /* ---------- Project filters ---------- */
@@ -1013,9 +1083,9 @@ function init(THREE) {
 
   /* ---------- 4. Orbital rings with traveling "data packets" ---------- */
   const rings = [];
-  const ringDefs = [ { r: 2.85, tilt: [1.25, 0.15, 0.0], speed: 0.32, c: "--c1", n: 3 },
-                     { r: 3.1,  tilt: [0.55, 0.5, 0.25], speed: -0.22, c: "--c2", n: 2 },
-                     { r: 3.35, tilt: [1.85, -0.35, 0.15], speed: 0.16, c: "--c3", n: 2 } ];
+  const ringDefs = [ { r: 2.75, tilt: [1.25, 0.15, 0.0], speed: 0.32, c: "--c1", n: 3 },
+                     { r: 2.95, tilt: [0.55, 0.5, 0.25], speed: -0.22, c: "--c2", n: 2 },
+                     { r: 3.15, tilt: [1.85, -0.35, 0.15], speed: 0.16, c: "--c3", n: 2 } ];
   ringDefs.forEach((d) => {
     const grp = new THREE.Group(); grp.rotation.set(d.tilt[0], d.tilt[1], d.tilt[2]); rig.add(grp);
     const ringMat = new THREE.MeshBasicMaterial({ color: col(d.c), transparent: true, opacity: 0.28, blending: THREE.AdditiveBlending, depthWrite: false });
@@ -1067,14 +1137,24 @@ function init(THREE) {
   window.addEventListener("lenschange", () => { pulse = 1; if (!running) renderOnce(); });
 
   /* ---------- Layout ---------- */
+  const disc = document.getElementById("portraitDisc");
   function resize() {
     const w = canvas.clientWidth, h = canvas.clientHeight;
     renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
-    const wide = w > 900;
-    world.position.x = wide ? 2.75 * Math.min(1.2, w / h / 1.5) : 0;
-    world.position.y = wide ? 0.05 : 1.2;
-    const sc = wide ? 0.92 : 0.7; world.scale.setScalar(sc);
-    canvas.style.opacity = wide ? "" : "0.32";
+    canvas.style.opacity = w > 900 ? "" : "0.75";
+    align();
+  }
+  // Keep the network sphere centered on the portrait disc, sized as a halo around it.
+  function align() {
+    const cr = canvas.getBoundingClientRect();
+    if (!cr.width || !cr.height) return;
+    const halfH = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.z, halfW = halfH * camera.aspect;
+    if (!disc) { world.position.set(halfW * 0.45, 0, 0); world.scale.setScalar(0.92); return; }
+    const dr = disc.getBoundingClientRect();
+    const cx = dr.left + dr.width / 2 - cr.left, cy = dr.top + dr.height / 2 - cr.top;
+    world.position.set((cx / cr.width * 2 - 1) * halfW, -(cy / cr.height * 2 - 1) * halfH, 0);
+    const ppu = cr.height / (2 * halfH);
+    world.scale.setScalar((dr.width / 2) * 1.3 / ppu / R);
   }
   window.addEventListener("resize", resize); resize();
 
@@ -1103,15 +1183,13 @@ function init(THREE) {
     ico2.rotation.y = t * 0.6; ico2.rotation.z = t * 0.3;
     pulse *= 0.94;
     const breathe = 1 + Math.sin(t * 1.2) * 0.04 + pulse * 0.35;
-    glow.scale.set(3.4 * breathe, 3.4 * breathe, 1);
+    glow.scale.set(4.6 * breathe, 4.6 * breathe, 1);
     nodes.scale.setScalar(1 + pulse * 0.06);
     rings.forEach((r) => r.packets.forEach((p) => {
       const a = p.phase + t * r.d.speed * 2.2; p.s.position.set(Math.cos(a) * r.d.r, Math.sin(a) * r.d.r, 0);
     }));
     stars.rotation.y = t * 0.01;
-    // scroll: drift back and fade
-    camera.position.z = 9.5 + scrollP * 3.5; camera.position.y = -scrollP * 1.2;
-    canvas.style.transform = `translateY(${scrollP * 12}vh)`;
+    align();
     renderer.render(scene, camera);
   }
   function renderOnce() { frame(reduce ? 8 : clock.getElapsedTime()); }
