@@ -1,6 +1,6 @@
 /* Polymath Arcade service worker: opens instantly, plays offline, updates quietly.
    The build stamps VERSION with a hash of the page, so every release gets a fresh cache. */
-const VERSION = '51430b60a6';
+const VERSION = '787bac66ba';
 const CORE = 'pa-core-' + VERSION;
 const RUNTIME = 'pa-runtime-v1';
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png',

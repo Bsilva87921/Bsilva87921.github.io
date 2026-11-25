@@ -113,7 +113,7 @@ const App = (() => {
   /* System bar color follows the theme */
   function syncThemeColor() {
     const metas = $$('meta[name="theme-color"]'); if (!metas.length) return;
-    const dark = effectiveTheme() === 'dark', c = dark ? '#05060f' : '#edf0f8';
+    const dark = effectiveTheme() === 'dark', c = dark ? '#0a0f18' : '#f5f4f1';
     metas.forEach(m => { if (!m.dataset.orig) m.dataset.orig = m.getAttribute('content'); m.setAttribute('content', S.theme ? c : m.dataset.orig); });
   }
 

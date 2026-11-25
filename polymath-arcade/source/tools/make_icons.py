@@ -15,9 +15,9 @@ def icon_html(cube_px, rounded, full_bleed):
     return f"""<!DOCTYPE html><html><head><style>{FONTS}
 html,body{{margin:0;width:1024px;height:1024px;background:transparent;overflow:hidden}}
 .bg{{position:absolute;inset:0;border-radius:{radius};overflow:hidden;
-  background:radial-gradient(60% 55% at 22% 18%,rgba(124,58,237,.95),transparent 70%),
-             radial-gradient(55% 50% at 86% 88%,rgba(219,39,119,.85),transparent 70%),
-             radial-gradient(45% 40% at 90% 12%,rgba(8,145,178,.7),transparent 70%),#0a0b1f}}
+  background:radial-gradient(60% 55% at 22% 18%,rgba(61,85,120,.95),transparent 70%),
+             radial-gradient(55% 50% at 86% 88%,rgba(122,51,65,.8),transparent 70%),
+             radial-gradient(45% 40% at 90% 12%,rgba(47,111,143,.6),transparent 70%),#0c1424}}
 .bg::before{{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 54%,rgba(255,255,255,.16),transparent 46%)}}
 .bg::after{{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 6px rgba(255,255,255,.08)}}
 .stars i{{position:absolute;width:6px;height:6px;border-radius:50%;background:#fff;box-shadow:0 0 14px #fff;opacity:.8}}
@@ -25,10 +25,10 @@ html,body{{margin:0;width:1024px;height:1024px;background:transparent;overflow:h
 .cube{{position:relative;width:{cube_px}px;height:{cube_px}px;transform-style:preserve-3d;transform:translateY({cube_px*0.04}px) rotateX(-27deg) rotateY(-38deg)}}
 .cube i{{position:absolute;inset:0;border-radius:{cube_px*0.13}px;display:grid;place-items:center;font:800 {cube_px*0.3}px/1 "PA Display",sans-serif;font-style:normal;color:#fff;
   border:{max(3, cube_px*0.012)}px solid rgba(255,255,255,.45);box-shadow:inset 0 0 {cube_px*0.18}px rgba(255,255,255,.28);text-shadow:0 {cube_px*0.01}px {cube_px*0.04}px rgba(0,0,0,.25);backface-visibility:hidden}}
-.cube i:nth-child(1){{transform:translateZ({half}px);background:linear-gradient(135deg,#8b5cf6,#db2777)}}
-.cube i:nth-child(2){{transform:rotateY(90deg) translateZ({half}px);background:linear-gradient(135deg,#06b6d4,#7c3aed)}}
-.cube i:nth-child(3){{transform:rotateX(90deg) translateZ({half}px);background:linear-gradient(135deg,#f59e0b,#db2777)}}
-.glow{{position:absolute;left:50%;top:76%;width:{cube_px*1.3}px;height:{cube_px*0.26}px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(167,139,250,.55),transparent);filter:blur(6px)}}
+.cube i:nth-child(1){{transform:translateZ({half}px);background:linear-gradient(135deg,#3d5578,#7a3341)}}
+.cube i:nth-child(2){{transform:rotateY(90deg) translateZ({half}px);background:linear-gradient(135deg,#2f6f8f,#1f3354)}}
+.cube i:nth-child(3){{transform:rotateX(90deg) translateZ({half}px);background:linear-gradient(135deg,#a8771a,#7a3341)}}
+.glow{{position:absolute;left:50%;top:76%;width:{cube_px*1.3}px;height:{cube_px*0.26}px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(154,174,203,.55),transparent);filter:blur(6px)}}
 </style></head><body><div class="bg"><div class="stars"><i style="left:16%;top:22%"></i><i style="left:80%;top:30%;width:4px;height:4px"></i><i style="left:24%;top:78%;width:4px;height:4px"></i><i style="left:74%;top:72%"></i></div><div class="glow"></div></div>
 <div class="stage"><div class="cube"><i>Pm</i><i>Ar</i><i>Ec</i></div></div></body></html>"""
 
@@ -40,7 +40,7 @@ GLYPHS = {
 
 def glyph_html(name):
     return f"""<!DOCTYPE html><html><head><style>html,body{{margin:0;width:1024px;height:1024px;background:transparent}}
-.b{{position:absolute;inset:0;border-radius:22.5%;background:linear-gradient(135deg,#7c3aed,#db2777);display:grid;place-items:center;box-shadow:inset 0 0 0 8px rgba(255,255,255,.15)}}
+.b{{position:absolute;inset:0;border-radius:22.5%;background:linear-gradient(135deg,#3d5578,#7a3341);display:grid;place-items:center;box-shadow:inset 0 0 0 8px rgba(255,255,255,.15)}}
 svg{{width:58%;height:58%}}</style></head><body><div class="b"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">{GLYPHS[name]}</svg></div></body></html>"""
 
 def shot(page, html, transparent=True):

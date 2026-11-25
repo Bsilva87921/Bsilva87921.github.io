@@ -12,8 +12,8 @@ APP = Path(os.environ.get("PA_APP_DIR") or ROOT / "app").resolve()   # in the si
 CSS_ORDER = ["fonts.css", "style.css", "brand.css", "emblems.css", "tour.css", "app.css"]
 JS_ORDER = ["core.js", "fx3d.js", "brand.js", "emblems.js", "tour.js", "app.js", "games_brain_math.js", "games_lang_sci.js", "games_phys_code.js", "games_money.js", "games_world.js", "boot.js"]
 
-APP_HEAD = """<meta name="theme-color" content="#edf0f8" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#05060f" media="(prefers-color-scheme: dark)">
+APP_HEAD = """<meta name="theme-color" content="#f5f4f1" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0a0f18" media="(prefers-color-scheme: dark)">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -41,8 +41,8 @@ MANIFEST = {
     "display": "standalone",
     "display_override": ["standalone", "minimal-ui"],
     "orientation": "any",
-    "background_color": "#05060f",
-    "theme_color": "#05060f",
+    "background_color": "#0a0f18",
+    "theme_color": "#0a0f18",
     "lang": "en-US",
     "dir": "ltr",
     "categories": ["games", "education", "productivity"],

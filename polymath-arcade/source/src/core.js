@@ -185,7 +185,7 @@ const FX = {
     if (this.cv.width !== w || this.cv.height !== hh) { this.cv.width = w; this.cv.height = hh; }
     this.dpr = d;
   },
-  palette() { const cs = getComputedStyle(document.documentElement); return DOMAIN_ORDER.map(d => cs.getPropertyValue('--d-' + d).trim()).concat(['#22d3ee', '#f472b6', '#fbbf24', '#a78bfa']); },
+  palette() { const cs = getComputedStyle(document.documentElement); return DOMAIN_ORDER.map(d => cs.getPropertyValue('--d-' + d).trim()).concat(['#8fb3cf', '#c58f9a', '#d8b26a', '#9aaecb']); },
   burst(n = 170) {
     if (reduceMotion()) return;
     this.ensure();
@@ -438,7 +438,7 @@ function heroEl() {
         'New here? Take the tour', h('small', null, '1 min')) : null,
       h('div', { class: 'hero-stats' },
         h('div', { class: 'hstat' }, h('span', { html: ringSVG(g / 3) }), h('div', null, h('small', null, 'Daily goal'), h('b', null, `${Math.min(g, 3)}/3 rounds`))),
-        h('div', { class: 'hstat', style: '--hc:#fb923c' }, h('span', { class: 'ico', html: ICON.flame }), h('div', null, h('small', null, 'Streak'), h('b', null, `${streak} day${streak === 1 ? '' : 's'}`))),
+        h('div', { class: 'hstat', style: '--hc:#e08a5a' }, h('span', { class: 'ico', html: ICON.flame }), h('div', null, h('small', null, 'Streak'), h('b', null, `${streak} day${streak === 1 ? '' : 's'}`))),
         h('div', { class: 'hstat' }, h('span', { class: 'ico', html: ICON.trophy }), h('div', null, h('small', null, 'Badges'), h('b', null, `${Object.keys(S.badges).length}/${BADGES.length}`))))),
     playerCardEl(L));
 }

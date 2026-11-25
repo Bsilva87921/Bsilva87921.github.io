@@ -29,7 +29,7 @@ const EMB = (() => {
       [[20, 25], [80, -10], [150, 35], [230, 5], [300, -30]].map(([lo, la]) => I('gl-dot', '', `--lon:${lo}deg;--lat:${la}deg`)).join(''))) + I('gl-pin'),
     robot: () => I('rb-board', rep(9, i => I('rb-t', '', `--x:${(i % 3) * 16}px;--y:${Math.floor(i / 3) * 16}px`)) + I('rb-gem') + I('rb-bot', I('top', I('eye')) + I('s') + I('w'))),
     tracer: () => I('ct-grp', I('ct-pane p3') + I('ct-pane p2') + I('ct-pane p1', I('ct-dots', I('') + I('') + I('')) +
-      [[60, 0, 'var(--dc)'], [42, 8, '#f472b6'], [52, 8, '#fbbf24'], [34, 16, '#22d3ee'], [46, 0, 'var(--dc)']].map(([w, x, c], i) => I('ln', '', `--w:${w}%;--ind:${x}px;--c:${c};--row:${i}`)).join('') + I('ct-caret')) + '<b class="ct-out">→ 42</b>'),
+      [[60, 0, 'var(--dc)'], [42, 8, '#c58f9a'], [52, 8, '#d8b26a'], [34, 16, '#8fb3cf'], [46, 0, 'var(--dc)']].map(([w, x, c], i) => I('ln', '', `--w:${w}%;--ind:${x}px;--c:${c};--row:${i}`)).join('') + I('ct-caret')) + '<b class="ct-out">→ 42</b>'),
     elements: () => I('el-shadow') + I('el-cube', [['rotateY(0deg)', '#22d3ee', 1, 'H'], ['rotateY(90deg)', '#94a3b8', 6, 'C'], ['rotateY(180deg)', '#f87171', 8, 'O'],
       ['rotateY(-90deg)', '#a78bfa', 11, 'Na'], ['rotateX(90deg)', '#fb923c', 26, 'Fe'], ['rotateX(-90deg)', '#fbbf24', 79, 'Au']]
       .map(([t, c, n, s]) => I('el-f', `<small>${n}</small><b>${s}</b>`, `--t:${t};--c:${c}`)).join('')),

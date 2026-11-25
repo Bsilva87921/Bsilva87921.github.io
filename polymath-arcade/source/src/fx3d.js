@@ -12,7 +12,7 @@ function hexRgb(str) {
   }
   const m = str.match(/rgba?\(([^)]+)\)/);
   if (m) { const p = m[1].split(/[\s,/]+/).filter(Boolean).map(Number); return [p[0] / 255, p[1] / 255, p[2] / 255]; }
-  return [0.65, 0.55, 1];
+  return [0.6, 0.66, 0.78];
 }
 function quietVT(vt) { if (vt) ['ready', 'finished', 'updateCallbackDone'].forEach(k => vt[k] && vt[k].catch(() => {})); return vt; }
 function withVT(fn) {
@@ -157,7 +157,7 @@ float fr=pow(1.0-max(dot(N,V),0.0),2.0);
 float dif=max(dot(N,normalize(vec3(0.5,0.8,0.6))),0.0)*0.6+max(dot(N,normalize(vec3(-0.7,-0.3,0.5))),0.0)*0.3+0.3;
 vec3 base=mix(uColor,uTint,uTintAmt*0.65);
 vec3 irid=hue(fr*0.7+dot(N,vec3(0.3,0.5,0.2))*0.35+uTime*0.03);
-vec3 col=base*dif+irid*fr*mix(0.35,0.6,uDark)+uRim*fr*0.7;
+vec3 col=base*dif+mix(vec3(1.0),irid,0.3)*fr*mix(0.1,0.18,uDark)+uRim*fr*0.7;
 float e=min(min(vB.x,vB.y),vB.z);float edge=1.0-smoothstep(0.0,0.04,e);
 vec3 ec=mix(base*0.62,mix(uRim,base,0.35)*1.3,uDark);col=mix(col,ec,edge*0.85);
 float a=clamp(uAlpha*(0.3+fr*0.7)+edge*mix(0.55,0.7,uDark),0.0,1.0);if(uBack>0.5)a*=0.45;
@@ -170,7 +170,7 @@ void main(){float d=length(gl_PointCoord-0.5);float a=smoothstep(0.5,0.0,d)*vA*u
 
   const B = {
     ok: false, gl: null, cv: null, raf: 0, last: 0, t0: 0, dpr: 1, quality: 2, isStatic: false, inGame: false,
-    mouse: { x: 0, y: 0, tx: 0, ty: 0 }, scroll: 0, tint: [0.6, 0.5, 1], tintAmt: 0, tintTarget: 0, boostAmt: 0,
+    mouse: { x: 0, y: 0, tx: 0, ty: 0 }, scroll: 0, tint: [0.55, 0.62, 0.76], tintAmt: 0, tintTarget: 0, boostAmt: 0,
     dark: true, cols: [], rim: [1, 1, 1], starCol: [1, 1, 1], crystals: [], buffers: {}, stars: null, nStars: 0,
     frames: 0, acc: 0, P: null, aspect: 1, sk: 1, calm: [1, 0.5, 0.4],
     init() {
@@ -228,7 +228,7 @@ void main(){float d=length(gl_PointCoord-0.5);float a=smoothstep(0.5,0.0,d)*vA*u
       this.dark = effectiveTheme() === 'dark';
       this.cols = DOMAIN_ORDER.map(d => hexRgb(cssVar('--d-' + d)));
       this.rim = this.dark ? [0.85, 0.9, 1] : [1, 1, 1];
-      this.starCol = this.dark ? [0.86, 0.9, 1] : [0.55, 0.4, 0.95];
+      this.starCol = this.dark ? [0.84, 0.88, 0.95] : [0.36, 0.44, 0.58];
       this.kick();
     },
     focus(varName) {
