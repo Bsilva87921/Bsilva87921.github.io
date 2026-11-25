@@ -15,15 +15,15 @@ css = read('style.css')
 pre = "<script>try{var t=localStorage.getItem('elite-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>"
 def page(title, desc, body, js, start, full):
     code = '\n'.join(read(f) for f in KIT + js).replace('</script', '<\\/script')
-    head = f'<title>{title}</title><meta name="description" content="{desc}">{FONTS}<style>{css}</style>{pre}'
-    content = f'{head}\n{body}\n{datajs}<script>\n{code}\ndocument.addEventListener("DOMContentLoaded",()=>{start});\n</script>'
+    head = f'<title>{title}</title><meta name="description" content="{desc}">{FONTS}<link rel="stylesheet" href="../assets/kit/project-3d.css"><style>{css}</style>{pre}'
+    content = f'{head}\n{body}\n<script src="../assets/kit/project-3d.js"></script>{datajs}<script>\n{code}\ndocument.addEventListener("DOMContentLoaded",()=>{start});\n</script>'
     if not full: return content
-    return f'<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex">{head}</head><body>\n{body}\n{datajs}<script>\n{code}\ndocument.addEventListener("DOMContentLoaded",()=>{start});\n</script><script src="../assets/ask-ai/ask-ai.js" defer></script></body></html>'
+    return f'<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex">{head}</head><body>\n{body}\n<script src="../assets/kit/project-3d.js"></script>{datajs}<script>\n{code}\ndocument.addEventListener("DOMContentLoaded",()=>{start});\n</script><script src="../assets/ask-ai/ask-ai.js" defer></script></body></html>'
 os.makedirs(os.path.join(R, 'dist', 'site'), exist_ok=True)
 D_T, D_D = 'Home Care Operations Dashboard', 'Interactive operations dashboard for a home care agency, built as a work sample for Elite Home Healthcare (illustrative data).'
 C_T, C_D = 'Closing the Hours Gap', 'Business case study: why authorized home care hours go unstaffed, what it costs and how to close the gap (illustrative data).'
-outs = [('index.html', D_T, D_D, read('body.html'), ['dash.js'], 'DASH.start()'),
-        ('case-study.html', C_T, C_D, read('cs-body.html') if os.path.exists(os.path.join(S, 'cs-body.html')) else '', ['dash.js', 'cs.js'] if os.path.exists(os.path.join(S, 'cs.js')) else ['dash.js'], 'CS.start()')]
+outs = [('index.html', D_T, D_D, read('body.html'), ['dash.js', 'px3d.js'], 'DASH.start()'),
+        ('case-study.html', C_T, C_D, read('cs-body.html') if os.path.exists(os.path.join(S, 'cs-body.html')) else '', ['dash.js', 'cs.js', 'px3d.js'] if os.path.exists(os.path.join(S, 'cs.js')) else ['dash.js', 'px3d.js'], 'CS.start()')]
 for fn, t, d, body, js, st in outs:
     if not body: continue
     open(os.path.join(R, 'dist', 'site', fn), 'w').write(page(t, d, body, js, st, True))

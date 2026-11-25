@@ -7,8 +7,12 @@ import { globe } from './globe.js';
 import { surface } from './surface.js';
 import { carousel } from './carousel.js';
 import { skyline } from './skyline.js';
-const KINDS = { arena, globe, surface, carousel, skyline };
-export const version = '1.1.0';
+import { constellation } from './constellation.js';
+import { cloud } from './cloud.js';
+import { bars } from './bars.js';
+import { flow } from './flow.js';
+const KINDS = { arena, globe, surface, carousel, skyline, constellation, cloud, bars, flow };
+export const version = '1.2.0';
 const KEY = 'px3d-backend';
 const lsGet = k => { try { return localStorage.getItem(k); } catch (e) { return null; } };
 const lsSet = (k, v) => { try { localStorage.setItem(k, v); } catch (e) { /* storage unavailable */ } };
@@ -26,6 +30,7 @@ export async function mount(el, kind, data, opts) {
   const api = {
     get backend() { return cur ? cur.backend : 'none'; },
     update(d) { last = d; if (cur && cur.update) cur.update(d); },
+    setTheme(t) { opts.theme = t; if (cur && cur.setTheme) cur.setTheme(t); },
     setPaused(p) { if (cur && cur.setPaused) cur.setPaused(p); },
     focus(...a) { if (cur && cur.focus) cur.focus(...a); },
     step(k) { if (cur && cur.step) cur.step(k); },

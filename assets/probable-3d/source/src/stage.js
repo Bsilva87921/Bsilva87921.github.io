@@ -53,8 +53,9 @@ export class Stage {
       const b = this.opts.bloom || {};
       const pipe = new THREE.RenderPipeline(r);
       const sp = pass(this.scene, this.camera);
-      pipe.outputNode = sp.add(bloom(sp, b.strength ?? 0.7, b.radius ?? 0.35, b.threshold ?? 0.55));
-      this.pipe = pipe;
+      const bn = bloom(sp, b.strength ?? 0.7, b.radius ?? 0.35, b.threshold ?? 0.55);
+      pipe.outputNode = sp.add(bn);
+      this.pipe = pipe; this.bloomNode = bn; this.bloomBase = b.strength ?? 0.7;
     }
     // overlay for labels + tooltip
     const ov = document.createElement('div'); ov.className = 'px3d-overlay'; el.appendChild(ov); this.overlay = ov;
@@ -107,6 +108,10 @@ export class Stage {
     this.placeLabels();
     this.dirty = false;
   }
+
+  /* ---------- theme (used by the project scenes; the Atlas and Sports scenes never call these) ---------- */
+  setClear(hex) { this.renderer.setClearColor(new THREE.Color(hex), 1); this.dirty = true; }
+  setBloom(k) { if (this.bloomNode) this.bloomNode.strength.value = this.bloomBase * k; this.dirty = true; }
 
   /* ---------- labels ---------- */
   label(text, cls) {

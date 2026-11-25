@@ -9,6 +9,7 @@
 <meta property="og:title" content="AI Strategy Lab · Bruno Silva">
 <meta property="og:description" content="How I'd run an enterprise AI program: find the work worth changing, prove the value, bring people along and govern it.">
 <meta property="og:image" content="https://bsilva87921.github.io/og-image.jpg">
+<link rel="stylesheet" href="../assets/kit/project-3d.css">
 <script>
   (function () { try { var t = localStorage.getItem("bs-theme"); if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t); } catch (e) {} })();
 </script>
@@ -19,10 +20,11 @@
   --text: #121826; --text-2: #454c59; --text-3: #757b86;
   --navy: #1f3354; --steel: #3d5578; --burgundy: #7a3341;
   --accent: #1f3354; --accent-soft: rgba(31,51,84,.08);
-  --now: #1f6f4a; --now-soft: rgba(31,111,74,.12);
-  --next: #9a6a12; --next-soft: rgba(154,106,18,.13);
-  --later: #7a3341; --later-soft: rgba(122,51,65,.11);
+  --now: #1b7f5a; --now-soft: rgba(27,127,90,.12);
+  --next: #c27a16; --next-soft: rgba(194,122,22,.14); --next-ink: #8a5a0a;
+  --later: #4a65b8; --later-soft: rgba(74,101,184,.12);
   --grid: rgba(16,24,40,.08);
+  --px-dark: 0; --px-line: #9aa4b2;
   --shadow: 0 1px 2px rgba(16,24,40,.05), 0 10px 30px -14px rgba(16,24,40,.18);
   --radius: 16px;
   color-scheme: light;
@@ -34,10 +36,11 @@
     --text: #eef1f5; --text-2: #b4bccb; --text-3: #858d9b;
     --navy: #c9d4e3; --steel: #9aaecb; --burgundy: #c58f9a;
     --accent: #c9d4e3; --accent-soft: rgba(201,212,227,.08);
-    --now: #5cc98f; --now-soft: rgba(92,201,143,.14);
-    --next: #e0b45c; --next-soft: rgba(224,180,92,.14);
-    --later: #d996a3; --later-soft: rgba(217,150,163,.14);
+    --now: #2a9f6e; --now-soft: rgba(42,159,110,.16);
+    --next: #b8801a; --next-soft: rgba(184,128,26,.16); --next-ink: #e0b45c;
+    --later: #6f8ee8; --later-soft: rgba(111,142,232,.15);
     --grid: rgba(200,212,230,.09);
+    --px-dark: 1; --px-line: #56667d;
     --shadow: 0 1px 2px rgba(0,0,0,.3), 0 14px 36px -18px rgba(0,0,0,.7);
     color-scheme: dark;
   }
@@ -48,10 +51,11 @@
   --text: #eef1f5; --text-2: #b4bccb; --text-3: #858d9b;
   --navy: #c9d4e3; --steel: #9aaecb; --burgundy: #c58f9a;
   --accent: #c9d4e3; --accent-soft: rgba(201,212,227,.08);
-  --now: #5cc98f; --now-soft: rgba(92,201,143,.14);
-  --next: #e0b45c; --next-soft: rgba(224,180,92,.14);
-  --later: #d996a3; --later-soft: rgba(217,150,163,.14);
+  --now: #2a9f6e; --now-soft: rgba(42,159,110,.16);
+  --next: #b8801a; --next-soft: rgba(184,128,26,.16); --next-ink: #e0b45c;
+  --later: #6f8ee8; --later-soft: rgba(111,142,232,.15);
   --grid: rgba(200,212,230,.09);
+  --px-dark: 1; --px-line: #56667d;
   --shadow: 0 1px 2px rgba(0,0,0,.3), 0 14px 36px -18px rgba(0,0,0,.7);
   color-scheme: dark;
 }
@@ -90,6 +94,12 @@ p { margin: 0; }
 .company { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 8px; }
 .pill { display: inline-flex; align-items: center; gap: 6px; padding: 5px 11px; border-radius: 999px; font-size: 13px; font-weight: 600; background: var(--surface); border: 1px solid var(--border); color: var(--text-2); }
 .pill b { color: var(--text); }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1.04fr) minmax(0, 1fr); gap: 40px; align-items: center; }
+.hero .px-panel { aspect-ratio: 6 / 5; max-height: 470px; width: 100%;
+  --px-bg: var(--surface); --px-plate: var(--surface-2); --px-ink: var(--text); --px-ink2: var(--text-3); --px-accent: var(--navy);
+  --px-now: var(--now); --px-next: var(--next); --px-later: var(--later); border: 1px solid var(--border); }
+.px-legend i.now { color: var(--now); } .px-legend i.next { color: var(--next); } .px-legend i.later { color: var(--later); }
+@media (max-width: 980px) { .hero-grid { grid-template-columns: 1fr; gap: 26px; } .hero .px-panel { aspect-ratio: 16 / 11; max-height: none; } }
 
 /* ---------- Sections & cards ---------- */
 section.block { padding: 44px 0 8px; }
@@ -146,7 +156,7 @@ tbody tr:hover { background: var(--accent-soft); }
 .bar i { display: block; height: 100%; background: var(--steel); border-radius: 6px; }
 .badge { display: inline-block; padding: 3px 9px; border-radius: 999px; font-size: 11.5px; font-weight: 750; white-space: nowrap; }
 .badge.now { color: var(--now); background: var(--now-soft); }
-.badge.next { color: var(--next); background: var(--next-soft); }
+.badge.next { color: var(--next-ink); background: var(--next-soft); }
 .badge.later { color: var(--later); background: var(--later-soft); }
 .rank { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 7px; font-size: 12px; font-weight: 800; background: var(--surface-2); border: 1px solid var(--border); }
 .linkbtn { border: 0; background: none; padding: 0; font: inherit; font-size: 12.5px; font-weight: 700; color: var(--steel); cursor: pointer; white-space: nowrap; }
@@ -208,7 +218,7 @@ svg { display: block; width: 100%; height: auto; overflow: visible; }
 .out .kpi .v { font-size: 24px; }
 .formula { margin-top: 14px; font-size: 12.5px; color: var(--text-3); line-height: 1.55; padding: 12px 14px; border-radius: 12px; background: var(--surface-2); border: 1px dashed var(--border-strong); }
 .formula code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; color: var(--text-2); }
-.pos { color: var(--now); } .neg { color: var(--later); }
+.pos { color: var(--now); } .neg { color: var(--burgundy); }
 
 /* ---------- Governance ---------- */
 .lvl { display: inline-flex; align-items: center; gap: 8px; font-weight: 750; }
@@ -283,7 +293,8 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
 
 <main>
 <section class="hero">
-  <div class="wrap">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
     <span class="flag">Portfolio project · Fictional company · Illustrative data</span>
     <h1>AI Strategy Lab</h1>
     <p class="lead">How I would run an enterprise AI program at a concrete-products manufacturer: find the work worth changing, prove the value, bring people along and govern it so the company can trust it. Every score, chart and dollar figure below is calculated live from the data on this page.</p>
@@ -294,6 +305,12 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
       <span class="pill">600 AI licenses</span>
       <span class="pill">Microsoft 365 · Power Platform · Claude · ChatGPT</span>
     </div>
+    </div>
+    <figure class="px-panel px-rise" id="px3d" aria-label="3D view of the eighteen use cases: value runs left to right, feasibility front to back, and each sphere sits at its score. It updates when you change the scoring weights below.">
+      <img class="px-fallback" src="../assets/renders/ai-lab-1200.webp" alt="" width="1200" height="750" decoding="async">
+      <figcaption class="px-cap"><b>The pipeline in 3D</b><small>Height is the score · drag to turn · hover a sphere</small></figcaption>
+      <div class="px-legend" aria-hidden="true"><span><i class="now"></i>Pilot now · 70+</span><span><i class="next"></i>Plan next · 60+</span><span><i class="later"></i>Explore later</span></div>
+    </figure>
   </div>
 </section>
 
@@ -485,6 +502,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
 </footer>
 <div class="tip" id="tip" role="tooltip"></div>
 
+<script src="../assets/kit/project-3d.js"></script>
 <script>
 (function () {
   "use strict";
@@ -501,7 +519,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
   var saved = null; try { saved = localStorage.getItem(KEY); } catch (e) {}
   applyTheme(saved || "auto");
   document.querySelectorAll("[data-theme-set]").forEach(function (b) {
-    b.addEventListener("click", function () { var t = b.getAttribute("data-theme-set"); applyTheme(t); try { localStorage.setItem(KEY, t); } catch (e) {} });
+    b.addEventListener("click", function () { var t = b.getAttribute("data-theme-set"); (window.Project3D ? Project3D.transition : function (f) { f(); })(function () { applyTheme(t); }); try { localStorage.setItem(KEY, t); } catch (e) {} });
   });
 
   /* ================= Data (fictional company, illustrative figures) ================= */
@@ -850,6 +868,24 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
   function renderAll() {
     var list = ranked();
     renderWeights(); renderKpis(list); renderTable(list); renderMatrix(list); renderHours(list); renderLanes(list);
+    render3d(list);
+  }
+
+  /* ================= 3D view of the pipeline (shared Probable 3D engine) ================= */
+  var px = null, pxList = null;
+  function pxData(list) {
+    return {
+      tierNames: TIER_NAME,
+      items: list.map(function (x) {
+        return { id: x.u.id, name: x.u.name, dept: x.u.dept, v: x.u.v, f: x.u.f, r: x.u.r, e: x.u.e, s: x.s, t: x.t, h: x.h, dim: DEPT !== "All" && x.u.dept !== DEPT };
+      }).sort(function (a, b) { return a.id - b.id; })
+    };
+  }
+  function render3d(list) { pxList = list; if (px) px.update(pxData(list)); }
+  if (window.Project3D) {
+    Project3D.mount(document.getElementById("px3d"), "constellation", function () { return pxData(pxList || ranked()); }, {
+      theme: function (t, v) { t.tiers = { now: v("--px-now"), next: v("--px-next"), later: v("--px-later") }; }
+    }).then(function (c) { px = c; if (c && pxList) c.update(pxData(pxList)); });
   }
   renderAll(); renderAdoption(); loadCase();
 

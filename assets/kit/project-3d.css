@@ -1,0 +1,149 @@
+/* Project 3D panel: the shared frame for the live 3D views on Bruno's project pages.
+   Colors come from the page through --px-* custom properties (set per page, light and dark):
+   --px-dark (0 or 1), --px-bg, --px-plate, --px-ink, --px-ink2, --px-line, --px-accent, --px-s1… and scene colors. */
+@property --px-angle { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+
+.px-panel {
+  --px-radius: 18px;
+  position: relative; isolation: isolate; overflow: hidden; margin: 0;
+  border-radius: var(--px-radius);
+  background:
+    radial-gradient(120% 90% at 18% 0%, color-mix(in oklab, var(--px-accent, #8aa0c4) 10%, transparent), transparent 62%),
+    var(--px-bg, #0f1622);
+  aspect-ratio: 16 / 10; min-height: 250px;
+  container-type: inline-size;
+  box-shadow: 0 1px 2px rgb(10 20 40 / .06), 0 26px 60px -32px rgb(10 20 40 / .5);
+  color: var(--px-ink, #e8edf4);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  touch-action: pan-y;
+}
+/* a hairline border whose highlight slowly travels around the panel */
+.px-panel::after {
+  content: ""; position: absolute; inset: 0; z-index: 6; pointer-events: none; border-radius: inherit; padding: 1px;
+  background: conic-gradient(from var(--px-angle),
+    color-mix(in oklab, var(--px-line, #5b6b82) 45%, transparent) 0deg,
+    color-mix(in oklab, var(--px-accent, #d3dceb) 80%, transparent) 50deg,
+    color-mix(in oklab, var(--px-line, #5b6b82) 45%, transparent) 110deg,
+    color-mix(in oklab, var(--px-line, #5b6b82) 30%, transparent) 360deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  animation: px-turn 16s linear infinite;
+}
+@keyframes px-turn { to { --px-angle: 360deg; } }
+
+/* the still image only shows where the browser cannot draw the 3D view (or scripts are off) */
+.px-panel .px-fallback { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; opacity: 0; transition: opacity .5s ease; }
+.px-panel.px-static .px-fallback { opacity: 1; }
+@media (scripting: none) { .px-panel .px-fallback { opacity: 1; } }
+/* over the (dark) still image the caption switches to light ink, and the drag/hover hint goes away */
+.px-panel.px-static .px-cap b { color: #eef2f8; text-shadow: 0 1px 8px rgb(0 0 0 / .5); }
+.px-panel.px-static .px-cap small { display: none; }
+.px-panel.px-loading::before {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(100deg, transparent 30%, color-mix(in oklab, var(--px-ink, #fff) 7%, transparent) 50%, transparent 70%) 0 0 / 220% 100%;
+  animation: px-shimmer 1.4s linear infinite;
+}
+@keyframes px-shimmer { to { background-position: -220% 0; } }
+
+.px-cap { position: absolute; left: 14px; top: 12px; z-index: 4; display: grid; gap: 1px; pointer-events: none; max-width: calc(100% - 28px); }
+.px-cap b { font-size: 12.5px; font-weight: 700; letter-spacing: -.005em; color: var(--px-ink); }
+.px-cap small { font-size: 11px; color: var(--px-ink2); }
+.px-legend {
+  position: absolute; left: 10px; bottom: 10px; z-index: 4; display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: center;
+  max-width: calc(100% - 110px); padding: 6px 10px; border-radius: 10px;
+  font: 600 11.5px/1.25 Inter, ui-sans-serif, system-ui, sans-serif; color: var(--px-ink2);
+  background: color-mix(in oklab, var(--px-bg, #0f1622) 74%, transparent);
+  border: 1px solid color-mix(in oklab, var(--px-line, #5b6b82) 35%, transparent);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+}
+.px-legend > span { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.px-legend i { width: 9px; height: 9px; border-radius: 50%; flex: none; background: currentColor; }
+.px-legend i.sq { border-radius: 2px; }
+.px-legend i.big { width: 11px; height: 11px; }
+.px-legend button {
+  appearance: none; font: inherit; color: var(--px-ink); cursor: pointer; padding: 2px 8px; border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--px-line, #5b6b82) 55%, transparent); background: transparent;
+}
+.px-legend button[aria-pressed="true"] { background: var(--px-ink); color: var(--px-bg); border-color: var(--px-ink); }
+.px-panel .px3d-still {
+  position: absolute; right: 10px; bottom: 10px; z-index: 4; appearance: none; cursor: pointer;
+  font: 600 11px/1 Inter, ui-sans-serif, system-ui, sans-serif; letter-spacing: .02em; color: var(--px-ink);
+  padding: 7px 10px; border-radius: 999px; border: 1px solid color-mix(in oklab, var(--px-line, #5b6b82) 50%, transparent);
+  background: color-mix(in oklab, var(--px-bg, #0f1622) 72%, transparent);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+}
+.px-panel .px3d-still:hover { border-color: var(--px-ink2); }
+.px-panel .px3d-still:focus-visible, .px-legend button:focus-visible { outline: 2px solid var(--px-accent); outline-offset: 2px; }
+.px-panel.px-static .px3d-still { display: none; }
+.px-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* the bundle's canvas, labels and tooltip, themed from the panel */
+.px-panel .px3d-canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; display: block; outline: none; z-index: 1; }
+.px-panel .px3d-overlay { position: absolute; inset: 0; z-index: 2; pointer-events: none; overflow: hidden; }
+.px-panel .px3d-label {
+  position: absolute; left: 0; top: 0; white-space: nowrap; transform: translate(-9999px, 0); will-change: transform; transition: opacity .25s;
+  font: 600 10.5px/1.2 Inter, ui-sans-serif, system-ui, sans-serif; letter-spacing: .02em; color: var(--px-ink2);
+  text-shadow: 0 0 3px var(--px-bg), 0 0 7px var(--px-bg);
+}
+.px-panel .px3d-tick { translate: -50% 0; font-weight: 500; font-variant-numeric: tabular-nums; }
+.px-panel .px3d-y { translate: -100% -50%; }
+.px-panel .px3d-y2 { translate: 6px -50%; }
+.px-panel .px3d-axis { font-weight: 700; font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--px-ink2); opacity: .9; }
+.px-panel .px3d-row { max-width: 150px; overflow: hidden; text-overflow: ellipsis; }
+.px-panel .px3d-grp { font-weight: 700; color: var(--px-ink); }
+.px-panel .px3d-node { translate: -50% 2px; font-weight: 600; color: var(--px-ink); }
+.px-panel .px3d-plane { translate: 0 -100%; font-weight: 700; font-size: 10.5px; letter-spacing: .04em; }
+.px-panel .px3d-plane.now { color: var(--px-now, var(--px-accent)); }
+.px-panel .px3d-plane.next { color: var(--px-next, var(--px-ink2)); }
+.px-panel .px3d-glabel {
+  translate: -50% -100%; font-weight: 600; font-size: 11px; letter-spacing: .005em; color: var(--px-ink); text-shadow: none;
+  padding: 3px 8px; border-radius: 8px;
+  background: color-mix(in oklab, var(--px-bg, #0f1622) 82%, transparent);
+  border: 1px solid color-mix(in oklab, var(--px-line, #5b6b82) 45%, transparent);
+  -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+}
+.px-panel .px3d-count { font-variant-numeric: tabular-nums; font-size: 10.5px; }
+.px-panel .px3d-rule.bad { color: var(--px-bad, var(--px-ink)); }
+.px-panel .px3d-rule.warn { color: var(--px-warn, var(--px-ink)); }
+.px-panel .px3d-note { color: var(--px-ink); border-color: color-mix(in oklab, var(--px-accent) 60%, transparent); }
+.px-panel .px3d-tip {
+  position: absolute; left: 0; top: 0; z-index: 7; pointer-events: none; max-width: 270px; display: grid; gap: 3px; padding: 9px 11px; border-radius: 11px;
+  background: color-mix(in oklab, var(--px-bg, #0f1622) 92%, transparent); color: var(--px-ink);
+  border: 1px solid color-mix(in oklab, var(--px-line, #5b6b82) 50%, transparent);
+  box-shadow: 0 12px 30px rgb(0 0 0 / .28);
+  -webkit-backdrop-filter: blur(10px) saturate(1.2); backdrop-filter: blur(10px) saturate(1.2);
+  font: 500 12.5px/1.35 Inter, ui-sans-serif, system-ui, sans-serif;
+}
+.px-panel .px3d-tip[hidden] { display: none; }
+.px-panel .px3d-tip b { font-weight: 700; font-size: 12.5px; }
+.px-panel .px3d-sub { color: var(--px-ink2); font-size: 11.5px; }
+.px-panel .px3d-big { font: 700 19px/1.1 Inter, ui-sans-serif, system-ui, sans-serif; letter-spacing: -.015em; font-variant-numeric: tabular-nums; }
+.px-panel .px3d-big small { font-size: 11px; font-weight: 600; color: var(--px-ink2); margin-left: 3px; letter-spacing: 0; }
+.px-panel .px3d-grabbing { cursor: grabbing !important; }
+
+/* compact panels: smaller legend, no axis titles */
+@container (max-width: 520px) {
+  .px-legend { font-size: 10.5px; gap: 3px 9px; padding: 5px 8px; max-width: calc(100% - 96px); }
+  .px-cap small { display: none; }
+  .px-panel .px3d-axis, .px-panel .px3d-plane { display: none; }
+}
+/* phones: a taller panel leaves room for the legend */
+@media (max-width: 560px) { .px-panel { aspect-ratio: 5 / 4 !important; max-height: none !important; } }
+
+/* the panel rises into place as it scrolls into view, where scroll-driven animation is supported */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .px-panel.px-rise { animation: px-rise linear both; animation-timeline: view(); animation-range: entry 0% entry 60%; }
+  }
+}
+@keyframes px-rise { from { opacity: 0; transform: translateY(26px) scale(.985); } to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .px-panel::after, .px-panel.px-loading::before { animation: none; }
+  .px-panel .px3d-label { transition: none; }
+}
+@media print { .px-panel .px3d-still, .px-panel .px3d-tip { display: none; } }
+@media (forced-colors: active) { .px-panel::after { display: none; } .px-panel { border: 1px solid CanvasText; } }
+
+/* smooth light/dark switches where view transitions are supported */
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: .35s; }

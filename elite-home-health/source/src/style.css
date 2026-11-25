@@ -336,3 +336,13 @@ section[id]{scroll-margin-top:150px}
 .cs table.tbl{font-size:13.5px}
 .cs .meta{color:var(--muted);font-size:14px}
 .pill-row a.btn{text-decoration:none;display:inline-flex}
+
+/* ---------- masthead 3D view (shared Project3D panel) ---------- */
+.mast .wrap.mast-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.92fr);gap:28px;align-items:center;padding-block:22px 22px}
+.mast-grid .brand{gap:6px}
+.mast-grid .modnav{justify-content:flex-start;margin-top:12px}
+.mast .px-panel{aspect-ratio:16/10;max-height:285px;width:100%;border:1px solid var(--band-line);
+  --px-dark:1;--px-bg:#1f2534;--px-plate:#242b3c;--px-ink:#EEF0F6;--px-ink2:#A3ABBF;--px-line:#47526b;--px-accent:#D1A6F0;
+  --px-s1:#3987e5;--px-s2:#d95926;--px-s3:#199e70}
+.px-legend i.s1{color:#3987e5}.px-legend i.s2{color:#d95926}.px-legend i.s3{color:#199e70}
+@media (max-width:900px){.mast .wrap.mast-grid{grid-template-columns:1fr}.mast .px-panel{max-height:none}}

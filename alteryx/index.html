@@ -14,6 +14,8 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://bsilva87921.github.io/alteryx/preview.jpg">
+<link rel="stylesheet" href="../assets/kit/project-3d.css">
+<script>(function () { try { var t = localStorage.getItem("bs-theme"); if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t); } catch (e) {} })();</script>
 <style>
   :root{
     color-scheme: light;
@@ -75,6 +77,18 @@
   .intro{background:radial-gradient(circle at 15% 20%, var(--navy-2) 0%, var(--navy) 60%); color:#fff; padding:36px 0 40px}
   .intro-grid{display:grid; grid-template-columns:minmax(0,1.25fr) minmax(0,1fr); gap:28px; align-items:center}
   @media (max-width:860px){ .intro-grid{grid-template-columns:minmax(0,1fr)} .hero-art{display:none} }
+  /* the hero workflow in 3D (shared Project3D panel); the 2D drawing stays as the fallback */
+  .intro .px-panel.hero-art{display:block; aspect-ratio:16/10; max-height:320px; width:100%; border:1px solid rgba(255,255,255,.12);
+    --px-dark:1; --px-bg:#0f1f3f; --px-plate:#142a52; --px-ink:#eef2f9; --px-ink2:#aab7cf; --px-line:#4d6185; --px-accent:var(--gold);
+    --px-c-io:#1f8f55; --px-c-prep:#3474dc; --px-c-join:#7a5ad6; --px-c-transform:#c9651c; --px-c-report:#c63d7e}
+  .px-panel.hero-art > svg{position:absolute; left:6%; right:6%; top:50%; width:88%; translate:0 -40%; transition:opacity .6s ease}
+  .px-panel.hero-art.px3d-on > svg{opacity:0}
+  .px-legend i.lg-io{color:#1f8f55} .px-legend i.lg-prep{color:#3474dc} .px-legend i.lg-join{color:#7a5ad6} .px-legend i.lg-transform{color:#c9651c} .px-legend i.lg-report{color:#c63d7e}
+  .themebar{display:inline-flex; gap:2px; padding:3px; border-radius:999px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.16)}
+  .themebar button{appearance:none; border:0; background:transparent; color:#c9d2e3; font:600 .78rem/1 inherit; padding:6px 10px; border-radius:999px; cursor:pointer}
+  .themebar button[aria-pressed="true"]{background:#fff; color:var(--navy)}
+  .themebar button:focus-visible{outline:2px solid var(--gold); outline-offset:2px}
+  .nav-links{align-items:center}
   .kicker{color:var(--gold); font-weight:700; text-transform:uppercase; letter-spacing:1.5px; font-size:.75rem; margin:0 0 8px}
   .intro h1{margin:0 0 10px; font-size:clamp(1.6rem, 3.4vw, 2.3rem); line-height:1.2}
   .lede{margin:0; max-width:640px; color:#dbe2f0}
@@ -292,6 +306,7 @@
     <div class="nav-links">
       <a href="https://bsilva87921.github.io/#projects">← Back to portfolio</a>
       <a href="https://github.com/Bsilva87921/alteryx-getting-started-and-projects" target="_blank" rel="noopener">GitHub</a>
+      <div class="themebar" role="group" aria-label="Color theme"><button type="button" data-theme-set="auto" aria-pressed="true">Auto</button><button type="button" data-theme-set="light" aria-pressed="false">Light</button><button type="button" data-theme-set="dark" aria-pressed="false">Dark</button></div>
     </div>
   </div>
 </nav>
@@ -308,7 +323,10 @@
         <a class="btn btn-outline" href="https://github.com/Bsilva87921/alteryx-getting-started-and-projects" target="_blank" rel="noopener">View the repo</a>
       </div>
     </div>
-    <div class="hero-art" id="heroArt" aria-hidden="true"></div>
+    <figure class="hero-art px-panel px-rise" id="heroArt" aria-label="3D view of the selected lesson's finished workflow: each Alteryx tool is a block in its tool-palette color, records travel the connections as particles, and each block shows how many records leave it.">
+      <figcaption class="px-cap"><b id="pxFlowTitle">Lesson 1 · Clean the gift data</b><small>The finished workflow · drag to turn · hover a tool</small></figcaption>
+      <div class="px-legend" aria-hidden="true"><span><i class="lg-io sq"></i>In/Out</span><span><i class="lg-prep sq"></i>Preparation</span><span><i class="lg-join sq"></i>Join</span><span><i class="lg-transform sq"></i>Transform</span><span><i class="lg-report sq"></i>Reporting</span></div>
+    </figure>
   </div>
 </header>
 
@@ -369,6 +387,7 @@
   </footer>
 </div>
 
+<script src="../assets/kit/project-3d.js"></script>
 <script>
 const DATA = {"L1":{"n_in":1048575,"input_rows":[["1000000","770487","2021-05-22","2,444.57","Men's Basketball","Online",null,"0"],["1000001","770487","2022-11-25","4,105.36","Men's Basketball","Cash",null,"0"],["1000002","770487","2023-06-21","2,286.23","Annual Fund","Credit Card","2023","0"],["1000032","207473","2023-03-09","17,985.51","Veterans Center","Check",null,"1"],["1000260","267414","2003-10-03","0.00","History Department","Stock",null,"0"],["1002095","639131","2025-10-20","2,194,192.88","Women's Soccer","Online",null,"0"]],"null_cy":733692,"after_remove_null":314883,"ws_changed":0,"clean_rows_default":[["1000000","770487","2021-05-22","2,444.57","Men's Basketball","Online",null,"0"],["1000001","770487","2022-11-25","4,105.36","Men's Basketball","Cash",null,"0"],["1000002","770487","2023-06-21","2,286.23","Annual Fund","Credit Card","2023","0"],["1000032","207473","2023-03-09","17,985.51","Veterans Center","Check",null,"1"],["1000260","267414","2003-10-03","0.00","History Department","Stock",null,"0"],["1002095","639131","2025-10-20","2,194,192.88","Women's Soccer","Online",null,"0"]],"clean_rows_zero":[["1000000","770487","2021-05-22","2,444.57","Men's Basketball","Online","0","0"],["1000001","770487","2022-11-25","4,105.36","Men's Basketball","Cash","0","0"],["1000002","770487","2023-06-21","2,286.23","Annual Fund","Credit Card","2023","0"],["1000032","207473","2023-03-09","17,985.51","Veterans Center","Check","0","1"],["1000260","267414","2003-10-03","0.00","History Department","Stock","0","0"],["1002095","639131","2025-10-20","2,194,192.88","Women's Soccer","Online","0","0"]],"clean_rows_removed":[["1000002","770487","2023-06-21","2,286.23","Annual Fund","Credit Card","2023","0"]],"formula_rows":{"year":[["1000000","770487","2021-05-22","2,444.57","Men's Basketball","Online","2021","0","No"],["1000001","770487","2022-11-25","4,105.36","Men's Basketball","Cash","2022","0","No"],["1000002","770487","2023-06-21","2,286.23","Annual Fund","Credit Card","2023","0","No"],["1000032","207473","2023-03-09","17,985.51","Veterans Center","Check","2023","1","Yes"],["1000260","267414","2003-10-03","0.00","History Department","Stock","2003","0","No"],["1002095","639131","2025-10-20","2,194,192.88","Women's Soccer","Online","2025","0","No"]],"zero":[["1000000","770487","2021-05-22","2,444.57","Men's Basketball","Online","0","0","No"],["1000001","770487","2022-11-25","4,105.36","Men's Basketball","Cash","0","0","No"],["1000002","770487","2023-06-21","2,286.23","Annual Fund","Credit Card","2023","0","No"],["1000032","207473","2023-03-09","17,985.51","Veterans Center","Check","0","1","Yes"],["1000260","267414","2003-10-03","0.00","History Department","Stock","0","0","No"],["1002095","639131","2025-10-20","2,194,192.88","Women's Soccer","Online","0","0","No"]],"month":[["1000000","770487","2021-05-22","2,444.57","Men's Basketball","Online","5","0","No"],["1000001","770487","2022-11-25","4,105.36","Men's Basketball","Cash","11","0","No"],["1000002","770487","2023-06-21","2,286.23","Annual Fund","Credit Card","2023","0","No"],["1000032","207473","2023-03-09","17,985.51","Veterans Center","Check","3","1","Yes"],["1000260","267414","2003-10-03","0.00","History Department","Stock","10","0","No"],["1002095","639131","2025-10-20","2,194,192.88","Women's Soccer","Online","10","0","No"]]},"formula_changed_idx":[0,1,3,4,5],"n_anon":52426,"filter":{"gt0":{"T":931680,"F":116895,"T_rows":[["1000000","770487","2021-05-22","2,444.57","Men's Basketball","Online","2021","0","No"],["1000001","770487","2022-11-25","4,105.36","Men's Basketball","Cash","2022","0","No"],["1000002","770487","2023-06-21","2,286.23","Annual Fund","Credit Card","2023","0","No"],["1000003","770487","2024-10-03","2,015.89","Community Service Center","Check","2024","0","No"],["1000004","770487","2025-08-06","6,161.84","Community Service Center","Credit Card","2025","0","No"],["1000005","356787","1995-12-08","866.63","Theatre Arts","Check","1995","0","No"]],"F_rows":[["1000137","127824","2015-09-23","0.00","Club Sports","Cash","2015","0","No"],["1000260","267414","2003-10-03","0.00","History Department","Stock","2003","0","No"],["1000261","267414","2004-10-07","0.00","Capital Campaign","Credit Card","2004","0","No"],["1000262","267414","2006-10-13","0.00","Capital Campaign","Credit Card","2006","0","No"],["1000263","267414","2007-10-10","0.00","Library","Credit Card","2007","0","No"],["1000264","267414","2008-02-20","0.00","Faculty Support","Check","2008","0","No"]],"F_sum":0.0},"ge1":{"T":931321,"F":117254,"T_rows":[["1000000","770487","2021-05-22","2,444.57","Men's Basketball","Online","2021","0","No"],["1000001","770487","2022-11-25","4,105.36","Men's Basketball","Cash","2022","0","No"],["1000002","770487","2023-06-21","2,286.23","Annual Fund","Credit Card","2023","0","No"],["1000003","770487","2024-10-03","2,015.89","Community Service Center","Check","2024","0","No"],["1000004","770487","2025-08-06","6,161.84","Community Service Center","Credit Card","2025","0","No"],["1000005","356787","1995-12-08","866.63","Theatre Arts","Check","1995","0","No"]],"F_rows":[["1000137","127824","2015-09-23","0.00","Club Sports","Cash","2015","0","No"],["1000260","267414","2003-10-03","0.00","History Department","Stock","2003","0","No"],["1000261","267414","2004-10-07","0.00","Capital Campaign","Credit Card","2004","0","No"],["1000262","267414","2006-10-13","0.00","Capital Campaign","Credit Card","2006","0","No"],["1000263","267414","2007-10-10","0.00","Library","Credit Card","2007","0","No"],["1000264","267414","2008-02-20","0.00","Faculty Support","Check","2008","0","No"]],"F_sum":174.57999999999998},"ge25":{"T":922394,"F":126181,"T_rows":[["1000000","770487","2021-05-22","2,444.57","Men's Basketball","Online","2021","0","No"],["1000001","770487","2022-11-25","4,105.36","Men's Basketball","Cash","2022","0","No"],["1000002","770487","2023-06-21","2,286.23","Annual Fund","Credit Card","2023","0","No"],["1000003","770487","2024-10-03","2,015.89","Community Service Center","Check","2024","0","No"],["1000004","770487","2025-08-06","6,161.84","Community Service Center","Credit Card","2025","0","No"],["1000005","356787","1995-12-08","866.63","Theatre Arts","Check","1995","0","No"]],"F_rows":[["1000135","127824","2007-08-17","16.13","Alumni Association","Check","2007","0","No"],["1000137","127824","2015-09-23","0.00","Club Sports","Cash","2015","0","No"],["1000260","267414","2003-10-03","0.00","History Department","Stock","2003","0","No"],["1000261","267414","2004-10-07","0.00","Capital Campaign","Credit Card","2004","0","No"],["1000262","267414","2006-10-13","0.00","Capital Campaign","Credit Card","2006","0","No"],["1000263","267414","2007-10-10","0.00","Library","Credit Card","2007","0","No"]],"F_sum":114658.95}},"unique_D":0,"unique_D_combo":0,"n_clean":931680,"clean_rows":[["1000000","770487","2021-05-22","2,444.57","Men's Basketball","Online","2021","0","No"],["1000001","770487","2022-11-25","4,105.36","Men's Basketball","Cash","2022","0","No"],["1000002","770487","2023-06-21","2,286.23","Annual Fund","Credit Card","2023","0","No"],["1000003","770487","2024-10-03","2,015.89","Community Service Center","Check","2024","0","No"],["1000004","770487","2025-08-06","6,161.84","Community Service Center","Credit Card","2025","0","No"],["1000005","356787","1995-12-08","866.63","Theatre Arts","Check","1995","0","No"]],"clean_total":7134899588.46},"L2":{"n_in":931680,"lookup":[["Men's Basketball","Athletics"],["Women's Soccer","Athletics"],["Men's Soccer","Athletics"],["Women's Volleyball","Athletics"],["Aquatic Center","Athletics"],["Club Sports","Athletics"],["Computer Science Department","Academics"],["Engineering Department","Academics"],["History Department","Academics"],["Music Department","Academics"],["Theatre Arts","Academics"],["Library","Academics"],["Faculty Support","Academics"],["Study Abroad","Academics"],["Student Health Center","Student Life"],["Career Development Center","Student Life"],["Community Service Center","Student Life"],["Veterans Center","Student Life"],["Greek Life","Student Life"],["Debate Team","Student Life"],["Finance Club","Student Life"],["DEI Initiatives","Student Life"],["Annual Fund","Institutional Funds"],["Endowment Fund","Institutional Funds"],["Scholarships","Institutional Funds"],["Capital Campaign","Institutional Funds"],["Alumni Association","Institutional Funds"]],"typo":["Mens Basketball","Men's Basketball"],"L_count":34470,"L_rows":[["1000000","770487","2021-05-22","2,444.57","Men's Basketball","Online"],["1000001","770487","2022-11-25","4,105.36","Men's Basketball","Cash"],["1000020","356787","2023-06-08","119.15","Men's Basketball","Online"],["1000043","671858","2002-10-19","107.93","Men's Basketball","Credit Card"],["1000090","343962","2013-06-09","58.76","Men's Basketball","Cash"],["1000098","629903","2022-05-02","1,046.14","Men's Basketball","Credit Card"]],"J_bad":897210,"J_good":931680,"J_rows":[["1000000","770487","2021-05-22","2,444.57","Men's Basketball","Online","2021","No","Men's Basketball","Athletics"],["1000001","770487","2022-11-25","4,105.36","Men's Basketball","Cash","2022","No","Men's Basketball","Athletics"],["1000002","770487","2023-06-21","2,286.23","Annual Fund","Credit Card","2023","No","Annual Fund","Institutional Funds"],["1000003","770487","2024-10-03","2,015.89","Community Service Center","Check","2024","No","Community Service Center","Student Life"],["1000004","770487","2025-08-06","6,161.84","Community Service Center","Credit Card","2025","No","Community Service Center","Student Life"],["1000005","356787","1995-12-08","866.63","Theatre Arts","Check","1995","No","Theatre Arts","Academics"]],"J_rows_bad":[["1000002","770487","2023-06-21","2,286.23","Annual Fund","Credit Card","2023","No","Annual Fund","Institutional Funds"],["1000003","770487","2024-10-03","2,015.89","Community Service Center","Check","2024","No","Community Service Center","Student Life"],["1000004","770487","2025-08-06","6,161.84","Community Service Center","Credit Card","2025","No","Community Service Center","Student Life"],["1000005","356787","1995-12-08","866.63","Theatre Arts","Check","1995","No","Theatre Arts","Academics"],["1000006","356787","1997-10-13","689.20","Veterans Center","Stock","1997","No","Veterans Center","Student Life"],["1000007","356787","1998-11-12","142.64","Men's Soccer","Cash","1998","No","Men's Soccer","Athletics"]],"select_rows":[["1000000","770487","2021-05-22","2,444.57","Men's Basketball","Online","2021","No","Athletics"],["1000001","770487","2022-11-25","4,105.36","Men's Basketball","Cash","2022","No","Athletics"],["1000002","770487","2023-06-21","2,286.23","Annual Fund","Credit Card","2023","No","Institutional Funds"],["1000003","770487","2024-10-03","2,015.89","Community Service Center","Check","2024","No","Student Life"],["1000004","770487","2025-08-06","6,161.84","Community Service Center","Credit Card","2025","No","Student Life"],["1000005","356787","1995-12-08","866.63","Theatre Arts","Check","1995","No","Academics"]],"summary":[["Academics",2100989855.39,275601,58597],["Student Life",2079282032.08,275729,58357],["Athletics",1543497489.84,206778,54897],["Institutional Funds",1411130211.15,173572,52509]],"designations_per_area":{"Athletics":6,"Academics":8,"Student Life":8,"Institutional Funds":5}},"L3":{"n_in":931680,"by":{"Campaign_Year":[[1990,359211547.96,17310,17310],[1991,301495607.38,17504,17504],[1992,292864163.74,17758,17758],[1993,251185680.19,18055,18055],[1994,244177792.5,18372,18372],[1995,195107065.76,18684,18684],[1996,199874251.3,19001,19001],[1997,184303272.58,19506,19506],[1998,154184747.18,19775,19775],[1999,149075551.53,20079,20079],[2000,140794642.65,20570,20570],[2001,125239405.11,20962,20962],[2002,135893655.05,21561,21561],[2003,139698195.07,21930,21930],[2004,117333162.27,22417,22417],[2005,113076120.48,22976,22976],[2006,121404406.13,23665,23665],[2007,133857328.25,24274,24274],[2008,134428298.92,24855,24855],[2009,154807842.79,25503,25503],[2010,123339340.57,26163,26163],[2011,140065681.92,26786,26786],[2012,128707201.48,27533,27533],[2013,110475633.77,28321,28321],[2014,221386786.04,29211,29211],[2015,155862082.18,29883,29883],[2016,145479426.74,30852,30852],[2017,129293691.96,31723,31723],[2018,138341409.96,32767,32767],[2019,165449902.91,33797,33797],[2020,158159061.91,34947,34947],[2021,186533889.35,35996,35996],[2022,274080719.23,36821,36821],[2023,297776196.26,38267,38267],[2024,337496143.78,38919,38919],[2025,774439683.56,34937,34937]],"Designation":[["Alumni Association",330409427.15,34873,24474],["Annual Fund",278808078.37,35086,24486],["Aquatic Center",267395116.99,34607,24289],["Capital Campaign",252971698.55,34695,24347],["Career Development Center",260126349.15,34250,24042],["Club Sports",248446495.09,34570,24234],["Community Service Center",276649724.49,34767,24397],["Computer Science Department",276937122.19,34445,24252],["DEI Initiatives",260970576.3,34395,24163],["Debate Team",266872697.99,34417,24178],["Endowment Fund",267377246.12,34812,24304],["Engineering Department",246569997.63,34332,24167],["Faculty Support",258941963.99,34269,24063],["Finance Club",289019298.79,34597,24310],["Greek Life",253307693.14,34210,24109],["History Department",242523086.75,34710,24253],["Library",259746230.07,34509,24197],["Men's Basketball",274923781.84,34470,24177],["Men's Soccer",210194678.28,34483,24173],["Music Department",234744639.7,34483,24240],["Scholarships",281563760.96,34106,24048],["Student Health Center",234170879.03,34683,24288],["Study Abroad",297177719.52,34418,24149],["Theatre Arts",284349095.54,34435,24232],["Veterans Center",238164813.19,34410,24244],["Women's Soccer",277714956.57,34307,24080],["Women's Volleyball",264822461.07,34341,24225]],"Gift_Type":[["Cash",1357074496.84,186572,53382],["Check",1380386204.1,186568,53472],["Credit Card",1530523178.8,186421,53386],["Online",1360256835.96,186115,53226],["Stock",1506658872.76,186004,53311]]},"date_top":[["2025-10-22",6518,175067210.27],["2023-01-28",148,256697.78999999998],["2024-05-16",146,916864.65],["2024-02-17",145,960368.7399999999],["2024-12-27",143,471036.3500000001]],"median_per_day":73.0,"days":12034,"as_of":"2025-10-22","oct22_share_2025":0.2260566109748386},"N":1048575,"cols_base":["Gift_ID","Donor_ID","Gift_Date","Gift_Amount","Designation","Gift_Type","Campaign_Year","Anonymous"],"cols_f":["Gift_ID","Donor_ID","Gift_Date","Gift_Amount","Designation","Gift_Type","Campaign_Year","Anonymous","Anonymous_Flag"],"cols_j":["Gift_ID","Donor_ID","Gift_Date","Gift_Amount","Designation","Gift_Type","Campaign_Year","Anonymous_Flag","Right_Designation","Program_Area"]};
 (function(){
@@ -1238,6 +1257,7 @@ const DATA = {"L1":{"n_in":1048575,"input_rows":[["1000000","770487","2021-05-22
   }
 
   function renderAll(opts = {}){
+    flow3d();
     renderTabs(); renderHead(); renderStep(); renderPalette();
     renderCanvas(opts);
     if (!opts.skipConfig) renderConfig();
@@ -1279,7 +1299,54 @@ const DATA = {"L1":{"n_in":1048575,"input_rows":[["1000000","770487","2021-05-22
     el.append(svg);
   })();
 
+  // ---------- the hero in 3D: the selected lesson's finished workflow, with real record counts ----------
+  let px = null, pxLesson = -1;
+  function flowFor(li){
+    const L = LESSONS[li], saveCur = cur, saveSt = ST[li];
+    const ls = fresh(li); ST[li] = ls; cur = li;
+    const nodes = [];
+    try {
+      L.steps.forEach((st, k) => { ls.placed = k + 1; ls.cfg[k] = Object.assign(defaults(st), JSON.parse(JSON.stringify((SOLUTIONS[L.key] || [])[k] || {}))); });
+      if (L.key === 'join') ls.typoFixed = true;
+      if (L.key === 'kpi') ls.dateCheck = true;
+      L.steps.forEach((st, k) => {
+        let count = null;
+        try { const r = st.run(ls.cfg[k], ls, k); ls.res[k] = r; ls.ran[k] = true; const a = r && r.anchors && (r.anchors.find(x => x.key === r.main) || r.anchors[0]); if (a && a.count != null) count = a.count; } catch (e) { /* counts are optional */ }
+        const T = TOOLS[st.tool], cat = CATS.find(c => c.id === T.cat);
+        nodes.push({ id:k, name:T.name, cat:T.cat, catName: cat ? cat.name : '', desc:T.desc.charAt(0).toUpperCase() + T.desc.slice(1) + '.', x:st.pos[0], y:st.pos[1], count });
+      });
+    } finally { cur = saveCur; ST[li] = saveSt; }
+    const edges = [];
+    L.steps.forEach((st, k) => (st.from || []).forEach(f => edges.push([f.s, k])));
+    return { nodes, edges };
+  }
+  function flow3d(){
+    if (!px || pxLesson === cur) return;
+    pxLesson = cur; px.update(flowFor(cur));
+    const t = $('pxFlowTitle'); if (t) t.textContent = `Lesson ${cur + 1} · ${LESSONS[cur].title}`;
+  }
+  if (window.Project3D){
+    Project3D.mount($('heroArt'), 'flow', () => { pxLesson = cur; return flowFor(cur); }, {
+      theme: (t, v) => { t.cats = { io:v('--px-c-io'), prep:v('--px-c-prep'), join:v('--px-c-join'), transform:v('--px-c-transform'), report:v('--px-c-report') }; }
+    }).then(c => { px = c; flow3d(); });
+  }
+
   renderAll();
+})();
+</script>
+<script>
+(function () {
+  var root = document.documentElement, KEY = "bs-theme";
+  function set(t) {
+    if (t === "light" || t === "dark") root.setAttribute("data-theme", t); else root.removeAttribute("data-theme");
+    document.querySelectorAll("[data-theme-set]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-theme-set") === (t || "auto"))); });
+  }
+  var saved = null; try { saved = localStorage.getItem(KEY); } catch (e) {}
+  set(saved || "auto");
+  document.querySelectorAll("[data-theme-set]").forEach(function (b) { b.addEventListener("click", function () {
+    var t = b.getAttribute("data-theme-set");
+    (window.Project3D ? Project3D.transition : function (f) { f(); })(function () { set(t); });
+    try { localStorage.setItem(KEY, t); } catch (e) {} }); });
 })();
 </script>
 <script src="../assets/ask-ai/ask-ai.js" defer></script>
