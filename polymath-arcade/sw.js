@@ -1,6 +1,6 @@
 /* Polymath Arcade service worker: opens instantly, plays offline, updates quietly.
    The build stamps VERSION with a hash of the page, so every release gets a fresh cache. */
-const VERSION = '4a5541b5b2';
+const VERSION = '51430b60a6';
 const CORE = 'pa-core-' + VERSION;
 const RUNTIME = 'pa-runtime-v1';
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png',
@@ -36,6 +36,16 @@ self.addEventListener('fetch', event => {
       try { return await fetch(req); }
       catch (err) { return new Response('<h1>Offline</h1><p>Open Polymath Arcade once while online to install it.</p>', { status: 503, headers: { 'Content-Type': 'text/html' } }); }
     })());
+    return;
+  }
+
+  // Shared site files outside the app (the Ask AI assistant and its settings): network first, so updates
+  // arrive right away, with the saved copy as the offline fallback.
+  if (url.origin === self.location.origin && !url.href.startsWith(self.registration.scope)) {
+    event.respondWith(fetch(req).then(res => {
+      if (res.ok) { const copy = res.clone(); caches.open(RUNTIME).then(c => c.put(req, copy)); }
+      return res;
+    }).catch(() => caches.match(req).then(hit => hit || Response.error())));
     return;
   }
 

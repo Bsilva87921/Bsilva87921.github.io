@@ -860,9 +860,21 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
   }, { rootMargin: "-40% 0px -55% 0px" });
   document.querySelectorAll("section.block").forEach(function (s) { spy.observe(s); });
 
+  /* ================= Live answers for the Ask AI assistant ================= */
+  window.ASK_AI_LIVE = {
+    top: function () {
+      var r = ranked().filter(function (x) { return x.t === "now"; });
+      return "With the current weights, **" + r.length + " use cases** score 70 or more (Pilot now): " + r.map(function (x) { return x.u.name + " (" + Math.round(x.s) + ")"; }).join(", ") + ".";
+    },
+    case: function () {
+      return "The calculator is showing **" + $("#bcTitle").textContent + "**: " + $("#oHours").textContent + " hours freed a year, " + $("#oValue").textContent + " annual value, " + $("#oCost").textContent + " year-one cost, " + $("#oNet").textContent + " year-one net benefit, and payback in " + $("#oPay").textContent + ".";
+    }
+  };
+
   // expose for automated checks
   window.__lab = { UC: UC, hoursOf: hoursOf, valueOf: valueOf, licOf: licOf, score: score, ranked: ranked };
 })();
 </script>
+<script src="../assets/ask-ai/ask-ai.js" defer></script>
 </body>
 </html>

@@ -39,6 +39,16 @@ self.addEventListener('fetch', event => {
     return;
   }
 
+  // Shared site files outside the app (the Ask AI assistant and its settings): network first, so updates
+  // arrive right away, with the saved copy as the offline fallback.
+  if (url.origin === self.location.origin && !url.href.startsWith(self.registration.scope)) {
+    event.respondWith(fetch(req).then(res => {
+      if (res.ok) { const copy = res.clone(); caches.open(RUNTIME).then(c => c.put(req, copy)); }
+      return res;
+    }).catch(() => caches.match(req).then(hit => hit || Response.error())));
+    return;
+  }
+
   // Same-origin files (icons, manifest): cache first, then network.
   if (url.origin === self.location.origin) {
     event.respondWith(caches.match(req).then(hit => hit || fetch(req).then(res => {

@@ -18,7 +18,7 @@ def page(title, desc, body, js, start, full):
     head = f'<title>{title}</title><meta name="description" content="{desc}">{FONTS}<style>{css}</style>{pre}'
     content = f'{head}\n{body}\n{datajs}<script>\n{code}\ndocument.addEventListener("DOMContentLoaded",()=>{start});\n</script>'
     if not full: return content
-    return f'<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex">{head}</head><body>\n{body}\n{datajs}<script>\n{code}\ndocument.addEventListener("DOMContentLoaded",()=>{start});\n</script></body></html>'
+    return f'<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex">{head}</head><body>\n{body}\n{datajs}<script>\n{code}\ndocument.addEventListener("DOMContentLoaded",()=>{start});\n</script><script src="../assets/ask-ai/ask-ai.js" defer></script></body></html>'
 os.makedirs(os.path.join(R, 'dist', 'site'), exist_ok=True)
 D_T, D_D = 'Home Care Operations Dashboard', 'Interactive operations dashboard for a home care agency, built as a work sample for Elite Home Healthcare (illustrative data).'
 C_T, C_D = 'Closing the Hours Gap', 'Business case study: why authorized home care hours go unstaffed, what it costs and how to close the gap (illustrative data).'
