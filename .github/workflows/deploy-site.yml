@@ -18,7 +18,7 @@ jobs:
       cancel-in-progress: false
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url || steps.deployment_retry.outputs.page_url }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -42,6 +42,18 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: '.'
+      # The artifact list can lag a few seconds behind the upload ("Found 0 artifact(s)"), so wait briefly and,
+      # if the first deploy still cannot see the artifact, wait longer and try once more.
+      - name: Let the upload register
+        run: sleep 15
       - name: Deploy to GitHub Pages
         id: deployment
+        continue-on-error: true
+        uses: actions/deploy-pages@v5
+      - name: Wait before retrying
+        if: steps.deployment.outcome == 'failure'
+        run: sleep 45
+      - name: Deploy to GitHub Pages (retry)
+        id: deployment_retry
+        if: steps.deployment.outcome == 'failure'
         uses: actions/deploy-pages@v5
