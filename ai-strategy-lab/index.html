@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Strategy Lab · Bruno Silva</title>
+<meta name="description" content="An interactive model of an enterprise AI program for a fictional concrete-products manufacturer: a use-case pipeline scored on value, feasibility, risk and effort, a roadmap, an ROI calculator, an adoption dashboard, governance and prompt playbooks.">
+<meta name="theme-color" content="#0a0f18">
+<meta property="og:title" content="AI Strategy Lab · Bruno Silva">
+<meta property="og:description" content="How I'd run an enterprise AI program: find the work worth changing, prove the value, bring people along and govern it.">
+<meta property="og:image" content="https://bsilva87921.github.io/og-image.jpg">
+<script>
+  (function () { try { var t = localStorage.getItem("bs-theme"); if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t); } catch (e) {} })();
+</script>
+<style>
+:root {
+  --bg: #f5f4f1; --bg-2: #ecebe7; --surface: #ffffff; --surface-2: #f7f6f3;
+  --border: rgba(16,24,40,.10); --border-strong: rgba(16,24,40,.18);
+  --text: #121826; --text-2: #454c59; --text-3: #757b86;
+  --navy: #1f3354; --steel: #3d5578; --burgundy: #7a3341;
+  --accent: #1f3354; --accent-soft: rgba(31,51,84,.08);
+  --now: #1f6f4a; --now-soft: rgba(31,111,74,.12);
+  --next: #9a6a12; --next-soft: rgba(154,106,18,.13);
+  --later: #7a3341; --later-soft: rgba(122,51,65,.11);
+  --grid: rgba(16,24,40,.08);
+  --shadow: 0 1px 2px rgba(16,24,40,.05), 0 10px 30px -14px rgba(16,24,40,.18);
+  --radius: 16px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0a0f18; --bg-2: #0f1622; --surface: #121a28; --surface-2: #162031;
+    --border: rgba(200,212,230,.10); --border-strong: rgba(200,212,230,.18);
+    --text: #eef1f5; --text-2: #b4bccb; --text-3: #858d9b;
+    --navy: #c9d4e3; --steel: #9aaecb; --burgundy: #c58f9a;
+    --accent: #c9d4e3; --accent-soft: rgba(201,212,227,.08);
+    --now: #5cc98f; --now-soft: rgba(92,201,143,.14);
+    --next: #e0b45c; --next-soft: rgba(224,180,92,.14);
+    --later: #d996a3; --later-soft: rgba(217,150,163,.14);
+    --grid: rgba(200,212,230,.09);
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 14px 36px -18px rgba(0,0,0,.7);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0a0f18; --bg-2: #0f1622; --surface: #121a28; --surface-2: #162031;
+  --border: rgba(200,212,230,.10); --border-strong: rgba(200,212,230,.18);
+  --text: #eef1f5; --text-2: #b4bccb; --text-3: #858d9b;
+  --navy: #c9d4e3; --steel: #9aaecb; --burgundy: #c58f9a;
+  --accent: #c9d4e3; --accent-soft: rgba(201,212,227,.08);
+  --now: #5cc98f; --now-soft: rgba(92,201,143,.14);
+  --next: #e0b45c; --next-soft: rgba(224,180,92,.14);
+  --later: #d996a3; --later-soft: rgba(217,150,163,.14);
+  --grid: rgba(200,212,230,.09);
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 14px 36px -18px rgba(0,0,0,.7);
+  color-scheme: dark;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 118px; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 15.5px/1.6 Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; -webkit-font-smoothing: antialiased; transition: background-color .3s, color .3s; }
+a { color: inherit; }
+h1, h2, h3 { margin: 0; letter-spacing: -0.02em; line-height: 1.15; }
+p { margin: 0; }
+.wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+.muted { color: var(--text-3); }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+:focus-visible { outline: 2px solid var(--steel); outline-offset: 2px; border-radius: 6px; }
+
+/* ---------- Top bar ---------- */
+.top { position: sticky; top: 0; z-index: 40; background: color-mix(in srgb, var(--bg) 82%, transparent); backdrop-filter: saturate(160%) blur(14px); -webkit-backdrop-filter: saturate(160%) blur(14px); border-bottom: 1px solid var(--border); }
+.top-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; height: 62px; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; text-decoration: none; }
+.brand-mark { width: 32px; height: 32px; border-radius: 9px; display: grid; place-items: center; background: var(--text); color: var(--bg); font-size: 13px; font-weight: 800; }
+.brand small { display: block; font-weight: 500; font-size: 12px; color: var(--text-3); line-height: 1.1; }
+.theme-switch { display: inline-flex; padding: 3px; border-radius: 11px; background: var(--surface); border: 1px solid var(--border); }
+.theme-switch button { border: 0; background: transparent; color: var(--text-3); font: inherit; font-size: 12.5px; font-weight: 650; padding: 5px 10px; border-radius: 8px; cursor: pointer; }
+.theme-switch button[aria-pressed="true"] { background: var(--text); color: var(--bg); }
+.subnav { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; padding-bottom: 10px; }
+.subnav::-webkit-scrollbar { display: none; }
+.subnav a { flex: none; text-decoration: none; font-size: 13.5px; font-weight: 600; color: var(--text-2); padding: 6px 12px; border-radius: 999px; border: 1px solid transparent; }
+.subnav a:hover { background: var(--surface); }
+.subnav a.active { background: var(--surface); border-color: var(--border-strong); color: var(--text); }
+
+/* ---------- Hero ---------- */
+.hero { padding: 48px 0 18px; }
+.flag { display: inline-flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text-3); }
+.flag::before { content: ""; width: 24px; height: 2px; background: var(--burgundy); border-radius: 2px; }
+.hero h1 { margin-top: 14px; font-size: clamp(36px, 5.4vw, 60px); font-weight: 800; letter-spacing: -0.04em; }
+.hero .lead { margin-top: 14px; max-width: 760px; font-size: clamp(16px, 1.6vw, 19px); color: var(--text-2); }
+.company { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 8px; }
+.pill { display: inline-flex; align-items: center; gap: 6px; padding: 5px 11px; border-radius: 999px; font-size: 13px; font-weight: 600; background: var(--surface); border: 1px solid var(--border); color: var(--text-2); }
+.pill b { color: var(--text); }
+
+/* ---------- Sections & cards ---------- */
+section.block { padding: 44px 0 8px; }
+.sec-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 18px; flex-wrap: wrap; margin-bottom: 20px; }
+.sec-head h2 { font-size: clamp(24px, 3vw, 34px); font-weight: 800; }
+.sec-head p { color: var(--text-2); max-width: 560px; margin-top: 8px; }
+.num { font-size: 12.5px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--text-3); }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+.pad { padding: 22px; }
+.grid { display: grid; gap: 16px; }
+.g2 { grid-template-columns: 1fr 1fr; }
+.g3 { grid-template-columns: repeat(3, 1fr); }
+.g4 { grid-template-columns: repeat(4, 1fr); }
+.g5 { grid-template-columns: repeat(5, 1fr); }
+.kpi { padding: 18px 20px; }
+.kpi .v { font-size: 30px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; font-variant-numeric: tabular-nums; }
+.kpi .l { margin-top: 6px; font-size: 13px; color: var(--text-3); line-height: 1.35; }
+.note { margin-top: 12px; font-size: 13px; color: var(--text-3); }
+h3.card-title { font-size: 16px; font-weight: 750; letter-spacing: -0.01em; }
+.card-sub { font-size: 13.5px; color: var(--text-3); margin-top: 3px; }
+
+/* ---------- Method steps ---------- */
+.steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; margin-top: 16px; }
+.step { position: relative; padding: 18px 18px 18px 20px; }
+.step + .step { border-left: 1px solid var(--border); }
+.step .k { font-size: 12px; font-weight: 800; letter-spacing: .1em; color: var(--burgundy); }
+.step h3 { margin-top: 6px; font-size: 16.5px; font-weight: 750; }
+.step p { margin-top: 6px; font-size: 13.5px; color: var(--text-2); line-height: 1.5; }
+
+/* ---------- Pipeline ---------- */
+.controls { display: grid; grid-template-columns: 1.2fr 1fr; gap: 16px; }
+.weights { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 14px; }
+.weight label { display: flex; justify-content: space-between; font-size: 13px; font-weight: 650; color: var(--text-2); }
+.weight output { font-variant-numeric: tabular-nums; color: var(--text); font-weight: 800; }
+.weight input[type=range] { width: 100%; margin-top: 8px; accent-color: var(--steel); }
+.weight .h { font-size: 11.5px; color: var(--text-3); margin-top: 2px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+.chips button { border: 1px solid var(--border); background: var(--surface-2); color: var(--text-2); font: inherit; font-size: 12.5px; font-weight: 650; padding: 6px 11px; border-radius: 999px; cursor: pointer; }
+.chips button[aria-pressed="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 12.5px; color: var(--text-2); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.dot.now { background: var(--now); } .dot.next { background: var(--next); } .dot.later { background: var(--later); }
+.table-wrap { overflow-x: auto; margin-top: 16px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { text-align: left; padding: 11px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+th { font-size: 12px; font-weight: 750; letter-spacing: .04em; text-transform: uppercase; color: var(--text-3); white-space: nowrap; }
+td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; }
+tbody tr:hover { background: var(--accent-soft); }
+.uc-name { font-weight: 700; }
+.uc-how { font-size: 12.5px; color: var(--text-3); margin-top: 2px; max-width: 420px; }
+.score { display: flex; align-items: center; gap: 8px; justify-content: flex-end; }
+.bar { width: 64px; height: 6px; border-radius: 6px; background: var(--grid); overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--steel); border-radius: 6px; }
+.badge { display: inline-block; padding: 3px 9px; border-radius: 999px; font-size: 11.5px; font-weight: 750; white-space: nowrap; }
+.badge.now { color: var(--now); background: var(--now-soft); }
+.badge.next { color: var(--next); background: var(--next-soft); }
+.badge.later { color: var(--later); background: var(--later-soft); }
+.rank { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 7px; font-size: 12px; font-weight: 800; background: var(--surface-2); border: 1px solid var(--border); }
+.linkbtn { border: 0; background: none; padding: 0; font: inherit; font-size: 12.5px; font-weight: 700; color: var(--steel); cursor: pointer; white-space: nowrap; }
+.linkbtn:hover { text-decoration: underline; }
+
+/* ---------- Charts ---------- */
+svg { display: block; width: 100%; height: auto; overflow: visible; }
+.axis { stroke: var(--border-strong); stroke-width: 1; }
+.gridline { stroke: var(--grid); stroke-width: 1; }
+.tick { fill: var(--text-3); font-size: 11px; }
+.axis-label { fill: var(--text-2); font-size: 12px; font-weight: 650; }
+.quad { fill: var(--text-3); font-size: 11.5px; font-weight: 750; letter-spacing: .08em; text-transform: uppercase; }
+.quad-bg { fill: var(--now-soft); opacity: .55; }
+.bubble { stroke: var(--surface); stroke-width: 2; cursor: pointer; transition: opacity .2s; }
+.bubble.now { fill: var(--now); } .bubble.next { fill: var(--next); } .bubble.later { fill: var(--later); }
+.bubble-label { fill: #fff; font-size: 11px; font-weight: 800; pointer-events: none; }
+:root[data-theme="dark"] .bubble-label { fill: #0a0f18; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .bubble-label { fill: #0a0f18; } }
+.line-active { fill: none; stroke: var(--navy); stroke-width: 2.6; }
+.line-trained { fill: none; stroke: var(--steel); stroke-width: 2; stroke-dasharray: 5 4; }
+.line-licensed { fill: none; stroke: var(--text-3); stroke-width: 1.6; }
+.area-active { fill: var(--accent-soft); }
+.pt { fill: var(--navy); }
+.end-label { font-size: 12px; font-weight: 700; }
+.funnel-bar { fill: var(--navy); }
+.funnel-txt { fill: var(--text); font-size: 13px; font-weight: 700; }
+.funnel-sub { fill: var(--text-3); font-size: 12px; }
+.tip { position: fixed; z-index: 60; pointer-events: none; max-width: 280px; padding: 10px 12px; border-radius: 12px; background: var(--text); color: var(--bg); font-size: 12.5px; line-height: 1.4; box-shadow: var(--shadow); opacity: 0; transform: translateY(4px); transition: opacity .15s, transform .15s; }
+.tip.show { opacity: 1; transform: none; }
+.tip b { display: block; font-size: 13px; margin-bottom: 2px; }
+
+/* ---------- Roadmap ---------- */
+.plan90 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.phase { padding: 20px; position: relative; overflow: hidden; }
+.phase .when { font-size: 12px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--burgundy); }
+.phase h3 { margin-top: 6px; font-size: 18px; font-weight: 800; }
+.phase ul { margin: 10px 0 0; padding-left: 18px; color: var(--text-2); font-size: 14px; }
+.phase li { margin-bottom: 4px; }
+.lanes { display: grid; grid-template-columns: 170px repeat(3, 1fr); gap: 0; margin-top: 16px; }
+.lane-h { padding: 12px 14px; font-size: 12.5px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--text-3); border-bottom: 1px solid var(--border-strong); }
+.lane-h b { display: block; font-size: 15px; letter-spacing: -0.01em; text-transform: none; color: var(--text); }
+.lane-label { padding: 14px; font-weight: 750; font-size: 14px; border-bottom: 1px solid var(--border); background: var(--surface-2); }
+.lane-label span { display: block; font-weight: 500; font-size: 12.5px; color: var(--text-3); }
+.lane-cell { padding: 12px; border-bottom: 1px solid var(--border); border-left: 1px solid var(--border); display: flex; flex-direction: column; gap: 8px; }
+.rm { padding: 9px 11px; border-radius: 10px; background: var(--surface-2); border: 1px solid var(--border); font-size: 13px; line-height: 1.35; }
+.rm b { display: block; font-size: 13.5px; }
+.rm.now { border-left: 3px solid var(--now); } .rm.next { border-left: 3px solid var(--next); } .rm.later { border-left: 3px solid var(--later); }
+.rm.found { border-left: 3px solid var(--steel); }
+
+/* ---------- Business case ---------- */
+.bc { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.field { display: grid; gap: 4px; }
+.field label { font-size: 12.5px; font-weight: 650; color: var(--text-2); }
+.field input, .field select { font: inherit; font-size: 14.5px; padding: 9px 11px; border-radius: 10px; border: 1px solid var(--border-strong); background: var(--surface-2); color: var(--text); width: 100%; }
+.fields { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+.fields .full { grid-column: 1 / -1; }
+.out { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+.out .kpi { padding: 14px 16px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; box-shadow: none; }
+.out .kpi .v { font-size: 24px; }
+.formula { margin-top: 14px; font-size: 12.5px; color: var(--text-3); line-height: 1.55; padding: 12px 14px; border-radius: 12px; background: var(--surface-2); border: 1px dashed var(--border-strong); }
+.formula code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; color: var(--text-2); }
+.pos { color: var(--now); } .neg { color: var(--later); }
+
+/* ---------- Governance ---------- */
+.lvl { display: inline-flex; align-items: center; gap: 8px; font-weight: 750; }
+.lvl i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+.lvl.g i { background: var(--now); } .lvl.y i { background: var(--next); } .lvl.o i { background: #c76a2a; } .lvl.r i { background: var(--later); }
+.check { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 10px; }
+.check li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; font-size: 14px; color: var(--text-2); }
+.check li::before { content: ""; width: 18px; height: 18px; margin-top: 2px; border-radius: 5px; border: 2px solid var(--steel); }
+.check b { color: var(--text); }
+
+/* ---------- Playbooks ---------- */
+.plays { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.play { padding: 20px; display: flex; flex-direction: column; }
+.play .role { font-size: 12px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--burgundy); }
+.play h3 { margin-top: 6px; font-size: 16.5px; font-weight: 750; }
+.play .tool { margin-top: 4px; font-size: 12.5px; color: var(--text-3); }
+.play blockquote { margin: 12px 0 0; padding: 12px 14px; border-radius: 12px; background: var(--surface-2); border: 1px solid var(--border); font-size: 13.5px; color: var(--text); line-height: 1.5; flex: 1; }
+.play .why { margin-top: 10px; font-size: 12.5px; color: var(--text-2); }
+.copy { margin-top: 12px; align-self: flex-start; border: 1px solid var(--border-strong); background: var(--surface); color: var(--text); font: inherit; font-size: 12.5px; font-weight: 700; padding: 7px 12px; border-radius: 10px; cursor: pointer; }
+.copy.done { color: var(--now); border-color: var(--now); }
+
+footer { margin-top: 56px; padding: 26px 0 50px; border-top: 1px solid var(--border); color: var(--text-3); font-size: 13.5px; }
+footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+@media (max-width: 1000px) {
+  .g4, .g5 { grid-template-columns: repeat(2, 1fr); }
+  .steps { grid-template-columns: 1fr 1fr; }
+  .step + .step { border-left: 0; }
+  .step { border-top: 1px solid var(--border); }
+  .controls, .bc, .g2 { grid-template-columns: 1fr; }
+  .plays, .plan90 { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 720px) {
+  .wrap { padding: 0 16px; }
+  .weights { grid-template-columns: 1fr 1fr; }
+  .plays, .plan90, .g3 { grid-template-columns: 1fr; }
+  .lanes { grid-template-columns: 1fr; }
+  .lane-h.corner { display: none; }
+  .lane-h { display: none; }
+  .lane-cell { border-left: 0; }
+  .lane-cell::before { content: attr(data-h); font-size: 11.5px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--text-3); }
+  .fields, .out { grid-template-columns: 1fr 1fr; }
+  .brand small { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+@media print { .top, .copy, .linkbtn { display: none !important; } .card { box-shadow: none; } }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="top-row">
+      <a class="brand" href="../?lens=ai" title="Back to Bruno Silva's portfolio"><span class="brand-mark">BS</span><span>AI Strategy Lab<small>Bruno Silva · Portfolio</small></span></a>
+      <div class="theme-switch" role="group" aria-label="Color theme">
+        <button type="button" data-theme-set="auto" aria-pressed="true">Auto</button>
+        <button type="button" data-theme-set="light" aria-pressed="false">Light</button>
+        <button type="button" data-theme-set="dark" aria-pressed="false">Dark</button>
+      </div>
+    </div>
+    <nav class="subnav" aria-label="Sections">
+      <a href="#overview">Overview</a>
+      <a href="#pipeline">Opportunity pipeline</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#case">Business case</a>
+      <a href="#adoption">Adoption</a>
+      <a href="#governance">Governance</a>
+      <a href="#playbooks">Playbooks</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="wrap">
+    <span class="flag">Portfolio project · Fictional company · Illustrative data</span>
+    <h1>AI Strategy Lab</h1>
+    <p class="lead">How I would run an enterprise AI program at a concrete-products manufacturer: find the work worth changing, prove the value, bring people along and govern it so the company can trust it. Every score, chart and dollar figure below is calculated live from the data on this page.</p>
+    <div class="company">
+      <span class="pill"><b>Northwind Concrete</b> (fictional)</span>
+      <span class="pill">12 plants</span>
+      <span class="pill">1,800 employees</span>
+      <span class="pill">600 AI licenses</span>
+      <span class="pill">Microsoft 365 · Power Platform · Claude · ChatGPT</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= OVERVIEW ================= -->
+<section class="block" id="overview">
+  <div class="wrap">
+    <div class="sec-head"><div><div class="num">01 · Overview</div><h2>The program at a glance</h2><p>Pipeline figures come from the use cases below; adoption figures are month 12 of the illustrative rollout.</p></div></div>
+    <div class="grid g4" id="kpis"></div>
+    <div class="card steps" aria-label="Method">
+      <div class="step"><div class="k">1 · DISCOVER</div><h3>Start with the work</h3><p>Sit with dispatchers, plant leads and AP clerks. List the manual, repetitive and error-prone tasks.</p></div>
+      <div class="step"><div class="k">2 · PRIORITIZE</div><h3>Score every idea</h3><p>Rate value, feasibility, risk and effort the same way, so leaders compare ideas on facts, not volume.</p></div>
+      <div class="step"><div class="k">3 · PILOT</div><h3>Prove it small</h3><p>Measure a baseline, run a 6-week pilot with a sponsor, and keep a human in the loop.</p></div>
+      <div class="step"><div class="k">4 · SCALE</div><h3>Bring people along</h3><p>Train by role, grow an AI Champions network, and share playbooks that work.</p></div>
+      <div class="step"><div class="k">5 · MEASURE</div><h3>Report results</h3><p>Track time saved, errors avoided, adoption and cost, and refresh the roadmap every quarter.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PIPELINE ================= -->
+<section class="block" id="pipeline">
+  <div class="wrap">
+    <div class="sec-head"><div><div class="num">02 · Opportunity pipeline</div><h2>Eighteen ideas, one scoring model</h2><p>Change the weights or filter by department and the ranking, matrix and roadmap update. Scores run from 0 to 100; lower risk and lower effort score higher.</p></div></div>
+    <div class="controls">
+      <div class="card pad">
+        <h3 class="card-title">Scoring weights</h3>
+        <div class="card-sub">How much each factor counts. Weights are normalized to 100%.</div>
+        <div class="weights">
+          <div class="weight"><label for="wV">Value <output id="oV"></output></label><input id="wV" type="range" min="0" max="50" step="5" value="40"><div class="h">Time, cost, errors, customer impact</div></div>
+          <div class="weight"><label for="wF">Feasibility <output id="oF"></output></label><input id="wF" type="range" min="0" max="50" step="5" value="25"><div class="h">Data ready, tools already owned</div></div>
+          <div class="weight"><label for="wR">Low risk <output id="oR"></output></label><input id="wR" type="range" min="0" max="50" step="5" value="15"><div class="h">Data sensitivity, accuracy stakes</div></div>
+          <div class="weight"><label for="wE">Low effort <output id="oE"></output></label><input id="wE" type="range" min="0" max="50" step="5" value="20"><div class="h">Build time, integration, change</div></div>
+        </div>
+      </div>
+      <div class="card pad">
+        <h3 class="card-title">Department</h3>
+        <div class="card-sub">Filter the pipeline, matrix and roadmap.</div>
+        <div class="chips" id="deptChips"></div>
+        <div class="legend" style="margin-top:16px"><span><i class="dot now"></i>Pilot now (70+)</span><span><i class="dot next"></i>Plan next (60–69)</span><span><i class="dot later"></i>Explore later (under 60)</span></div>
+      </div>
+    </div>
+
+    <div class="grid g2" style="margin-top:16px">
+      <div class="card pad">
+        <h3 class="card-title">Value vs. effort</h3>
+        <div class="card-sub">Bubble size is hours saved per year; numbers match the ranking.</div>
+        <div id="matrix" style="margin-top:10px"></div>
+      </div>
+      <div class="card pad">
+        <h3 class="card-title">Where the hours are</h3>
+        <div class="card-sub">Hours each use case could free up per year, by tier.</div>
+        <div id="hoursBars" style="margin-top:10px"></div>
+      </div>
+    </div>
+
+    <div class="card table-wrap">
+      <table id="pipeTable">
+        <thead><tr><th>#</th><th>Use case and approach</th><th>Department</th><th class="n">Value</th><th class="n">Feasibility</th><th class="n">Risk</th><th class="n">Effort</th><th class="n">Hours / yr</th><th class="n">Score</th><th>Tier</th><th></th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <p class="note">Value and feasibility: 5 is best. Risk and effort: 5 is highest. Hours per year come from each use case's business-case inputs (people × tasks per week × minutes saved × 48 weeks × adoption).</p>
+  </div>
+</section>
+
+<!-- ================= ROADMAP ================= -->
+<section class="block" id="roadmap">
+  <div class="wrap">
+    <div class="sec-head"><div><div class="num">03 · Roadmap</div><h2>First 90 days, then two years</h2><p>The use-case lanes fill from the live scores above. Foundations are the program work that makes every use case stick.</p></div></div>
+    <div class="plan90">
+      <div class="card phase"><div class="when">Days 1–30</div><h3>Listen</h3><ul><li>Meet every functional leader and IT partner</li><li>Visit plants, dispatch and the office floor</li><li>Inventory the tools and licenses already owned</li><li>Collect pain points and baseline metrics</li></ul></div>
+      <div class="card phase"><div class="when">Days 31–60</div><h3>Prioritize</h3><ul><li>Publish the scored pipeline with sponsors</li><li>Agree on data guardrails with Cybersecurity</li><li>Launch the first AI literacy sessions</li><li>Pick three pilots with clear baselines</li></ul></div>
+      <div class="card phase"><div class="when">Days 61–90</div><h3>Prove</h3><ul><li>Run the pilots with a human in the loop</li><li>Recruit the first AI Champions</li><li>Ship the executive results dashboard</li><li>Set next quarter's roadmap and budget</li></ul></div>
+    </div>
+    <div class="card lanes" id="lanes"></div>
+  </div>
+</section>
+
+<!-- ================= BUSINESS CASE ================= -->
+<section class="block" id="case">
+  <div class="wrap">
+    <div class="sec-head"><div><div class="num">04 · Business case</div><h2>Is it worth doing?</h2><p>Pick a use case to load its assumptions, then change any input. Results update as you type.</p></div></div>
+    <div class="bc">
+      <div class="card pad">
+        <div class="field full"><label for="ucSel">Use case</label><select id="ucSel"></select></div>
+        <div class="fields">
+          <div class="field"><label for="iPeople">People doing the task</label><input id="iPeople" type="number" min="0" step="1"></div>
+          <div class="field"><label for="iWeek">Times per person per week</label><input id="iWeek" type="number" min="0" step="0.5"></div>
+          <div class="field"><label for="iMins">Minutes saved each time</label><input id="iMins" type="number" min="0" step="1"></div>
+          <div class="field"><label for="iAdopt">Adoption (%)</label><input id="iAdopt" type="number" min="0" max="100" step="5"></div>
+          <div class="field"><label for="iRate">Loaded cost per hour ($)</label><input id="iRate" type="number" min="0" step="1"></div>
+          <div class="field"><label for="iUsers">Licensed users</label><input id="iUsers" type="number" min="0" step="1"></div>
+          <div class="field"><label for="iLic">License cost per user per month ($)</label><input id="iLic" type="number" min="0" step="1"></div>
+          <div class="field"><label for="iBuild">One-time build hours</label><input id="iBuild" type="number" min="0" step="10"></div>
+          <div class="field"><label for="iBuildRate">Build cost per hour ($)</label><input id="iBuildRate" type="number" min="0" step="5"></div>
+          <div class="field"><label for="iErr">Errors avoided per month ($)</label><input id="iErr" type="number" min="0" step="100"></div>
+        </div>
+      </div>
+      <div class="card pad">
+        <h3 class="card-title" id="bcTitle">Results</h3>
+        <div class="card-sub" id="bcHow"></div>
+        <div class="out">
+          <div class="kpi"><div class="v" id="oHours">–</div><div class="l">Hours freed per year</div></div>
+          <div class="kpi"><div class="v" id="oFte">–</div><div class="l">Full-time equivalents (1,920 h)</div></div>
+          <div class="kpi"><div class="v" id="oValue">–</div><div class="l">Annual value (time + errors)</div></div>
+          <div class="kpi"><div class="v" id="oCost">–</div><div class="l">Year-one cost (licenses + build)</div></div>
+          <div class="kpi"><div class="v" id="oNet">–</div><div class="l">Year-one net benefit</div></div>
+          <div class="kpi"><div class="v" id="oPay">–</div><div class="l">Payback</div></div>
+        </div>
+        <div id="bcBars" style="margin-top:14px"></div>
+        <div class="formula"><code>Hours = people × times per week × minutes ÷ 60 × 48 weeks × adoption</code><br><code>Value = hours × loaded cost + errors avoided × 12</code><br><code>3-year ROI = (3 × value − 3 × licenses − build) ÷ (3 × licenses + build)</code><br><span id="oRoi"></span><br>Time saved is capacity, not cash, until it is redeployed to higher-value work or avoids a new hire. I report both.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ADOPTION ================= -->
+<section class="block" id="adoption">
+  <div class="wrap">
+    <div class="sec-head"><div><div class="num">05 · Adoption</div><h2>Licenses are not adoption</h2><p>The measure that matters is how many people use AI every week to do real work. Illustrative 12-month rollout in three waves.</p></div></div>
+    <div class="grid g5" id="adoptKpis"></div>
+    <div class="grid g2" style="margin-top:16px">
+      <div class="card pad"><h3 class="card-title">Licensed, trained and active users</h3><div class="card-sub">Monthly, across the three rollout waves</div><div id="adoptLine" style="margin-top:10px"></div></div>
+      <div class="card pad"><h3 class="card-title">From license to habit</h3><div class="card-sub">Month 12: where people drop off, and where to coach next</div><div id="funnel" style="margin-top:10px"></div></div>
+    </div>
+    <div class="card table-wrap">
+      <table id="deptTable"><thead><tr><th>Department</th><th class="n">Licenses</th><th class="n">Trained</th><th class="n">Monthly active</th><th class="n">AI Champions</th><th>Top use case</th></tr></thead><tbody></tbody></table>
+    </div>
+    <p class="note">Production and Fleet lag because many of their people work on plant floors and in trucks, away from a desk. The next wave targets them with mobile, voice-first tools and floor-level Champions.</p>
+  </div>
+</section>
+
+<!-- ================= GOVERNANCE ================= -->
+<section class="block" id="governance">
+  <div class="wrap">
+    <div class="sec-head"><div><div class="num">06 · Governance</div><h2>Responsible AI, in plain language</h2><p>Simple rules people can follow without a lawyer, set with Cybersecurity, Data &amp; Integration and Business Applications.</p></div></div>
+    <div class="grid g2">
+      <div class="card table-wrap" style="margin-top:0">
+        <table>
+          <thead><tr><th>Data</th><th>Examples</th><th>Where it can go</th></tr></thead>
+          <tbody>
+            <tr><td><span class="lvl g"><i></i>Public</span></td><td>Product literature, published specs, website copy</td><td>Any approved AI tool</td></tr>
+            <tr><td><span class="lvl y"><i></i>Internal</span></td><td>Procedures, schedules, meeting notes</td><td>Company-licensed tools only (Microsoft 365 Copilot, enterprise Claude or ChatGPT), signed in with work accounts</td></tr>
+            <tr><td><span class="lvl o"><i></i>Confidential</span></td><td>Customer pricing, bids, contracts, HR records</td><td>Approved tools with data protection, plus a named owner and human review before anything leaves the company</td></tr>
+            <tr><td><span class="lvl r"><i></i>Restricted</span></td><td>SSNs, bank details, medical data, credentials</td><td>Never in AI tools</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card pad">
+        <h3 class="card-title">Every new use case answers seven questions</h3>
+        <ul class="check">
+          <li><span><b>Owner and outcome.</b> Who sponsors it, and which number should move?</span></li>
+          <li><span><b>Baseline.</b> How long does the work take today, and how often does it go wrong?</span></li>
+          <li><span><b>Data.</b> What data does it touch, and what is its classification?</span></li>
+          <li><span><b>Security review.</b> Has Cybersecurity approved the tool and access?</span></li>
+          <li><span><b>Integration.</b> Does it need ERP, dispatch or other system data from IT?</span></li>
+          <li><span><b>Human in the loop.</b> Who checks the output, and how is accuracy tested?</span></li>
+          <li><span><b>Change plan.</b> Who gets trained, by whom, and what gets retired?</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="card table-wrap">
+      <table>
+        <thead><tr><th>Decision</th><th>Business sponsor</th><th>AI Strategy Manager</th><th>Cybersecurity</th><th>Data &amp; Integration</th><th>Business Applications</th></tr></thead>
+        <tbody>
+          <tr><td><b>Approve a use case</b></td><td>Decides</td><td>Recommends</td><td>Consulted</td><td>Consulted</td><td>Consulted</td></tr>
+          <tr><td><b>Approve a new AI tool</b></td><td>Consulted</td><td>Recommends</td><td>Decides</td><td>Consulted</td><td>Consulted</td></tr>
+          <tr><td><b>Connect AI to company systems</b></td><td>Informed</td><td>Coordinates</td><td>Approves access</td><td>Builds</td><td>Builds</td></tr>
+          <tr><td><b>Report results to leadership</b></td><td>Co-presents</td><td>Owns</td><td>Informed</td><td>Informed</td><td>Informed</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PLAYBOOKS ================= -->
+<section class="block" id="playbooks">
+  <div class="wrap">
+    <div class="sec-head"><div><div class="num">07 · Playbooks</div><h2>Prompts people can use on Monday</h2><p>Role-based starting points for training sessions and AI Champions. Each one names the tool, the format and the check.</p></div></div>
+    <div class="plays" id="plays"></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Built by <a href="../?lens=ai">Bruno Silva</a> with HTML, CSS and JavaScript. Northwind Concrete is fictional, and all figures are illustrative.</span>
+    <a href="../?lens=ai">← Back to portfolio</a>
+  </div>
+</footer>
+<div class="tip" id="tip" role="tooltip"></div>
+
+<script>
+(function () {
+  "use strict";
+  var root = document.documentElement;
+
+  /* ================= Theme (shared with the rest of the site) ================= */
+  var KEY = "bs-theme";
+  function applyTheme(t) {
+    if (t === "light" || t === "dark") root.setAttribute("data-theme", t); else root.removeAttribute("data-theme");
+    document.querySelectorAll("[data-theme-set]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-theme-set") === (t || "auto"))); });
+    var dark = t === "dark" || (t !== "light" && matchMedia("(prefers-color-scheme: dark)").matches);
+    document.querySelector('meta[name="theme-color"]').setAttribute("content", dark ? "#0a0f18" : "#f5f4f1");
+  }
+  var saved = null; try { saved = localStorage.getItem(KEY); } catch (e) {}
+  applyTheme(saved || "auto");
+  document.querySelectorAll("[data-theme-set]").forEach(function (b) {
+    b.addEventListener("click", function () { var t = b.getAttribute("data-theme-set"); applyTheme(t); try { localStorage.setItem(KEY, t); } catch (e) {} });
+  });
+
+  /* ================= Data (fictional company, illustrative figures) ================= */
+  // v = value, f = feasibility (5 best); r = risk, e = effort (5 highest).
+  // bc = business-case defaults: people, times/week each, minutes saved, adoption, $/h, licensed users, $/user/month, build hours, $ errors avoided per month.
+  var UC = [
+    { id: 1, name: "Delivery ETA answers for customers", dept: "Dispatch", how: "Copilot Studio agent that reads order status and truck GPS, so dispatchers stop fielding routine “where is my truck?” calls.", v: 5, f: 3, r: 3, e: 4, bc: { people: 18, week: 150, mins: 3, adopt: 60, rate: 32, users: 1, lic: 200, build: 240, err: 0 } },
+    { id: 2, name: "Quote and bid drafting", dept: "Sales", how: "Claude Project loaded with the product catalog, price rules and past quotes; reps review every draft.", v: 5, f: 4, r: 3, e: 2, bc: { people: 22, week: 8, mins: 35, adopt: 70, rate: 45, users: 22, lic: 30, build: 80, err: 0 } },
+    { id: 3, name: "AP invoice capture and matching", dept: "Finance", how: "Power Automate with AI document processing reads invoices and flags mismatches against POs and delivery tickets.", v: 4, f: 4, r: 2, e: 3, bc: { people: 6, week: 105, mins: 4, adopt: 85, rate: 30, users: 6, lic: 40, build: 160, err: 1500 } },
+    { id: 4, name: "Month-end variance commentary", dept: "Finance", how: "Copilot in Excel drafts plant-by-plant variance explanations from approved P&L exports.", v: 3, f: 5, r: 2, e: 1, bc: { people: 5, week: 4, mins: 45, adopt: 80, rate: 48, users: 5, lic: 30, build: 16, err: 0 } },
+    { id: 5, name: "Batch ticket and QC summaries", dept: "Quality", how: "A Power Automate flow sends each shift lead a plain-language summary of out-of-spec batches.", v: 3, f: 4, r: 2, e: 2, bc: { people: 14, week: 10, mins: 10, adopt: 70, rate: 34, users: 14, lic: 30, build: 60, err: 800 } },
+    { id: 6, name: "Maintenance log search", dept: "Production", how: "Copilot grounded in SharePoint equipment manuals and maintenance logs answers “how did we fix this last time?”", v: 4, f: 3, r: 2, e: 3, bc: { people: 30, week: 6, mins: 12, adopt: 60, rate: 38, users: 30, lic: 30, build: 120, err: 0 } },
+    { id: 7, name: "Safety incident intake by voice (EN/ES)", dept: "Safety", how: "Power Apps form with speech-to-text; Copilot structures the report and writes the huddle summary in English and Spanish.", v: 4, f: 4, r: 3, e: 3, bc: { people: 40, week: 1.5, mins: 20, adopt: 75, rate: 36, users: 40, lic: 5, build: 140, err: 0 } },
+    { id: 8, name: "HR policy and benefits Q&A (EN/ES)", dept: "HR", how: "Copilot Studio agent that answers only from the handbook and benefits guide on SharePoint, in the employee's language.", v: 3, f: 5, r: 2, e: 2, bc: { people: 4, week: 60, mins: 6, adopt: 65, rate: 35, users: 1, lic: 200, build: 60, err: 0 } },
+    { id: 9, name: "Job descriptions and interview guides", dept: "HR", how: "A custom GPT or Claude Project with company templates and competencies.", v: 2, f: 5, r: 2, e: 1, bc: { people: 4, week: 3, mins: 40, adopt: 80, rate: 35, users: 4, lic: 30, build: 8, err: 0 } },
+    { id: 10, name: "IT help desk triage", dept: "IT", how: "Power Automate categorizes and routes tickets; Copilot drafts knowledge articles from resolved ones.", v: 3, f: 4, r: 2, e: 2, bc: { people: 6, week: 80, mins: 4, adopt: 70, rate: 40, users: 6, lic: 30, build: 50, err: 0 } },
+    { id: 11, name: "Driver hours and fuel exceptions", dept: "Fleet", how: "Power BI with a Copilot narrative on weekly telematics exports.", v: 3, f: 3, r: 2, e: 3, bc: { people: 3, week: 5, mins: 50, adopt: 80, rate: 34, users: 3, lic: 30, build: 70, err: 0 } },
+    { id: 12, name: "Supplier PO follow-ups", dept: "Purchasing", how: "Power Automate tracks open POs; Copilot in Outlook drafts follow-ups and delivery confirmations.", v: 3, f: 4, r: 2, e: 2, bc: { people: 5, week: 40, mins: 4, adopt: 75, rate: 36, users: 5, lic: 30, build: 40, err: 0 } },
+    { id: 13, name: "Product literature and spec sheets", dept: "Marketing", how: "Claude Project with brand voice and engineering specs; an engineer approves every change.", v: 2, f: 5, r: 2, e: 1, bc: { people: 3, week: 5, mins: 45, adopt: 80, rate: 38, users: 3, lic: 30, build: 10, err: 0 } },
+    { id: 14, name: "Weekly operations brief for leaders", dept: "Operations", how: "Copilot drafts a one-page brief from the plant, safety and delivery dashboards in Power BI.", v: 4, f: 4, r: 2, e: 2, bc: { people: 8, week: 1, mins: 90, adopt: 85, rate: 60, users: 8, lic: 30, build: 60, err: 0 } },
+    { id: 15, name: "Takeoffs from construction plans", dept: "Sales", how: "AI vision pulls quantities from plan sets for estimators to verify. High value, but accuracy stakes are high.", v: 5, f: 2, r: 4, e: 5, bc: { people: 6, week: 5, mins: 90, adopt: 50, rate: 45, users: 6, lic: 150, build: 300, err: 0 } },
+    { id: 16, name: "Contract and terms review", dept: "Legal", how: "Claude Project flags non-standard clauses for counsel; counsel decides.", v: 3, f: 3, r: 5, e: 3, bc: { people: 2, week: 6, mins: 30, adopt: 60, rate: 75, users: 2, lic: 30, build: 40, err: 0 } },
+    { id: 17, name: "Credit application summaries", dept: "Finance", how: "Power Automate extracts applications; Copilot summarizes them for credit managers.", v: 3, f: 3, r: 4, e: 3, bc: { people: 3, week: 15, mins: 12, adopt: 70, rate: 40, users: 3, lic: 30, build: 80, err: 0 } },
+    { id: 18, name: "Demand forecasting by plant", dept: "Production", how: "Machine-learning forecast built with the Data & Integration team; planners review every week.", v: 5, f: 2, r: 3, e: 5, bc: { people: 6, week: 3, mins: 120, adopt: 60, rate: 45, users: 6, lic: 0, build: 480, err: 0 } }
+  ];
+
+  var ADOPT = {
+    months: ["M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8", "M9", "M10", "M11", "M12"],
+    licensed: [150, 150, 300, 300, 300, 450, 450, 450, 600, 600, 600, 600],
+    trained: [40, 95, 150, 210, 260, 320, 370, 410, 470, 520, 555, 580],
+    active: [30, 62, 105, 140, 168, 215, 250, 280, 330, 372, 395, 408],
+    power: 156,
+    champions: 24
+  };
+  var DEPTS = [
+    { d: "Sales & Estimating", lic: 90, tr: 100, ac: 81, ch: 4, top: "Quote and bid drafting" },
+    { d: "Dispatch & Customer Service", lic: 70, tr: 96, ac: 74, ch: 3, top: "Delivery updates" },
+    { d: "Finance & AP", lic: 45, tr: 100, ac: 84, ch: 3, top: "Variance commentary" },
+    { d: "Production & Maintenance", lic: 160, tr: 94, ac: 55, ch: 5, top: "Maintenance log search" },
+    { d: "Quality", lic: 40, tr: 95, ac: 63, ch: 2, top: "QC summaries" },
+    { d: "Safety", lic: 45, tr: 98, ac: 71, ch: 2, top: "Incident intake (EN/ES)" },
+    { d: "HR", lic: 20, tr: 100, ac: 85, ch: 2, top: "Policy Q&A" },
+    { d: "IT", lic: 30, tr: 100, ac: 90, ch: 2, top: "Ticket triage" },
+    { d: "Fleet & Purchasing", lic: 100, tr: 96, ac: 56, ch: 1, top: "PO follow-ups" }
+  ];
+  var PLAYS = [
+    { role: "Dispatcher", title: "Today's delivery changes", tool: "Microsoft 365 Copilot in Outlook and Teams", prompt: "Summarize today's delivery changes from my inbox and the dispatch channel. Group them by plant, list the customer, order number, new time and reason, and flag anything that needs a call back before noon. Show it as a table.", why: "Names the sources, the grouping and the decision rule, so the answer is ready to act on." },
+    { role: "Plant manager", title: "Downtime patterns", tool: "Microsoft 365 Copilot (SharePoint)", prompt: "Using the Plant 3 maintenance logs from the last 90 days, list the five pieces of equipment with the most downtime, the most common cause for each, and one preventive step we could take. Cite the log entries you used.", why: "Asking for citations makes the output easy to check before anyone acts on it." },
+    { role: "Sales rep", title: "Quote follow-up", tool: "Claude Project with the catalog and price rules", prompt: "Draft a follow-up email to [customer] about the [project] bid. Use the catalog and price rules in this project. Keep it under 120 words, confirm the delivery window and lead time, and end with one clear next step.", why: "The project holds the approved catalog, so reps never paste pricing into a consumer tool." },
+    { role: "AP specialist", title: "Invoice mismatch", tool: "Microsoft 365 Copilot in Outlook", prompt: "Write a friendly email to [supplier] about invoice [number]: the quantity billed (240) does not match the receiving ticket (220). Ask for a corrected invoice by Friday.", why: "Specific numbers and a deadline turn a vague complaint into a quick fix." },
+    { role: "Safety coordinator", title: "Incident report and huddle note", tool: "Power Apps form with Copilot", prompt: "Turn these notes into an incident report with sections for what happened, location, people involved, immediate actions and likely root cause. Then write a two-sentence summary in English and in Spanish for the shift huddle.", why: "One input produces the formal record and a bilingual message crews will actually hear." },
+    { role: "Any leader", title: "Find the work worth changing", tool: "Claude, ChatGPT or Copilot", prompt: "I lead a [team] at a concrete-products manufacturer. List ten tasks my team repeats every week that take the most time. For each, say whether AI, automation, a process change or nothing would help most, and why.", why: "Starts discovery with the work, not the tool, and makes “nothing” an acceptable answer." }
+  ];
+
+  /* ================= Helpers ================= */
+  function $(s) { return document.querySelector(s); }
+  function fmt(n) { return Math.round(n).toLocaleString("en-US"); }
+  function money(n) {
+    var a = Math.abs(n), s = n < 0 ? "−$" : "$";
+    if (a >= 1e6) return s + (a / 1e6).toFixed(2) + "M";
+    if (a >= 1e4) return s + Math.round(a / 1e3) + "K";
+    return s + fmt(a);
+  }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  var WEEKS = 48, FTE_HOURS = 1920;
+  function hoursOf(bc) { return bc.people * bc.week * bc.mins / 60 * WEEKS * (bc.adopt / 100); }
+  function valueOf(bc) { return hoursOf(bc) * bc.rate + bc.err * 12; }
+  function licOf(bc) { return bc.users * bc.lic * 12; }
+
+  /* ================= Scoring ================= */
+  var W = { v: 40, f: 25, r: 15, e: 20 }, DEPT = "All";
+  function score(u) {
+    var t = W.v + W.f + W.r + W.e; if (!t) return 0;
+    return 100 * (W.v * (u.v - 1) / 4 + W.f * (u.f - 1) / 4 + W.r * (5 - u.r) / 4 + W.e * (5 - u.e) / 4) / t;
+  }
+  function tier(s) { return s >= 70 ? "now" : s >= 60 ? "next" : "later"; }
+  var TIER_NAME = { now: "Pilot now", next: "Plan next", later: "Explore later" };
+  function ranked() {
+    return UC.map(function (u) { var s = score(u); return { u: u, s: s, t: tier(s), h: hoursOf(u.bc) }; })
+      .sort(function (a, b) { return b.s - a.s || b.h - a.h; })
+      .map(function (x, i) { x.rank = i + 1; return x; });
+  }
+  function filtered(list) { return DEPT === "All" ? list : list.filter(function (x) { return x.u.dept === DEPT; }); }
+
+  /* ================= Tooltip ================= */
+  var tip = $("#tip");
+  function showTip(html, ev) { tip.innerHTML = html; tip.classList.add("show"); moveTip(ev); }
+  function moveTip(ev) { var x = ev.clientX + 14, y = ev.clientY + 14; var r = tip.getBoundingClientRect(); if (x + r.width > innerWidth - 8) x = ev.clientX - r.width - 14; if (y + r.height > innerHeight - 8) y = ev.clientY - r.height - 14; tip.style.left = x + "px"; tip.style.top = y + "px"; }
+  function hideTip() { tip.classList.remove("show"); }
+
+  /* ================= Overview KPIs ================= */
+  function renderKpis(list) {
+    var hours = list.reduce(function (a, x) { return a + x.h; }, 0);
+    var value = list.reduce(function (a, x) { return a + valueOf(x.u.bc); }, 0);
+    var now = list.filter(function (x) { return x.t === "now"; }).length;
+    var last = ADOPT.active.length - 1;
+    var html = [
+      ["" + list.length, "Use cases in the pipeline, " + now + " ready to pilot now"],
+      [fmt(hours), "Hours a year the full pipeline could free up (about " + (hours / FTE_HOURS).toFixed(1) + " FTE)"],
+      [money(value), "Annual value of that time at loaded cost, plus errors avoided"],
+      [Math.round(100 * ADOPT.active[last] / ADOPT.licensed[last]) + "%", "Of licensed users active each month by month 12, with " + ADOPT.champions + " AI Champions"]
+    ].map(function (k) { return '<div class="card kpi"><div class="v">' + k[0] + '</div><div class="l">' + k[1] + "</div></div>"; }).join("");
+    $("#kpis").innerHTML = html;
+  }
+
+  /* ================= Pipeline table ================= */
+  function renderTable(list) {
+    $("#pipeTable tbody").innerHTML = filtered(list).map(function (x) {
+      var u = x.u;
+      return "<tr><td><span class='rank'>" + x.rank + "</span></td>" +
+        "<td><div class='uc-name'>" + esc(u.name) + "</div><div class='uc-how'>" + esc(u.how) + "</div></td>" +
+        "<td>" + esc(u.dept) + "</td><td class='n'>" + u.v + "</td><td class='n'>" + u.f + "</td><td class='n'>" + u.r + "</td><td class='n'>" + u.e + "</td>" +
+        "<td class='n'>" + fmt(x.h) + "</td>" +
+        "<td class='n'><div class='score'><span class='bar'><i style='width:" + x.s.toFixed(0) + "%'></i></span><b>" + x.s.toFixed(0) + "</b></div></td>" +
+        "<td><span class='badge " + x.t + "'>" + TIER_NAME[x.t] + "</span></td>" +
+        "<td><button class='linkbtn' data-model='" + u.id + "'>Model it →</button></td></tr>";
+    }).join("") || "<tr><td colspan='11' class='muted'>No use cases for this department.</td></tr>";
+    document.querySelectorAll("[data-model]").forEach(function (b) {
+      b.addEventListener("click", function () { $("#ucSel").value = b.getAttribute("data-model"); loadCase(); document.getElementById("case").scrollIntoView(); });
+    });
+  }
+
+  /* ================= Value vs effort matrix (SVG) ================= */
+  function renderMatrix(list) {
+    var Wd = 560, H = 420, m = { l: 48, r: 16, t: 34, b: 44 };
+    var iw = Wd - m.l - m.r, ih = H - m.t - m.b;
+    var X = function (e) { return m.l + (e - 0.5) / 5 * iw; }, Y = function (v) { return m.t + ih - (v - 0.5) / 5 * ih; };
+    var maxH = Math.max.apply(null, UC.map(function (u) { return hoursOf(u.bc); }));
+    var R = function (h) { return 7 + 15 * Math.sqrt(h / maxH); };
+    var s = '<svg viewBox="0 0 ' + Wd + " " + H + '" role="img" aria-label="Value versus effort matrix">';
+    s += '<rect class="quad-bg" x="' + m.l + '" y="' + m.t + '" width="' + (X(3) - m.l) + '" height="' + (Y(3) - m.t) + '" rx="8"></rect>';
+    for (var i = 1; i <= 5; i++) {
+      s += '<line class="gridline" x1="' + X(i) + '" x2="' + X(i) + '" y1="' + m.t + '" y2="' + (m.t + ih) + '"></line>';
+      s += '<line class="gridline" x1="' + m.l + '" x2="' + (m.l + iw) + '" y1="' + Y(i) + '" y2="' + Y(i) + '"></line>';
+      s += '<text class="tick" x="' + X(i) + '" y="' + (m.t + ih + 16) + '" text-anchor="middle">' + i + "</text>";
+      s += '<text class="tick" x="' + (m.l - 10) + '" y="' + (Y(i) + 4) + '" text-anchor="end">' + i + "</text>";
+    }
+    s += '<line class="axis" x1="' + m.l + '" x2="' + (m.l + iw) + '" y1="' + (m.t + ih) + '" y2="' + (m.t + ih) + '"></line>';
+    s += '<line class="axis" x1="' + m.l + '" x2="' + m.l + '" y1="' + m.t + '" y2="' + (m.t + ih) + '"></line>';
+    s += '<text class="axis-label" x="' + (m.l + iw / 2) + '" y="' + (H - 6) + '" text-anchor="middle">Effort →</text>';
+    s += '<text class="axis-label" transform="translate(14 ' + (m.t + ih / 2) + ') rotate(-90)" text-anchor="middle">Value →</text>';
+    s += '<text class="quad" x="' + (m.l + 2) + '" y="' + (m.t - 12) + '">\u2196 Quick wins</text>';
+    s += '<text class="quad" x="' + (m.l + iw) + '" y="' + (m.t - 12) + '" text-anchor="end">Big bets \u2197</text>';
+    s += '<text class="quad" x="' + (m.l + 10) + '" y="' + (m.t + ih - 10) + '">Fill-ins</text>';
+    s += '<text class="quad" x="' + (m.l + iw - 10) + '" y="' + (m.t + ih - 10) + '" text-anchor="end">Rethink</text>';
+    // spread bubbles that share a grid point
+    var groups = {};
+    filtered(list).forEach(function (x) { var k = x.u.e + "-" + x.u.v; (groups[k] = groups[k] || []).push(x); });
+    var pts = [];
+    Object.keys(groups).forEach(function (k) {
+      var g = groups[k].sort(function (a, b) { return b.h - a.h; }), n = g.length;
+      var rmax = Math.max.apply(null, g.map(function (x) { return R(x.h); }));
+      var ring = n === 1 ? 0 : n === 2 ? rmax + 2 : rmax + 6;
+      g.forEach(function (x, i) {
+        var ang = -Math.PI / 2 + (n === 2 ? Math.PI / 2 : 0) + i * 2 * Math.PI / n;
+        pts.push({ x: x, cx: X(x.u.e) + Math.cos(ang) * ring, cy: Y(x.u.v) + Math.sin(ang) * ring * 0.8 });
+      });
+    });
+    pts.sort(function (a, b) { return b.x.h - a.x.h; });
+    pts.forEach(function (p) {
+      var x = p.x;
+      s += '<circle class="bubble ' + x.t + '" data-i="' + x.u.id + '" cx="' + p.cx.toFixed(1) + '" cy="' + p.cy.toFixed(1) + '" r="' + R(x.h).toFixed(1) + '"></circle>';
+      s += '<text class="bubble-label" x="' + p.cx.toFixed(1) + '" y="' + (p.cy + 4).toFixed(1) + '" text-anchor="middle">' + x.rank + "</text>";
+    });
+    s += "</svg>";
+    var el = $("#matrix"); el.innerHTML = s;
+    var byId = {}; list.forEach(function (x) { byId[x.u.id] = x; });
+    el.querySelectorAll(".bubble").forEach(function (c) {
+      var x = byId[c.getAttribute("data-i")];
+      var html = "<b>#" + x.rank + " " + esc(x.u.name) + "</b>" + esc(x.u.dept) + " · score " + x.s.toFixed(0) + " · " + fmt(x.h) + " h/yr";
+      c.addEventListener("mouseenter", function (ev) { showTip(html, ev); });
+      c.addEventListener("mousemove", moveTip);
+      c.addEventListener("mouseleave", hideTip);
+      c.addEventListener("click", function () { $("#ucSel").value = x.u.id; loadCase(); document.getElementById("case").scrollIntoView(); });
+    });
+  }
+
+  /* ================= Hours by use case (horizontal bars) ================= */
+  function renderHours(list) {
+    var rows = filtered(list).slice().sort(function (a, b) { return b.h - a.h; });
+    var Wd = 560, rowH = 21, m = { l: 214, r: 58, t: 4, b: 4 };
+    var H = m.t + m.b + rows.length * rowH;
+    var max = Math.max.apply(null, rows.map(function (x) { return x.h; }).concat([1]));
+    var s = '<svg viewBox="0 0 ' + Wd + " " + Math.max(H, 40) + '" role="img" aria-label="Hours saved per year by use case">';
+    rows.forEach(function (x, i) {
+      var y = m.t + i * rowH, w = (Wd - m.l - m.r) * x.h / max;
+      var label = x.u.name.length > 34 ? x.u.name.slice(0, 33) + "…" : x.u.name;
+      s += '<text class="tick" x="' + (m.l - 8) + '" y="' + (y + 14) + '" text-anchor="end">' + esc(label) + "</text>";
+      s += '<rect class="bubble ' + x.t + '" style="stroke:none" x="' + m.l + '" y="' + (y + 4) + '" width="' + Math.max(w, 2).toFixed(1) + '" height="' + (rowH - 8) + '" rx="3"></rect>';
+      s += '<text class="tick" x="' + (m.l + w + 6).toFixed(1) + '" y="' + (y + 14) + '">' + fmt(x.h) + "</text>";
+    });
+    s += "</svg>";
+    $("#hoursBars").innerHTML = rows.length ? s : "<p class='muted'>No use cases for this department.</p>";
+  }
+
+  /* ================= Roadmap lanes ================= */
+  function renderLanes(list) {
+    var f = filtered(list);
+    var lanes = { now: [], next: [], later: [] };
+    f.forEach(function (x) { lanes[x.t].push(x); });
+    var H = [["now", "Now", "0–6 months"], ["next", "Next", "6–12 months"], ["later", "Later", "12–24 months"]];
+    var found = {
+      now: ["AI literacy program, wave 1", "AI Champions network launched", "Approved tools and data guardrails", "Baselines for every pilot"],
+      next: ["Champions in every department", "Role-based playbooks", "Executive results dashboard"],
+      later: ["Agents connected to ERP and dispatch data, with IT", "Annual strategy refresh and budget"]
+    };
+    var s = '<div class="lane-h corner"></div>' + H.map(function (h) { return '<div class="lane-h">' + h[2] + "<b>" + h[1] + "</b></div>"; }).join("");
+    s += '<div class="lane-label">Use cases<span>Placed by live score</span></div>';
+    H.forEach(function (h) {
+      s += '<div class="lane-cell" data-h="' + h[1] + " · " + h[2] + '">' + (lanes[h[0]].map(function (x) { return '<div class="rm ' + h[0] + '"><b>' + esc(x.u.name) + "</b>" + esc(x.u.dept) + " · " + fmt(x.h) + " h/yr</div>"; }).join("") || '<span class="muted" style="font-size:13px">None in this view</span>') + "</div>";
+    });
+    s += '<div class="lane-label">Foundations<span>Program work</span></div>';
+    H.forEach(function (h) {
+      s += '<div class="lane-cell" data-h="' + h[1] + " · foundations" + '">' + found[h[0]].map(function (t) { return '<div class="rm found">' + esc(t) + "</div>"; }).join("") + "</div>";
+    });
+    $("#lanes").innerHTML = s;
+  }
+
+  /* ================= Business case ================= */
+  var FIELDS = { iPeople: "people", iWeek: "week", iMins: "mins", iAdopt: "adopt", iRate: "rate", iUsers: "users", iLic: "lic", iBuild: "build", iErr: "err" };
+  var BUILD_RATE = 95;
+  $("#ucSel").innerHTML = UC.map(function (u) { return '<option value="' + u.id + '">' + esc(u.name) + " (" + esc(u.dept) + ")</option>"; }).join("");
+  $("#ucSel").value = "2";
+  function loadCase() {
+    var u = UC.filter(function (x) { return String(x.id) === $("#ucSel").value; })[0];
+    Object.keys(FIELDS).forEach(function (k) { document.getElementById(k).value = u.bc[FIELDS[k]]; });
+    $("#iBuildRate").value = BUILD_RATE;
+    calc();
+  }
+  function val(id) { var n = parseFloat(document.getElementById(id).value); return isFinite(n) && n > 0 ? n : 0; }
+  function calc() {
+    var u = UC.filter(function (x) { return String(x.id) === $("#ucSel").value; })[0];
+    var bc = { people: val("iPeople"), week: val("iWeek"), mins: val("iMins"), adopt: Math.min(val("iAdopt"), 100), rate: val("iRate"), users: val("iUsers"), lic: val("iLic"), err: val("iErr") };
+    var hours = hoursOf(bc), value = valueOf(bc), lic = licOf(bc), build = val("iBuild") * val("iBuildRate");
+    var y1cost = lic + build, net = value - y1cost, monthly = (value - lic) / 12;
+    var pay = monthly > 0 ? build / monthly : Infinity;
+    var roi3 = (3 * lic + build) > 0 ? (3 * value - 3 * lic - build) / (3 * lic + build) : 0;
+    $("#bcTitle").textContent = u.name;
+    $("#bcHow").textContent = u.how;
+    $("#oHours").textContent = fmt(hours);
+    $("#oFte").textContent = (hours / FTE_HOURS).toFixed(2);
+    $("#oValue").textContent = money(value);
+    $("#oCost").textContent = money(y1cost);
+    $("#oNet").innerHTML = '<span class="' + (net >= 0 ? "pos" : "neg") + '">' + money(net) + "</span>";
+    $("#oPay").textContent = !isFinite(pay) ? "Never" : pay < 1 ? "< 1 month" : pay.toFixed(1) + " months";
+    $("#oRoi").innerHTML = "3-year ROI: <b class='" + (roi3 >= 0 ? "pos" : "neg") + "'>" + (roi3 * 100).toFixed(0) + "%</b> · Assumes 48 working weeks and a " + fmt(FTE_HOURS) + "-hour FTE.";
+    // value vs cost bars, year one and three years
+    var rows = [["Year 1 value", value, "pos"], ["Year 1 cost", y1cost, "neg"], ["3-year value", 3 * value, "pos"], ["3-year cost", 3 * lic + build, "neg"]];
+    var max = Math.max.apply(null, rows.map(function (r) { return r[1]; }).concat([1]));
+    var Wd = 520, rowH = 26, l = 96, r = 70, s = '<svg viewBox="0 0 ' + Wd + " " + (rows.length * rowH + 4) + '" role="img" aria-label="Value versus cost">';
+    rows.forEach(function (row, i) {
+      var y = i * rowH, w = (Wd - l - r) * row[1] / max;
+      s += '<text class="tick" x="' + (l - 8) + '" y="' + (y + 17) + '" text-anchor="end">' + row[0] + "</text>";
+      s += '<rect x="' + l + '" y="' + (y + 6) + '" width="' + Math.max(w, 2).toFixed(1) + '" height="' + (rowH - 11) + '" rx="3" style="fill:var(' + (row[2] === "pos" ? "--now" : "--later") + ')"></rect>';
+      s += '<text class="tick" x="' + (l + w + 6).toFixed(1) + '" y="' + (y + 17) + '">' + money(row[1]) + "</text>";
+    });
+    $("#bcBars").innerHTML = s + "</svg>";
+  }
+  Object.keys(FIELDS).concat(["iBuildRate"]).forEach(function (k) { document.getElementById(k).addEventListener("input", calc); });
+  $("#ucSel").addEventListener("change", loadCase);
+
+  /* ================= Adoption ================= */
+  function renderAdoption() {
+    var n = ADOPT.months.length - 1, lic = ADOPT.licensed[n];
+    var k = [
+      [fmt(lic), "Licensed users"],
+      [Math.round(100 * ADOPT.trained[n] / lic) + "%", "Trained (" + fmt(ADOPT.trained[n]) + ")"],
+      [Math.round(100 * ADOPT.active[n] / lic) + "%", "Active monthly (" + fmt(ADOPT.active[n]) + ")"],
+      [Math.round(100 * ADOPT.power / lic) + "%", "Weekly power users (" + fmt(ADOPT.power) + ")"],
+      [ADOPT.champions, "AI Champions in " + DEPTS.length + " departments"]
+    ];
+    $("#adoptKpis").innerHTML = k.map(function (x) { return '<div class="card kpi"><div class="v">' + x[0] + '</div><div class="l">' + x[1] + "</div></div>"; }).join("");
+
+    // line chart
+    var Wd = 560, H = 300, m = { l: 44, r: 92, t: 14, b: 30 }, iw = Wd - m.l - m.r, ih = H - m.t - m.b;
+    var X = function (i) { return m.l + i / n * iw; }, Y = function (v) { return m.t + ih - v / 650 * ih; };
+    var path = function (arr, step) {
+      return arr.map(function (v, i) {
+        if (step && i > 0) return "H" + X(i).toFixed(1) + "V" + Y(v).toFixed(1);
+        return (i ? "L" : "M") + X(i).toFixed(1) + "," + Y(v).toFixed(1);
+      }).join("");
+    };
+    var s = '<svg viewBox="0 0 ' + Wd + " " + H + '" role="img" aria-label="Licensed, trained and active users by month">';
+    [0, 200, 400, 600].forEach(function (v) {
+      s += '<line class="gridline" x1="' + m.l + '" x2="' + (m.l + iw) + '" y1="' + Y(v) + '" y2="' + Y(v) + '"></line>';
+      s += '<text class="tick" x="' + (m.l - 8) + '" y="' + (Y(v) + 4) + '" text-anchor="end">' + v + "</text>";
+    });
+    ADOPT.months.forEach(function (mo, i) { if (i % 2 === 0 || i === n) s += '<text class="tick" x="' + X(i) + '" y="' + (H - 8) + '" text-anchor="middle">' + mo + "</text>"; });
+    s += '<path class="area-active" d="' + path(ADOPT.active) + "L" + X(n) + "," + Y(0) + "L" + X(0) + "," + Y(0) + 'Z"></path>';
+    s += '<path class="line-licensed" d="' + path(ADOPT.licensed, true) + '"></path>';
+    s += '<path class="line-trained" d="' + path(ADOPT.trained) + '"></path>';
+    s += '<path class="line-active" d="' + path(ADOPT.active) + '"></path>';
+    ADOPT.active.forEach(function (v, i) { s += '<circle class="pt" cx="' + X(i) + '" cy="' + Y(v) + '" r="3"></circle>'; });
+    s += '<text class="end-label" style="fill:var(--text-3)" x="' + (X(n) + 8) + '" y="' + (Y(ADOPT.licensed[n]) - 2) + '">Licensed</text>';
+    s += '<text class="end-label" style="fill:var(--steel)" x="' + (X(n) + 8) + '" y="' + (Y(ADOPT.trained[n]) + 14) + '">Trained</text>';
+    s += '<text class="end-label" style="fill:var(--navy)" x="' + (X(n) + 8) + '" y="' + (Y(ADOPT.active[n]) + 4) + '">Active</text>';
+    $("#adoptLine").innerHTML = s + "</svg>";
+
+    // funnel
+    var stages = [["Licensed", lic], ["Trained", ADOPT.trained[n]], ["Active monthly", ADOPT.active[n]], ["Weekly power users", ADOPT.power]];
+    var FW = 520, FH = 250, rowH = 58, f = '<svg viewBox="0 0 ' + FW + " " + FH + '" role="img" aria-label="Adoption funnel">';
+    stages.forEach(function (st, i) {
+      var w = (FW - 190) * st[1] / lic, x = 0, y = i * rowH + 6;
+      f += '<rect class="funnel-bar" x="' + x + '" y="' + y + '" width="' + w.toFixed(1) + '" height="38" rx="6" style="opacity:' + (1 - i * 0.18) + '"></rect>';
+      f += '<text class="funnel-txt" x="' + (w + 12).toFixed(1) + '" y="' + (y + 17) + '">' + st[0] + " · " + fmt(st[1]) + "</text>";
+      var sub = i === 0 ? "100% of licenses" : Math.round(100 * st[1] / stages[i - 1][1]) + "% of the stage above";
+      f += '<text class="funnel-sub" x="' + (w + 12).toFixed(1) + '" y="' + (y + 34) + '">' + sub + "</text>";
+    });
+    $("#funnel").innerHTML = f + "</svg>";
+
+    $("#deptTable tbody").innerHTML = DEPTS.map(function (d) {
+      return "<tr><td><b>" + esc(d.d) + "</b></td><td class='n'>" + d.lic + "</td><td class='n'>" + d.tr + "%</td><td class='n'>" + d.ac + "%</td><td class='n'>" + d.ch + "</td><td>" + esc(d.top) + "</td></tr>";
+    }).join("");
+  }
+
+  /* ================= Playbooks ================= */
+  $("#plays").innerHTML = PLAYS.map(function (p, i) {
+    return '<div class="card play"><div class="role">' + esc(p.role) + "</div><h3>" + esc(p.title) + '</h3><div class="tool">' + esc(p.tool) + "</div><blockquote>" + esc(p.prompt) + '</blockquote><div class="why"><b>Why it works:</b> ' + esc(p.why) + '</div><button class="copy" data-copy="' + i + '">Copy prompt</button></div>';
+  }).join("");
+  document.querySelectorAll("[data-copy]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var text = PLAYS[+b.getAttribute("data-copy")].prompt;
+      var done = function () { b.textContent = "Copied"; b.classList.add("done"); setTimeout(function () { b.textContent = "Copy prompt"; b.classList.remove("done"); }, 1800); };
+      if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, function () {}); else done();
+    });
+  });
+
+  /* ================= Controls ================= */
+  var depts = ["All"].concat(UC.map(function (u) { return u.dept; }).filter(function (d, i, a) { return a.indexOf(d) === i; }).sort());
+  $("#deptChips").innerHTML = depts.map(function (d) { return '<button aria-pressed="' + (d === "All") + '" data-dept="' + esc(d) + '">' + esc(d) + "</button>"; }).join("");
+  document.querySelectorAll("[data-dept]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      DEPT = b.getAttribute("data-dept");
+      document.querySelectorAll("[data-dept]").forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); });
+      renderAll();
+    });
+  });
+  [["wV", "v", "oV"], ["wF", "f", "oF"], ["wR", "r", "oR"], ["wE", "e", "oE"]].forEach(function (c) {
+    document.getElementById(c[0]).addEventListener("input", function (ev) { W[c[1]] = +ev.target.value; renderAll(); });
+  });
+  function renderWeights() {
+    var t = W.v + W.f + W.r + W.e || 1;
+    $("#oV").textContent = Math.round(100 * W.v / t) + "%"; $("#oF").textContent = Math.round(100 * W.f / t) + "%";
+    $("#oR").textContent = Math.round(100 * W.r / t) + "%"; $("#oE").textContent = Math.round(100 * W.e / t) + "%";
+  }
+  function renderAll() {
+    var list = ranked();
+    renderWeights(); renderKpis(list); renderTable(list); renderMatrix(list); renderHours(list); renderLanes(list);
+  }
+  renderAll(); renderAdoption(); loadCase();
+
+  /* ================= Section highlight in the sub-nav ================= */
+  var links = document.querySelectorAll(".subnav a");
+  var spy = new IntersectionObserver(function (es) {
+    es.forEach(function (e) { if (e.isIntersecting) links.forEach(function (a) { a.classList.toggle("active", a.getAttribute("href") === "#" + e.target.id); }); });
+  }, { rootMargin: "-40% 0px -55% 0px" });
+  document.querySelectorAll("section.block").forEach(function (s) { spy.observe(s); });
+
+  // expose for automated checks
+  window.__lab = { UC: UC, hoursOf: hoursOf, valueOf: valueOf, licOf: licOf, score: score, ranked: ranked };
+})();
+</script>
+</body>
+</html>
