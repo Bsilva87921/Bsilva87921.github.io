@@ -4,7 +4,7 @@
 import { Stage, THREE } from './stage.js';
 import { uniform, diffuseColor } from 'three/tsl';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
-import { esc, nf, themeOf, applyTheme, floor, fit, recolor, lights, markColor } from './common.js';
+import { esc, nf, themeOf, applyTheme, gridFloor, fit, recolor, lights, markColor } from './common.js';
 
 const SX = 1.5, SZ = 1.35, NW = 0.66, NH = 0.36;
 const V3 = (x, y, z) => new THREE.Vector3(x, y, z);
@@ -59,7 +59,13 @@ export async function flow(el, data, opts) {
         const L2 = st.label(fmtN(n.count), 'px3d-glabel px3d-count'); const l2 = { el: L2, pos: V3(p.x, NH + 0.06, p.z), dy: -6, group: 'fl', push: -1 }; st.labels.push(l2); labs.push(l2);
       }
     });
-    fl = floor(bounds.hx * 2 + 1.0, bounds.hz * 2 + 1.0, Math.round(bounds.hx * 2), Math.max(1, Math.round(bounds.hz * 2)), theme);
+    // grid lines run between tool columns and rows, so every tool sits in its own cell
+    const xmin = Math.min(...xs), xmax = Math.max(...xs), ymin = Math.min(...ys), ymax = Math.max(...ys);
+    const gx = [], gz = [];
+    for (let k = xmin; k <= xmax + 1; k++) gx.push((k - 0.5 - cx) * SX);
+    for (let k = ymin; k <= ymax + 1; k++) gz.push((k - 0.5 - cy) * SZ);
+    const zLo = oneRow ? -1.35 : gz[0], zHi = oneRow ? 1.05 : gz[gz.length - 1];
+    fl = gridFloor(gx[0], gx[gx.length - 1], zLo, zHi, gx, oneRow ? [zLo, zHi] : gz, theme, 0.3);
     G.add(fl);
     // connections, and the particles that travel them
     const edges = (d.edges || []).filter(e => byId[e[0]] && byId[e[1]]);

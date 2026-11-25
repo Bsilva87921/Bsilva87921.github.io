@@ -210,14 +210,15 @@ void main(){float d=length(gl_PointCoord-0.5);float a=smoothstep(0.5,0.0,d)*vA*u
         this.buffers[k] = { buf, count: data.length / 9 };
       }
       const rnd = makeRng(20261105);
-      // Hero crystals: framed around the edges so the content stays calm
+      // Hero crystals: they sit in the side margins, half off the edge, and the far ones stay small, so none of them
+      // lands on the headline, the cards, the header or the tab bar
       const layout = [
-        ['geo', -0.86, 0.62, -1.5, 1.05], ['crystal', 0.84, 0.7, -2.5, 1.2], ['octa', -0.72, -0.5, 0.5, 0.75], ['ico', 0.9, -0.38, -1, 0.95],
-        ['star', -0.2, 0.92, -7, 1.3], ['tetra', 0.42, -0.9, -4, 0.8], ['ico', -0.98, 0.05, -8, 1.4], ['geo', 0.98, 0.25, -9, 1.5],
-        ['crystal', 0.15, 1.15, -12, 1.6], ['octa', -0.5, -1.05, -10, 1.3]
+        ['geo', -1.06, 0.5, -2.2, 0.78], ['crystal', 1.05, 0.58, -2.8, 0.86], ['octa', -1.04, -0.58, -1.6, 0.62], ['ico', 1.06, -0.5, -2.2, 0.72],
+        ['star', -1.0, 0.02, -9, 0.95], ['tetra', 1.02, -0.05, -8, 0.8], ['ico', -0.96, -1.0, -10, 0.95], ['geo', 0.98, 0.95, -11, 1.05],
+        ['crystal', -0.9, 0.9, -12, 1.0], ['octa', 0.92, -1.0, -12, 0.95]
       ];
       this.crystals = layout.map((L, i) => ({ kind: L[0], nx: L[1], ny: L[2], z: L[3], s: L[4], ci: i % 10, rs: [rnd.float(-0.25, 0.25), rnd.float(0.12, 0.35), rnd.float(-0.15, 0.15)], ph: rnd.float(0, 6.28), alpha: rnd.float(0.5, 0.75), pos: [0, 0, 0] }));
-      for (let i = 0; i < 8; i++) this.crystals.push({ kind: rnd.pick(['tetra', 'octa', 'crystal']), nx: rnd.float(-1.1, 1.1), ny: rnd.float(-1.2, 1.2), z: rnd.float(-14, -5), s: rnd.float(0.25, 0.45), ci: rnd.int(0, 9), rs: [rnd.float(-0.6, 0.6), rnd.float(-0.6, 0.6), rnd.float(-0.4, 0.4)], ph: rnd.float(0, 6.28), alpha: 0.55, pos: [0, 0, 0] });
+      for (let i = 0; i < 8; i++) this.crystals.push({ kind: rnd.pick(['tetra', 'octa', 'crystal']), nx: (i % 2 ? 1 : -1) * rnd.float(0.82, 1.12), ny: rnd.float(-1.05, 0.95), z: rnd.float(-14, -5), s: rnd.float(0.25, 0.45), ci: rnd.int(0, 9), rs: [rnd.float(-0.6, 0.6), rnd.float(-0.6, 0.6), rnd.float(-0.4, 0.4)], ph: rnd.float(0, 6.28), alpha: 0.55, pos: [0, 0, 0] });
       this.crystals.sort((a, b) => a.z - b.z);
       const N = 1100, arr = new Float32Array(N * 4);
       for (let i = 0; i < N; i++) { arr[i * 4] = rnd.float(-30, 30); arr[i * 4 + 1] = rnd.float(-20, 20); arr[i * 4 + 2] = rnd.float(-40, 4); arr[i * 4 + 3] = rnd.next(); }
@@ -249,7 +250,7 @@ void main(){float d=length(gl_PointCoord-0.5);float a=smoothstep(0.5,0.0,d)*vA*u
       const t = Math.tan(25 * Math.PI / 180);
       const narrow = this.aspect < 0.8;
       this.sk = narrow ? 0.58 : this.aspect < 1.15 ? 0.8 : 1;
-      this.calm = [w, narrow ? 0.62 : 0.5, narrow ? 0.62 : 0.42];
+      this.calm = [w, narrow ? 0.7 : 0.66, narrow ? 0.7 : 0.62];
       for (const c of this.crystals) {
         const half = (10 - c.z) * t, spreadX = narrow ? 1.14 : this.aspect < 1.15 ? 1.02 : 0.92;
         c.pos = [c.nx * half * this.aspect * spreadX, c.ny * half * 0.92, c.z];

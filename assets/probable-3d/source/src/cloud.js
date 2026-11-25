@@ -4,7 +4,7 @@
    and the risk cap) that move with the sliders. Loans that were not fully paid are drawn larger. */
 import { Stage, THREE, clamp } from './stage.js';
 import { diffuseColor, uniform } from 'three/tsl';
-import { esc, themeOf, applyTheme, segments, recolor, floor, fit, lights } from './common.js';
+import { esc, themeOf, applyTheme, segments, recolor, gridFloor, fit, lights } from './common.js';
 
 const W = 6.6, H = 3.15, D = 3.8;                                   // footprint and height of the cloud
 const F0 = 610, F1 = 830, R1 = 450, D1 = 300;                     // FICO range; risk and DTI are stored in tenths
@@ -21,7 +21,7 @@ export async function cloud(el, data, opts) {
   applyTheme(st, theme);
   const Lt = lights(scene, theme);
 
-  const fl = floor(W + 0.5, D + 0.5, 11, 6, theme, W, D); rig.add(fl);
+  const fl = gridFloor(-W / 2, W / 2, -D / 2, D / 2, [F0, 650, 700, 750, 800, F1].map(xOf), [0, 100, 200, 300].map(zOf), theme, 0.25); rig.add(fl);
   // back and right walls: faint frames that give the cloud a box to sit in (the cloud is low on the right)
   const wallPts = [];
   for (let k = 1; k <= 4; k++) { const y = yOf(k * 100); wallPts.push(V3(-W / 2, y, -D / 2), V3(W / 2, y, -D / 2), V3(W / 2, y, -D / 2), V3(W / 2, y, D / 2)); }

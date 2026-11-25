@@ -4,7 +4,7 @@
    when the page's filters change; hover reads any bar. */
 import { Stage, THREE } from './stage.js';
 import { positionLocal, smoothstep, mix, float, vec3, diffuseColor, uniform } from 'three/tsl';
-import { esc, nf, themeOf, applyTheme, floor, fit, lights, markColor } from './common.js';
+import { esc, nf, themeOf, applyTheme, gridFloor, fit, lights, markColor } from './common.js';
 
 const HMAX = 2.7;
 const V3 = (x, y, z) => new THREE.Vector3(x, y, z);
@@ -52,7 +52,14 @@ export async function bars(el, data, opts) {
     for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) {
       B.push({ r, c, x: x0 + c * cs, z: z0 - rowZ(r), h: 0, h0: 0, th: 0, v: 0, pos: V3(0, 0, 0) });
     }
-    fl = floor(dims.w + cs * 1.6, dims.dp + rs * 1.6, Math.max(1, Math.round(C / (d.colEvery || 1))), Math.max(1, R), theme, dims.w + cs, dims.dp + rs);
+    // grid lines fall on bar boundaries: between every k-th column (where the labels are) and between rows
+    const ev = d.colEvery || Math.ceil(C / 8), gx = [], gz = [];
+    for (let c = 0; c <= C; c += ev) gx.push(x0 + (c - 0.5) * cs);
+    if ((C % ev) !== 0) gx.push(x0 + (C - 0.5) * cs);
+    gz.push(z0 + rs * 0.5);
+    for (let r = 0; r < R - 1; r++) gz.push(z0 - (rowZ(r) + rowZ(r + 1)) / 2);
+    gz.push(z0 - rowZ(R - 1) - rs * 0.5);
+    fl = gridFloor(x0 - cs * 0.5, x0 + (C - 0.5) * cs, z0 - rowZ(R - 1) - rs * 0.5, z0 + rs * 0.5, gx, gz, theme, Math.min(cs, rs) * 0.6);
     rig.add(fl);
     // labels: every k-th column along the front, each row along the right edge, groups along the left
     const lab = (text, cls, pos, extra) => { const e = st.label(text, cls); const L = Object.assign({ el: e, pos }, extra || {}); st.labels.push(L); labelEls.push(L); return L; };
@@ -128,7 +135,8 @@ export async function bars(el, data, opts) {
 
   st.onResize = () => { if (!d) return; const w = st.w; if (Math.abs((st._lw || 0) - w) > 60 || (st._lw >= 460) !== (w >= 460)) { st._lw = w; apply(d, true); } else setCam(); };
   st.onHover = () => { st.dirty = true; };
-  st.tipHTML = b => d.tip ? d.tip(b.r, b.c, b.v) : `<b>${esc(d.rows[b.r])}</b><span class="px3d-big">${esc(d.fmt ? d.fmt(b.v) : nf.format(Math.round(b.v)))}</span><span class="px3d-sub">${esc(d.cols[b.c])}</span>`;
+  st.tipHTML = b => (d.tip ? d.tip(b.r, b.c, b.v) : `<b>${esc(d.rows[b.r])}</b><span class="px3d-big">${esc(d.fmt ? d.fmt(b.v) : nf.format(Math.round(b.v)))}</span><span class="px3d-sub">${esc(d.cols[b.c])}</span>`) +
+    (d.pickHint ? `<span class="px3d-hint">${esc(d.pickHint(b.r, b.c, st.touch))}</span>` : '');
   st.yaw = -0.36; st.pitch = 0.0;
   st.onFrame = t => {
     if (frameBars()) st.dirty = true;

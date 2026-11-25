@@ -581,10 +581,11 @@ const D = {"years":[1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,
     const narrow = ($('px3d') || {}).clientWidth < 520;
     if (capAt) v.forEach((x, i) => { if (x > capAt) notes.push({ r: Math.floor(i / Y), c: i % Y, text: narrow ? `${compact(x, 0)} (capped)` : `${MONTHS[Math.floor(i / Y)]} ${D.years[i % Y]}: ${compact(x)} (bar capped)` }); });
     return { cols: D.years.map(String), rows: MONTHS, v, colEvery: 5, rowEvery: 3, hiCol: state.y, rowRoom: 0.6, tilt: 0.5, capAt, notes: notes.slice(0, 2),
+      pickHint: (r, c, touch) => state.y === c ? (touch ? 'Tap again to show all years' : 'Click to show all years') : (touch ? `Tap again to filter the page to ${D.years[c]}` : `Click to filter the page to ${D.years[c]}`),
       tip: (r, c, val) => `<b>${MONTHS[r]} ${D.years[c]}</b><span class="px3d-big">${compact(val)}</span><span class="px3d-sub">${scope}</span>` };
   }
   function render3d(){ if (px) px.update(pxData()); }
-  if (window.Project3D) Project3D.mount($('px3d'), 'bars', pxData).then(c => { px = c; });
+  if (window.Project3D) Project3D.mount($('px3d'), 'bars', pxData, { onPick: b => { if (!b) return; state.y = state.y === b.c ? -1 : b.c; render(); } }).then(c => { px = c; });
 
   let rt;
   new ResizeObserver(() => { clearTimeout(rt); rt = setTimeout(() => { hoverIdx = -1; hideTip(); renderTrend(); }, 80); }).observe(plot);

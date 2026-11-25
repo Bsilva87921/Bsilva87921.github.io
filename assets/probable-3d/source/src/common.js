@@ -97,3 +97,18 @@ const WHITE = new THREE.Color('#ffffff');
 export function markColor(out, hex, theme, k) { out.set(hex); if (!theme.dark) out.lerp(WHITE, k == null ? 0.16 : k); return out; }
 
 export function lerpColor(out, a, b, k) { return out.copy(a).lerp(b, k); }
+
+/* a plate spanning x0..x1 × z0..z1 (plus a margin) with grid lines exactly at the given x and z positions, so the
+   grid lines up with the data's own scale: ticks, bar boundaries or tool columns */
+export function gridFloor(x0, x1, z0, z1, xs, zs, theme, margin) {
+  const m = margin == null ? 0.25 : margin, grp = new THREE.Group();
+  const plateMat = new THREE.MeshBasicNodeMaterial({ color: new THREE.Color(theme.plate), transparent: true, opacity: 0.92, depthWrite: false, side: THREE.DoubleSide });
+  const plate = new THREE.Mesh(new THREE.PlaneGeometry(x1 - x0 + 2 * m, z1 - z0 + 2 * m), plateMat);
+  plate.rotation.x = -Math.PI / 2; plate.position.set((x0 + x1) / 2, -0.004, (z0 + z1) / 2); plate.renderOrder = -2; grp.add(plate);
+  const pts = [];
+  for (const x of xs) pts.push(new THREE.Vector3(x, 0, z0), new THREE.Vector3(x, 0, z1));
+  for (const z of zs) pts.push(new THREE.Vector3(x0, 0, z), new THREE.Vector3(x1, 0, z));
+  const grid = segments(pts, theme.line, theme.dark ? 0.24 : 0.32); grid.renderOrder = -1; grp.add(grid);
+  grp.setTheme = t => { recolor(plate, t.plate); recolor(grid, t.line, t.dark ? 0.24 : 0.32); };
+  return grp;
+}

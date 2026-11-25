@@ -884,7 +884,10 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
   function render3d(list) { pxList = list; if (px) px.update(pxData(list)); }
   if (window.Project3D) {
     Project3D.mount(document.getElementById("px3d"), "constellation", function () { return pxData(pxList || ranked()); }, {
-      theme: function (t, v) { t.tiers = { now: v("--px-now"), next: v("--px-next"), later: v("--px-later") }; }
+      theme: function (t, v) { t.tiers = { now: v("--px-now"), next: v("--px-next"), later: v("--px-later") }; },
+      // clicking a sphere opens that use case in the business-case calculator, like "Model it" in the table
+      onPick: function (b) { if (!b || !b.u) return; $("#ucSel").value = String(b.u.id); loadCase(); document.getElementById("case").scrollIntoView({ behavior: "smooth" }); },
+      pickHint: { mouse: "Click to open its business case", touch: "Tap again to open its business case" }
     }).then(function (c) { px = c; if (c && pxList) c.update(pxData(pxList)); });
   }
   renderAll(); renderAdoption(); loadCase();

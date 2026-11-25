@@ -3,11 +3,12 @@
    when the panel is about to be seen, follows the page's light/dark theme, and adds a Motion/Still switch that is
    remembered across the site. If the browser cannot draw 3D, the panel keeps its still image.
 
-   Project3D.mount(host, kind, data, { theme(t, v) }) -> Promise<controller | null>
+   Project3D.mount(host, kind, data, { theme(t, v), onPick(item), pickHint }) -> Promise<controller | null>
      host   the panel element (class "px-panel"); its CSS custom properties --px-* carry the colors
      kind   'constellation' | 'cloud' | 'bars' | 'flow' (see assets/probable-3d/source/src)
      data   the scene's data; controller.update(data) redraws it
      theme  optional hook to add scene colors read from the panel: (t, v) => { t.tiers = { now: v('--px-now') } }
+     onPick optional: what clicking (or tapping twice) a mark does; pickHint { mouse, touch } says so in the tooltip
    Project3D.transition(fn) runs a theme change inside a view transition where the browser supports one. */
 (function () {
   "use strict";
@@ -72,7 +73,7 @@
           host.classList.add("px-loading");
           var theme = readTheme(host, opts.theme);
           load().then(function (m) {
-            return m.mount(host, kind, typeof data === "function" ? data() : data, { reducedMotion: still(), theme: theme, quality: opts.quality });
+            return m.mount(host, kind, typeof data === "function" ? data() : data, { reducedMotion: still(), theme: theme, quality: opts.quality, onPick: opts.onPick, pickHint: opts.pickHint });
           }).then(function (ctl) {
             host.classList.remove("px-loading"); host.classList.add("px3d-on");
             motionToggle(host, ctl);

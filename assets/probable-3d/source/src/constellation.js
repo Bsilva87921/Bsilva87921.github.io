@@ -125,7 +125,7 @@ export async function constellation(el, data, opts) {
       b.col.copy(b.from).lerp(b.to, k); b.cU.value.copy(b.col); b.spot.material.color.copy(b.col);
       const hov = st.hover && st.hover.data === b;
       b.mesh.scale.setScalar(b.r * (hov ? 1.25 : 1));
-      b.mesh.position.y = b.y + b.r; b.pos.set(b.x, b.y + b.r, b.z);
+      b.mesh.position.y = b.y; b.pos.set(b.x, b.y, b.z);
       if (a) { a.set([b.x, 0.004, b.z, b.x, Math.max(0.004, b.y), b.z], i * 6); }
     });
     if (stems) stems.geometry.attributes.position.needsUpdate = true;
@@ -142,7 +142,8 @@ export async function constellation(el, data, opts) {
     return `<b>${esc(u.name)}</b><span class="px3d-big">${Math.round(u.s || 0)}<small> / 100</small></span>` +
       `<span class="px3d-sub">${esc(tn)}${u.dept ? ' · ' + esc(u.dept) : ''}</span>` +
       `<span class="px3d-sub">Value ${u.v}/5 · Feasibility ${u.f}/5 · Risk ${u.r}/5 · Effort ${u.e}/5</span>` +
-      (u.h ? `<span class="px3d-sub">About ${nf.format(Math.round(u.h))} hours a year</span>` : '');
+      (u.h ? `<span class="px3d-sub">About ${nf.format(Math.round(u.h))} hours a year</span>` : '') +
+      (opts.pickHint ? `<span class="px3d-hint">${esc(st.touch ? opts.pickHint.touch : opts.pickHint.mouse)}</span>` : '');
   };
   st.onFrame = t => {
     const moving = frameBalls();

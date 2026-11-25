@@ -379,6 +379,12 @@ section.block { padding: 120px 0 20px; position: relative; }
 
 /* ============================== CASE STUDIES ============================== */
 .cases { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+/* the whole card opens its project (the first link stretches over it); the other links stay clickable on top */
+.project .links a.stretched::after, .case .links a.stretched::after { content: ""; position: absolute; inset: 0; z-index: 1; border-radius: inherit; }
+.project .links a:not(.stretched), .case .links a:not(.stretched) { position: relative; z-index: 2; }
+.project:has(a.stretched), .case:has(a.stretched) { cursor: pointer; }
+.project:has(a.stretched:focus-visible), .case:has(a.stretched:focus-visible) { outline: 2px solid var(--c1); outline-offset: 3px; }
+.project .links a.stretched:focus-visible, .case .links a.stretched:focus-visible { outline: none; }
 .case { padding: 32px; display: flex; flex-direction: column; }
 .case .big { font-size: 46px; font-weight: 800; letter-spacing: -0.04em; line-height: 1; }
 .case .big-lbl { font-size: 13px; color: var(--text-3); margin-top: 6px; }
@@ -726,7 +732,7 @@ footer a:hover { color: var(--text); }
           <h3>How I'd run an enterprise AI program</h3>
           <p>Eighteen AI use cases for a fictional concrete-products manufacturer, scored on value, feasibility, risk and effort. Change the weights and the ranking, value-vs-effort matrix and roadmap update live, alongside an ROI calculator, an adoption dashboard, governance guardrails and prompt playbooks for each role.</p>
           <div class="tags"><span class="chip">AI Strategy</span><span class="chip">Change Management</span><span class="chip">Business Cases &amp; ROI</span><span class="chip">Copilot · Claude · Power Platform</span></div>
-          <div class="links"><a href="ai-strategy-lab/">Open the lab <span class="arr">→</span></a><a href="ai-strategy-lab/#case" class="muted">ROI calculator</a><a href="https://github.com/Bsilva87921/bsilva87921.github.io/tree/main/ai-strategy-lab" class="muted" target="_blank" rel="noopener">Source</a></div>
+          <div class="links"><a class="stretched" href="ai-strategy-lab/">Open the lab <span class="arr">→</span></a><a href="ai-strategy-lab/#case" class="muted">ROI calculator</a><a href="https://github.com/Bsilva87921/bsilva87921.github.io/tree/main/ai-strategy-lab" class="muted" target="_blank" rel="noopener">Source</a></div>
         </div>
       </article>
 
@@ -737,7 +743,7 @@ footer a:hover { color: var(--text); }
           <h3>Set lending rules and see where 9,578 real loans land</h3>
           <p>An interactive business analysis tool on LendingClub data: test rules against the bank's own policy with a defect log, score applicants with a cross-validated risk model, and generate the business rules and test cases a project team needs.</p>
           <div class="tags"><span class="chip">Predictive Modeling</span><span class="chip">Business Rules</span><span class="chip">UAT</span><span class="chip">Python</span></div>
-          <div class="links"><a href="loan-rules-lab/">Open the lab <span class="arr">→</span></a><a href="loan-rules-lab/#guide" class="muted">How to use</a><a href="https://github.com/Bsilva87921/bsilva87921.github.io/tree/main/loan-rules-lab" class="muted" target="_blank" rel="noopener">Source</a></div>
+          <div class="links"><a class="stretched" href="loan-rules-lab/">Open the lab <span class="arr">→</span></a><a href="loan-rules-lab/#guide" class="muted">How to use</a><a href="https://github.com/Bsilva87921/bsilva87921.github.io/tree/main/loan-rules-lab" class="muted" target="_blank" rel="noopener">Source</a></div>
         </div>
       </article>
 
@@ -748,7 +754,7 @@ footer a:hover { color: var(--text); }
           <h3>16 operational KPIs and a $1.1M–$1.9M fix</h3>
           <p>A one-page ops dashboard tracking fill rate, missed visits, turnover, denials and more against targets, plus a case study using SQL, regression and a difference-in-differences test to show why care hours go unstaffed.</p>
           <div class="tags"><span class="chip">KPI Design</span><span class="chip">SQL</span><span class="chip">Root-Cause Analysis</span></div>
-          <div class="links"><a href="elite-home-health/">Open dashboard <span class="arr">→</span></a><a href="elite-home-health/case-study.html" class="muted">Case study</a><a href="https://github.com/Bsilva87921/bsilva87921.github.io/tree/main/elite-home-health" class="muted" target="_blank" rel="noopener">Source</a></div>
+          <div class="links"><a class="stretched" href="elite-home-health/">Open dashboard <span class="arr">→</span></a><a href="elite-home-health/case-study.html" class="muted">Case study</a><a href="https://github.com/Bsilva87921/bsilva87921.github.io/tree/main/elite-home-health" class="muted" target="_blank" rel="noopener">Source</a></div>
         </div>
       </article>
 
@@ -758,7 +764,7 @@ footer a:hover { color: var(--text); }
           <div class="kicker">Probable Atlas: Finance</div>
           <h3>61 markets, 34 Fed series, seven backtested models</h3>
           <p>Daily data on funds, indexes, rates and FX since 1990, with GARCH volatility, regime models, a portfolio lab, a 3D market skyline and an Ask AI analyst.</p>
-          <div class="links"><a href="probable-atlas/finance/">Open dashboard <span class="arr">→</span></a><a href="probable-atlas/finance/#how" class="muted">How it works</a></div>
+          <div class="links"><a class="stretched" href="probable-atlas/finance/">Open dashboard <span class="arr">→</span></a><a href="probable-atlas/finance/#how" class="muted">How it works</a></div>
         </div>
       </article>
 
@@ -768,7 +774,7 @@ footer a:hover { color: var(--text); }
           <div class="kicker">Probable Atlas: Economics</div>
           <h3>Recession odds, nowcasts and a 3D data globe</h3>
           <p>World Bank, IMF and FRED data refreshed twice a day, with models that publish their own track records and a recommendation engine ranked by evidence.</p>
-          <div class="links"><a href="probable-atlas/">Open dashboard <span class="arr">→</span></a><a href="probable-atlas/app/" class="muted">Get the app</a></div>
+          <div class="links"><a class="stretched" href="probable-atlas/">Open dashboard <span class="arr">→</span></a><a href="probable-atlas/app/" class="muted">Get the app</a></div>
         </div>
       </article>
 
@@ -778,7 +784,7 @@ footer a:hover { color: var(--text); }
           <div class="kicker">Probable: Live Sports Lab</div>
           <h3>Live win probabilities, graded hourly</h3>
           <p>Real-time scores across 13+ leagues with Monte Carlo, Poisson and Markov models, a 260-scenario what-if simulator and a 3D scoreboard.</p>
-          <div class="links"><a href="live-sports-lab/">Open dashboard <span class="arr">→</span></a><a href="live-sports-lab/#method" class="muted">Track record</a></div>
+          <div class="links"><a class="stretched" href="live-sports-lab/">Open dashboard <span class="arr">→</span></a><a href="live-sports-lab/#method" class="muted">Track record</a></div>
         </div>
       </article>
 
@@ -788,7 +794,7 @@ footer a:hover { color: var(--text); }
           <div class="kicker">Probable: Polymath Arcade</div>
           <h3>21 adaptive 3D brain games</h3>
           <p>Ten subjects from finance and economics to coding and physics. Every round adapts to the player and explains what they missed. Installable and works offline.</p>
-          <div class="links"><a href="polymath-arcade/">Play <span class="arr">→</span></a><a href="https://github.com/Bsilva87921/bsilva87921.github.io/tree/main/polymath-arcade" class="muted" target="_blank" rel="noopener">Source</a></div>
+          <div class="links"><a class="stretched" href="polymath-arcade/">Play <span class="arr">→</span></a><a href="https://github.com/Bsilva87921/bsilva87921.github.io/tree/main/polymath-arcade" class="muted" target="_blank" rel="noopener">Source</a></div>
         </div>
       </article>
 
@@ -798,7 +804,7 @@ footer a:hover { color: var(--text); }
           <div class="kicker">Fundraising Analytics Dashboard</div>
           <h3>Donor behavior across 1M+ gift records</h3>
           <p>An interactive dashboard of donor behavior, fundraising performance and gift types, built to help stakeholders plan with confidence.</p>
-          <div class="links"><a href="fundraising-dashboard/">Open dashboard <span class="arr">→</span></a><a href="https://github.com/Bsilva87921/Fundraising-Analytics-Dashboard" class="muted" target="_blank" rel="noopener">GitHub</a></div>
+          <div class="links"><a class="stretched" href="fundraising-dashboard/">Open dashboard <span class="arr">→</span></a><a href="https://github.com/Bsilva87921/Fundraising-Analytics-Dashboard" class="muted" target="_blank" rel="noopener">GitHub</a></div>
         </div>
       </article>
 
@@ -808,7 +814,7 @@ footer a:hover { color: var(--text); }
           <div class="kicker">Alteryx Workflow Lab</div>
           <h3>Data prep and automation, hands-on</h3>
           <p>Applied Alteryx workflows for preparation, blending and automation, the same tooling that saved 0.5 FTE of reporting work at Chase.</p>
-          <div class="links"><a href="alteryx/">Open workflow lab <span class="arr">→</span></a><a href="https://github.com/Bsilva87921/alteryx-getting-started-and-projects" class="muted" target="_blank" rel="noopener">GitHub</a></div>
+          <div class="links"><a class="stretched" href="alteryx/">Open workflow lab <span class="arr">→</span></a><a href="https://github.com/Bsilva87921/alteryx-getting-started-and-projects" class="muted" target="_blank" rel="noopener">GitHub</a></div>
         </div>
       </article>
     </div>
@@ -826,13 +832,13 @@ footer a:hover { color: var(--text); }
         <div class="big grad-text">23,904</div><div class="big-lbl">Florida bank complaints analyzed in SQL</div>
         <h3>Where Florida bank customers struggle</h3>
         <p>CFPB complaints about checking and savings accounts, 2023–2026. Monthly complaints doubled, and three issues make up 43% of them. Includes a dashboard, a ranked fix-first list and the full SQL.</p>
-        <div class="links"><a href="case-studies/bank-complaints/">Open case study <span class="arr">→</span></a><a href="https://github.com/Bsilva87921/bsilva87921.github.io/tree/main/case-studies/bank-complaints" class="muted" target="_blank" rel="noopener">View SQL</a></div>
+        <div class="links"><a class="stretched" href="case-studies/bank-complaints/">Open case study <span class="arr">→</span></a><a href="https://github.com/Bsilva87921/bsilva87921.github.io/tree/main/case-studies/bank-complaints" class="muted" target="_blank" rel="noopener">View SQL</a></div>
       </article>
       <article class="card tilt case reveal d1">
         <div class="big grad-text">$20M</div><div class="big-lbl">Saved by finding the true driver of handle time</div>
         <h3>Business analysis case studies</h3>
         <p>Three cases on delivering strategic initiatives: rolling out loan decision rules with test cases and a defect log, the AHT root-cause analysis, and scorecard governance for 30,000 employees.</p>
-        <div class="links"><a href="case-studies/Bruno_Silva_Business_Analysis_Case_Studies.pdf">Read the case studies <span class="arr">→</span></a></div>
+        <div class="links"><a class="stretched" href="case-studies/Bruno_Silva_Business_Analysis_Case_Studies.pdf">Read the case studies <span class="arr">→</span></a></div>
       </article>
     </div>
   </div>
