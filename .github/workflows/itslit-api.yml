@@ -1,0 +1,135 @@
+# Turns on Shelley, ItsLit's AI librarian. Deploys the Cloudflare Worker in itslit/server, stores the Anthropic key in
+# it, points the site at it and redeploys the site. It uses the same three repository secrets as the Probable "Ask AI
+# proxy" workflow (Settings > Secrets and variables > Actions); until they exist it does nothing:
+#   ANTHROPIC_API_KEY      an Anthropic API key (set a monthly spend limit in the Claude Console)
+#   CLOUDFLARE_API_TOKEN   a Cloudflare API token from the "Edit Cloudflare Workers" template
+#   CLOUDFLARE_ACCOUNT_ID  the Cloudflare account ID
+# Optional secrets BEEHIIV_API_KEY and BEEHIIV_PUBLICATION_ID send Gazette sign-ups to beehiiv (with newsletter:
+# 'beehiiv' in itslit/config.js). Optional repository variable ITSLIT_MODEL picks another model.
+# It reads the Firebase project, the daily question limit and your own domain from itslit/config.js, so run it again
+# (it runs by itself when config.js changes) after switching on reader accounts. See itslit/README.md.
+name: ItsLit API (Shelley)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+    paths:
+      - "itslit/server/**"
+      - "itslit/config.js"
+      - ".github/workflows/itslit-api.yml"
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: itslit-api
+  cancel-in-progress: false
+
+jobs:
+  worker:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    outputs:
+      changed: ${{ steps.config.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check the secrets
+        id: have
+        env:
+          A: ${{ secrets.ANTHROPIC_API_KEY }}
+          T: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          C: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          if [ -n "$A" ] && [ -n "$T" ] && [ -n "$C" ]; then echo "ok=1" >> "$GITHUB_OUTPUT"
+          else echo "::notice::Shelley is off: add ANTHROPIC_API_KEY, CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID as repository secrets, then run this workflow (see itslit/README.md)."; fi
+      - uses: actions/setup-node@v4
+        if: steps.have.outputs.ok == '1'
+        with:
+          node-version: "22"
+      - name: Read the settings from itslit/config.js
+        if: steps.have.outputs.ok == '1'
+        run: |
+          node -e '
+            const fs = require("fs"), vm = require("vm");
+            const box = { window: {} };
+            vm.runInNewContext(fs.readFileSync("itslit/config.js", "utf8"), box);
+            const c = box.window.ITSLIT_CONFIG || {};
+            const pid = String((c.firebase || {}).projectId || "").trim();
+            const lim = parseInt(c.dailyLimit, 10) > 0 ? parseInt(c.dailyLimit, 10) : 5;
+            const origins = ["https://bsilva87921.github.io", "capacitor://localhost", "https://localhost"];
+            const dom = String(c.customDomain || "").trim().replace(/\/+$/, "");
+            if (/^https:\/\/[a-z0-9.-]+$/i.test(dom)) {
+              const host = new URL(dom).hostname;
+              origins.push("https://" + host, host.startsWith("www.") ? "https://" + host.slice(4) : "https://www." + host);
+            }
+            if (pid && !/^[a-z0-9-]+$/.test(pid)) { console.error("The Firebase projectId in itslit/config.js looks wrong: " + pid); process.exit(1); }
+            fs.appendFileSync(process.env.GITHUB_ENV, `FIREBASE_PROJECT_ID=${pid}\nDAILY_LIMIT=${lim}\nALLOWED_ORIGINS=${origins.join(",")}\n`);
+            console.log("Accounts:", pid ? "on (" + pid + ")" : "not yet", "· daily limit:", lim, "· origins:", origins.join(", "));'
+      - name: Deploy the Worker
+        if: steps.have.outputs.ok == '1'
+        working-directory: itslit/server
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          AI_MODEL: ${{ vars.ITSLIT_MODEL }}
+        run: |
+          set -o pipefail
+          npx --yes wrangler@4 deploy --var "ALLOWED_ORIGINS:$ALLOWED_ORIGINS" --var "DAILY_LIMIT:$DAILY_LIMIT" \
+            ${FIREBASE_PROJECT_ID:+--var FIREBASE_PROJECT_ID:$FIREBASE_PROJECT_ID} ${AI_MODEL:+--var MODEL:$AI_MODEL} 2>&1 | tee deploy.log
+          url=$(grep -oE 'https://[a-zA-Z0-9.-]+\.workers\.dev' deploy.log | head -1)
+          if [ -z "$url" ]; then echo "::error::No workers.dev address in the deploy output. Open Workers & Pages in the Cloudflare dashboard once to pick a workers.dev subdomain, then run this again."; exit 1; fi
+          echo "URL=$url" >> "$GITHUB_ENV"
+      - name: Store the keys in the Worker
+        if: steps.have.outputs.ok == '1'
+        working-directory: itslit/server
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          BEEHIIV_API_KEY: ${{ secrets.BEEHIIV_API_KEY }}
+          BEEHIIV_PUBLICATION_ID: ${{ secrets.BEEHIIV_PUBLICATION_ID }}
+        run: |
+          printf '%s' "$ANTHROPIC_API_KEY" | npx --yes wrangler@4 secret put ANTHROPIC_API_KEY
+          if [ -n "$BEEHIIV_API_KEY" ] && [ -n "$BEEHIIV_PUBLICATION_ID" ]; then
+            printf '%s' "$BEEHIIV_API_KEY" | npx --yes wrangler@4 secret put BEEHIIV_API_KEY
+            printf '%s' "$BEEHIIV_PUBLICATION_ID" | npx --yes wrangler@4 secret put BEEHIIV_PUBLICATION_ID
+          fi
+      - name: Check that Shelley answers
+        if: steps.have.outputs.ok == '1'
+        run: |
+          for i in 1 2 3 4 5 6; do
+            h=$(curl -fsS -H 'Origin: https://bsilva87921.github.io' "$URL/health" || true)
+            echo "health: $h"
+            case "$h" in *'"ok":true'*) break;; esac
+            sleep 10
+          done
+          case "$h" in *'"ok":true'*) ;; *) echo "::error::The Worker does not have the Anthropic key yet."; exit 1;; esac
+          if [ -z "$FIREBASE_PROJECT_ID" ]; then
+            r=$(curl -sS -X POST "$URL/shelley" -H 'Origin: https://bsilva87921.github.io' -H 'content-type: application/json' \
+              -d '{"messages":[{"role":"user","content":"In one word: who wrote Frankenstein?"}]}' | head -c 2000)
+            echo "reply: ${r:0:400}"
+            case "$r" in *content_block_delta*) echo "Shelley answered.";; *) echo "::error::The Worker is up but Shelley did not answer: check the Anthropic key and its credit."; exit 1;; esac
+          else
+            r=$(curl -sS -o /dev/null -w '%{http_code}' -X POST "$URL/shelley" -H 'Origin: https://bsilva87921.github.io' -H 'content-type: application/json' -d '{"messages":[{"role":"user","content":"hi"}]}')
+            echo "without signing in: HTTP $r (401 expected: accounts are on)"
+          fi
+      - name: Point the site at the Worker
+        id: config
+        if: steps.have.outputs.ok == '1'
+        run: |
+          printf '%s\n%s\n' "// ItsLit · Shelley's address. Written by the \"ItsLit API (Shelley)\" workflow once the Worker is deployed; no need to edit." \
+            "window.ITSLIT_API = { workerUrl: '$URL' };" > itslit/api-config.js
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add itslit/api-config.js
+          if git diff --cached --quiet; then echo "changed=0" >> "$GITHUB_OUTPUT"; exit 0; fi
+          git commit -qm "ItsLit: Shelley on through the ItsLit API Worker"
+          for i in 1 2 3 4 5; do git pull -q --rebase origin main && git push -q origin HEAD:main && break; sleep 6; done
+          echo "changed=1" >> "$GITHUB_OUTPUT"
+  pages:
+    needs: worker
+    if: needs.worker.outputs.changed == '1'
+    uses: ./.github/workflows/deploy-site.yml

@@ -1,0 +1,104 @@
+rules_version = '2';
+
+// ItsLit · Firestore security rules.
+// Paste this whole file into Firebase console → Firestore Database → Rules, then press Publish.
+// FIRST put the Gazette editors' sign-in emails (lower case) in editorEmails() below: the same emails as `editors` in
+// itslit/config.js. Editors can publish letters, hide the sample letters, remove Salon posts and see the sign-up lists.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function editorEmails() {
+      return ['editor@example.com'];
+    }
+
+    function signedIn() { return request.auth != null; }
+    // Google accounts are verified; email-and-password accounts are verified once the reader clicks the link we send
+    function verified() { return signedIn() && request.auth.token.email_verified == true; }
+    function isEditor() { return verified() && request.auth.token.email != null && request.auth.token.email.lower() in editorEmails(); }
+    function isMe(uid) { return signedIn() && request.auth.uid == uid; }
+    function onlyKeys(keys) { return request.resource.data.keys().hasOnly(keys); }
+    function changedKeys() { return request.resource.data.diff(resource.data).affectedKeys(); }
+    function fresh(ts) { return ts is number && ts > request.time.toMillis() - 600000 && ts < request.time.toMillis() + 600000; }
+    function shortList(l, n) { return l is list && l.size() <= n; }
+    function sized(s, min, max) { return s is string && s.size() >= min && s.size() <= max; }
+    // a reader may add (and, where allowed, remove) only their own id in a list, and change nothing else
+    function onlyMine(field, canRemove) {
+      let after = request.resource.data[field];
+      let before = resource.data[field];
+      return after is list && after.size() <= 50000
+        && after.toSet().difference(before.toSet()).hasOnly([request.auth.uid])
+        && (canRemove ? before.toSet().difference(after.toSet()).hasOnly([request.auth.uid])
+                      : before.toSet().difference(after.toSet()).size() == 0);
+    }
+
+    // The Salon: everyone can read; verified readers post as themselves; authors and editors can delete.
+    match /posts/{id} {
+      allow read: if true;
+      allow create: if verified()
+        && onlyKeys(['book', 'parent', 'text', 'author', 'ts', 'spoiler', 'cheers', 'flaggedBy'])
+        && request.resource.data.author == request.auth.uid
+        && sized(request.resource.data.book, 1, 60)
+        && sized(request.resource.data.parent, 0, 64)
+        && sized(request.resource.data.text, 1, 1200)
+        && request.resource.data.spoiler is bool
+        && fresh(request.resource.data.ts)
+        && request.resource.data.cheers == [] && request.resource.data.flaggedBy == [];
+      allow update: if verified() && (
+        (changedKeys().hasOnly(['cheers']) && onlyMine('cheers', true)) ||
+        (changedKeys().hasOnly(['flaggedBy']) && onlyMine('flaggedBy', false))
+      );
+      allow delete: if isMe(resource.data.author) || isEditor();
+    }
+
+    // The Gazette's letters and settings: public to read, editors to write.
+    match /letters/{id} {
+      allow read: if true;
+      allow write: if isEditor();
+    }
+    match /config/{id} {
+      allow read: if true;
+      allow write: if isEditor();
+    }
+
+    // Public reader profiles: the name and picture shown next to posts.
+    match /profiles/{uid} {
+      allow read: if true;
+      allow create, update: if isMe(uid)
+        && onlyKeys(['name', 'avatarUrl', 'ts'])
+        && sized(request.resource.data.name, 1, 40)
+        && sized(request.resource.data.avatarUrl, 0, 600) && request.resource.data.avatarUrl.matches('^(https://.*)?$')
+        && request.resource.data.ts is number;
+      allow delete: if isMe(uid);
+    }
+
+    // Private shelves: only their owner can see them.
+    match /shelves/{uid} {
+      allow read, delete: if isMe(uid);
+      allow create, update: if isMe(uid)
+        && onlyKeys(['want', 'reading', 'done'])
+        && shortList(request.resource.data.want, 300) && shortList(request.resource.data.reading, 300) && shortList(request.resource.data.done, 300);
+    }
+
+    // Membership and Emporium waitlists: the reader and the editors can see them.
+    match /waitlist/{uid} {
+      allow read: if isMe(uid) || isEditor();
+      allow delete: if isMe(uid);
+      allow create, update: if isMe(uid)
+        && onlyKeys(['plans', 'merch', 'ts'])
+        && shortList(request.resource.data.plans, 10) && shortList(request.resource.data.merch, 20)
+        && request.resource.data.ts is number;
+    }
+
+    // Gazette sign-ups: anyone may add their email; only editors can read the list.
+    match /subscribers/{id} {
+      allow read: if isEditor() || isMe(id);
+      allow create: if onlyKeys(['email', 'src', 'ts'])
+        && sized(request.resource.data.email, 6, 200)
+        && request.resource.data.email.matches('^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$')
+        && sized(request.resource.data.src, 0, 40)
+        && fresh(request.resource.data.ts);
+      allow delete: if isEditor() || isMe(id);
+    }
+  }
+}

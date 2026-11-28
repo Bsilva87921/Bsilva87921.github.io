@@ -1,0 +1,69 @@
+<a class="skip" href="#view">Skip to content</a>
+<div class="stage">
+<button class="btn light exit-preview" id="exitPreview" type="button">Back to the website view</button>
+<div class="device">
+<div class="shell" id="shell">
+  <header class="site-head">
+    <div class="in">
+      <a class="brand" href="#home" aria-label="ItsLit home"><span class="brand-flame"></span><b>ItsLit</b></a>
+      <nav class="nav" aria-label="Main">
+        <a href="#library" data-r="library">Library</a>
+        <a href="#match" data-r="match">Matchmaker</a>
+        <a href="#salon" data-r="salon">Salon</a>
+        <a href="#ask" data-r="ask">Ask Shelley</a>
+        <a href="#gazette" data-r="gazette">Gazette</a>
+        <a href="#shop" data-r="shop">Emporium</a>
+      </nav>
+      <div class="head-actions">
+        <button class="icon-btn theme-btn" type="button"></button>
+        <button class="icon-btn" type="button" id="previewBtn" aria-label="View as phone app" title="View as phone app"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M8 2h8a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zM11 18h2"/></svg></button>
+        <a class="btn primary small" href="#join" data-r="join">Become a Patron</a>
+      </div>
+    </div>
+  </header>
+  <header class="app-bar">
+    <a class="brand" href="#home" aria-label="ItsLit home"><span class="brand-flame"></span><b>ItsLit</b></a>
+    <span class="spacer"></span>
+    <button class="icon-btn theme-btn" type="button"></button>
+    <a class="icon-btn" href="#shelf" aria-label="My shelf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h18M5 20V6h3v14M10 20V4h3v16M15 20l2-13 3 .5-2 12.5"/></svg></a>
+  </header>
+  <main id="view" tabindex="-1"></main>
+  <footer class="site-foot">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="#home" style="color:#fff" aria-label="ItsLit home"><span class="brand-flame"></span><b>ItsLit</b></a>
+        <p style="margin:12px 0 4px;max-width:400px">A candlelit reading club for the great works. The classics, finally lit.</p>
+        <form class="sub-form foot-sub" data-src="footer"><label class="vh" for="sub-foot">Email address</label><input id="sub-foot" type="email" placeholder="Your email for the Gazette" autocomplete="email" required><button class="btn light" type="submit">Subscribe</button></form>
+        <p class="small sub-state" aria-live="polite" style="color:inherit"></p>
+      </div>
+      <div><h4>Read</h4><ul><li><a href="#library">The Library</a></li><li><a href="#match">The Matchmaker</a></li><li><a href="#shelf">My shelf</a></li></ul></div>
+      <div><h4>Talk</h4><ul><li><a href="#salon">The Salon</a></li><li><a href="#ask">Ask Shelley</a></li><li><a href="#gazette">The Gazette</a></li></ul></div>
+      <div><h4>Join</h4><ul><li><a href="#join">Membership</a></li><li><a href="#shop">The Emporium</a> <span class="soon">Soon</span></li><li style="font-size:15px">On phones, ItsLit runs as an app with tabs at the bottom. Store versions are planned for late 2027.</li></ul></div>
+    </div>
+    <div class="foot-base"><span>&copy; 2026 ItsLit. Prototype with sample content; prices are placeholders and checkout is not open.</span><span>Free texts courtesy of Project Gutenberg.</span></div>
+  </footer>
+  <nav class="tabbar" aria-label="App sections">
+    <a href="#home" data-r="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span>Home</span></a>
+    <a href="#library" data-r="library"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h4v16H4zM10 4h4v16h-4zM15.5 5.2l3.4-.9 3.6 15-3.4.9z"/></svg><span>Library</span></a>
+    <a href="#ask" data-r="ask" class="mid"><span class="c" id="tabShelley"></span><span>Shelley</span></a>
+    <a href="#salon" data-r="salon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg><span>Salon</span></a>
+    <button type="button" id="moreBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span>More</span></button>
+  </nav>
+</div>
+</div>
+</div>
+<dialog id="moreSheet" class="sheet" aria-label="More of ItsLit">
+  <div class="sheet-grip"></div>
+  <div class="sheet-links">
+    <a href="#gazette"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h13v14H6a2 2 0 0 1-2-2zM17 9h3v8a2 2 0 0 1-2 2M7 9h7M7 12h7M7 15h5"/></svg>The Gazette</a>
+    <a href="#match"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></svg>The Matchmaker</a>
+    <a href="#shelf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h18M5 20V6h3v14M10 20V4h3v16M15 20l2-13 3 .5-2 12.5"/></svg>My shelf</a>
+    <a href="#shop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6zM9 8V6a3 3 0 0 1 6 0v2"/></svg>The Emporium <span class="soon">Soon</span></a>
+    <a href="#join"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16v3a2 2 0 0 0 0 4v3H4v-3a2 2 0 0 0 0-4zM10 8v8"/></svg>Membership</a>
+    <button class="theme-btn" type="button"></button>
+    <button class="preview-only" type="button" data-web><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 5h18v14H3zM3 9h18"/></svg>View as website</button>
+    <form method="dialog"><button type="submit" class="btn" style="width:100%;justify-content:center;margin-top:6px">Close</button></form>
+  </div>
+</dialog>
+<dialog id="dlg"></dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>

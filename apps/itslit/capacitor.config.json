@@ -1,0 +1,13 @@
+{
+  "appId": "com.itslit.readingclub",
+  "appName": "ItsLit",
+  "webDir": "www",
+  "server": { "androidScheme": "https" },
+  "backgroundColor": "#F4EEE3",
+  "ios": { "contentInset": "never", "backgroundColor": "#F4EEE3" },
+  "android": { "backgroundColor": "#F4EEE3" },
+  "plugins": {
+    "SplashScreen": { "launchShowDuration": 900, "launchAutoHide": true, "backgroundColor": "#F4EEE3", "showSpinner": false },
+    "StatusBar": { "style": "LIGHT", "backgroundColor": "#F4EEE3", "overlaysWebView": false }
+  }
+}

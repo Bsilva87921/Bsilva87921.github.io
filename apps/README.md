@@ -33,3 +33,6 @@ npx cap open android       # Android Studio: Build → Generate Signed Bundle (A
 What publishing needs: an Apple Developer Program membership ($99/year) and a Google Play developer account ($25 once); a privacy policy URL — use <https://bsilva87921.github.io/apps/privacy.html>; and the listing text in each app's `STORE.md`.
 
 Review note: Apple's guideline 4.2 asks that apps offer more than a website. These apps are interactive tools (3D views, simulations, what-if labs, offline use); the store listing should lead with that.
+
+## ItsLit Reading Club
+A separate brand built the same way. The website and installable app live in [`../itslit/`](../itslit/) (its README is the launch guide). Its Capacitor project is [`itslit/`](itslit/), and the **ItsLit app builds** workflow makes the test APK and the Xcode project. The store listing is in [`itslit/STORE.md`](itslit/STORE.md).

@@ -1,0 +1,33 @@
+# ItsLit API: Shelley, the AI librarian (Cloudflare Worker). Deployed by .github/workflows/itslit-api.yml; see ../README.md.
+# The workflow also sets FIREBASE_PROJECT_ID, DAILY_LIMIT and ALLOWED_ORIGINS from itslit/config.js.
+name = "itslit-api"
+main = "worker.js"
+compatibility_date = "2025-09-01"
+workers_dev = true
+
+[vars]
+MODEL = "claude-haiku-5-5"
+MAX_TOKENS = "700"
+# free questions per signed-in reader per day (Patrons are not counted)
+DAILY_LIMIT = "5"
+# questions per visitor per day while reader accounts are not switched on yet
+OPEN_DAILY_LIMIT = "20"
+ALLOWED_ORIGINS = "https://bsilva87921.github.io,capacitor://localhost,https://localhost"
+
+# bursts: about one question every ten seconds per reader at most
+[[ratelimits]]
+name = "LIMITER"
+namespace_id = "4317"
+
+  [ratelimits.simple]
+  limit = 6
+  period = 60
+
+# the daily question counts (a SQLite Durable Object, available on the free plan)
+[[durable_objects.bindings]]
+name = "COUNTER"
+class_name = "Counter"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["Counter"]

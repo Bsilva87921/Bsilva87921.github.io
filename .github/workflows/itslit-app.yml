@@ -1,0 +1,91 @@
+# Native app builds for ItsLit (Capacitor). Produces a test Android APK and an Xcode project (checked by an iOS
+# simulator build). Download them from the workflow run's Artifacts. Publishing to the stores needs your developer
+# accounts: see apps/itslit/STORE.md.
+name: ItsLit app builds
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+    paths:
+      - "apps/itslit/**"
+      - ".github/workflows/itslit-app.yml"
+      # the site files the app packages
+      - "itslit/index.html"
+      - "itslit/config.js"
+      - "itslit/api-config.js"
+      - "itslit/backend.js"
+      - "itslit/icons/**"
+
+permissions:
+  contents: read
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    defaults:
+      run:
+        shell: bash
+        working-directory: apps/itslit
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+      - name: Install Capacitor
+        run: npm install --no-audit --no-fund && npx cap --version
+      - name: Assemble the web files
+        run: npm run build:web
+      - name: Create the Android project
+        run: npx cap add android
+      - name: Icons and splash screens
+        run: npm run assets -- --android || echo "asset generation skipped"
+      - name: Sync
+        run: npx cap sync android
+      - name: Build a test APK
+        working-directory: apps/itslit/android
+        run: ./gradlew assembleDebug --no-daemon -q
+      - uses: actions/upload-artifact@v4
+        with:
+          name: itslit-android-test-apk
+          path: apps/itslit/android/app/build/outputs/apk/debug/*.apk
+          retention-days: 90
+
+  ios:
+    runs-on: macos-latest
+    timeout-minutes: 50
+    defaults:
+      run:
+        shell: bash
+        working-directory: apps/itslit
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install Capacitor
+        run: npm install --no-audit --no-fund && npx cap --version
+      - name: Assemble the web files
+        run: npm run build:web
+      - name: Create the iOS project
+        run: npx cap add ios
+      - name: Icons and splash screens
+        run: npm run assets -- --ios || echo "asset generation skipped"
+      - name: Sync
+        run: npx cap sync ios
+      - name: Check it builds (iOS simulator, unsigned)
+        run: |
+          if [ -d ios/App/App.xcworkspace ]; then T="-workspace ios/App/App.xcworkspace"; else T="-project ios/App/App.xcodeproj"; fi
+          xcodebuild $T -scheme App -configuration Debug -sdk iphonesimulator -derivedDataPath build CODE_SIGNING_ALLOWED=NO build | tail -25
+      - name: Package the Xcode project
+        run: rm -rf build && zip -qry ../itslit-ios-xcode-project.zip ios capacitor.config.json package.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: itslit-ios-xcode-project
+          path: apps/itslit-ios-xcode-project.zip
+          retention-days: 90
